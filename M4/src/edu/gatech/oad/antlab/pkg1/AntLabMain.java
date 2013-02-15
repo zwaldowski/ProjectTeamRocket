@@ -70,7 +70,7 @@ import edu.gatech.oad.antlab.pkg2.*;
 		  Person3 p3 = new Person3("P3");
 		  toPrint += p3.toString("ggg003x");
           Person4 p4 = new Person4("Zachary Waldowski");
-          toPrint += p4.toString("902897777");
+          toPrint += p4.toString("dwaldowski3");
         System.out.println(toPrint);
         
         
