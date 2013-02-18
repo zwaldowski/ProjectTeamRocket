@@ -18,3 +18,41 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# Mac crap
+.DS_Store
+._*
+
+# Windows crap
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux crap
+.*
+!.gitignore
+*~
+
+# IntelliJ crap
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Eclipse crap
+*.pydevproject
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.externalToolBuilders/
+*.launch
+.cproject
+.buildpath
