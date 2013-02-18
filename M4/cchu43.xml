@@ -1,0 +1,133 @@
+<!--Ant M4-->
+<!--build.xml-->
+
+<!--Cristina Chu-->
+
+
+<project name="M4" basedir="." default="all">
+
+
+  <!--init:to initialize properties-->
+
+	<target name="init">
+
+
+		<property name="src.dir" value="src"/>
+
+		<property name="def.dir" value="src/edu/gatech/oad/antlab"/>
+
+		<property name="src1.dir" value="${def.dir}/person"/>
+
+		<property name="src2.dir" value="${def.dir}/pkg1"/>
+
+		<property name="src3.dir" value="${def.dir}/pkg2"/>
+
+		<property name="build.dir" value="build"/>
+
+		<property name="apidoc.dir" value="apidoc" />
+
+
+	</target>
+
+
+	<!--prepare:to initialize directories-->
+
+	<target name="prepare" depends="init">
+
+		<mkdir dir="${build.dir}"/>
+
+		<mkdir dir="${apidoc.dir}"/>
+
+	</target>
+
+
+	<!--compile:compiles things in src dir to build dir-->
+
+	<target name="compile" depends="prepare">
+
+		<javac destdir="${build.dir}" includeantruntime="false">
+
+			<src path="${src1.dir}"/>
+
+			<src path="${src2.dir}"/>
+
+			<src path="${src3.dir}"/>
+
+			<classpath>
+
+				<pathelement path="${build.dir}"/>
+
+				<pathelement path="lib/resources.jar"/>
+
+			</classpath>
+
+		</javac>
+	</target>
+
+
+	<!--javadoc:generates javadocs for the code-->
+
+	<target name="javadoc" depends="compile">
+
+		<javadoc sourcepath="${src.dir}" destdir="${apidoc.dir}" access="public" packagenames="edu.gatech.oad.antdemo">
+
+          <fileset dir="${src.dir}">
+
+              <include name="**/*.java" />
+
+          </fileset>
+
+          <classpath>
+            <pathelement path="lib/resources.jar" />
+
+          </classpath>
+
+        </javadoc>
+	</target>
+
+
+	<!--jar:package the compiled classes to AntLabRun.jar-->
+
+	<target name="jar" depends="javadoc">
+
+		<jar basedir="${build.dir}" destfile="AntLabRun.jar" >
+
+		<manifest>
+
+			<attribute name="Class-Path" value="lib/resources.jar" />
+
+			<attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+
+		</manifest>
+
+		</jar>
+	</target>
+
+
+	<!--run:starts execution and runs jar file created-->
+
+	<target name="run" depends="jar">
+
+		<java jar="AntLabRun.jar" fork="true"/>
+
+	</target>
+
+
+	<!--all:performs all of the above tasks-->
+
+	<target name="all" depends="run">
+
+
+	</target>
+
+
+	<!--clean:removes JARs and compiled classes-->
+
+	<target name="clean" depends="init">
+
+		<delete dir="${build.dir}"/>
+
+	</target>
+
+
+</project>
