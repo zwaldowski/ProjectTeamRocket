@@ -15,10 +15,6 @@ gen/
 # Local configuration file (sdk path, etc)
 local.properties
 
-# Eclipse project files
-.classpath
-.project
-
 # Mac crap
 .DS_Store
 ._*
@@ -37,7 +33,6 @@ Desktop.ini
 *.iml
 *.ipr
 *.iws
-.idea/
 
 # Eclipse crap
 *.pydevproject
@@ -50,9 +45,10 @@ tmp/**/*
 *.swp
 *~.nib
 local.properties
-.settings/
 .loadpath
 .externalToolBuilders/
 *.launch
 .cproject
 .buildpath
+
+.idea/
