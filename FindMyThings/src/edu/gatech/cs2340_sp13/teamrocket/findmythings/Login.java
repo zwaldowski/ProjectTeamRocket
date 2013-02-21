@@ -12,6 +12,11 @@ public class Login {
 	public Login() {
 		
 	}
+	/**
+	 * verify a user
+	 * @param m Member to be verified
+	 * @return whether or not the member has valid credentials
+	 */
 	public boolean verifyUser(Member m) {
 		Scanner scan = new Scanner("nopasswordsinhere.txt");
 		boolean found = false;
@@ -23,6 +28,11 @@ public class Login {
 				}
 		return found;
 	}
+	/**
+	 * In the future, will create a new member, I'm lazy so as of now it just adds the user to a text file to test registration
+	 * @param name user name
+	 * @param password user pass
+	 */
 	public void register(String name, String password) {
 		try {
 		    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("nopasswordsinhere.txt", true)));  //store usernames and passwords in super secure text file
@@ -31,6 +41,7 @@ public class Login {
 		} catch (IOException e) {
 		    System.out.println("This can't be life");
 		}
+		
 	}
 
 }
