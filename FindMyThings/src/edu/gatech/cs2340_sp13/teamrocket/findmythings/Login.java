@@ -13,13 +13,15 @@ public class Login {
 		
 	}
 	public boolean verifyUser(Member m) {
-		Scanner scan = new Scanner(nopasswordsinhere.txt);
+		Scanner scan = new Scanner("nopasswordsinhere.txt");
 		boolean found = false;
 				while(scan.hasNext() && !found) {
 					String[] str = scan.nextLine().split(":");
-					if(m.getUser.equals(str))	
-						found=true;
+					if(m.getUser().equals(str[0]))	
+						if(m.getPassword().equals(str[1]))
+							found = true;
 				}
+		return found;
 	}
 	public void register(String name, String password) {
 		try {
