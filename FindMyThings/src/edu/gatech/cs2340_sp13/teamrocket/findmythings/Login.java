@@ -8,7 +8,15 @@ import java.util.ArrayList;
 
 public class Login {
 	ArrayList<Member> data = new ArrayList<Member>();
+	
 	public Login() {
+		Member[] template = new Member[4]; //For testing login without the need for registration
+			template[0] = new Member("cchu43@gatech.edu","admin","555-555-5555");
+			template[1] = new Member("jcole44@gatech.edu","admin","555-555-5555");
+			template[2] = new Member("tstowell3@gatech.edu","admin","555-555-5555");
+			template[3] = new Member("zwaldowski@gatech.edu ","admin","555-555-5555");
+			for(Member m : template)
+				data.add(m);
 		
 	}
 	/**
