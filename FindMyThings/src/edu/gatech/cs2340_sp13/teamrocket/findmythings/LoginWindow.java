@@ -199,6 +199,7 @@ public class LoginWindow extends Activity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
+			Login log = new Login();
 
 			try {
 				// Simulate network access.
@@ -206,17 +207,15 @@ public class LoginWindow extends Activity {
 			} catch (InterruptedException e) {
 				return false;
 			}
-
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
+			Member temp = new Member(mEmail,mPassword);
+				if(log.verifyUser(temp))
+					return true;
+				
 
 			// TODO: register the new account here.
-			return true;
+			Member m = log.register(mEmail,mPassword);
+			return log.verifyUser(m);
+			
 		}
 
 		@Override
