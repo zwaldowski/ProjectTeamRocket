@@ -1,5 +1,6 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
+import android.R;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
