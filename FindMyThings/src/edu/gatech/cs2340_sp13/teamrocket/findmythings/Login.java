@@ -23,6 +23,8 @@ public class Login {
 	public boolean verifyUser(Member m) {
 		Scanner scan;
 		boolean found = false;
+		File here = new File(".");
+		System.out.println(here.getAbsolutePath());
 		File pass = new File("test.txt");
 		try {
 			scan = new Scanner(pass); // file not found, will fix later
