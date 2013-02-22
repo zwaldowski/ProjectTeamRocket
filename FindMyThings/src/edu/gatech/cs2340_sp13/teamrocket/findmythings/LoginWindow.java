@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ public class LoginWindow extends Activity {
 	 */
 	private static final String[] DUMMY_CREDENTIALS = new String[] {
 			"foo@example.com:hello", "bar@example.com:world" };
-
+	
 	/**
 	 * The default email to populate the email field with.
 	 */
@@ -37,6 +38,7 @@ public class LoginWindow extends Activity {
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
 	private UserLoginTask mAuthTask = null;
+	
 
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
@@ -103,7 +105,7 @@ public class LoginWindow extends Activity {
 		if (mAuthTask != null) {
 			return;
 		}
-
+		Login log = new Login();
 		// Reset errors.
 		mEmailView.setError(null);
 		mPasswordView.setError(null);
@@ -146,8 +148,19 @@ public class LoginWindow extends Activity {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
-			mAuthTask = new UserLoginTask();
-			mAuthTask.execute((Void) null);
+			Member temp = new Member(mEmail,mPassword);
+			if(log.verifyUser(temp)) {
+				mAuthTask = new UserLoginTask();
+				mAuthTask.execute((Void) null);
+			}
+			else {
+				Intent goToNextActivity = new Intent(getApplicationContext(), Register.class);
+				startActivity(goToNextActivity);
+			}
+			
+			
+		    
+			
 		}
 	}
 
@@ -208,14 +221,14 @@ public class LoginWindow extends Activity {
 			} catch (InterruptedException e) {
 				return false;
 			}
-			Member temp = new Member(mEmail,mPassword);
-				if(log.verifyUser(temp))
-					return true;
+			
 				
+					
 
 			// TODO: register the new account here.
-			Member m = log.register(mEmail,mPassword);
-			return log.verifyUser(m);
+			
+
+			return true;
 			
 		}
 

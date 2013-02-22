@@ -16,11 +16,20 @@
         <activity
             android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.LoginWindow"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize|stateVisible">
+            android:windowSoftInputMode="adjustResize|stateVisible" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.Register"
+            android:label="@string/title_activity_register"
+            android:parentActivityName="edu.gatech.cs2340_sp13.teamrocket.findmythings.LoginWindow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.gatech.cs2340_sp13.teamrocket.findmythings.LoginWindow" />
         </activity>
     </application>
 
