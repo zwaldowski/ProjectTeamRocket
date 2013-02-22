@@ -149,6 +149,7 @@ public class LoginWindow extends Activity {
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
 			Member temp = new Member(mEmail,mPassword);
+			
 			if(log.verifyUser(temp)) {
 				mAuthTask = new UserLoginTask();
 				mAuthTask.execute((Void) null);
@@ -213,7 +214,7 @@ public class LoginWindow extends Activity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
-			Login log = new Login();
+			
 
 			try {
 				// Simulate network access.

@@ -93,7 +93,6 @@
         android:layout_marginTop="57dp"
         android:ems="10"
         android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:text="@id/email" />
+        android:inputType="textEmailAddress" />
 
 </RelativeLayout>

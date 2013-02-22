@@ -51,5 +51,12 @@ public class Member {
 	public void setPhone(String s) {
 		phone = s;
 	}
+	@Override
+	public boolean equals(Object m) {
+		if(m instanceof Member)
+			if(this.user.equals(((Member) m).getUser()) && this.password.equals(((Member) m).getPassword()))
+				return true;
+		return false;
+	}
 	
 }
