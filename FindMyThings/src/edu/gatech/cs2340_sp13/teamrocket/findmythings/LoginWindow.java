@@ -106,6 +106,11 @@ public class LoginWindow extends Activity {
 		getMenuInflater().inflate(R.menu.activity_login_window, menu);
 		return true;
 	}
+	
+	/**
+	 * Creates user object, will need to be modified once the admin class is created 
+	 * but I was having problems instantiating elsewhere.
+	 */
 	public void createUser() {
 		temp = new User(mEmail,mPassword);
 	}
@@ -161,10 +166,10 @@ public class LoginWindow extends Activity {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
-			if(temp==null)
+			if(temp==null) //Instantiates member
 				createUser();
 			
-			if(log.exists(temp)) {
+			if(log.exists(temp)) { // Checks for valid user name
 				mAuthTask = new UserLoginTask();
 				mAuthTask.execute((Void) null);
 			}
@@ -237,7 +242,7 @@ public class LoginWindow extends Activity {
 			} catch (InterruptedException e) {
 				return false;
 			}
-			if(temp instanceof User) //Won't be necessary for admin						
+			if(temp instanceof User) // Won't be necessary for admin						
 				if(log.verifyUser(temp) && !((User)temp).locked()) //Validates user info and checks to see if their account is locked
 					return true;
 			return false;
