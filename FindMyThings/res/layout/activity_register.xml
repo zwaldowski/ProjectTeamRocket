@@ -81,7 +81,7 @@
         android:layout_alignRight="@+id/address"
         android:layout_below="@+id/address"
         android:layout_marginTop="44dp"
-        android:text="Register" />
+        android:text="@string/register" />
 
     <EditText
         android:id="@id/email"

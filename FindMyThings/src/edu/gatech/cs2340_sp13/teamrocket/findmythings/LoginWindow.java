@@ -168,20 +168,27 @@ public class LoginWindow extends Activity {
 			showProgress(true);
 				
 			Member chk = new User(mEmail,mPassword);
-			if(temp==null || !temp.equals(chk)) { //Instantiates member, checks to see if the username is the same on each attempt
+			if(temp==null || !temp.equals(chk)) { 
+				//Instantiates member, checks to see if the username is the same on each attempt
 				createUser();
-				temp = log.update((User) temp); //updates locked status of account
+				temp = log.update((User) temp); 
+				//updates locked status of account
 				attempts=0;
 			}
 			
-			if(log.exists(temp)) { // Checks for valid user name
+			if(log.exists(temp)) { 
+				// Checks for valid user name
 				mAuthTask = new UserLoginTask();
 				mAuthTask.execute((Void) null);
 			}
 			
-			else { //To register activity
+			else { 
+				//To register activity
 				Intent goToNextActivity = new Intent(getApplicationContext(), Register.class);
 				startActivity(goToNextActivity);
+				
+				
+				
 			}
 			
 			
@@ -189,6 +196,10 @@ public class LoginWindow extends Activity {
 			
 		}
 	}
+	
+
+
+	
 
 	/**
 	 * Shows the progress UI and hides the login form.
@@ -248,7 +259,8 @@ public class LoginWindow extends Activity {
 				return false;
 			}
 			if(temp instanceof User) // Won't be necessary for admin						
-				if(log.verifyUser(temp) && !((User)temp).locked()) //Validates user info and checks to see if their account is locked
+				if(log.verifyUser(temp) && !((User)temp).locked())
+					//Validates user info and checks to see if their account is locked
 					return true;
 			return false;
 			

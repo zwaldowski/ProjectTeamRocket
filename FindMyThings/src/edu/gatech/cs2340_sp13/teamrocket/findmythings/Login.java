@@ -56,8 +56,8 @@ public class Login {
 	 * @param name user name
 	 * @param password user pass
 	 */
-	public Member register(String name, String password) {
-		Member temp = new Member(name, password);
+	public Member register(Member temp) {
+		
 		data.add(temp);
 
 		return temp;		

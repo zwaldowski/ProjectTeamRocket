@@ -1,7 +1,7 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 public class Member {
-	private String user, name, password;
+	private String user, name, password, address;
 	private String phone = "";
 	//private Location address; 
 	public Member(String user, String pass, String phone) {
@@ -16,6 +16,9 @@ public class Member {
 		
 		
 	}
+	
+	//Getters
+	
 	/**
 	 * 
 	 * @return user
@@ -45,12 +48,38 @@ public class Member {
 		return phone;
 	}
 	/**
+	 * 
+	 * @return address
+	 */
+	public String getAddress(){
+		return address;
+	}
+	
+	//Setters
+	
+	/**
 	 * Sets phone number
 	 * @param s phone number
 	 */
 	public void setPhone(String s) {
 		phone = s;
 	}
+	/**
+	 * set name
+	 * @param s
+	 */
+	public void setAddress(String s) {
+		address=s;
+	}
+	/**
+	 * set name
+	 * @param s
+	 */
+	public void setName(String s) {
+		name = s;
+	}
+	//
+	
 	@Override
 	public boolean equals(Object m) {
 		if(m instanceof Member)
