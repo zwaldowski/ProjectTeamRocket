@@ -26,9 +26,19 @@ public class Login {
 	 */
 	public boolean verifyUser(Member m) {
 		boolean found = false;
-		if(data.contains(m))
-			found = true;
+		int index = data.indexOf(m);
+		if(index!=-1)
+			if(data.get(index).getPassword().equals(m.getPassword()))
+				found = true;
 		return found;
+	}
+	/**
+	 * Checks whether or not the user account exists
+	 * @param m Member 
+	 * @return true is username has been registered
+	 */
+	public boolean exists(Member m) {
+		return data.contains(m);
 	}
 	/**
 	 * In the future, will create a new member, I'm lazy so as of now it just adds the user to a text file to test registration

@@ -22,12 +22,7 @@ import android.widget.TextView;
  * well.
  */
 public class LoginWindow extends Activity {
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
+
 	
 	/**
 	 * The default email to populate the email field with.
@@ -38,6 +33,21 @@ public class LoginWindow extends Activity {
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
 	private UserLoginTask mAuthTask = null;
+	
+	/**
+	 * Login reference
+	 */
+	private Login log = new Login();
+	
+	/**
+	 * tracks number of login attempts
+	 */
+	private int attempts = 0;
+	
+	/**
+	 * Member reference
+	 */
+	private Member temp = null;
 	
 
 	// Values for email and password at the time of the login attempt.
@@ -87,6 +97,7 @@ public class LoginWindow extends Activity {
 						attemptLogin();
 					}
 				});
+		
 	}
 
 	@Override
@@ -95,7 +106,9 @@ public class LoginWindow extends Activity {
 		getMenuInflater().inflate(R.menu.activity_login_window, menu);
 		return true;
 	}
-
+	public void createUser() {
+		temp = new User(mEmail,mPassword);
+	}
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -105,7 +118,7 @@ public class LoginWindow extends Activity {
 		if (mAuthTask != null) {
 			return;
 		}
-		Login log = new Login();
+		
 		// Reset errors.
 		mEmailView.setError(null);
 		mPasswordView.setError(null);
@@ -148,13 +161,15 @@ public class LoginWindow extends Activity {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
-			Member temp = new Member(mEmail,mPassword);
+			if(temp==null)
+				createUser();
 			
-			if(log.verifyUser(temp)) {
+			if(log.exists(temp)) {
 				mAuthTask = new UserLoginTask();
 				mAuthTask.execute((Void) null);
 			}
-			else {
+			
+			else { //To register activity
 				Intent goToNextActivity = new Intent(getApplicationContext(), Register.class);
 				startActivity(goToNextActivity);
 			}
@@ -222,14 +237,10 @@ public class LoginWindow extends Activity {
 			} catch (InterruptedException e) {
 				return false;
 			}
-			
-				
-					
-
-			// TODO: register the new account here.
-			
-
-			return true;
+			if(temp instanceof User) //Won't be necessary for admin						
+				if(log.verifyUser(temp) && !((User)temp).locked()) //Validates user info and checks to see if their account is locked
+					return true;
+			return false;
 			
 		}
 
@@ -237,13 +248,23 @@ public class LoginWindow extends Activity {
 		protected void onPostExecute(final Boolean success) {
 			mAuthTask = null;
 			showProgress(false);
-
-			if (success) {
+			
+			if (!((User)temp).locked() && success) {
+				attempts = 0;
 				finish();
 			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+				if(attempts!=3) {
+					mPasswordView
+						.setError(getString(R.string.error_incorrect_password) + " ");
+					mPasswordView.requestFocus();
+					attempts++;
+				}
+				else {
+					((User)temp).setLock(true);
+					mPasswordView
+					.setError("Exceeded login attempts, account locked");
+					mPasswordView.requestFocus();
+				}
 			}
 		}
 

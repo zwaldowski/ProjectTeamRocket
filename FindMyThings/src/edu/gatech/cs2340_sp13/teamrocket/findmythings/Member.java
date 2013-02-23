@@ -54,7 +54,7 @@ public class Member {
 	@Override
 	public boolean equals(Object m) {
 		if(m instanceof Member)
-			if(this.user.equals(((Member) m).getUser()) && this.password.equals(((Member) m).getPassword()))
+			if(this.user.equals(((Member) m).getUser()) )
 				return true;
 		return false;
 	}
