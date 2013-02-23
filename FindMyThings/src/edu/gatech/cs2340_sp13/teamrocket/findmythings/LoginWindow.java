@@ -276,7 +276,11 @@ public class LoginWindow extends Activity {
 			if (!((User)temp).locked() && success) {
 				attempts = 0;
 				//TODO: Go to main activity
+				Intent main = new Intent(getApplicationContext(), ItemListActivity.class);
+				//finish();
+				startActivity(main);
 				finish();
+				
 			} else {
 				if(attempts!=3 && !((User) temp).locked()) { 
 					mPasswordView

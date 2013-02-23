@@ -12,5 +12,7 @@
     <string name="address">Address</string>
     <string name="phone_number">Phone number</string>
     <string name="register">Register</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
 
 </resources>
