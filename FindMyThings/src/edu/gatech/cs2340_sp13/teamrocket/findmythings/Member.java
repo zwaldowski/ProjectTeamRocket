@@ -1,7 +1,10 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 public class Member {
-	private String user, name, password, address;
+	protected String user;
+	private String name;
+	private String password;
+	private String address;
 	private String phone = "";
 	//private Location address; 
 	public Member(String user, String pass, String phone) {

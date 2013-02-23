@@ -185,7 +185,9 @@ public class LoginWindow extends Activity {
 			else { 
 				//To register activity
 				Intent goToNextActivity = new Intent(getApplicationContext(), Register.class);
+				finish();
 				startActivity(goToNextActivity);
+				
 				
 				
 				
@@ -198,7 +200,7 @@ public class LoginWindow extends Activity {
 	}
 	
 
-
+	
 	
 
 	/**
@@ -273,6 +275,7 @@ public class LoginWindow extends Activity {
 			
 			if (!((User)temp).locked() && success) {
 				attempts = 0;
+				//TODO: Go to main activity
 				finish();
 			} else {
 				if(attempts!=3 && !((User) temp).locked()) { 

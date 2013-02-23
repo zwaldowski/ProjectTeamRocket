@@ -115,6 +115,7 @@ public class Register extends Activity {
 					//Band-aid to go back to login, needs to be changed later
 					Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
 					startActivity(goToNextActivity);
+					finish();
 					
 				}
 				else {
