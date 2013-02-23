@@ -166,8 +166,12 @@ public class LoginWindow extends Activity {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
-			if(temp==null) //Instantiates member
+				
+			Member chk = new User(mEmail,mPassword);
+			if(temp==null || !temp.equals(chk)) { //Instantiates member, checks to see if the username is the same on each attempt
 				createUser();
+				attempts=0;
+			}
 			
 			if(log.exists(temp)) { // Checks for valid user name
 				mAuthTask = new UserLoginTask();
