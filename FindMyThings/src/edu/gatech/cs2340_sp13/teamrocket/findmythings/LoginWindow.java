@@ -170,6 +170,7 @@ public class LoginWindow extends Activity {
 			Member chk = new User(mEmail,mPassword);
 			if(temp==null || !temp.equals(chk)) { //Instantiates member, checks to see if the username is the same on each attempt
 				createUser();
+				temp = log.update((User) temp); //updates locked status of account
 				attempts=0;
 			}
 			
@@ -262,14 +263,15 @@ public class LoginWindow extends Activity {
 				attempts = 0;
 				finish();
 			} else {
-				if(attempts!=3) {
+				if(attempts!=3 && !((User) temp).locked()) { 
 					mPasswordView
 						.setError(getString(R.string.error_incorrect_password) + " ");
 					mPasswordView.requestFocus();
 					attempts++;
 				}
 				else {
-					((User)temp).setLock(true);
+					if(!((User) temp).locked()) //locks the account after three attempts
+						log.lock((User)temp);
 					mPasswordView
 					.setError("Exceeded login attempts, account locked");
 					mPasswordView.requestFocus();
