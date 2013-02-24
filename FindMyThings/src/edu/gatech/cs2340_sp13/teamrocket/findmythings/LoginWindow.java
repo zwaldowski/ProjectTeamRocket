@@ -185,9 +185,8 @@ public class LoginWindow extends Activity {
 			else { 
 				//To register activity
 				Intent goToNextActivity = new Intent(getApplicationContext(), Register.class);
-				finish();
 				startActivity(goToNextActivity);
-				
+				finish();
 				
 				
 				
