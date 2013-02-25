@@ -134,9 +134,17 @@ public class LoginWindow extends Activity {
 
 		boolean cancel = false;
 		View focusView = null;
-
+		
+		/**If pass/email fields both empty
+		 *or if email not empty and email hasn't been registered
+		 *go to register activity
+		 */
+		if ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.exists(new Member(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword)))
+			//TODO: Carry over email to registration activity
+			register();
+		
 		// Check for a valid password.
-		if (TextUtils.isEmpty(mPassword)) {
+		else if (TextUtils.isEmpty(mPassword)) {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
@@ -184,9 +192,8 @@ public class LoginWindow extends Activity {
 			
 			else { 
 				//To register activity
-				Intent goToNextActivity = new Intent(getApplicationContext(), Register.class);
-				startActivity(goToNextActivity);
-				finish();
+				register();
+				
 				
 				
 				
@@ -199,8 +206,13 @@ public class LoginWindow extends Activity {
 	}
 	
 
-	
-	
+	/**
+	 * Goes to register screen
+	 */
+	private void register() {
+		Intent goToNextActivity = new Intent(getApplicationContext(), Register.class);
+		startActivity(goToNextActivity);
+	}
 
 	/**
 	 * Shows the progress UI and hides the login form.
@@ -272,16 +284,16 @@ public class LoginWindow extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 			
-			if (!((User)temp).locked() && success) {
+			if (!((User)temp).locked() && success) { //User successfully logs in
 				attempts = 0;
 				//TODO: Go to main activity
 				Intent main = new Intent(getApplicationContext(), ItemListActivity.class);
-				//finish();
-				startActivity(main);
 				finish();
+				startActivity(main);
+				
 				
 			} else {
-				if(attempts!=3 && !((User) temp).locked()) { 
+				if(attempts!=3 && !((User) temp).locked()) {  //Wrong password
 					mPasswordView
 						.setError(getString(R.string.error_incorrect_password) + " ");
 					mPasswordView.requestFocus();
