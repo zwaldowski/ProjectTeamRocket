@@ -17,6 +17,7 @@ local.properties
 
 # Mac crap
 .DS_Store
+.DS_Store?
 ._*
 
 # Windows crap
@@ -33,6 +34,7 @@ Desktop.ini
 *.iml
 *.ipr
 *.iws
+.idea
 
 # Eclipse crap
 *.pydevproject
@@ -51,5 +53,7 @@ local.properties
 .cproject
 .buildpath
 
-.idea/
-/.DS_Store
+.Spotlight-V100
+.Trashes
+Icon?
+
