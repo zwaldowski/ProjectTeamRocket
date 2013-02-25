@@ -33,7 +33,13 @@ public class Register extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		// Gets mEmail from LoginWindow
+		Intent i = getIntent();
+		String s = i.getExtras().getString("email");
+		
 		mEmailView = (EditText) findViewById(R.id.email);
+		mEmailView.setText(s);
+		
 		mPasswordView = (EditText) findViewById(R.id.pass);
 		mPhoneView = (EditText) findViewById(R.id.phone);
 		mAddressView = (EditText) findViewById(R.id.address);

@@ -204,7 +204,8 @@ public class LoginWindow extends Activity {
 	 * Goes to register screen
 	 */
 	private void register() {
-		Intent goToNextActivity = new Intent(getApplicationContext(), Register.class);
+		Intent goToNextActivity = new Intent(LoginWindow.this, Register.class);
+		goToNextActivity.putExtra("email",mEmail); // Passes email to Register
 		startActivity(goToNextActivity);
 	}
 
