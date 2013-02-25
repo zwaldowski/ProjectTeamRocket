@@ -142,13 +142,14 @@ public class LoginWindow extends Activity {
 		if ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.exists(new Member(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword)))
 			//TODO: Carry over email to registration activity
 			register();
-		
+		else {
 		//Check for a valid password.
-		else if (TextUtils.isEmpty(mPassword)) {
+		if (TextUtils.isEmpty(mPassword)) {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
-		} else if (mPassword.length() < 4) {
+		} 
+		else if (mPassword.length() < 4) {
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
@@ -164,6 +165,7 @@ public class LoginWindow extends Activity {
 			focusView = mEmailView;
 			cancel = true;
 		}
+		} // end of outer else
 
 		if (cancel) {
 			// There was an error; don't attempt login and focus the first
@@ -176,10 +178,10 @@ public class LoginWindow extends Activity {
 			showProgress(true);
 				
 			Member chk = new User(mEmail,mPassword);
-			if(temp==null || !temp.equals(chk)) { 
+			if(temp==null || !temp.equals(chk) || !temp.getPassword().equals(chk.getPassword())) { 
 				//Instantiates member, checks to see if the username is the same on each attempt
 				createUser();
-				temp = log.update((User) temp); 
+				temp = log.	update((User) temp); 
 				//updates locked status of account
 				attempts=0;
 			}
@@ -193,15 +195,7 @@ public class LoginWindow extends Activity {
 			else { 
 				//To register activity
 				register();
-				
-				
-				
-				
 			}
-			
-			
-		    
-			
 		}
 	}
 	
@@ -293,7 +287,7 @@ public class LoginWindow extends Activity {
 				
 				
 			} else {
-				if(attempts!=3 && !((User) temp).locked()) {  //Wrong password
+				if(attempts!=3 && !((User)temp).locked()) {  //Wrong password
 					mPasswordView
 						.setError(getString(R.string.error_incorrect_password) + " ");
 					mPasswordView.requestFocus();
