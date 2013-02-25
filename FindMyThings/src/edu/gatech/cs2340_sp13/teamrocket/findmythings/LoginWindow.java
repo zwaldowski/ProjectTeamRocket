@@ -47,7 +47,7 @@ public class LoginWindow extends Activity {
 	/**
 	 * Member reference
 	 */
-	private Member temp = null;
+	private Member temp = new Member("","");
 	
 
 	// Values for email and password at the time of the login attempt.
@@ -140,31 +140,30 @@ public class LoginWindow extends Activity {
 		 *go to register activity
 		 */
 		if ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.exists(new Member(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword)))
-			//TODO: Carry over email to registration activity
 			register();
 		else {
-		//Check for a valid password.
-		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordView.setError(getString(R.string.error_field_required));
-			focusView = mPasswordView;
-			cancel = true;
-		} 
-		else if (mPassword.length() < 4) {
-			mPasswordView.setError(getString(R.string.error_invalid_password));
-			focusView = mPasswordView;
-			cancel = true;
-		}
+			//Check for a valid password.
+			if (TextUtils.isEmpty(mPassword)) {
+				mPasswordView.setError(getString(R.string.error_field_required));
+				focusView = mPasswordView;
+				cancel = true;
+			} 
+			else if (mPassword.length() < 4) {
+				mPasswordView.setError(getString(R.string.error_invalid_password));
+				focusView = mPasswordView;
+				cancel = true;
+			}
 
-		// Check for a valid email address.
-		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
-			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
-			cancel = true;
-		}
+			// Check for a valid email address.
+			if (TextUtils.isEmpty(mEmail)) {
+				mEmailView.setError(getString(R.string.error_field_required));
+				focusView = mEmailView;
+				cancel = true;
+			} else if (!mEmail.contains("@")) {
+				mEmailView.setError(getString(R.string.error_invalid_email));
+				focusView = mEmailView;
+				cancel = true;
+			}
 		} // end of outer else
 
 		if (cancel) {
@@ -176,14 +175,21 @@ public class LoginWindow extends Activity {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
+			
+			if(mEmail!=null && !mEmail.equals("")) {
+				Member chk = new User(mEmail,mPassword);
+				if(temp==null || !temp.equals(chk) || !temp.getPassword().equals(chk.getPassword())) { 
+					//Instantiates member, checks to see if the username is the same on each attempt
+					if(!temp.equals(chk)) 
+						attempts=0;
+					//Resets attempts only if a new username is entered
+					//TODO: Have each Member keep track of how many attempts have been made to login.
+					
+					createUser();
+					temp = log.	update((User) temp); 
+					//updates locked status of account
 				
-			Member chk = new User(mEmail,mPassword);
-			if(temp==null || !temp.equals(chk) || !temp.getPassword().equals(chk.getPassword())) { 
-				//Instantiates member, checks to see if the username is the same on each attempt
-				createUser();
-				temp = log.	update((User) temp); 
-				//updates locked status of account
-				attempts=0;
+				}
 			}
 			
 			if(log.exists(temp)) { 

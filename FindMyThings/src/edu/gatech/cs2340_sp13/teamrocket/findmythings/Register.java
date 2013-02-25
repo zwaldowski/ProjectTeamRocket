@@ -3,6 +3,7 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,6 +56,19 @@ public class Register extends Activity {
 					}
 				});
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+	    	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+			finish();
+			startActivity(goToNextActivity);
+	        return true;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
+	}
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.
@@ -70,8 +84,7 @@ public class Register extends Activity {
 	 * already logged in. 
 	 */
 	private void register() {
-		//TODO: return to login screen OR move to main activity
-		
+			
 		View focusView = null;
 		boolean cancel = false;
 		
