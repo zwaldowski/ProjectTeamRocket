@@ -143,7 +143,7 @@ public class LoginWindow extends Activity {
 			//TODO: Carry over email to registration activity
 			register();
 		
-		// Check for a valid password.
+		//Check for a valid password.
 		else if (TextUtils.isEmpty(mPassword)) {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
