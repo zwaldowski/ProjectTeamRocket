@@ -67,8 +67,9 @@ public class Login {
 	 * @param m
 	 */
 	public User update(User m) {
-		if(exists(m))
-			m.setLock(((User) data.get(data.indexOf(m))).locked());
+		if(exists(m)) 
+			m.setAttempts(((User) data.get(data.indexOf(m))).getAttempts());
+		
 		return m;
 	}
 	
@@ -76,10 +77,10 @@ public class Login {
 	 * Locks user account in the arraylist
 	 * @param m
 	 */
-	public void lock(User m) {
+	public void checkAttempts(User m) {
 		int justincase = data.indexOf(m);
 		if(justincase!=-1)
-			((User) data.get(justincase)).setLock(true);
+			((User) data.get(justincase)).setAttempts(m.getAttempts());
 	}
 
 }

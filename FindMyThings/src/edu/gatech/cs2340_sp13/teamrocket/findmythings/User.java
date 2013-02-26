@@ -3,6 +3,8 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 public class User extends Member {
 
 	private boolean locked = false;
+	
+	private int attempts = 0;
 	public User(String user, String pass, String phone) {
 		super(user, pass, phone);
 		// TODO Auto-generated constructor stub
@@ -33,5 +35,33 @@ public class User extends Member {
 				return true;
 		return false;
 	}
-
+	
+	/**
+	 * Increments the number of unsuccessful attempts a User has made to log in
+	 */
+	public void incrment() {
+		attempts++;
+		
+		if(attempts==3)
+			setLock(true);
+	}
+	
+	/**
+	 * 
+	 * @param i
+	 */
+	public void setAttempts(int i) {
+		attempts=i;
+		if(attempts==3)
+			setLock(true);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getAttempts() {
+		return attempts;
+	}
+	
 }

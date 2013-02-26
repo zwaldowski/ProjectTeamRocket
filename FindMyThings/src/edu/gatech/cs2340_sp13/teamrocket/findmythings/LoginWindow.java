@@ -40,11 +40,6 @@ public class LoginWindow extends Activity {
 	private Login log = new Login();
 	
 	/**
-	 * tracks number of login attempts
-	 */
-	private int attempts = 0;
-	
-	/**
 	 * Member reference
 	 */
 	private Member temp = new Member("","");
@@ -180,11 +175,7 @@ public class LoginWindow extends Activity {
 				Member chk = new User(mEmail,mPassword);
 				if(temp==null || !temp.equals(chk) || !temp.getPassword().equals(chk.getPassword())) { 
 					//Instantiates member, checks to see if the username is the same on each attempt
-					if(!temp.equals(chk)) 
-						attempts=0;
-					//Resets attempts only if a new username is entered
-					//TODO: Have each Member keep track of how many attempts have been made to login.
-					
+								
 					createUser();
 					temp = log.	update((User) temp); 
 					//updates locked status of account
@@ -286,7 +277,7 @@ public class LoginWindow extends Activity {
 			showProgress(false);
 			
 			if (!((User)temp).locked() && success) { //User successfully logs in
-				attempts = 0;
+				((User) temp).setAttempts(0);
 				//TODO: Go to main activity
 				Intent main = new Intent(getApplicationContext(), ItemListActivity.class);
 				finish();
@@ -294,15 +285,16 @@ public class LoginWindow extends Activity {
 				
 				
 			} else {
-				if(attempts!=3 && !((User)temp).locked()) {  //Wrong password
+				if(!((User)temp).locked()) {  //Wrong password
+					((User)temp).incrment();
 					mPasswordView
 						.setError(getString(R.string.error_incorrect_password) + " ");
 					mPasswordView.requestFocus();
-					attempts++;
+
 				}
 				else {
-					if(!((User) temp).locked()) //locks the account after three attempts
-						log.lock((User)temp);
+					if(((User) temp).locked()) //locks the account after three attempts
+						log.checkAttempts((User)temp);
 					mPasswordView
 					.setError("Exceeded login attempts, account locked");
 					mPasswordView.requestFocus();
