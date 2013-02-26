@@ -8,19 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Register" >
 
-    <QuickContactBadge
-        android:id="@+id/quickContactBadge1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
-
     <EditText
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/quickContactBadge1"
-        android:layout_toRightOf="@+id/quickContactBadge1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:ems="10"
         android:hint="@string/prompt_name"
         android:inputType="textPersonName" >
@@ -87,9 +80,8 @@
         android:id="@id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/quickContactBadge1"
+        android:layout_alignLeft="@+id/name"
         android:layout_alignRight="@+id/name"
-        android:layout_below="@+id/quickContactBadge1"
         android:layout_marginTop="57dp"
         android:ems="10"
         android:hint="@string/prompt_email"
