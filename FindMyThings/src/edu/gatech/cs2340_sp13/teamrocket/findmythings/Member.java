@@ -86,7 +86,7 @@ public class Member {
 	@Override
 	public boolean equals(Object m) {
 		if(m instanceof Member)
-			if(this.user.equals(((Member) m).getUser()) )
+			if(this.user.trim().equals(((Member) m).getUser().trim()) )
 				return true;
 		return false;
 	}

@@ -28,13 +28,6 @@ public class User extends Member {
 	public void setLock(boolean b) {
 		locked = b;
 	}
-	@Override
-	public boolean equals(Object m) {
-		if(m instanceof User)
-			if(this.user.equals(((User) m).getUser()) )
-				return true;
-		return false;
-	}
 	
 	/**
 	 * Increments the number of unsuccessful attempts a User has made to log in
