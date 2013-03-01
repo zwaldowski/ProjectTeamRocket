@@ -1,80 +1,108 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_form"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".action_cancelaction_accept" >
+    android:layout_height="match_parent" >
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:ems="10"
-        android:hint="@string/prompt_name"
-        android:inputType="textPersonName" >
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".action_cancelaction_accept" >
 
-        <requestFocus />
-    </EditText>
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:hint="@string/prompt_name"
+            android:inputType="textPersonName"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" >
 
-    <EditText
-        android:id="@+id/pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/email"
-        android:layout_alignRight="@id/email"
-        android:layout_below="@id/email"
-        android:ems="10"
-        android:hint="@string/prompt_password"
-        android:inputType="textPassword" />
+            <requestFocus />
+        </EditText>
 
-    <EditText
-        android:id="@+id/confirmpass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/pass"
-        android:layout_alignRight="@+id/pass"
-        android:layout_below="@+id/pass"
-        android:ems="10"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/email"
+            android:layout_alignRight="@id/email"
+            android:layout_below="@id/email"
+            android:ems="10"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" />
 
-    <EditText
-        android:id="@+id/phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/confirmpass"
-        android:layout_alignRight="@+id/confirmpass"
-        android:layout_below="@+id/confirmpass"
-        android:ems="10"
-        android:hint="@string/phone_number"
-        android:inputType="phone" />
+        <EditText
+            android:id="@+id/confirmpass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/pass"
+            android:layout_alignRight="@+id/pass"
+            android:layout_below="@+id/pass"
+            android:ems="10"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" />
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/phone"
-        android:layout_below="@+id/phone"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:hint="@string/address"
-        android:inputType="textPostalAddress" />
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/confirmpass"
+            android:layout_alignRight="@+id/confirmpass"
+            android:layout_below="@+id/confirmpass"
+            android:ems="10"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" />
 
-    <EditText
-        android:id="@id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/name"
-        android:layout_alignRight="@+id/name"
-        android:layout_marginTop="57dp"
-        android:ems="10"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/phone"
+            android:layout_below="@+id/phone"
+            android:ems="10"
+            android:gravity="left|center_vertical"
+            android:hint="@string/address"
+            android:inputType="textPostalAddress|textMultiLine"
+            android:lines="2"
+            android:minLines="2"
+            android:scrollHorizontally="false"
+            android:singleLine="false"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" />
 
-</RelativeLayout>
+        <EditText
+            android:id="@id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/name"
+            android:layout_below="@+id/name"
+            android:layout_alignParentLeft="true"
+            android:ems="10"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" />
+    </RelativeLayout>
+
+</ScrollView>

@@ -68,6 +68,7 @@ public class Register extends Activity {
 	 */
 	private void setupActionBar() {
 		getActionBar().setDisplayHomeAsUpEnabled(false);
+		getActionBar().setDisplayShowHomeEnabled(false);
 	}
 	/**
 	 * Register new user and return to login screen 
