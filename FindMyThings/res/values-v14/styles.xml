@@ -6,7 +6,17 @@
         res/values-v11/styles.xml on API 14+ devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/FindMyThingsActionBar</item>
         <!-- API 14 theme customizations can go here. -->
     </style>
+
+	<style name="FindMyThingsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    	<item name="android:titleTextStyle">@style/FindMyThingsActionBar.TitleTextStyle</item>
+	</style>
+
+	<style name="FindMyThingsActionBar.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    	<item name="android:textColor">@android:color/holo_blue_dark</item>
+    	<item name="android:textSize">22sp</item>
+	</style>
 
 </resources>
