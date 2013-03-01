@@ -134,7 +134,7 @@ public class LoginWindow extends Activity {
 		 *or if email not empty and email hasn't been registered
 		 *go to register activity
 		 */
-		if ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.exists(new Member(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword)))
+		if ( mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.exists(new Member(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
 			register();
 		else {
 			//Check for a valid password.
@@ -175,7 +175,6 @@ public class LoginWindow extends Activity {
 				Member chk = new User(mEmail,mPassword);
 				if(temp==null || !temp.equals(chk) || !temp.getPassword().equals(chk.getPassword())) { 
 					//Instantiates member, checks to see if the username is the same on each attempt
-								
 					createUser();
 					temp = log.	update((User) temp); 
 					//updates locked status of account
