@@ -48,6 +48,7 @@ public class LoginWindow extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
+	private static String Email = "";
 
 	// UI references.
 	private EditText mEmailView;
@@ -62,9 +63,15 @@ public class LoginWindow extends Activity {
 
 		setContentView(R.layout.activity_login_window);
 
+		if(!Email.equals(Register.rEmail))
+		//Email carried over from Register.
+			Email = Register.rEmail; 
+		
 		// Set up the login form.
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
+		if(Email!=null) //Saves Email even after you leave the Activity
+			mEmail = Email;
 		mEmailView.setText(mEmail);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
@@ -190,6 +197,7 @@ public class LoginWindow extends Activity {
 			
 			else { 
 				//To register activity
+				Email = mEmail;
 				register();
 			}
 		}
@@ -277,7 +285,8 @@ public class LoginWindow extends Activity {
 			
 			if (!((User)temp).locked() && success) { //User successfully logs in
 				((User) temp).setAttempts(0);
-				//TODO: Go to main activity
+				
+				Email = mEmail; //Remembers User's email.
 				Intent main = new Intent(getApplicationContext(), ItemListActivity.class);
 				finish();
 				startActivity(main);

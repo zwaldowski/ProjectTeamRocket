@@ -18,6 +18,8 @@ public class Register extends Activity {
 	
 	private String mEmail, mPassword, mCon, mPhone, mName, mAddress;
 	
+	public static String rEmail = "";
+	
 	private Member toreg = null;
 	
 	//UI references
@@ -42,7 +44,8 @@ public class Register extends Activity {
 		
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(s);
-		
+		rEmail = s; 
+				
 		mPasswordView = (EditText) findViewById(R.id.pass);
 		mPhoneView = (EditText) findViewById(R.id.phone);
 		mAddressView = (EditText) findViewById(R.id.address);
@@ -126,9 +129,13 @@ public class Register extends Activity {
 				if(mAddress!=null)
 					toreg.setAddress(mAddress);
 			
-				if(mPassword.equals(mCon)) { //User is registered, goes back to login screen.
+				if(mPassword.equals(mCon)) { 
+					//User is registered, goes back to login screen.
 					log.register(toreg);
-					//Band-aid to go back to login, needs to be changed later
+					
+					// Saves email so it can be passed to LoginWindow
+					rEmail = mEmail;
+					
 					Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
 					finish();
 					startActivity(goToNextActivity);
