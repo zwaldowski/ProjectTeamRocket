@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Register" >
+    tools:context=".action_cancelaction_accept" >
 
     <EditText
         android:id="@+id/name"
@@ -65,16 +65,6 @@
         android:ems="10"
         android:hint="@string/address"
         android:inputType="textPostalAddress" />
-
-    <Button
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/address"
-        android:layout_alignRight="@+id/address"
-        android:layout_below="@+id/address"
-        android:layout_marginTop="44dp"
-        android:text="@string/register" />
 
     <EditText
         android:id="@id/email"

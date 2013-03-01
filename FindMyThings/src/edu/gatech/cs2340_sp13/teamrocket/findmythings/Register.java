@@ -27,11 +27,13 @@ public class Register extends Activity {
 	private EditText mAddressView;
 	private EditText mNameView;
 	private EditText mConfirmView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
-		// Show the Up button in the action bar.
+		
+		// Hide the Up button in the action bar.
 		setupActionBar();
 		
 		// Gets mEmail from LoginWindow
@@ -46,15 +48,6 @@ public class Register extends Activity {
 		mAddressView = (EditText) findViewById(R.id.address);
 		mNameView = (EditText) findViewById(R.id.name);
 		mConfirmView = (EditText) findViewById(R.id.confirmpass);
-		
-		findViewById(R.id.register).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						register();
-						
-					}
-				});
 	}
 	
 	@Override
@@ -74,9 +67,7 @@ public class Register extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 	/**
 	 * Register new user and return to login screen 
@@ -157,6 +148,10 @@ public class Register extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+	 	case R.id.register_ok:
+	 		register();
+	 		return true;
+	 	case R.id.register_cancel:
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
