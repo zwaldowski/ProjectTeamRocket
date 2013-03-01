@@ -44,10 +44,17 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ems="10"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+                android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+                android:paddingTop="@dimen/form_activity_input_pad_vertical"
+                android:singleLine="true" >
+
+                <requestFocus />
+            </EditText>
 
             <EditText
                 android:id="@+id/password"
@@ -59,6 +66,9 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+                android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+                android:paddingTop="@dimen/form_activity_input_pad_vertical"
                 android:singleLine="true" />
 
             <Button
