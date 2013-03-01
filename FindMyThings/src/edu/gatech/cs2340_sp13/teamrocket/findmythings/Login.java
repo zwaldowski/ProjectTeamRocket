@@ -14,11 +14,12 @@ public class Login {
 	
 	
 	public Login() {
-		Member[] template = new Member[4]; //For testing login without the need for registration
+		Member[] template = new Member[5]; //For testing login without the need for registration
 			template[0] = new User("cchu43@gatech.edu","admin","555-555-5555");
 			template[1] = new User("jcole44@gatech.edu","admin","555-555-5555");
 			template[2] = new User("tstowell3@gatech.edu","admin","555-555-5555");
 			template[3] = new User("zwaldowski@gatech.edu","admin","555-555-5555");
+			template[4] = new User("a@a.com","aaaa"); 
 			for(Member m : template)
 				data.add(m);
 			
