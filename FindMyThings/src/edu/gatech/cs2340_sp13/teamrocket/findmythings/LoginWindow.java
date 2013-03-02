@@ -283,17 +283,19 @@ public class LoginWindow extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 			
-			if (!((User)temp).locked() && success) { //User successfully logs in
+			if (!((User)temp).locked() && success) { 
+				//User successfully logs in
 				((User) temp).setAttempts(0);
 				
 				Email = mEmail; //Remembers User's email.
-				Intent main = new Intent(getApplicationContext(), ItemListActivity.class);
+				Intent main = new Intent(getApplicationContext(), SettingsActivity.class);
 				finish();
 				startActivity(main);
 				
 				
 			} else {
-				if(!((User)temp).locked()) {  //Wrong password
+				if(!((User)temp).locked()) { 
+					//Wrong password
 					((User)temp).incrment();
 					mPasswordView
 						.setError(getString(R.string.error_incorrect_password) + " ");

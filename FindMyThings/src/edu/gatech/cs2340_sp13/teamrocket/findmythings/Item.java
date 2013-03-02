@@ -1,4 +1,4 @@
-package edu.gatech.cs2340_sp13.teamrocket.findmythings;
+ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 import java.util.Date;
 
@@ -7,8 +7,10 @@ public class Item {
 	private String name, description;
 	
 	private boolean open;
-	// Using enum for type and category, can always change to 
-	// int later if you guys prefer.
+	/**
+	 * Using enum for type and category, can always change to 
+	 * int later if you guys prefer.
+	 */ 
 	public enum Type {FOUND, DONATE};
 	
 	public enum Category {HEIR, KEEPSAKE, MISC};
