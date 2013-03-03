@@ -5,7 +5,7 @@
               android:orientation="vertical">
 
     <EditText
-        android:id="@+id/lookingfor"
+        android:id="@+id/required"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transWhite"
@@ -13,7 +13,7 @@
         android:ems="10"
         android:focusableInTouchMode="false"
         android:gravity="start"
-        android:hint="@string/looking"
+        android:hint="@string/required"
         android:inputType="none"
         android:linksClickable="false"
         android:paddingBottom="3dp"
@@ -22,14 +22,8 @@
         android:paddingTop="@dimen/form_activity_input_pad_vertical"
         android:textSize="12sp" >
 
-        <requestFocus />
+        
     </EditText>
-
-     <fragment
-         android:id="@+id/settings_fragment"
-         android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SettingsFragment"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent" />
               
 	<View   android:id="@+id/firstDivider"
         android:layout_height="2dp"

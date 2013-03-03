@@ -23,7 +23,7 @@
         android:paddingTop="@dimen/form_activity_input_pad_vertical"
         android:textSize="12sp" >
 
-        <requestFocus />
+        
     </EditText>
 
     <fragment
