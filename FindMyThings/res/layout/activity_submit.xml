@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <EditText
         android:id="@+id/required"
@@ -21,22 +22,29 @@
         android:paddingRight="@dimen/form_activity_input_pad_horizontal"
         android:paddingTop="@dimen/form_activity_input_pad_vertical"
         android:textSize="12sp" >
-
-        
     </EditText>
-              
-	<View   android:id="@+id/firstDivider"
-        android:layout_height="2dp"
+
+    <View
+        android:id="@+id/firstDivider"
         android:layout_width="fill_parent"
+        android:layout_height="2dp"
         android:background="@color/LightGrey" />
 
-	<EditText
-	    android:id="@+id/description"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:ems="10" >
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/describ" >
 
-	    <requestFocus />
-	</EditText>
+        <requestFocus />
+    </EditText>
+
+    <fragment
+        android:id="@+id/submit_fragment"
+        android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SubmitFrag"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        tools:layout="@android:layout/list_content" />
 
 </LinearLayout>

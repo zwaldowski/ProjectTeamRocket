@@ -14,7 +14,7 @@
        	
     <intent 
         android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-        android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+        android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
         android:action="android.intent.action.VIEW"
      />
 	</Preference>
@@ -39,7 +39,7 @@
        
     <intent 
         android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-        android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+        android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
         android:action="android.intent.action.VIEW"
      />
 	</Preference>
