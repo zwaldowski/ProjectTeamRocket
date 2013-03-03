@@ -20,13 +20,11 @@ public class SettingsFragment extends PreferenceFragment {
         
 		// Add 'notifications' preferences, and a corresponding header.
 	
-		
-		addPreferencesFromResource(R.xml.pref_notification);
+	
 
 		// Add 'data and sync' preferences, and a corresponding header.
 		
 		
-		addPreferencesFromResource(R.xml.pref_data_sync);
 		
 			
 		}

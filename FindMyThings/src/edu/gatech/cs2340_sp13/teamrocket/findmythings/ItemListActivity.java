@@ -54,7 +54,7 @@ public class ItemListActivity extends FragmentActivity implements
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-	    	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+	    	Intent goToNextActivity = new Intent(getApplicationContext(), SettingsActivity.class);
 			finish();
 			startActivity(goToNextActivity);
 	        return true;
