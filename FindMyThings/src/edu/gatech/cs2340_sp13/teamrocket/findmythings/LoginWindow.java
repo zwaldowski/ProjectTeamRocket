@@ -109,6 +109,12 @@ public class LoginWindow extends Activity {
 		return true;
 	}
 	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+	}
+	
 	/**
 	 * Creates user object, will need to be modified once the admin class is created 
 	 * but I was having problems instantiating elsewhere.

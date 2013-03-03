@@ -65,6 +65,12 @@ public class Register extends Activity {
 
 	    return super.onKeyDown(keyCode, event);
 	}
+	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+	}
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.

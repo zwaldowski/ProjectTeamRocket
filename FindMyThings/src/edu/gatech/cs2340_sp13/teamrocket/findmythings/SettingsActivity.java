@@ -3,6 +3,7 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -17,6 +18,8 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+
 import java.util.List;
 
 /**
@@ -43,10 +46,27 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
-		
 		setContentView(R.layout.settingsfrag);
 		setTitle("Find My Things");
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+	    	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+			finish();
+			startActivity(goToNextActivity);
+	        return true;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 
 	
