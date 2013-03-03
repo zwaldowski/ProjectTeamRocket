@@ -43,12 +43,15 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		
+		//SettingsFragment is currently Overlapping the layout
+		//setContentView(R.layout.settingsfrag);
+		
+		
 		// Display the fragment as the main content.
-		setContentView(R.layout.settingsfrag);
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
-        
         setTitle("Find My Things");
 	}
 

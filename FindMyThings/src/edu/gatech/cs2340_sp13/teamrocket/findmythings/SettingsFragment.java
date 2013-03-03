@@ -17,7 +17,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 		// Add 'general' preferences.
         
-
+       
 		addPreferencesFromResource(R.xml.pref_general);
 		
 		// Add 'notifications' preferences, and a corresponding header.

@@ -4,17 +4,32 @@
               android:layout_height="fill_parent"
               android:orientation="vertical">
 
-     <EditText
-         android:id="@+id/lookingfor"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:background="@color/transWhite"
-         android:ems="10"
-         android:hint="@string/looking"
-         android:inputType="none"
-         android:paddingBottom="3dp"
-         android:paddingRight="@dimen/form_activity_input_pad_horizontal"
-         android:paddingTop="@dimen/form_activity_input_pad_vertical" />
+    <EditText
+        android:id="@+id/lookingfor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transWhite"
+        android:clickable="false"
+        android:ems="10"
+        android:focusableInTouchMode="false"
+        android:gravity="start"
+        android:hint="@string/looking"
+        android:inputType="none"
+        android:linksClickable="false"
+        android:paddingBottom="3dp"
+        android:paddingRight="@dimen/form_activity_input_pad_horizontal"
+        android:paddingTop="@dimen/form_activity_input_pad_vertical"
+        android:textSize="12sp" >
+
+        <requestFocus />
+    </EditText>
+
+     <fragment	
+         android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SettingsFragment"
+         android:id="@+id/settings_fragment"
+         android:layout_weight="1"
+         android:layout_width="5dp"
+         android:layout_height="match_parent" />
               
 	<View   android:id="@+id/firstDivider"
         android:layout_height="2dp"
