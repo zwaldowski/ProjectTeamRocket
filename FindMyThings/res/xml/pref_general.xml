@@ -11,7 +11,7 @@
     
     <Preference android:title="@string/pref_title_lost" 
         android:summary="... the owner of something I've found.">
-       
+       	
     <intent 
         android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
         android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"

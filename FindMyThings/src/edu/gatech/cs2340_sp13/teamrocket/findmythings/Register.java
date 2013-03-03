@@ -49,7 +49,7 @@ public class Register extends Activity {
 		mPasswordView = (EditText) findViewById(R.id.pass);
 		mPhoneView = (EditText) findViewById(R.id.phone);
 		mAddressView = (EditText) findViewById(R.id.address);
-		mNameView = (EditText) findViewById(R.id.name);
+		mNameView = (EditText) findViewById(R.id.lookingfor);
 		mConfirmView = (EditText) findViewById(R.id.confirmpass);
 	}
 	

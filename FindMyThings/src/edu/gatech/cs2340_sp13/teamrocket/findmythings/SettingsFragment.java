@@ -3,6 +3,7 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 import android.os.Bundle;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.view.View;
 
 public class SettingsFragment extends PreferenceFragment {
 	@Override
@@ -16,8 +17,9 @@ public class SettingsFragment extends PreferenceFragment {
 
 		// Add 'general' preferences.
         
+
 		addPreferencesFromResource(R.xml.pref_general);
-        
+		
 		// Add 'notifications' preferences, and a corresponding header.
 	
 	

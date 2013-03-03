@@ -44,9 +44,11 @@ public class SettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		// Display the fragment as the main content.
+		setContentView(R.layout.settingsfrag);
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
+        
         setTitle("Find My Things");
 	}
 

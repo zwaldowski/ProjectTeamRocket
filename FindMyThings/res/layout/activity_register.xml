@@ -14,7 +14,7 @@
         tools:context=".action_cancelaction_accept" >
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/lookingfor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -94,8 +94,8 @@
             android:id="@id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/name"
-            android:layout_below="@+id/name"
+            android:layout_alignRight="@+id/lookingfor"
+            android:layout_below="@+id/lookingfor"
             android:layout_alignParentLeft="true"
             android:ems="10"
             android:hint="@string/prompt_email"
