@@ -9,9 +9,13 @@
     <string name="pref_header_general">General</string>
     <string name="pref_title_social_recommendations">Enable social recommendations</string>
     <string name="pref_description_social_recommendations">Recommendations for people to contact based on your message history</string>
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string name="pref_title_lost">Lost</string>
+    <string name="pref_title_Found">Found</string>
+    <string name="pref_title_Donations">Donations</string>
+    <string name="pref_title_Requests">Requests</string>
+    <string name="pref_title_account">My Account</string>
+    <string name="pref_title_sign_out">Sign out</string>
 
     <string-array name="pref_example_list_titles">
         <item>Always</item>
