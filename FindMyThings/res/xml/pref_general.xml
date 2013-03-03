@@ -1,8 +1,13 @@
+
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     
     <!-- Goes to Activity to view items -->
     <!-- EditPreferenceActivity. -->
+    
+    <!-- Dividing Line -->
+   
     
     <Preference android:title="@string/pref_title_lost" 
         android:summary="... the owner of something I've found.">
@@ -13,6 +18,11 @@
         android:action="android.intent.action.VIEW"
      />
 	</Preference>
+	
+	
+	
+	
+    
 	
 	<Preference android:title="@string/pref_title_Found" 
         android:summary="... something that I lost.">
