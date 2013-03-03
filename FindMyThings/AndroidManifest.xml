@@ -47,6 +47,14 @@
             android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
+            android:label="@string/title_activity_submit"
+            android:parentActivityName="edu.gatech.cs2340_sp13.teamrocket.findmythings.SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.gatech.cs2340_sp13.teamrocket.findmythings.SettingsActivity" />
+        </activity>
     </application>
 
 </manifest>

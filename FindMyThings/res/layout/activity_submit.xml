@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
     <EditText
         android:id="@+id/lookingfor"
@@ -26,17 +25,14 @@
         <requestFocus />
     </EditText>
 
-    <fragment
-        android:id="@+id/settings_fragment"
-        android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SettingsFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@android:layout/list_content" />
-
-    <View
-        android:id="@+id/firstDivider"
-        android:layout_width="fill_parent"
+     <fragment
+         android:id="@+id/settings_fragment"
+         android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SettingsFragment"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent" />
+              
+	<View   android:id="@+id/firstDivider"
         android:layout_height="2dp"
+        android:layout_width="fill_parent"
         android:background="@color/LightGrey" />
-
 </LinearLayout>

@@ -16,5 +16,6 @@
     <string name="title_item_detail">Item Detail</string>
     <string name="action_cancel">Cancel</string>
     <string name="looking">I\'m looking for&#8230;</string>
+    <string name="title_activity_submit">Submit</string>
 
 </resources>
