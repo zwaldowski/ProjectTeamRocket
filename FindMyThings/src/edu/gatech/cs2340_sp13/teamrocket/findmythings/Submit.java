@@ -54,9 +54,7 @@ public class Submit extends Activity {
 	
 	public void addItem() {
 		//TODO: Actually add the item
-		Intent i = new Intent(Submit.this, ItemListActivity.class);
-		finish();
-		startActivity(i);
+		toItemList();
 		
 		
 	}
@@ -68,7 +66,8 @@ public class Submit extends Activity {
 	 		//TODO: Add new item to the ItemList
 	 		return true;
 	 	case R.id.submit_cancel:
-	 		
+	 		toItemList();
+	 		return true;
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
@@ -77,7 +76,7 @@ public class Submit extends Activity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			//NavUtils.navigateUpFromSameTask(this);
 			return true;	
 		}	
 			
