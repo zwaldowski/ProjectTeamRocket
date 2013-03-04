@@ -25,8 +25,8 @@ public class Item {
 	
 	public Item (String name, int reward) {
 		open = true;
-		typ= typ.FOUND;
-		cat = cat.MISC;
+		typ = Type.FOUND;
+		cat = Category.MISC;
 		
 		this.name = name;
 		this.reward = reward;
@@ -36,20 +36,49 @@ public class Item {
 	public void setDescription(String s) {
 		description = s;
 	}
-	public void setType(int i) {
-		if(i==1)
-			typ=typ.FOUND;
-		else typ = typ.DONATE;
-	}
-	public void setCat(int i) {
-		if(i==1)
-			cat = cat.MISC;
-		if(i==2)
-			cat = cat.HEIR;
-		else cat = cat.KEEPSAKE;
+	
+	public void setType(Item.Type i) {
+		typ = i;
 	}
 	
+	public void setCat(Item.Category i) {
+		cat = i;
+	}
 	
+	public void setDate(Date d) {
+		date = d;
+	}
 	
+	public void setReward(int r) {
+		reward = r;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public boolean isOpen() {
+		return open;
+	}
+	
+	public Item.Type getType() {
+		return typ;
+	}
+	
+	public Item.Category getCat() {
+		return cat;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+	
+	public int getReward() {
+		return reward;
+	}
 
 }
