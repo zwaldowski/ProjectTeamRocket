@@ -6,6 +6,7 @@ public class Member {
 	private String password;
 	private String address;
 	private String phone = "";
+	
 	//private Location address; 
 	public Member(String user, String pass, String phone) {
 		this(user,pass);
