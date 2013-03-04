@@ -2,6 +2,8 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
@@ -32,15 +34,41 @@ public class Submit extends Activity {
 		getMenuInflater().inflate(R.menu.submit, menu);
 		return true;
 	}
-	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+	    	toItemList();
+	        return true;
+	    }
 
+	    return super.onKeyDown(keyCode, event);
+	}
+	
+	//Goes to ItemList Activity
+	public void toItemList() {
+		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
+		finish();
+		startActivity(goToNextActivity);
+	}
+	
+	public void addItem() {
+		//TODO: Actually add the item
+		Intent i = new Intent(Submit.this, ItemListActivity.class);
+		finish();
+		startActivity(i);
+		
+		
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-	 	case R.id.submit_ok:	
+	 	case R.id.submit_ok:
+	 		addItem();
 	 		//TODO: Add new item to the ItemList
 	 		return true;
 	 	case R.id.submit_cancel:
+	 		
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users

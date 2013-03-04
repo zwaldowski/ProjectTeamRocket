@@ -7,7 +7,8 @@
         android:key="type_pref"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_type" />
+        android:title="@string/pref_type" 
+		android:summary=""/>
 	  
     
 	
