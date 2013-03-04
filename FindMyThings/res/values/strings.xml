@@ -20,6 +20,7 @@
     <string name="required">REQUIRED</string>
     <string name="optional">OPTIONAL</string>
     <string name="pref_type">Kind</string>
+    <string name="submit">Submit</string>
     
     <string-array name="Types">
     <item>Found</item>

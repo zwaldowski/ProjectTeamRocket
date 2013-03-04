@@ -1,9 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+ <item android:id="@+id/submit_ok" android:title="@string/submit" android:icon="@drawable/action_accept" android:showAsAction="ifRoom|withText"></item><item android:id="@+id/submit_cancel" android:icon="@drawable/action_cancel" android:title="@string/action_cancel" android:showAsAction="ifRoom|withText"></item>
+
 
 </menu>

@@ -12,7 +12,8 @@ public class Submit extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_submit);
-		// Show the Up button in the action bar.
+		
+		// Hide the Up button in the action bar.
 		setupActionBar();
 	}
 
@@ -21,7 +22,7 @@ public class Submit extends Activity {
 	 */
 	private void setupActionBar() {
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 
 	}
 
@@ -31,10 +32,15 @@ public class Submit extends Activity {
 		getMenuInflater().inflate(R.menu.submit, menu);
 		return true;
 	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+	 	case R.id.submit_ok:	
+	 		//TODO: Add new item to the ItemList
+	 		return true;
+	 	case R.id.submit_cancel:
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
@@ -44,9 +50,10 @@ public class Submit extends Activity {
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
 			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+			return true;	
+		}	
+			
+			return super.onOptionsItemSelected(item);
 	}
 
 }
