@@ -294,7 +294,7 @@ public class LoginWindow extends Activity {
 				((User) temp).setAttempts(0);
 				
 				Email = mEmail; //Remembers User's email.
-				Intent main = new Intent(getApplicationContext(), SettingsActivity.class);
+				Intent main = new Intent(getApplicationContext(), MainActivity.class);
 				finish();
 				startActivity(main);
 				
