@@ -23,7 +23,7 @@
     <string name="submit">Submit</string>
     
     <string-array name="Types">
-    <item>Found</item>
+    <item>Lost</item>
     <item>Donate</item>
     </string-array>
     <string name="header_more">More</string>

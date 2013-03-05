@@ -15,9 +15,8 @@ import android.view.ViewGroup;
 
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
 	
-	public static String currValue;
-	
-	public static ListPreference mListPref;
+		
+	public ListPreference mListPref;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +25,10 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         //Gets type from ListPreference
         mListPref = (ListPreference) findPreference("type_pref");
         
-
-        CharSequence currText = mListPref.getEntry();
-        currValue = mListPref.getValue();
         mListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-            	mListPref.setSummary(mListPref.getEntry().equals("Lost") ? "I'm looking for something that is mine.":"I'm looking for something I need");
+            	mListPref.setSummary(mListPref.getValue().equals("1") ? "I'm looking for something that is mine.":"I'm looking for something I need");
                     return true;
                 }
             });
@@ -43,7 +39,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 	
