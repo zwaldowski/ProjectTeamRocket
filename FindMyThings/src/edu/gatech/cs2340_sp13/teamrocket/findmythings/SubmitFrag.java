@@ -1,17 +1,12 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
 
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
 	
@@ -25,10 +20,14 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         //Gets type from ListPreference
         mListPref = (ListPreference) findPreference("type_pref");
         
+        
+        
         mListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-            	mListPref.setSummary(mListPref.getValue().equals("1") ? "I'm looking for something that is mine.":"I'm looking for something I need");
+	String ss = mListPref.getValue();
+            	mListPref.setSummary(mListPref.getValue().equals("0") ? "I'm looking for something I need": "I'm looking for something that is mine.");
+            	mListPref.setTitle(mListPref.getValue().equals("0") ? "Kind - Donate": "Kind - Lost");
                     return true;
                 }
             });
