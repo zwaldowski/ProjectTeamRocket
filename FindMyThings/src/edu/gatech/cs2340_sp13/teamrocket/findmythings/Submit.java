@@ -1,6 +1,7 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.KeyEvent;
@@ -10,14 +11,18 @@ import android.support.v4.app.NavUtils;
 
 public class Submit extends Activity {
 
+	private ListPreference Type;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_submit);
-		
+
 		// Hide the Up button in the action bar.
 		setupActionBar();
 	}
+
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.
@@ -45,13 +50,17 @@ public class Submit extends Activity {
 	    return super.onKeyDown(keyCode, event);
 	}
 	
-	//Goes to ItemList Activity
+	/**
+	 * Goes to ItemList Activity
+	 */
 	public void toItemList() {
 		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
 		finish();
 		startActivity(goToNextActivity);
 	}
-	
+	/**
+	 * Adds the item and goes to the Item List Activity
+	 */
 	public void addItem() {
 		//TODO: Actually add the item
 		toItemList();
@@ -76,7 +85,7 @@ public class Submit extends Activity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			//NavUtils.navigateUpFromSameTask(this);
+			
 			return true;	
 		}	
 			
