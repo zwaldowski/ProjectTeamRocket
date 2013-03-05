@@ -2,13 +2,14 @@
     
 	<ListPreference  
         android:entries="@array/Types"
+        android:dialogTitle="Lost"
         android:entryValues="@array/Typedata"
         android:key="type_pref"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_type" 	   
         android:defaultValue="0"
-        android:summary=""/>
+        android:summary="sadasda"/>
 	  
     
 	

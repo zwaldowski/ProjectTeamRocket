@@ -3,27 +3,39 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
+
+
 public class Submit extends Activity {
 
 	private ListPreference Type;
+	private Context mContext;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_submit);
-
+		
 		// Hide the Up button in the action bar.
 		setupActionBar();
+		
+		
 	}
-
-
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		SubmitFrag.mListPref.setSummary(SubmitFrag.mListPref.getEntry().equals("Found") ? "fuck":"me");
+	}
+	
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */
