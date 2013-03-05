@@ -26,6 +26,7 @@
     <item>Found</item>
     <item>Donate</item>
     </string-array>
+    <string name="header_more">More</string>
     
 
 </resources>

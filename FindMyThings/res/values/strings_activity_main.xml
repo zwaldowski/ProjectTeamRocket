@@ -1,11 +1,13 @@
 <resources>
 
-    <string name="title_activity_settings">Settings</string>
-
-    <string name="pref_title_lost">Lost</string>
-    <string name="pref_title_Found">Found</string>
-    <string name="pref_title_Donations">Donations</string>
-    <string name="pref_title_Requests">Requests</string>
+    <string name="main_title_lost">Lost</string>
+    <string name="main_summary_lost">&#8230;the owner of something I\'ve found.</string>
+    <string name="main_title_found">Found</string>
+    <string name="main_summary_found">&#8230;something that I lost.</string>
+    <string name="main_title_donations">Donations</string>
+    <string name="main_summary_donations">&#8230;something that I need.</string>
+    <string name="main_title_requests">Requests</string>
+    <string name="main_summary_requests">&#8230;help someone needs.</string>
     <string name="pref_title_account">My Account</string>
     <string name="pref_title_sign_out">Sign out</string>
 

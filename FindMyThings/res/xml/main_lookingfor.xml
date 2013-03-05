@@ -2,49 +2,67 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     
-        <!-- PreferenceScreen android:title="@string/app_name" -->         
-            <PreferenceCategory android:title="@string/looking" >
-    			<Preference android:title="@string/pref_title_lost" 
-        		    android:summary="... the owner of something I've found.">
-    				<intent 
-        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-        			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
-        			 android:action="android.intent.action.VIEW"
-    				/>
-    			</Preference>
+		<PreferenceCategory android:title="@string/looking" >
+    		<Preference android:title="@string/main_title_lost" 
+        	    android:summary="@string/main_summary_lost">
+    			<intent 
+        		 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+        		 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
+        		 android:action="android.intent.action.VIEW"
+    			/>
+    		</Preference>
 	
-    			<Preference android:title="@string/pref_title_Found" 
-    			    android:summary="... something that I lost.">
-    				<!--   <intent 
-        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-        			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
-        			 android:action="android.intent.action.VIEW"
-    				/>  TODO:Create activity to add an item to the list-->
-    			</Preference>
+    		<Preference android:title="@string/main_title_found" 
+    		    android:summary="@string/main_summary_found">
+    			<!--   <intent 
+       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+       			 android:action="android.intent.action.VIEW"
+    			/>  TODO:Create activity to add an item to the list-->
+    		</Preference>
 	
-    			<Preference android:title="@string/pref_title_Donations" 
-        		    android:summary="... something that I need.">
+    		<Preference android:title="@string/main_title_donations" 
+       		    android:summary="@string/main_summary_donations">
        
-    				<intent 
-        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-        			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
-        			 android:action="android.intent.action.VIEW"
-    				/>
-    			</Preference>
+    			<intent 
+       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
+       			 android:action="android.intent.action.VIEW"
+    			/>
+    		</Preference>
 	
-    			<Preference android:title="@string/pref_title_Requests" 
-        		    android:summary="... help someone needs.">
+    		<Preference android:title="@string/main_title_requests" 
+       		    android:summary="@string/main_summary_requests">
        
-    				<intent 
-        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-        			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
-        			 android:action="android.intent.action.VIEW"
-    				/>
-    			</Preference>
+    			<intent 
+       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+       			 android:action="android.intent.action.VIEW"
+    			/>
+   			</Preference>
                 
-            </PreferenceCategory>
-		<!-- /PreferenceScreen-->
-
+        </PreferenceCategory>
+		<PreferenceCategory android:title="@string/header_more" >
+	
+    		<Preference android:title="@string/pref_title_account" 
+       		    android:summary="Email address here.">
+       
+    			<!-- intent 
+       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+       			 android:action="android.intent.action.VIEW"
+    			/> # TODO: Intent -->
+   			</Preference>
+	
+    		<Preference android:title="@string/pref_title_sign_out">
+       
+    			<!-- intent 
+       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+       			 android:action="android.intent.action.VIEW"
+    			/> # TODO: Intent -->
+   			</Preference>
+		</PreferenceCategory>
     
     <!-- Goes to Activity to view items -->
     <!-- EditPreferenceActivity. -->
