@@ -32,7 +32,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         mListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-            	mListPref.setSummary(mListPref.getEntry().equals("Found") ? "Found stuff":"Lost stuff");
+            	mListPref.setSummary(mListPref.getEntry().equals("Lost") ? "I'm looking for something that is mine.":"I'm looking for something I need");
                     return true;
                 }
             });

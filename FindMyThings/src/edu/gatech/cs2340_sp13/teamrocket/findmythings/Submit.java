@@ -29,13 +29,7 @@ public class Submit extends Activity {
 		
 		
 	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		SubmitFrag.mListPref.setSummary(SubmitFrag.mListPref.getEntry().equals("Found") ? "fuck":"me");
-	}
-	
+		
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */

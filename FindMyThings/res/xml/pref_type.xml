@@ -9,7 +9,7 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_type" 	   
         android:defaultValue="0"
-        android:summary="sadasda"/>
+        android:summary="I'm looking for something that is mine."/>
 	  
     
 	
