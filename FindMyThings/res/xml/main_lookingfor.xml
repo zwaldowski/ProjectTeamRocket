@@ -1,0 +1,73 @@
+
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    
+    <!-- Goes to Activity to view items -->
+    <!-- EditPreferenceActivity. -->
+    
+    <!-- Dividing Line -->
+   
+    
+    <Preference android:title="@string/pref_title_lost" 
+        android:summary="... the owner of something I've found.">
+       	
+    <intent 
+        android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+        android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
+        android:action="android.intent.action.VIEW"
+     />
+	</Preference>
+	
+	
+	
+	
+    
+	
+	<Preference android:title="@string/pref_title_Found" 
+        android:summary="... something that I lost.">
+       
+   <!--   <intent 
+        android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+        android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+        android:action="android.intent.action.VIEW"
+     />  TODO:Create activity to add an item to the list-->
+	</Preference>
+	
+	<Preference android:title="@string/pref_title_Donations" 
+        android:summary="... something that I need.">
+       
+    <intent 
+        android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+        android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
+        android:action="android.intent.action.VIEW"
+     />
+	</Preference>
+	
+	<Preference android:title="@string/pref_title_Requests" 
+        android:summary="... help someone needs.">
+       
+    <intent 
+        android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+        android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+        android:action="android.intent.action.VIEW"
+     />
+	</Preference>
+       
+    
+
+    <!--
+         NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it.
+    
+    <! NOTE: ListPreference's summary should be set to its value by the activity code. >
+    <ListPreference
+        android:defaultValue="-1"
+        android:entries="@array/pref_example_list_titles"
+        android:entryValues="@array/pref_example_list_values"
+        android:key="example_list"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_add_friends_to_messages" />
+	-->
+</PreferenceScreen>
