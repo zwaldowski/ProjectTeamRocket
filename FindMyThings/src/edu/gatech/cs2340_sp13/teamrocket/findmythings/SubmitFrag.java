@@ -32,6 +32,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
                     return true;
                 }
             });
+        
         CatListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {

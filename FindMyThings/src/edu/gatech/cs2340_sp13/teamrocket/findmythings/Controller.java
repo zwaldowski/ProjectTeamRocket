@@ -3,7 +3,26 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 import java.util.ArrayList;
 
 public class Controller {
+	
+	//Holds items
+	private static ArrayList<Item> items;
+	
+	/**
+	 * Adds a few generic items to the arraylist
+	 */
+	public Controller() {
+		//TODO: Add
+		items = new ArrayList<Item>();
+		
+	}
 
+	/**
+	 * Adds an item to the arraylist
+	 * @param i
+	 */
+	public void addItem(Item i) {
+		items.add(i);
+	}
 	/**
 	 * create a new item (lost, found, donated or requested) 
 	 * @param m
