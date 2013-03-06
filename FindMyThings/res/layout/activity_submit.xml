@@ -1,52 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    tools:context=".action_cancelaction_accept" >
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	    
+		<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
 		    
-	<TextView
-        android:id="@+id/required"
-        android:text="@string/required"
-        style="@style/Header" />
-
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/describ" >
-
-        <requestFocus />
-    </EditText>
-
-    <fragment
-        android:id="@+id/submit_fragment"
-        android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SubmitFrag"
-        android:layout_width="match_parent"
-        android:layout_height="151dp"
-        tools:layout="@android:layout/list_content" />
-		    
-	<TextView
-        android:id="@+id/optional"
-        android:text="@string/optional"
-        style="@style/Header" />
-
-    <EditText
-        android:id="@+id/locationtext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/location"
-        android:inputType="textPostalAddress" />
-
-    <EditText
-        android:id="@+id/rewardtext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/reward"
-        android:inputType="number" />
-
-</LinearLayout>
+			<View
+			    android:id="@+id/leftPadder"
+				android:layout_width="@dimen/form_activity_standard_padding"
+				android:layout_height="fill_parent"
+				android:layout_alignParentLeft="true" />
+			<View
+			    android:id="@+id/rightPadder"
+				android:layout_width="@dimen/form_activity_standard_padding"
+				android:layout_height="fill_parent"
+				android:layout_alignParentRight="true" />
+			    
+			<TextView
+	        	android:id="@+id/required"
+	        	android:text="@string/required"
+	        	style="@style/Header"
+	        	android:layout_alignParentTop="true"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder" />
+	
+			<EditText
+	        	android:id="@+id/description"
+	        	android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:ems="10"
+	        	android:hint="@string/describ"
+	        	android:layout_below="@id/required"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder">
+	        	<requestFocus />
+			</EditText>
+			
+			<fragment
+	        	android:id="@+id/submit_fragment"
+	        	android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SubmitFrag"
+	        	android:layout_width="match_parent"
+	        	android:layout_height="130dp"
+	        	tools:layout="@android:layout/list_content"
+	        	android:layout_below="@id/description" />
+			    
+			<TextView
+	        	android:id="@+id/optional"
+	        	android:text="@string/optional"
+	        	style="@style/Header"
+	        	android:layout_below="@id/submit_fragment"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder" />
+	
+			<EditText
+	        	android:id="@+id/locationtext"
+	        	android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:ems="10"
+	        	android:hint="@string/location"
+	        	android:inputType="textPostalAddress"
+	        	android:layout_below="@id/optional"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder" />
+	
+			<EditText
+	        	android:id="@+id/rewardtext"
+	        	android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:ems="10"
+	        	android:hint="@string/reward"
+	        	android:inputType="number"
+	        	android:layout_below="@id/locationtext"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder" />
+    
+        </RelativeLayout>
+</ScrollView>

@@ -4,7 +4,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="widget_standard_padding">8.0dip</dimen>
-    <dimen name="form_activity_input_pad_vertical">12dp</dimen>
-    <dimen name="form_activity_input_pad_horizontal">8dp</dimen>
+    <dimen name="header_mini_margin">4.0dip</dimen>
+    <dimen name="form_activity_standard_padding">12.0dip</dimen>
+    <dimen name="form_activity_input_pad_vertical">8.0dip</dimen>
+    <dimen name="form_activity_input_pad_horizontal">8.0dip</dimen>
+    <dimen name="list_section_divider_min_height">32.0dip</dimen>
 
 </resources>
