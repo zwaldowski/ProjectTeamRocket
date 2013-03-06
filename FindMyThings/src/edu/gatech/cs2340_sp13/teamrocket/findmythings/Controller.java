@@ -37,6 +37,7 @@ public class Controller {
 	 * @param i
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private ArrayList<Item> getInfo(Item i) {
 		return null;
 	}
