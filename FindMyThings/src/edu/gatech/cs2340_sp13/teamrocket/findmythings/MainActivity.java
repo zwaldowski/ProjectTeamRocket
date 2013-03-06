@@ -34,7 +34,7 @@ public class MainActivity extends PreferenceActivity {
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
-	        EditTextPreference p = (EditTextPreference)findPreference("emailhere");
+	        Preference p = (Preference)findPreference("emailhere");
 			p.setSummary(LoginWindow.Email);
 	    }
 	}
