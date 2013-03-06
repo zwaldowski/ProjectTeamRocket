@@ -56,14 +56,18 @@
     			/> # TODO: Intent -->
    			</Preference>
 	
-    		<Preference android:title="@string/pref_title_sign_out">
+		<edu.gatech.cs2340_sp13.teamrocket.findmythings.ConfirmationDialog
+                    android:title="@string/pref_title_sign_out"
+                    android:dialogMessage="Are you sure you want to log out of Find My Things?"
+                    android:key="@string/pref_readytologout"
+                    android:summary="Log out of the app.">
        
     			<!-- intent 
        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
        			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
     			/> # TODO: Intent -->
-   			</Preference>
+			</edu.gatech.cs2340_sp13.teamrocket.findmythings.ConfirmationDialog>
 		</PreferenceCategory>
     
     <!-- Goes to Activity to view items -->

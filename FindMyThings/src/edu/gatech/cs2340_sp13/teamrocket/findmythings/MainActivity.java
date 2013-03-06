@@ -1,12 +1,16 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 
 /**
@@ -20,14 +24,7 @@ import android.view.KeyEvent;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class MainActivity extends PreferenceActivity {
-	/**
-	 * Determines whether to always show the simplified settings UI, where
-	 * settings are presented in a single list. When false, settings are shown
-	 * as a master/detail two-pane view on tablets. When true, a single pane is
-	 * shown on tablets.
-	 */
-	//private static final boolean ALWAYS_SIMPLE_PREFS = false;
+public class MainActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 	
 	public static class MainFragment extends PreferenceFragment {
 	    @Override
@@ -39,6 +36,8 @@ public class MainActivity extends PreferenceActivity {
 	    }
 	}
 
+	private MainFragment settingsListFragment;
+
 	@SuppressWarnings("deprecation")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,60 +45,43 @@ public class MainActivity extends PreferenceActivity {
 		  
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			addPreferencesFromResource(R.xml.main_lookingfor);
-		} else { 
+		} else {
+			settingsListFragment = new MainFragment();
 			getFragmentManager().beginTransaction().replace(android.R.id.content,
-		                new MainFragment()).commit();
+					settingsListFragment).commit();
 		}
 		
 	}
 	
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event)  {
-		//Tells Activity what to do when back key is pressed
-	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-	    	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
-			finish();
-			startActivity(goToNextActivity);
-	        return true;
-	    }
-
-	    return super.onKeyDown(keyCode, event);
-	}
-	
-	@Override
-	public void onResume() {
+	protected void onResume() {
 	    super.onResume();
 	    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+	    settingsListFragment.getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
 
-	
+	@Override
+	public void onPause() {
+		settingsListFragment.getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+	super.onPause();
+	}
 
-	/** {@inheritDoc} */
-	/*public boolean onIsMultiPane() {
-		return isXLargeTablet(this) && !isSimplePreferences(this);
-	}*/
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+	if (key.equals(getString(R.string.pref_readytologout))) {
+		boolean shouldLogout = sharedPreferences.getBoolean(key, false);
+		if (shouldLogout) {
+			Editor prefEdit = sharedPreferences.edit();
+		prefEdit.putBoolean(key, false);
+		prefEdit.commit();
 
-	/**
-	 * Helper method to determine if the device has an extra-large screen. For
-	 * example, 10" tablets are extra-large.
-	 */
-	/*private static boolean isXLargeTablet(MainActivity settingsActivity) {
-		return (settingsActivity.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
-	}*/
+		// TODO logout logic
 
-	/**
-	 * Determines whether the simplified settings UI should be shown. This is
-	 * true if this is forced via {@link #ALWAYS_SIMPLE_PREFS}, or the device
-	 * doesn't have newer APIs like {@link PreferenceFragment}, or the device
-	 * doesn't have an extra-large screen. In these cases, a single-pane
-	 * "simplified" settings UI should be shown.
-	 */
-	/*private static boolean isSimplePreferences(MainActivity settingsActivity) {
-		return false;
-		return ALWAYS_SIMPLE_PREFS
-				|| Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
-				|| !isXLargeTablet(settingsActivity);
-	}*/
-
+		Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+			finish();
+			startActivity(goToNextActivity);
+			return;
+		}
+        }
+    }
 
 }
