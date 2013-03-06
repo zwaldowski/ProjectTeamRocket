@@ -10,25 +10,51 @@ import android.preference.PreferenceFragment;
 
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
 	
-		
-	public ListPreference mListPref;
+	
+	
+	public ListPreference TypeListPref, CatListPref;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_type);
         
         //Gets type from ListPreference
-        mListPref = (ListPreference) findPreference("type_pref");
+        TypeListPref = (ListPreference) findPreference("type_pref");
+        CatListPref = (ListPreference) findPreference("cat_pref");
         
-        
-        
-        mListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+        //TODO: Create one listener class for all Preferences. Maybe.
+        TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-	String ss = mListPref.getValue();
-            	mListPref.setSummary(mListPref.getValue().equals("0") ? "I'm looking for something I need": "I'm looking for something that is mine.");
-            	mListPref.setTitle(mListPref.getValue().equals("0") ? "Kind - Donate": "Kind - Lost");
+            	String s = newValue.toString();
+            	TypeListPref.setSummary(s.equals("0") ?  "I'm looking for something that is mine.":"I'm looking for something I need");
+            	TypeListPref.setTitle(s.equals("0") ? "Kind - Lost":"Kind - Donate");
                     return true;
+                }
+            });
+        CatListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            	
+            	int i = Integer.parseInt(newValue.toString());
+            	switch(i) {
+            	case 0:
+            		CatListPref.setSummary("A valuable object that has belonged to a family for several generations.");
+            		CatListPref.setTitle("Category - Heirloom");
+            		return true;
+            	case 1:
+            		CatListPref.setSummary("A small item kept in memory of the person who gave it or originally owned it.");
+            		CatListPref.setTitle("Category - Keepsake");
+            		return true;
+            	case 2:
+            		CatListPref.setSummary("Items not fitting into another category");
+            		CatListPref.setTitle("Category - Misc");
+            		return true;
+            		
+
+            	}
+            	
+            	return true;
                 }
             });
 	}

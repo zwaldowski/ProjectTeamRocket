@@ -7,9 +7,20 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_type" 	
-        android:defaultValue="1"
+        android:defaultValue="0"
         android:summary="I'm looking for something that is mine."/>
-	  
+	
+	<ListPreference  
+        android:entries="@array/Categories"
+        android:entryValues="@array/CatData"
+        android:key="cat_pref"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/cat_type" 	
+        android:defaultValue="2"
+        android:summary="Items not fitting into another category."/>
+	
+	
     
 	
 

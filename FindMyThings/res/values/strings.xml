@@ -21,11 +21,26 @@
     <string name="optional">OPTIONAL</string>
     <string name="pref_type">Kind - Lost</string>
     <string name="submit">Submit</string>
+    <string name="cat_type">Category - Misc</string>
     
     <string-array name="Types">
     <item>Lost</item>
     <item>Donate</item>
     </string-array>
+    
+    <string-array name="Categories">
+    <item>Heir</item>
+    <item>Keepsake</item>
+    <item>Misc</item>
+    </string-array>
+    
+    <string-array name="CatData">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    </string-array>
+    
+    
     <string name="header_more">More</string>
     
 
