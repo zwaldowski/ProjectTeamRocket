@@ -45,13 +45,9 @@
         android:id="@+id/submit_fragment"
         android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.SubmitFrag"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_height="151dp"
         tools:layout="@android:layout/list_content" />
-    <View
-        android:id="@+id/secondDivider"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@color/LightGrey" />
+    
     <EditText
         android:id="@+id/optional"
         android:layout_width="match_parent"
@@ -70,5 +66,26 @@
         android:paddingTop="@dimen/form_activity_input_pad_vertical"
         android:textSize="12sp" >
     </EditText>
+    <View
+        android:id="@+id/secondDivider"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@color/LightGrey" />
+
+    <EditText
+        android:id="@+id/locationtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/location"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/rewardtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/reward"
+        android:inputType="number" />
 
 </LinearLayout>

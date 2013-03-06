@@ -15,10 +15,7 @@ import android.support.v4.app.NavUtils;
 
 public class Submit extends Activity {
 
-	private ListPreference Type;
-	private Context mContext;
-	
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,7 +24,7 @@ public class Submit extends Activity {
 		// Hide the Up button in the action bar.
 		setupActionBar();
 		
-		
+		setTitle("Submit an Item");
 	}
 		
 	/**

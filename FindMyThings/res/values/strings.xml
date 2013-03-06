@@ -22,6 +22,8 @@
     <string name="pref_type">Kind - Lost</string>
     <string name="submit">Submit</string>
     <string name="cat_type">Category - Misc</string>
+    <string name="location">Location</string>
+    <string name="reward">Reward</string>
     
     
     <string-array name="Types">
