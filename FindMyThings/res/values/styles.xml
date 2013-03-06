@@ -22,5 +22,25 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
     </style>
-
+    
+    <style name="Header">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/widget_standard_padding</item>
+        <item name="android:layout_marginRight">@dimen/widget_standard_padding</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">@color/HoloLightBlue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:background">@drawable/list_section_divider_holo_custom</item>
+        <item name="android:paddingLeft">@dimen/widget_standard_padding</item>
+        <item name="android:paddingRight">@dimen/widget_standard_padding</item>
+        <item name="android:paddingTop">@dimen/widget_standard_padding</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    
 </resources>

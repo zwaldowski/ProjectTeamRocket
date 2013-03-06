@@ -5,31 +5,11 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" 
     tools:context=".action_cancelaction_accept" >
-
-    <EditText
+		    
+	<TextView
         android:id="@+id/required"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transWhite"
-        android:clickable="false"
-        android:ems="10"
-        android:focusableInTouchMode="false"
-        android:gravity="start"
-        android:hint="@string/required"
-        android:inputType="none"
-        android:linksClickable="false"
-        android:paddingBottom="3dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="@dimen/form_activity_input_pad_horizontal"
-        android:paddingTop="@dimen/form_activity_input_pad_vertical"
-        android:textSize="12sp" >
-    </EditText>
-
-    <View
-        android:id="@+id/firstDivider"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@color/LightGrey" />
+        android:text="@string/required"
+        style="@style/Header" />
 
     <EditText
         android:id="@+id/description"
@@ -47,30 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="151dp"
         tools:layout="@android:layout/list_content" />
-    
-    <EditText
+		    
+	<TextView
         android:id="@+id/optional"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transWhite"
-        android:clickable="false"
-        android:ems="10"
-        android:focusableInTouchMode="false"
-        android:gravity="start"
-        android:hint="@string/optional"
-        android:inputType="none"
-        android:linksClickable="false"
-        android:paddingBottom="3dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="@dimen/form_activity_input_pad_horizontal"
-        android:paddingTop="@dimen/form_activity_input_pad_vertical"
-        android:textSize="12sp" >
-    </EditText>
-    <View
-        android:id="@+id/secondDivider"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@color/LightGrey" />
+        android:text="@string/optional"
+        style="@style/Header" />
 
     <EditText
         android:id="@+id/locationtext"
