@@ -3,6 +3,8 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.view.KeyEvent;
@@ -32,6 +34,8 @@ public class MainActivity extends PreferenceActivity {
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
+	        EditTextPreference p = (EditTextPreference)findPreference("emailhere");
+			p.setSummary(LoginWindow.Email);
 	    }
 	}
 
@@ -46,6 +50,7 @@ public class MainActivity extends PreferenceActivity {
 			getFragmentManager().beginTransaction().replace(android.R.id.content,
 		                new MainFragment()).commit();
 		}
+		
 	}
 	
 	@Override

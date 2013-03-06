@@ -48,7 +48,7 @@ public class LoginWindow extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
-	private static String Email = "";
+	public static String Email = "";
 
 	// UI references.
 	private EditText mEmailView;

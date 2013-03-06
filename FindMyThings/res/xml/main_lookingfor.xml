@@ -42,9 +42,11 @@
    			</Preference>
                 
         </PreferenceCategory>
-		<PreferenceCategory android:title="@string/header_more" >
+		<PreferenceCategory android:title="@string/header_more" > 	
 	
-    		<Preference android:title="@string/pref_title_account" 
+    		<EditTextPreference
+    		    android:key="emailhere"
+    		    android:title="@string/pref_title_account" 
        		    android:summary="Email address here.">
        
     			<!-- intent 
@@ -52,7 +54,7 @@
        			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
     			/> # TODO: Intent -->
-   			</Preference>
+   			</EditTextPreference>
 	
     		<Preference android:title="@string/pref_title_sign_out">
        
