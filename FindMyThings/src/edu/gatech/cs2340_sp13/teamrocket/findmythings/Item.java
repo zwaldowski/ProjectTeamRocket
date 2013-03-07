@@ -111,7 +111,8 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return name;
+		String desc = description.length()>10? description.substring(0,10):description.substring(0,description.length());
+		return name + " - " + loc + "\n" + desc;
 	}
 
 }

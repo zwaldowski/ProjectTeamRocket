@@ -27,8 +27,8 @@ public class Controller {
 		Item catdog = new Item("CatDog",100);
 		
 		cat.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
-		dog.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
-		catdog.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
+		dog.setDescription("oom oom oom oom oom oom oom oom oom oom oom oom ");
+		catdog.setDescription("omo omo omo omo omo omo omo omo omo omo omo ");
 		addItem(cat);
 		addItem(dog);
 		addItem(catdog);
