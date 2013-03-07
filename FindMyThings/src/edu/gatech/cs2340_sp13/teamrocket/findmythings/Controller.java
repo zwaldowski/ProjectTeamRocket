@@ -17,6 +17,8 @@ public class Controller {
 		dummy[0] = new Item("Cat",0);
 		dummy[1] = new Item("Dog",0);
 		dummy[2] = new Item("CatDog",100);
+		for(Item e : dummy)
+			items.add(e);
 		
 	}
 	
