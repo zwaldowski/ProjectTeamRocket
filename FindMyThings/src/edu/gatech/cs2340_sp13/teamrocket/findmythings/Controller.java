@@ -19,12 +19,19 @@ public class Controller {
 	 * Adds a few generic items to the arraylist
 	 */
 	public Controller() {
-		//TODO: Add
+		
 		items = new ArrayList<Item>();
 		
-		addItem(new Item("Cat",0));
-		addItem(new Item("Dog",0));
-		addItem(new Item("CatDog",100));
+		Item cat = new Item("Cat",0);
+		Item dog = new Item("Dog",0);
+		Item catdog = new Item("CatDog",100);
+		
+		cat.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
+		dog.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
+		catdog.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
+		addItem(cat);
+		addItem(dog);
+		addItem(catdog);
 		
 		
 	}

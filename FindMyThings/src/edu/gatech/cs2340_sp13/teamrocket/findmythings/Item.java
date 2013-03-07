@@ -1,10 +1,16 @@
  package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import android.text.format.DateFormat;
 
 public class Item {
 	
-	private String name, description;
+	private String name, loc;
+	
+	private String description = "";
+	
 	
 	private boolean open;
 	/**
@@ -29,7 +35,12 @@ public class Item {
 		typ = Type.FOUND;
 		cat = Category.MISC;
 				
-		description = "Testing";
+		loc = "The streets";
+		
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		date = new Date();
+		dateFormat.format(date);
 		
 		this.name = name;
 		this.reward = reward;
@@ -77,6 +88,15 @@ public class Item {
 		return cat;
 	}
 	
+	public String getCatString() {
+		if(cat== Category.HEIR)
+			return "Heirloom";
+		if(cat==Category.KEEPSAKE)
+			return "Keepsake";
+		return "Miscellaneous"; 
+		
+	}
+	
 	public Date getDate() {
 		return date;
 	}
@@ -84,6 +104,11 @@ public class Item {
 	public int getReward() {
 		return reward;
 	}
+	
+	public String getLoc() {
+		return loc;
+	}
+	
 	@Override
 	public String toString() {
 		return name;

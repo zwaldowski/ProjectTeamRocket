@@ -57,6 +57,10 @@ public class ItemDetailFragment extends Fragment {
 		if (mItem != null) {
 			((TextView) rootView.findViewById(R.id.item_detail))
 					.setText(mItem.getDescription());
+			((TextView) rootView.findViewById(R.id.loc_detail))
+			.setText(mItem.getLoc());
+			((TextView) rootView.findViewById(R.id.cat_detail))
+			.setText(mItem.getCatString());
 		}
 
 		return rootView;

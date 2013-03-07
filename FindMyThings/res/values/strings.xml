@@ -25,6 +25,12 @@
     <string name="location">Location</string>
     <string name="reward">Reward</string>
     
+    <string name="description">DESCRIPTION</string>
+    <string name="datesub">DATE SUBMITTED</string>
+    <string name="locationcaps">LOCATION</string>
+    <string name="cat_caps">CATEGORY</string>
+    <string name="contact">CONTACT</string>
+    
     
     <string-array name="Types">
     <item>Lost</item>
