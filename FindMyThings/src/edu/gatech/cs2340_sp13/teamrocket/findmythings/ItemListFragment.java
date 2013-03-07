@@ -1,5 +1,7 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -43,10 +45,8 @@ public class ItemListFragment extends ListFragment {
 	 * selections.
 	 */
 	
-		
-	/**
-	 * For displaying the items
-	 */
+	private Controller control = new Controller();
+	
 	private ArrayAdapter<Item> adapter;
 	
 	public interface Callbacks {
@@ -76,11 +76,18 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+	
 		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+		
+		adapter = new ArrayAdapter<Item>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+				android.R.id.text1, control.items);
+		setListAdapter(adapter);
+	}
+	
+	public void AddItem(View v, Item i){
+		control.addItem(i);
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -123,7 +130,7 @@ public class ItemListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(Controller.items.get(position).getName());
 	}
 
 	@Override

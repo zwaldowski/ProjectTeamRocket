@@ -24,7 +24,6 @@ public class Item {
 	private int reward;
 	
 	
-	
 	public Item (String name, int reward) {
 		open = true;
 		typ = Type.FOUND;
@@ -35,6 +34,7 @@ public class Item {
 		this.name = name;
 		this.reward = reward;
 	}
+	
 	
 	// Setters
 	public void setDescription(String s) {
@@ -83,6 +83,10 @@ public class Item {
 	
 	public int getReward() {
 		return reward;
+	}
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }

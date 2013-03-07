@@ -1,11 +1,19 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.gatech.cs2340_sp13.teamrocket.findmythings.dummy.DummyContent.DummyItem;
 
 public class Controller {
 	
-	//Holds items
-	private static ArrayList<Item> items;
+	public static ArrayList<Item> items;
+	
+	/**
+	 * Used to get the description of each item
+	 */
+	public static Map<String, Item> items_map = new HashMap<String, Item>();
 	
 	/**
 	 * Adds a few generic items to the arraylist
@@ -13,22 +21,17 @@ public class Controller {
 	public Controller() {
 		//TODO: Add
 		items = new ArrayList<Item>();
-		Item[] dummy = new Item[5];
-		dummy[0] = new Item("Cat",0);
-		dummy[1] = new Item("Dog",0);
-		dummy[2] = new Item("CatDog",100);
-		for(Item e : dummy)
-			items.add(e);
+		
+		addItem(new Item("Cat",0));
+		addItem(new Item("Dog",0));
+		addItem(new Item("CatDog",100));
+		
 		
 	}
 	
-	/**
-	 * returns list of items
-	 * @return
-	 */
-	public ArrayList getList() {
-		return items;
-	}
+	
+
+	
 
 	/**
 	 * Adds an item to the arraylist
@@ -36,6 +39,7 @@ public class Controller {
 	 */
 	public void addItem(Item i) {
 		items.add(i);
+		items_map.put(i.getName(),i);
 	}
 	/**
 	 * create a new item (lost, found, donated or requested) 
