@@ -13,7 +13,19 @@ public class Controller {
 	public Controller() {
 		//TODO: Add
 		items = new ArrayList<Item>();
+		Item[] dummy = new Item[5];
+		dummy[0] = new Item("Cat",0);
+		dummy[1] = new Item("Dog",0);
+		dummy[2] = new Item("CatDog",100);
 		
+	}
+	
+	/**
+	 * returns list of items
+	 * @return
+	 */
+	public ArrayList getList() {
+		return items;
 	}
 
 	/**

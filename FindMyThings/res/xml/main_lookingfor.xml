@@ -14,11 +14,11 @@
 	
     		<Preference android:title="@string/main_title_found" 
     		    android:summary="@string/main_summary_found">
-    			<!--   <intent 
+    			 <intent 
        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
        			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
-    			/>  TODO:Create activity to add an item to the list-->
+    			/>  
     		</Preference>
 	
     		<Preference android:title="@string/main_title_donations" 

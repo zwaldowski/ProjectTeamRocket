@@ -23,10 +23,14 @@ public class Item {
 	
 	private int reward;
 	
+	
+	
 	public Item (String name, int reward) {
 		open = true;
 		typ = Type.FOUND;
 		cat = Category.MISC;
+				
+		description = "Testing";
 		
 		this.name = name;
 		this.reward = reward;

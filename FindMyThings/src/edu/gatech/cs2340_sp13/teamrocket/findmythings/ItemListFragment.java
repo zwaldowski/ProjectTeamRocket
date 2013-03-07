@@ -42,6 +42,13 @@ public class ItemListFragment extends ListFragment {
 	 * implement. This mechanism allows activities to be notified of item
 	 * selections.
 	 */
+	
+		
+	/**
+	 * For displaying the items
+	 */
+	private ArrayAdapter<Item> adapter;
+	
 	public interface Callbacks {
 		/**
 		 * Callback for when an item has been selected.
