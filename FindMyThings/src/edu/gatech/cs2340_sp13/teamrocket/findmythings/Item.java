@@ -90,12 +90,21 @@ public class Item {
 		typ = i;
 	}
 	
-	public void setCat(String s) {
-		if(s.equals("0"))
-			cat = Category.MISC;
-		if(s.equals("1"))
+	public void setCat(int i) {
+		switch(i) {
+		case 0:
+			cat = Category.HEIR;
+			break;
+		case 1: 
 			cat = Category.KEEPSAKE;
-		else cat = Category.HEIR;
+			break;
+		case 2:
+			cat = Category.MISC;
+			break;
+		
+			
+		}
+			
 	}
 	
 	public void setDate(Date d) {

@@ -15,6 +15,8 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 	
 	private Controller control = Controller.shared();
 	
+	public static int cat = 2;
+	
 	public void syncTypePref(Item.Class value) {
     	Submit activity = (Submit)getActivity();
 		TypeListPref.setValue(((Integer)value.ordinal()).toString());
@@ -49,6 +51,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
             public boolean onPreferenceChange(Preference preference, Object newValue) {
             	
             	int i = Integer.parseInt(newValue.toString());
+            	cat = i;
             	switch(i) {
             	case 0:
             		CatListPref.setSummary("A valuable object that has belonged to a family for several generations.");
