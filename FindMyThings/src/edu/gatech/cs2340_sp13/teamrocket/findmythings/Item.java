@@ -62,6 +62,8 @@ public class Item {
 	
 	private int reward;
 	
+	private SimpleDateFormat mDateFormat;
+	
 	public Item (String name, int reward) {
 		open = true;
 		mType = Type.FOUND;
@@ -78,8 +80,10 @@ public class Item {
 		this.reward = reward;
 	}
 	
+	/** ACCESSORS **/
 	
 	// Setters
+	
 	public void setDescription(String s) {
 		if(s!=null)
 			description = s;
@@ -106,6 +110,8 @@ public class Item {
 		reward = r;
 	}
 	
+	// Getters
+	
 	public String getName() {
 		return name;
 	}
@@ -126,22 +132,15 @@ public class Item {
 		return cat;
 	}
 	
-	public String getCatString() {
-		if(cat== Category.HEIR)
-			return "Heirloom";
-		if(cat==Category.KEEPSAKE)
-			return "Keepsake";
-		return "Miscellaneous"; 
-		
-	}
-	
 	public Date getDate() {
 		return date;
 	}
 	
 	public String getDateString() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
-		return dateFormat.format(date);
+		if (mDateFormat == null) {
+			mDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+		}
+		return mDateFormat.format(date);
 	}
 	
 	public int getReward() {
