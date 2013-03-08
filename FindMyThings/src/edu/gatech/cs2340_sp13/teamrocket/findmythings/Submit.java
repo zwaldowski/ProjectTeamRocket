@@ -46,7 +46,7 @@ public class Submit extends Activity {
 		
 		setTitle("Submit an Item");
 		
-		SubmitFrag frag = getFragmentManager().findFragmentById(R.id.submit_fragment);
+		SubmitFrag frag = (SubmitFrag) getFragmentManager().findFragmentById(R.id.submit_fragment);
 		frag.syncTypePref(mClass);
 	}
 		
