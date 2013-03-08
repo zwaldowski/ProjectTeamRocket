@@ -62,7 +62,7 @@ public class Item {
 		mType = Type.Found;
 		cat = Category.MISC;
 				
-		loc = "The streets";
+		loc = "Harlem";
 		
 		//Gets todays date - maybe
 		
@@ -161,7 +161,7 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		String desc = description.length()>10? description.substring(0,10):description.substring(0,description.length());
+		String desc = description.length()>30? description.substring(0,30):description.substring(0,description.length());
 		return name + " - " + loc + "\n" + desc;
 	}
 

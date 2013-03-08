@@ -51,12 +51,12 @@ public final class Controller {
 	 */
 	private Controller() {
 		
-		Item cat = new Item("Cat",0);
-		Item dog = new Item("Dog",0);
-		Item catdog = new Item("CatDog",100);
-		cat.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
-		dog.setDescription("oom oom oom oom oom oom oom oom oom oom oom oom ");
-		catdog.setDescription("omo omo omo omo omo omo omo omo omo omo omo ");
+		Item cat = new Item("Small bag of sugar",1000);
+		Item dog = new Item("Dog",50);
+		Item catdog = new Item("Lost Phone",20);
+		cat.setDescription("Small ziplock bag of sugar, very dear to me. Will pay $1,000 upon its return.");
+		dog.setDescription("Goes by the name of Snoopy, hates white people.");
+		catdog.setDescription("Black Android phone, or maybe Iphone. Might actually be white, definitely a new phone though. $20 payed upon delivery");
 		
 		for (Item.Type kind : Item.Type.values()) {
 			ItemsList container = new ItemsList();
