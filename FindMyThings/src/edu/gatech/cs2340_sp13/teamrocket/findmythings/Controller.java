@@ -7,8 +7,6 @@ import java.util.Map;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
-import edu.gatech.cs2340_sp13.teamrocket.findmythings.dummy.DummyContent.DummyItem;
-
 public final class Controller {
 	
 	private static Controller mSharedInstance;
@@ -60,7 +58,7 @@ public final class Controller {
 		dog.setDescription("oom oom oom oom oom oom oom oom oom oom oom oom ");
 		catdog.setDescription("omo omo omo omo omo omo omo omo omo omo omo ");
 		
-		for (Item.Class kind : Item.Class.values()) {
+		for (Item.Type kind : Item.Type.values()) {
 			ItemsList container = new ItemsList();
 			allItems.put(kind, container);
 			
@@ -70,9 +68,9 @@ public final class Controller {
 		}
     }
 	
-	private Map<Item.Class, ItemsList> allItems = new HashMap<Item.Class, ItemsList>();
+	private Map<Item.Type, ItemsList> allItems = new HashMap<Item.Type, ItemsList>();
 	
-	private ItemsList getContainer(Item.Class kind) {
+	private ItemsList getContainer(Item.Type kind) {
 		return allItems.get(kind);
 	}
 	
@@ -80,7 +78,7 @@ public final class Controller {
 	 * Adds an item to the arraylist
 	 * @param i
 	 */
-	public void addItem(Item.Class kind, Item i) {
+	public void addItem(Item.Type kind, Item i) {
 		ItemsList container = getContainer(kind);
 		container.addItem(i);
 	}
@@ -89,7 +87,7 @@ public final class Controller {
 	 * Gets an indexed item from our arraylist
 	 * @param key The key of the Item to return
 	 */
-	public Item getItem(Item.Class kind, Integer key) {
+	public Item getItem(Item.Type kind, Integer key) {
 		ItemsList container = getContainer(kind);
 		return container.getItem(key);
 	}
@@ -98,12 +96,12 @@ public final class Controller {
 	 * Gets an item from our arraylist
 	 * @param key The key of the Item to return
 	 */
-	public Item getItem(Item.Class kind, String key) {
+	public Item getItem(Item.Type kind, String key) {
 		ItemsList container = getContainer(kind);
 		return container.getItem(key);
 	}
 	
-	public ArrayAdapter<Item> newItemsAdapter(Context context, int resource, int textViewResourceId, Item.Class kind) {
+	public ArrayAdapter<Item> newItemsAdapter(Context context, int resource, int textViewResourceId, Item.Type kind) {
 		ItemsList container = getContainer(kind);
 		return new ArrayAdapter<Item>(context, resource, textViewResourceId, container.mItems);
 	}

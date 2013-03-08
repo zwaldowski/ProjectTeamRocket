@@ -2,18 +2,16 @@
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import android.content.Context;
-import android.text.format.DateFormat;
 
 public class Item {
 	
-	public enum Class {
+	public enum Type {
 		Lost(0), Found(1), Donation(2), Request(3);
 		
 		private int idx;
 		
-		private Class(int i)
+		private Type(int i)
 	    {
 	        idx = i;
 	    }
@@ -30,8 +28,8 @@ public class Item {
 			return context.getResources().getStringArray(R.array.item_list_titles)[idx];
 		}
 		
-		public static Class forInt(int value) {
-			return Class.values()[value];
+		public static Type forInt(int value) {
+			return Type.values()[value];
 		}
 		
 		public static final String ID = "item_class";
@@ -42,16 +40,15 @@ public class Item {
 	private String description = "";
 	
 	private boolean open;
+	
 	/**
 	 * Using enum for type and category, can always change to 
 	 * int later if you guys prefer.
 	 */ 
-	public enum Type {FOUND, DONATE};
-	
 	public enum Category {HEIR, KEEPSAKE, MISC};
 	
-	private Type typ;
-	
+	private Type mType;
+
 	private Category cat;
 	
 	private Date date;
@@ -60,7 +57,7 @@ public class Item {
 	
 	public Item (String name, int reward) {
 		open = true;
-		typ = Type.FOUND;
+		mType = Type.Found;
 		cat = Category.MISC;
 				
 		loc = "The streets";
@@ -86,8 +83,8 @@ public class Item {
 			loc=s;
 	}
 	
-	public void setType(Item.Type i) {
-		typ = i;
+	public void setType(Item.Type c) {
+		mType = c;
 	}
 	
 	public void setCat(int i) {
@@ -128,7 +125,7 @@ public class Item {
 	}
 	
 	public Item.Type getType() {
-		return typ;
+		return mType;
 	}
 	
 	public Item.Category getCat() {

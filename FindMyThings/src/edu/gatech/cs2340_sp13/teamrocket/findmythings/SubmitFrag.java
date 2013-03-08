@@ -6,18 +6,15 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
-import android.widget.EditText;
 
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
 	
 	//UI References
 	public static ListPreference TypeListPref, CatListPref;
 	
-	private Controller control = Controller.shared();
-	
 	public static int cat = 2;
 	
-	public void syncTypePref(Item.Class value) {
+	public void syncTypePref(Item.Type value) {
     	Submit activity = (Submit)getActivity();
 		TypeListPref.setValue(((Integer)value.ordinal()).toString());
     	TypeListPref.setTitle("Kind - " + value.getLocalizedValue(activity));
@@ -39,7 +36,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-            	Item.Class newClass = Item.Class.forInt(Integer.parseInt((String)newValue));
+            	Item.Type newClass = Item.Type.forInt(Integer.parseInt((String)newValue));
             	syncTypePref(newClass);
             	((Submit)getActivity()).setItemClass(newClass);
                 return true;

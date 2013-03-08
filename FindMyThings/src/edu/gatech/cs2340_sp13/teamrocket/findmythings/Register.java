@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 
 public class Register extends Activity {

@@ -16,7 +16,7 @@ import android.view.MenuItem;
  */
 public class ItemDetailActivity extends FragmentActivity {
 	
-	private Item.Class mClass;
+	private Item.Type mClass;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,8 @@ public class ItemDetailActivity extends FragmentActivity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(Item.Class.ID)) {
-			mClass = Item.Class.forInt(extraInfo.getInt(Item.Class.ID));
+		if (extraInfo != null && extraInfo.containsKey(Item.Type.ID)) {
+			mClass = Item.Type.forInt(extraInfo.getInt(Item.Type.ID));
 		}
 
 		// savedInstanceState is non-null when there is fragment state
@@ -69,7 +69,7 @@ public class ItemDetailActivity extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public Item.Class getItemClass() {
+	public Item.Type getItemClass() {
 		return mClass;
 	}
 }

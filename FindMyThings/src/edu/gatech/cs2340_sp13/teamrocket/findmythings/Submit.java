@@ -22,7 +22,7 @@ public class Submit extends Activity {
 	
 	private Controller control = Controller.shared();
 	
-	private Item.Class mClass = Item.Class.Lost;
+	private Item.Type mClass = Item.Type.Lost;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class Submit extends Activity {
 		reward = (EditText) findViewById(R.id.rewardtext);
 		
 		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(Item.Class.ID)) {
-			mClass = Item.Class.forInt(extraInfo.getInt(Item.Class.ID));
+		if (extraInfo != null && extraInfo.containsKey(Item.Type.ID)) {
+			mClass = Item.Type.forInt(extraInfo.getInt(Item.Type.ID));
 		}
 		
 		// Hide the Up button in the action bar.
@@ -83,7 +83,7 @@ public class Submit extends Activity {
 		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
 		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		goToNextActivity.putExtra(getString(R.string.key_nooverride_animation), true);
-		goToNextActivity.putExtra(Item.Class.ID, mClass.ordinal());
+		goToNextActivity.putExtra(Item.Type.ID, mClass.ordinal());
 		finish();
 		startActivity(goToNextActivity);
 		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
@@ -125,11 +125,11 @@ public class Submit extends Activity {
 			return super.onOptionsItemSelected(item);
 	}
 	
-	public void setItemClass(Item.Class newItemClass) {
+	public void setItemClass(Item.Type newItemClass) {
 		mClass = newItemClass;
 	}
 	
-	public Item.Class getItemClass() {
+	public Item.Type getItemClass() {
 		return mClass;
 	}
 
