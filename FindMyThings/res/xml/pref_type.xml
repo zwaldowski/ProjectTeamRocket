@@ -1,18 +1,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
 	<ListPreference  
-        android:entries="@array/item_classes"
-        android:entryValues="@array/Typedata"
+        android:entries="@array/item_type"
+        android:entryValues="@array/item_type_data"
         android:key="type_pref"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_type" 	
-        android:defaultValue="0"
-        android:summary="I'm looking for something that is mine."/>
+        android:title="@string/pref_type" />
 	
 	<ListPreference  
-        android:entries="@array/Categories"
-        android:entryValues="@array/CatData"
+        android:entries="@array/item_category"
+        android:entryValues="@array/item_category_data"
         android:key="cat_pref"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"

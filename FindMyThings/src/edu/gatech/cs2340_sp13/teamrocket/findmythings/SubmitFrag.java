@@ -12,15 +12,21 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 	//UI References
 	public static ListPreference TypeListPref, CatListPref;
 	
-	public static int cat = 2;
+	//public static Item.Category cat = Item.Category.MISC;
 	
 	public void syncTypePref(Item.Type value) {
     	Submit activity = (Submit)getActivity();
 		TypeListPref.setValue(((Integer)value.ordinal()).toString());
-    	TypeListPref.setTitle("Kind - " + value.getLocalizedValue(activity));
+	TypeListPref.setTitle(R.string.pref_type + " - " + value.getLocalizedValue(activity));
     	TypeListPref.setSummary(value.getLocalizedDescription(activity));
 	}
 	
+	public void syncCatPref(Item.Category value) {
+	Submit activity = (Submit)getActivity();
+	CatListPref.setValue(((Integer)value.ordinal()).toString());
+		CatListPref.setTitle(R.string.cat_type + " - " + value.getLocalizedValue(activity));
+		CatListPref.setSummary(value.getLocalizedDescription(activity));
+	}
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +42,9 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-            	Item.Type newClass = Item.Type.forInt(Integer.parseInt((String)newValue));
-            	syncTypePref(newClass);
-            	((Submit)getActivity()).setItemType(newClass);
+		Item.Type newType = Item.Type.forInt(Integer.parseInt((String)newValue));
+		syncTypePref(newType);
+		((Submit)getActivity()).setItemType(newType);
                 return true;
             }
         });
@@ -46,26 +52,9 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         CatListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-            	
-            	int i = Integer.parseInt(newValue.toString());
-            	cat = i;
-            	switch(i) {
-            	case 0:
-            		CatListPref.setSummary("A valuable object that has belonged to a family for several generations.");
-            		CatListPref.setTitle("Category - Heirloom");
-            		return true;
-            	case 1:
-            		CatListPref.setSummary("A small item kept in memory of the person who gave it or originally owned it.");
-            		CatListPref.setTitle("Category - Keepsake");
-            		return true;
-            	case 2:
-            		CatListPref.setSummary("Items not fitting into another category");
-            		CatListPref.setTitle("Category - Misc");
-            		return true;
-            		
-
-            	}
-            	
+		Item.Category newCategory = Item.Category.forInt(Integer.parseInt((String)newValue));
+		syncCatPref(newCategory);
+		((Submit)getActivity()).setItemCategory(newCategory);
             	return true;
                 }
             });

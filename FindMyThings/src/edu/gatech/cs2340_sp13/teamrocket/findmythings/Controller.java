@@ -83,6 +83,11 @@ public final class Controller {
 		container.addItem(i);
 	}
 	
+	public void addItem(Item i) {
+		Item.Type kind = i.getType();
+		addItem(kind, i);
+	}
+
 	/**
 	 * Gets an indexed item from our arraylist
 	 * @param key The key of the Item to return

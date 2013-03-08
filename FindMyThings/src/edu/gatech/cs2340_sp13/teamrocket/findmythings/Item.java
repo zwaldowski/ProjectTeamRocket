@@ -9,45 +9,50 @@ import android.content.Context;
 public class Item {
 	
 	public enum Type {
-		Lost(0), Found(1), Donation(2), Request(3);
+		LOST, FOUND, DONATION, REQUEST;
 		
-		private int idx;
+		public static final String ID = "item_type";
 		
-		private Type(int i)
-	    {
-	        idx = i;
-	    }
+		public static Type forInt(int value) {
+			return values()[value];
+		}
 		
 		public String getLocalizedValue(Context context) {
-			return context.getResources().getStringArray(R.array.item_classes)[idx];
+			return context.getResources().getStringArray(R.array.item_type)[ordinal()];
 		}
 		
 		public String getLocalizedDescription(Context context) {
-			return context.getResources().getStringArray(R.array.item_class_descriptions)[idx];
+			return context.getResources().getStringArray(R.array.item_type_descriptions)[ordinal()];
 		}
 		
 		public String getListActivityTitle(Context context) {
-			return context.getResources().getStringArray(R.array.item_list_titles)[idx];
+			return context.getResources().getStringArray(R.array.item_list_titles)[ordinal()];
 		}
-		
-		public static Type forInt(int value) {
-			return Type.values()[value];
-		}
-		
-		public static final String ID = "item_class";
 	}
+
+	public enum Category {
+		HEIR, KEEPSAKE, MISC;
+
+		public static final String ID = "item_category";
+		
+		public static Category forInt(int value) {
+			return values()[value];
+		}
+		
+		public String getLocalizedValue(Context context) {
+			return context.getResources().getStringArray(R.array.item_category)[ordinal()];
+		}
+
+		public String getLocalizedDescription(Context context) {
+			return context.getResources().getStringArray(R.array.item_category_descriptions)[ordinal()];
+		}
+	};
 	
 	private String name, loc;
 	
 	private String description = "";
 	
 	private boolean open;
-	
-	/**
-	 * Using enum for type and category, can always change to 
-	 * int later if you guys prefer.
-	 */ 
-	public enum Category {HEIR, KEEPSAKE, MISC};
 	
 	private Type mType;
 
@@ -59,7 +64,7 @@ public class Item {
 	
 	public Item (String name, int reward) {
 		open = true;
-		mType = Type.Found;
+		mType = Type.FOUND;
 		cat = Category.MISC;
 				
 		loc = "Harlem";
@@ -89,20 +94,8 @@ public class Item {
 		mType = c;
 	}
 	
-	public void setCat(int i) {
-		switch(i) {
-		case 0:
-			cat = Category.HEIR;
-			break;
-		case 1: 
-			cat = Category.KEEPSAKE;
-			break;
-		case 2:
-			cat = Category.MISC;
-			break;
-			
-		}
-			
+	public void setCategory(Item.Category c) {
+		cat = c;
 	}
 	
 	public void setDate(Date d) {

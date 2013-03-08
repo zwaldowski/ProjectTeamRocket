@@ -31,7 +31,7 @@ public class ItemListActivity extends FragmentActivity implements
 	 */
 	private boolean mTwoPane;
 	
-	private Item.Type mType = Item.Type.Lost;
+	private Item.Type mType = Item.Type.LOST;
 	
 	private static final String kItemListFragmentKey = "ItemListFragment"; 
 

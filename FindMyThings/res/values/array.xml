@@ -3,10 +3,16 @@
     
     
     
-    <string-array name="Typedata">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-</string-array>
+    <string-array name="item_type_data">
+	<item>0</item>
+	<item>1</item>
+	<item>2</item>
+	<item>3</item>
+	</string-array>
+
+    <string-array name="item_category_data">
+	<item>0</item>
+	<item>1</item>
+	<item>2</item>
+    </string-array>
 </resources>

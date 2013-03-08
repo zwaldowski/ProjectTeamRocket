@@ -19,9 +19,9 @@
     <string name="title_activity_submit">Submit</string>
     <string name="required">Required</string>
     <string name="optional">Optional</string>
-    <string name="pref_type">Kind - Lost</string>
+    <string name="pref_type">Kind</string>
     <string name="action_submit">Submit</string>
-    <string name="cat_type">Category - Misc</string>
+    <string name="cat_type">Category</string>
     <string name="location">Location</string>
     <string name="reward">Reward</string>
     
@@ -35,35 +35,33 @@
     <string name="item_name">Item name</string>
     <string name="i_example">Bike/Photo Album/Baby etc.</string>
     
-    <string-array name="Categories">
-    <item>Heir</item>
-    <item>Keepsake</item>
-    <item>Misc</item>
-    </string-array>
-    
-    <string-array name="CatData">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    </string-array>
-    
     <string name="header_more">More</string>
     
-    <string-array name="item_classes">
+    <string-array name="item_category">
+	<item>Heir</item>
+	<item>Keepsake</item>
+	<item>Misc</item>
+    </string-array>
+    
+    <string-array name="item_category_descriptions">
+        <item>A valuable object that has belonged to a family for several generations.</item>
+        <item>A small item kept in memory of the person who gave it or originally owned it.</item>
+        <item>Items not fitting into another category.</item>
+    </string-array>
+    
+    <string-array name="item_type">
         <item>Lost</item>
         <item>Found</item>
         <item>Donated</item>
         <item>Requested</item>
     </string-array>
     
-    <string-array name="item_class_descriptions">
+    <string-array name="item_type_descriptions">
         <item>I\'m looking for something that is mine.</item>
         <item>I\'m looking for the owner of something I found.</item>
         <item>I\'m looking for someone who needs something.</item>
         <item>I\'m looking for something I need.</item>
     </string-array>
-    
-    
     
     <string name="key_nooverride_animation">findmythings.activity.nooverride_animation</string>
     

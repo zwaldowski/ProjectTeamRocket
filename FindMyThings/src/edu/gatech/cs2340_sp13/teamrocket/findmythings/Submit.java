@@ -24,7 +24,9 @@ public class Submit extends Activity {
 	
 	private Controller control = Controller.shared();
 	
-	private Item.Type mType = Item.Type.Lost;
+	private Item.Type mType = Item.Type.LOST;
+
+	private Item.Category mCategory = Item.Category.MISC;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +83,7 @@ public class Submit extends Activity {
 	/**
 	 * Goes to ItemList Activity
 	 */
-	public void toItemList() {
+	public boolean toItemList() {
 		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
 		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		goToNextActivity.putExtra(getString(R.string.key_nooverride_animation), true);
@@ -89,6 +91,7 @@ public class Submit extends Activity {
 		finish();
 		startActivity(goToNextActivity);
 		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+		return true;
 	}
 	
 	@Override
@@ -126,17 +129,16 @@ public class Submit extends Activity {
 				rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 	 		
 				Item temp = new Item(name,rward);
-				temp.setCat(SubmitFrag.cat);
+				temp.setCategory(mCategory);
+				temp.setType(mType);
 				temp.setDescription(desc);
 				temp.setLoc(loc);
 				
-				control.addItem(mType, temp);
-				toItemList();
+				control.addItem(temp);
 				
-				return true;
+				return toItemList();
 			case R.id.submit_cancel:
-				toItemList();
-				return true;
+				return toItemList();
 			case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
@@ -160,6 +162,14 @@ public class Submit extends Activity {
 	
 	public Item.Type getItemType() {
 		return mType;
+	}
+
+	public void setItemCategory(Item.Category type) {
+		mCategory = type;
+	}
+
+	public Item.Category getItemCategory() {
+		return mCategory;
 	}
 
 }
