@@ -7,14 +7,14 @@ import android.util.AttributeSet;
 
 /**
  * The {@link ConfirmationDialog} is a preference subclass that shows
- * a dialog with Yes and No buttons.
+ * a dialog with Yes and No buttons, for the purpose of confirming an action.
  *
  * This preference will persist a boolean into the SharedPreferences key
  * dictated by android:key in the XML preference.
  *
  * Dervied from:
- * http://stackoverflow.com/questions/5365310/creating-a-dialogpreference-from-xml/8818446#8818446
- * YesNoPreference.java in Android Private SDK
+ * - http://stackoverflow.com/questions/5365310/creating-a-dialogpreference-from-xml/8818446#8818446
+ * - YesNoPreference.java in Android Private SDK
  *
  * @attr ref android.R.styleable#DialogPreference_dialogTitle
  * @attr ref android.R.styleable#DialogPreference_dialogMessage
@@ -32,9 +32,6 @@ public class ConfirmationDialog extends DialogPreference {
         super(context, attrs);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
@@ -42,6 +39,22 @@ public class ConfirmationDialog extends DialogPreference {
         if (callChangeListener(positiveResult)) {
             setValue(positiveResult);
         }
+    }
+
+    @Override
+    protected Object onGetDefaultValue(TypedArray a, int index) {
+        return a.getBoolean(index, false);
+    }
+
+    @Override
+    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
+        setValue(restorePersistedValue ? getPersistedBoolean(mValue) :
+                (Boolean) defaultValue);
+    }
+
+    @Override
+    public boolean shouldDisableDependents() {
+        return !mValue || super.shouldDisableDependents();
     }
 
     /**
@@ -65,22 +78,6 @@ public class ConfirmationDialog extends DialogPreference {
      */
     public boolean getValue() {
         return mValue;
-    }
-
-    @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getBoolean(index, false);
-    }
-
-    @Override
-    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        setValue(restorePersistedValue ? getPersistedBoolean(mValue) :
-                (Boolean) defaultValue);
-    }
-
-    @Override
-    public boolean shouldDisableDependents() {
-        return !mValue || super.shouldDisableDependents();
     }
 
 }
