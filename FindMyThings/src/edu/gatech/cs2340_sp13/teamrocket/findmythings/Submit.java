@@ -3,9 +3,11 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 public class Submit extends Activity {
@@ -91,26 +93,51 @@ public class Submit extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-	 	case R.id.submit_ok:
-	 		desc = description.getText().toString();
-	 		loc = location.getText().toString();
-	 		rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
-	 		name = iName.getText().toString();
+		
+		boolean cancel = false;
+		View focusView = null;
+		
+		desc = description.getText().toString();
+		name = iName.getText().toString();
+		
+		//Check to see if name is empty
+		if (TextUtils.isEmpty(name.trim())) {
+			iName.setError(getString(R.string.error_field_required));
+			focusView = iName;
+			cancel = true;
+		}
+		
+		//Check to see if description is empty
+		if (TextUtils.isEmpty(desc.trim())) {
+			description.setError(getString(R.string.error_field_required));
+			focusView = description;
+			cancel = true;
+		} 
+		
+		
+		if (cancel) //There was an error
+		focusView.requestFocus();
+		
+		else {
+			switch (item.getItemId()) {
+			case R.id.submit_ok:
 	 		
-	 		Item temp = new Item(name,rward);
-	 		temp.setCat(SubmitFrag.cat);
-	 		temp.setDescription(desc);
-	 		temp.setLoc(loc);
-	 		//TODO: Get type and category from SubmitFrag
-	 		control.addItem(mType, temp);
-	 		toItemList();
+				loc = location.getText().toString();
+				rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 	 		
-	 		return true;
-	 	case R.id.submit_cancel:
-	 		toItemList();
-	 		return true;
-		case android.R.id.home:
+				Item temp = new Item(name,rward);
+				temp.setCat(SubmitFrag.cat);
+				temp.setDescription(desc);
+				temp.setLoc(loc);
+				
+				control.addItem(mType, temp);
+				toItemList();
+				
+				return true;
+			case R.id.submit_cancel:
+				toItemList();
+				return true;
+			case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
 			// to navigate up one level in the application structure. For
@@ -120,9 +147,11 @@ public class Submit extends Activity {
 			//
 			
 			return true;	
+			}	
+		
 		}	
-			
 			return super.onOptionsItemSelected(item);
+		
 	}
 	
 	public void setItemType(Item.Type type) {
