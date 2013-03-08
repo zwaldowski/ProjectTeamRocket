@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 
 /**
@@ -39,7 +40,6 @@ public class ItemListActivity extends FragmentActivity implements
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		
 		String listTypeKey = getString(R.string.item_list_key_class);
 		Bundle extraInfo = getIntent().getExtras();
 		if (extraInfo != null && extraInfo.containsKey(listTypeKey)) {
@@ -63,8 +63,6 @@ public class ItemListActivity extends FragmentActivity implements
 
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
-	
-
 	
 	private void goToParentActivity() {
     	Intent goToNextActivity = new Intent(this, MainActivity.class);
@@ -90,6 +88,8 @@ public class ItemListActivity extends FragmentActivity implements
 	        case android.R.id.home:
 	        	goToParentActivity();
 	            return true;
+	        case R.id.item_list_submit:
+	        	return toSubmit();
 	    }
 	    return super.onOptionsItemSelected(item);
 	}
@@ -97,7 +97,12 @@ public class ItemListActivity extends FragmentActivity implements
 	@Override
 	protected void onResume() {
 	    super.onResume();
-	    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+	    
+	    String noOverKey = getString(R.string.key_nooverride_animation);
+	    Bundle extraInfo = getIntent().getExtras();
+		if (extraInfo == null || (extraInfo != null && !extraInfo.getBoolean(noOverKey))) {
+			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+		}
 	}
 
 	/**
@@ -124,5 +129,23 @@ public class ItemListActivity extends FragmentActivity implements
 			detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
 		}
+	}
+	
+	/**
+	 * Goes to Submit activity
+	 */
+	public boolean toSubmit() {
+		Intent goToNextActivity = new Intent(ItemListActivity.this, Submit.class);
+		goToNextActivity.putExtra(getString(R.string.item_list_key_class), mClass.ordinal()); // Passes email to Register
+		startActivity(goToNextActivity);
+	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
+	    return true;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_item_list, menu);
+		return true;
 	}
 }

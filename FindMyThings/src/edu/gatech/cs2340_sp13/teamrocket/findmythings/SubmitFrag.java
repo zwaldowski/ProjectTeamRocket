@@ -20,9 +20,6 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_type);
         
-        
-        
-        
         //Gets type from ListPreference
         TypeListPref = (ListPreference) findPreference("type_pref");
         CatListPref = (ListPreference) findPreference("cat_pref");

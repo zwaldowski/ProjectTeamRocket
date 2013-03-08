@@ -82,22 +82,22 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	}
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-	if (key.equals(getString(R.string.main_key_signout))) {
-		boolean shouldLogout = sharedPreferences.getBoolean(key, false);
-		if (shouldLogout) {
-			Editor prefEdit = sharedPreferences.edit();
-		prefEdit.putBoolean(key, false);
-		prefEdit.commit();
+    	if (key.equals(getString(R.string.main_key_signout))) {
+    		boolean shouldLogout = sharedPreferences.getBoolean(key, false);
+    		if (shouldLogout) {
+    			Editor prefEdit = sharedPreferences.edit();
+    			prefEdit.putBoolean(key, false);
+    			prefEdit.commit();
 
-		// TODO logout logic
+    			// TODO logout logic
 		
-			Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
-			goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			finish();
-			startActivity(goToNextActivity);
-			overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-			return;
-		}
+    			Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+    			goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    			finish();
+    			startActivity(goToNextActivity);
+				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+				return;
+    		}
         }
     }
 

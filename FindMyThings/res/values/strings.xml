@@ -20,7 +20,7 @@
     <string name="required">Required</string>
     <string name="optional">Optional</string>
     <string name="pref_type">Kind - Lost</string>
-    <string name="submit">Submit</string>
+    <string name="action_submit">Submit</string>
     <string name="cat_type">Category - Misc</string>
     <string name="location">Location</string>
     <string name="reward">Reward</string>
@@ -52,7 +52,6 @@
     <item>2</item>
     </string-array>
     
-    
     <string name="header_more">More</string>
     
     <string-array name="item_classes">
@@ -61,6 +60,8 @@
         <item>Donated</item>
         <item>Requested</item>
     </string-array>
+    
+    <string name="key_nooverride_animation">findmythings.activity.nooverride_animation</string>
     
 
 </resources>

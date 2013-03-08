@@ -57,6 +57,7 @@ public class Submit extends Activity {
 		getMenuInflater().inflate(R.menu.submit, menu);
 		return true;
 	}
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -72,8 +73,11 @@ public class Submit extends Activity {
 	 */
 	public void toItemList() {
 		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
+		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		goToNextActivity.putExtra(getString(R.string.key_nooverride_animation), true);
 		finish();
 		startActivity(goToNextActivity);
+		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
 	}
 	
 	@Override

@@ -1,6 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
- <item android:id="@+id/submit_ok" android:title="@string/submit" android:icon="@drawable/action_accept" android:showAsAction="ifRoom|withText"></item><item android:id="@+id/submit_cancel" android:icon="@drawable/action_cancel" android:title="@string/action_cancel" android:showAsAction="ifRoom|withText"></item>
+ <item
+     android:id="@+id/submit_ok" 
+     android:title="@android:string/ok"
+     android:icon="@drawable/action_accept"
+     android:showAsAction="ifRoom|withText" />
+ <item
+     android:id="@+id/submit_cancel"
+     android:icon="@drawable/action_cancel"
+     android:title="@android:string/cancel"
+     android:showAsAction="ifRoom|withText" />
 
 
 </menu>
