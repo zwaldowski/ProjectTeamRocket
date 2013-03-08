@@ -38,14 +38,14 @@ public class ItemListFragment extends ListFragment {
 	 * The current activated item position. Only used on tablets.
 	 */
 	private int mActivatedPosition = ListView.INVALID_POSITION;
+	
+	private Controller control = Controller.shared();
 
 	/**
 	 * A callback interface that all activities containing this fragment must
 	 * implement. This mechanism allows activities to be notified of item
 	 * selections.
 	 */
-	
-	private Controller control = new Controller();
 	
 	private static ArrayAdapter<Item> adapter;
 	
@@ -79,9 +79,9 @@ public class ItemListFragment extends ListFragment {
 	
 		// TODO: replace with a real list adapter.
 		
-		adapter = new ArrayAdapter<Item>(getActivity(),
+		adapter = control.newItemsAdapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, control.items);
+				android.R.id.text1);
 		setListAdapter(adapter);
 	}
 		
@@ -130,7 +130,7 @@ public class ItemListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(Controller.items.get(position).getName());
+		mCallbacks.onItemSelected(control.getItem(position).getName());
 	}
 
 	@Override

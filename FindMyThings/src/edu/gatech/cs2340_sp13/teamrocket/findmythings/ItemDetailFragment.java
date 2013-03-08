@@ -26,7 +26,7 @@ public class ItemDetailFragment extends Fragment {
 	 */
 	private Item mItem;
 	
-	private Controller control = new Controller();
+	private Controller control = Controller.shared();
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,7 +44,7 @@ public class ItemDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = control.items_map.get(getArguments().getString(
+			mItem = control.getItem(getArguments().getString(
 					ARG_ITEM_ID));
 		}
 	}

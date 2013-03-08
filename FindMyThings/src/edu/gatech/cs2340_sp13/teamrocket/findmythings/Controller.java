@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Context;
+import android.widget.ArrayAdapter;
+
 import edu.gatech.cs2340_sp13.teamrocket.findmythings.dummy.DummyContent.DummyItem;
 
-public class Controller {
+public final class Controller {
 	
-	public static ArrayList<Item> items = new ArrayList<Item>();
+	private static Controller mSharedInstance;
 	
-	/**
-	 * Used to get the description of each item
-	 */
-	public static Map<String, Item> items_map = new HashMap<String, Item>();
-	
-	
-	public Controller() {
-				
-	}
+	public synchronized static Controller shared() {
+        if (mSharedInstance == null) {
+        	mSharedInstance = new Controller();
+        }
+        return mSharedInstance;
+    }
 	
 	/**
 	 * Adds a few generic items to the arraylist
 	 */
-	static {
+	private Controller() {
 		Item cat = new Item("Cat",0);
 		Item dog = new Item("Dog",0);
 		Item catdog = new Item("CatDog",100);
@@ -31,16 +31,18 @@ public class Controller {
 		cat.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
 		dog.setDescription("oom oom oom oom oom oom oom oom oom oom oom oom ");
 		catdog.setDescription("omo omo omo omo omo omo omo omo omo omo omo ");
-		Controller c = new Controller();
-		c.addItem(cat);
-		c.addItem(dog);
-		c.addItem(catdog);
-	}
+		addItem(cat);
+		addItem(dog);
+		addItem(catdog);
+    }
 	
+	private ArrayList<Item> items = new ArrayList<Item>();
 	
-
+	/**
+	 * Used to get the description of each item
+	 */
+	private Map<String, Item> items_map = new HashMap<String, Item>();
 	
-
 	/**
 	 * Adds an item to the arraylist
 	 * @param i
@@ -49,12 +51,34 @@ public class Controller {
 		items.add(i);
 		items_map.put(i.getName(),i);
 	}
+	
+	/**
+	 * Gets an indexed item from our arraylist
+	 * @param key The key of the Item to return
+	 */
+	public Item getItem(Integer key) {
+		return items.get(key);
+	}
+	
+	/**
+	 * Gets an item from our arraylist
+	 * @param key The key of the Item to return
+	 */
+	public Item getItem(String key) {
+		return items_map.get(key);
+	}
+	
+	public ArrayAdapter<Item> newItemsAdapter(Context context, int resource, int textViewResourceId) {
+		return new ArrayAdapter<Item>(context, resource, textViewResourceId, items);
+	}
+	
 	/**
 	 * create a new item (lost, found, donated or requested) 
 	 * @param m
 	 * @return
 	 */
 	public Item createItem(Member m) {
+		// TODO
 		return null;
 	}
 	
@@ -65,6 +89,7 @@ public class Controller {
 	 */
 	@SuppressWarnings("unused")
 	private ArrayList<Item> getInfo(Item i) {
+		// TODO
 		return null;
 	}
 	
@@ -75,6 +100,7 @@ public class Controller {
 	 * @return
 	 */
 	public ArrayList<Item> doSearch(int[] searches) {
+		// TODO
 		return null;
 	}
 	
@@ -85,7 +111,7 @@ public class Controller {
 	 * @param requester
 	 */
 	public void getContact (Member m, Member requester) {
-		
+		// TODO
 	}
 
 }

@@ -11,12 +11,10 @@ import android.widget.EditText;
 
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
 	
-	
 	//UI References
 	public ListPreference TypeListPref, CatListPref;
 	
-	private Controller control = new Controller();
-	
+	private Controller control = Controller.shared();
 		
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

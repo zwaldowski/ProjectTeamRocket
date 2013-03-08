@@ -20,8 +20,7 @@ public class Submit extends Activity {
 	private String desc, loc, name;
 	private int rward;
 	
-	private Controller control = new Controller();
-	
+	private Controller control = Controller.shared();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
