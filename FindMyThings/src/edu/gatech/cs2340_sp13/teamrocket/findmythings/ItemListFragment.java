@@ -1,15 +1,11 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import edu.gatech.cs2340_sp13.teamrocket.findmythings.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Items. This fragment also supports
