@@ -39,9 +39,11 @@ public class ItemListActivity extends FragmentActivity implements
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
+		
 		String listTypeKey = getString(R.string.item_list_key_class);
-		if (savedInstanceState != null && savedInstanceState.containsKey(listTypeKey)) {
-			mClass = Item.Class.values()[savedInstanceState.getInt(listTypeKey)];
+		Bundle extraInfo = getIntent().getExtras();
+		if (extraInfo != null && extraInfo.containsKey(listTypeKey)) {
+			mClass = Item.Class.values()[extraInfo.getInt(listTypeKey)];
 		}
 		
 		setTitle(mClass.getListActivityTitle(this));

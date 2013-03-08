@@ -31,29 +31,21 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        
 	        final String listTypeKey = getString(R.string.item_list_key_class);
 
-	        Preference lostButton = findPreference(getString(R.string.main_key_lost));
-	        Intent lostIntent = lostButton.getIntent();
+	        Intent lostIntent = findPreference(getString(R.string.main_key_lost)).getIntent();
 	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        Bundle lostButtonBundle = lostButton.getExtras();
-	        lostButtonBundle.putInt(listTypeKey, Item.Class.Lost.ordinal());
+	        lostIntent.putExtra(listTypeKey, Item.Class.Lost.ordinal());
 	        
-	        Preference foundButton = findPreference(getString(R.string.main_key_found));
-	        Intent foundIntent = foundButton.getIntent();
+	        Intent foundIntent = findPreference(getString(R.string.main_key_found)).getIntent();
 	        foundIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        Bundle foundButtonBundle = foundButton.getExtras();
-	        foundButtonBundle.putInt(listTypeKey, Item.Class.Found.ordinal());
+	        foundIntent.putExtra(listTypeKey, Item.Class.Found.ordinal());
 	        
-	        Preference donationButton = findPreference(getString(R.string.main_key_donations));
-	        Intent donationIntent = donationButton.getIntent();
+	        Intent donationIntent = findPreference(getString(R.string.main_key_donations)).getIntent();
 	        donationIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        Bundle donationButtonBundle = donationButton.getExtras();
-	        donationButtonBundle.putInt(listTypeKey, Item.Class.Donation.ordinal());
+	        donationIntent.putExtra(listTypeKey, Item.Class.Donation.ordinal());
 	        
-	        Preference requestButton = findPreference(getString(R.string.main_key_requests));
-	        Intent requestIntent = requestButton.getIntent();
+	        Intent requestIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        Bundle requestButtonBundle = requestButton.getExtras();
-	        requestButtonBundle.putInt(listTypeKey, Item.Class.Request.ordinal());
+	        requestIntent.putExtra(listTypeKey, Item.Class.Request.ordinal());
 	    
 	        Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
 	        myAccount.setSummary(LoginWindow.Email);
