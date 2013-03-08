@@ -63,6 +63,8 @@ public class ItemDetailFragment extends Fragment {
 			.setText(mItem.getLoc());
 			((TextView) rootView.findViewById(R.id.cat_detail))
 			.setText(mItem.getCatString());
+			((TextView) rootView.findViewById(R.id.date_detail))
+			.setText(mItem.getDateString());
 		}
 
 		return rootView;

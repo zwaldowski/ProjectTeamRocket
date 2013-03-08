@@ -75,6 +75,27 @@
 			    android:paddingRight="12dp" >
 	        	
 			</TextView>
+			
+			<TextView
+			    android:id="@+id/date"
+			    style="@style/Header"
+			    android:paddingBottom="15dp"
+			    android:paddingTop="15dp"
+			    android:text="@string/date_caps" />
+			
+				<TextView
+			    android:id="@+id/date_detail"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:ems="10"
+			    android:paddingBottom="15dp"
+			    android:paddingLeft="12dp"
+			    android:paddingTop="10dp"
+			    android:textIsSelectable="true"
+			    android:textSize="20sp"
+			    android:paddingRight="12dp" >
+	        	
+			</TextView>
     
         </LinearLayout>
 </ScrollView>

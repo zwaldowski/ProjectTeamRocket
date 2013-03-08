@@ -66,9 +66,9 @@ public class Item {
 		loc = "The streets";
 		
 		//Gets todays date - maybe
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		
 		date = new Date();
-		dateFormat.format(date);
+		
 		
 		this.name = name;
 		this.reward = reward;
@@ -92,10 +92,10 @@ public class Item {
 	
 	public void setCat(String s) {
 		if(s.equals("0"))
-			cat = Category.HEIR;
+			cat = Category.MISC;
 		if(s.equals("1"))
 			cat = Category.KEEPSAKE;
-		else cat = Category.MISC;
+		else cat = Category.HEIR;
 	}
 	
 	public void setDate(Date d) {
@@ -137,6 +137,11 @@ public class Item {
 	
 	public Date getDate() {
 		return date;
+	}
+	
+	public String getDateString() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		return dateFormat.format(date);
 	}
 	
 	public int getReward() {
