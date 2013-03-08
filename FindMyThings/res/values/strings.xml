@@ -17,8 +17,8 @@
     <string name="action_cancel">Cancel</string>
     <string name="looking">I\'m looking for&#8230;</string>
     <string name="title_activity_submit">Submit</string>
-    <string name="required">REQUIRED</string>
-    <string name="optional">OPTIONAL</string>
+    <string name="required">Required</string>
+    <string name="optional">Optional</string>
     <string name="pref_type">Kind - Lost</string>
     <string name="submit">Submit</string>
     <string name="cat_type">Category - Misc</string>
@@ -61,6 +61,6 @@
         <item>Donated</item>
         <item>Requested</item>
     </string-array>
-
+    
 
 </resources>

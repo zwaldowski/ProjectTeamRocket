@@ -53,23 +53,23 @@ public class Register extends Activity {
 		mConfirmView = (EditText) findViewById(R.id.confirmpass);
 	}
 	
+	private boolean backToLogin() {
+		Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+    	goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		finish();
+		startActivity(goToNextActivity);
+	    overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+	    return true;
+	}
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-	    	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
-			finish();
-			startActivity(goToNextActivity);
-	        return true;
+			return backToLogin();
 	    }
 
 	    return super.onKeyDown(keyCode, event);
-	}
-	
-	@Override
-	public void onResume() {
-	    super.onResume();
-	    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 
 	/**
@@ -143,8 +143,12 @@ public class Register extends Activity {
 					rEmail = mEmail;
 					
 					Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+			    	goToNextActivity.addFlags(
+			                Intent.FLAG_ACTIVITY_CLEAR_TOP |
+			                Intent.FLAG_ACTIVITY_NEW_TASK);
 					finish();
 					startActivity(goToNextActivity);
+				    overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
 					
 					
 				}
@@ -172,15 +176,7 @@ public class Register extends Activity {
 	 		return true;
 	 	case R.id.register_cancel:
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
+			return backToLogin();
 		}
 		return super.onOptionsItemSelected(item);
 	}

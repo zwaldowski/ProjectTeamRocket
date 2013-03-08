@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 
 /**
  * An activity representing a list of Items. This activity has different
@@ -28,21 +29,21 @@ public class ItemListActivity extends FragmentActivity implements
 	 * device.
 	 */
 	private boolean mTwoPane;
-
+	
 	private Item.Class mClass = Item.Class.Lost;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
-
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		
 		String listTypeKey = getString(R.string.item_list_key_class);
 		if (savedInstanceState != null && savedInstanceState.containsKey(listTypeKey)) {
 			mClass = Item.Class.values()[savedInstanceState.getInt(listTypeKey)];
 		}
-
+		
 		setTitle(mClass.getListActivityTitle(this));
 
 		if (findViewById(R.id.item_detail_container) != null) {
@@ -61,19 +62,40 @@ public class ItemListActivity extends FragmentActivity implements
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
 	
+
 	
+	private void goToParentActivity() {
+    	Intent goToNextActivity = new Intent(this, MainActivity.class);
+    	goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(goToNextActivity);
+	    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-	    	Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
-			finish();
-			startActivity(goToNextActivity);
+	    	goToParentActivity();
 	        return true;
 	    }
 
 	    return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	goToParentActivity();
+	            return true;
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 	}
 
 	/**

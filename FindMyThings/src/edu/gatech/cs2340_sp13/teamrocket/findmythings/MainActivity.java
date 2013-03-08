@@ -22,13 +22,41 @@ import android.preference.PreferenceFragment;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class MainActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+		
 	public static class MainFragment extends PreferenceFragment {
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
-	        Preference p = (Preference)findPreference("emailhere");
-			p.setSummary(LoginWindow.Email);
+	        
+	        final String listTypeKey = getString(R.string.item_list_key_class);
+
+	        Preference lostButton = findPreference(getString(R.string.main_key_lost));
+	        Intent lostIntent = lostButton.getIntent();
+	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	        Bundle lostButtonBundle = lostButton.getExtras();
+	        lostButtonBundle.putInt(listTypeKey, Item.Class.Lost.ordinal());
+	        
+	        Preference foundButton = findPreference(getString(R.string.main_key_found));
+	        Intent foundIntent = foundButton.getIntent();
+	        foundIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	        Bundle foundButtonBundle = foundButton.getExtras();
+	        foundButtonBundle.putInt(listTypeKey, Item.Class.Found.ordinal());
+	        
+	        Preference donationButton = findPreference(getString(R.string.main_key_donations));
+	        Intent donationIntent = donationButton.getIntent();
+	        donationIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	        Bundle donationButtonBundle = donationButton.getExtras();
+	        donationButtonBundle.putInt(listTypeKey, Item.Class.Donation.ordinal());
+	        
+	        Preference requestButton = findPreference(getString(R.string.main_key_requests));
+	        Intent requestIntent = requestButton.getIntent();
+	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	        Bundle requestButtonBundle = requestButton.getExtras();
+	        requestButtonBundle.putInt(listTypeKey, Item.Class.Request.ordinal());
+	    
+	        Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
+	        myAccount.setSummary(LoginWindow.Email);
 	    }
 	}
 
@@ -52,18 +80,17 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	@Override
 	protected void onResume() {
 	    super.onResume();
-	    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	    settingsListFragment.getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
 	public void onPause() {
 		settingsListFragment.getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-	super.onPause();
+		super.onPause();
 	}
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-	if (key.equals(getString(R.string.pref_readytologout))) {
+	if (key.equals(getString(R.string.main_key_signout))) {
 		boolean shouldLogout = sharedPreferences.getBoolean(key, false);
 		if (shouldLogout) {
 			Editor prefEdit = sharedPreferences.edit();
@@ -71,10 +98,12 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 		prefEdit.commit();
 
 		// TODO logout logic
-
-		Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+		
+			Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+			goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			finish();
 			startActivity(goToNextActivity);
+			overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 			return;
 		}
         }

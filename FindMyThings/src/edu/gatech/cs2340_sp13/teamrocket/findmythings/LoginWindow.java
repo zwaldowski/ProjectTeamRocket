@@ -109,12 +109,6 @@ public class LoginWindow extends Activity {
 		return true;
 	}
 	
-	@Override
-	public void onResume() {
-	    super.onResume();
-	    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-	}
-	
 	/**
 	 * Creates user object, will need to be modified once the admin class is created 
 	 * but I was having problems instantiating elsewhere.
@@ -217,6 +211,7 @@ public class LoginWindow extends Activity {
 		Intent goToNextActivity = new Intent(LoginWindow.this, Register.class);
 		goToNextActivity.putExtra("email",mEmail); // Passes email to Register
 		startActivity(goToNextActivity);
+	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 	}
 
 	/**
@@ -296,6 +291,7 @@ public class LoginWindow extends Activity {
 				Email = mEmail; //Remembers User's email.
 				Intent main = new Intent(getApplicationContext(), MainActivity.class);
 				finish();
+			    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 				startActivity(main);
 				
 				
