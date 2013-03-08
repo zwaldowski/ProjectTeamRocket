@@ -49,7 +49,13 @@ public class Item {
 	
 	// Setters
 	public void setDescription(String s) {
-		description = s;
+		if(s!=null)
+			description = s;
+	}
+	
+	public void setLoc(String s) {
+		if(s!=null)
+			loc=s;
 	}
 	
 	public void setType(Item.Type i) {

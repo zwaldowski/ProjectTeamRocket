@@ -6,6 +6,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
+import android.widget.EditText;
 
 
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
@@ -14,9 +15,16 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 	
 	public ListPreference TypeListPref, CatListPref;
 	
+	private Controller control = new Controller();
+	
+	
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_type);
+        
+        
+        
         
         //Gets type from ListPreference
         TypeListPref = (ListPreference) findPreference("type_pref");
@@ -59,6 +67,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
                 }
             });
 	}
+	
 	
 
 

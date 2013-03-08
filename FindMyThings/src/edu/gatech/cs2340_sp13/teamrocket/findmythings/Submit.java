@@ -6,12 +6,36 @@ import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class Submit extends Activity {
+	
+	//UI references
+	private EditText description;
+	private EditText location;
+	private EditText reward;
+	private EditText iName;
+	
+	//Hold strings from the UI
+	private String desc, loc, name;
+	private int rward;
+	
+	private Controller control = new Controller();
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+				
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_submit);
+		
+		
+		//References the layout in activity_submit
+		iName = (EditText) findViewById(R.id.name);
+		description = (EditText) findViewById(R.id.description);
+		location = (EditText) findViewById(R.id.locationtext);
+		reward = (EditText) findViewById(R.id.rewardtext);
+				
 		
 		// Hide the Up button in the action bar.
 		setupActionBar();
@@ -38,8 +62,7 @@ public class Submit extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-	    	toItemList();
-	        return true;
+	    	return false;
 	    }
 
 	    return super.onKeyDown(keyCode, event);
@@ -53,21 +76,23 @@ public class Submit extends Activity {
 		finish();
 		startActivity(goToNextActivity);
 	}
-	/**
-	 * Adds the item and goes to the Item List Activity
-	 */
-	public void addItem() {
-		//TODO: Actually add the item
-		toItemList();
-		
-		
-	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 	 	case R.id.submit_ok:
-	 		addItem();
-	 		//TODO: Add new item to the ItemList
+	 		desc = description.getText().toString();
+	 		loc = location.getText().toString();
+	 		rward = reward.getText().toString()==null? 0:Integer.parseInt(reward.getText().toString());
+	 		name = iName.getText().toString();
+	 		
+	 		Item temp = new Item(name,rward);
+	 		temp.setDescription(desc);
+	 		temp.setLoc(loc);
+	 		//TODO: Get type and category from SubmitFrag
+	 		control.addItem(temp);
+	 		toItemList();
+	 		
 	 		return true;
 	 	case R.id.submit_cancel:
 	 		toItemList();

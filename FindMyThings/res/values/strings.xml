@@ -31,6 +31,9 @@
     <string name="cat_caps">CATEGORY</string>
     <string name="contact">CONTACT</string>
     
+    <string name="item_name">Item name</string>
+    <string name="i_example">Bike/Photo Album/Baby etc.</string>
+    
     
     <string-array name="Types">
     <item>Lost</item>

@@ -47,7 +47,7 @@ public class ItemListFragment extends ListFragment {
 	
 	private Controller control = new Controller();
 	
-	private ArrayAdapter<Item> adapter;
+	private static ArrayAdapter<Item> adapter;
 	
 	public interface Callbacks {
 		/**
@@ -83,6 +83,10 @@ public class ItemListFragment extends ListFragment {
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, control.items);
 		setListAdapter(adapter);
+	}
+	
+	public static void refresh() {
+		adapter.notifyDataSetChanged();
 	}
 	
 	public void AddItem(View v, Item i){
