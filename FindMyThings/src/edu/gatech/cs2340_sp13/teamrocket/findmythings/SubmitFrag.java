@@ -17,14 +17,14 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 	public void syncTypePref(Item.Type value) {
     	Submit activity = (Submit)getActivity();
 		TypeListPref.setValue(((Integer)value.ordinal()).toString());
-	TypeListPref.setTitle(R.string.pref_type + " - " + value.getLocalizedValue(activity));
+	TypeListPref.setTitle(getString(R.string.pref_type) + " - " + value.getLocalizedValue(activity));
     	TypeListPref.setSummary(value.getLocalizedDescription(activity));
 	}
 	
 	public void syncCatPref(Item.Category value) {
 	Submit activity = (Submit)getActivity();
 	CatListPref.setValue(((Integer)value.ordinal()).toString());
-		CatListPref.setTitle(R.string.cat_type + " - " + value.getLocalizedValue(activity));
+		CatListPref.setTitle(getString(R.string.cat_type) + " - " + value.getLocalizedValue(activity));
 		CatListPref.setSummary(value.getLocalizedDescription(activity));
 	}
 	
