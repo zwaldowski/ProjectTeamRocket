@@ -23,13 +23,22 @@ public class Submit extends Activity {
 	//Hold strings from the UI
 	private String desc, loc, name;
 	private int rward;
-	
+
+	/**
+	 * Data source we submit to.
+	 */
 	private Controller control = Controller.shared();
-	
+
+	/**
+	 * The list to submit this item to.
+	 */
 	private Item.Type mType = Item.Type.LOST;
 
+	/**
+	 * Category for this item, helper for {@link SubmitFrag}.
+	 */
 	private Item.Category mCategory = Item.Category.MISC;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 				
@@ -81,9 +90,9 @@ public class Submit extends Activity {
 
 	    return super.onKeyDown(keyCode, event);
 	}
-	
+
 	/**
-	 * Goes to ItemList Activity
+	 * Returns to Item List activity. Animation and ID helper.
 	 */
 	public boolean toItemList() {
 		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
@@ -160,21 +169,38 @@ public class Submit extends Activity {
 		
 			
 			return super.onOptionsItemSelected(item);
-		
+
 	}
-	
+
+	/**
+	 * Sets the item type for this submission, i.e., the list
+	 * the item will be put on.
+	 * @param type An Item Type enumerated value.
+	 */
 	public void setItemType(Item.Type type) {
 		mType = type;
 	}
-	
+
+	/**
+	 * Returns the list the item will be put on.
+	 * @return An Item Type enumerated value.
+	 */
 	public Item.Type getItemType() {
 		return mType;
 	}
 
+	/**
+	 * Sets the item category for this submission, used for filtering
+	 * @param type An Item Category enumerated value.
+	 */
 	public void setItemCategory(Item.Category type) {
 		mCategory = type;
 	}
 
+	/**
+	 * Returns the category for the item.
+	 * @return An Item Category enumerated value.
+	 */
 	public Item.Category getItemCategory() {
 		return mCategory;
 	}

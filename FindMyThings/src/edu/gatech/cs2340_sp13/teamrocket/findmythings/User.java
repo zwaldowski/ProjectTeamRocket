@@ -2,9 +2,16 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 public class User extends Member {
 
+	/**
+	 * Whether or not a user has exceeded their login attempts.
+	 */
 	private boolean locked = false;
 	
+	/**
+	 * The number of login attempts.
+	 */
 	private int attempts = 0;
+
 	public User(String user, String pass, String phone) {
 		super(user, pass, phone);
 		// TODO Auto-generated constructor stub
@@ -21,6 +28,7 @@ public class User extends Member {
 	public boolean locked(){
 		return locked;
 	}
+
 	/**
 	 * locks or unlocks user account
 	 * @param b 

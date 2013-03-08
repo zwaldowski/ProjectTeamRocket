@@ -7,18 +7,18 @@ public class Member {
 	private String address;
 	private String phone = "";
 	
-	//private Location address; 
+	// TODO hash password(s)
+
 	public Member(String user, String pass, String phone) {
 		this(user,pass);
 		if(phone!=null)
 		this.phone=phone;
 		
 	}
+
 	public Member(String user, String pass) {
 		this.user = user;
 		password = pass;
-		
-		
 	}
 	
 	//Getters
@@ -30,6 +30,7 @@ public class Member {
 	public String getUser() {
 		return user;
 	}
+
 	/**
 	 * 
 	 * @return password
@@ -37,6 +38,7 @@ public class Member {
 	public String getPassword() {
 		return password;
 	}
+
 	/**
 	 * 
 	 * @return name
@@ -44,6 +46,7 @@ public class Member {
 	public String getName() {
 		return name;
 	}
+
 	/**
 	 * 
 	 * @return phone number
@@ -51,6 +54,7 @@ public class Member {
 	public String getPhone() {
 		return phone;
 	}
+
 	/**
 	 * 
 	 * @return address
@@ -68,13 +72,15 @@ public class Member {
 	public void setPhone(String s) {
 		phone = s;
 	}
+
 	/**
-	 * set name
+	 * set address
 	 * @param s
 	 */
 	public void setAddress(String s) {
 		address=s;
 	}
+
 	/**
 	 * set name
 	 * @param s
@@ -82,7 +88,8 @@ public class Member {
 	public void setName(String s) {
 		name = s;
 	}
-	//
+
+	/* Object methods */
 	
 	@Override
 	public boolean equals(Object m) {

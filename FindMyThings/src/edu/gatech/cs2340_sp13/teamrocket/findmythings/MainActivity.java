@@ -50,6 +50,10 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	    }
 	}
 
+	/**
+	 * A reference to the fragment this activity is displaying.
+	 * Undefined on Android versions less than Honeycomb.
+	 */
 	private MainFragment settingsListFragment;
 
 	@SuppressWarnings("deprecation")
@@ -79,6 +83,9 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 		super.onPause();
 	}
 
+	/**
+	 * Listener responder for the Sign Out button.
+	 */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     	if (key.equals(getString(R.string.main_key_signout))) {
     		boolean shouldLogout = sharedPreferences.getBoolean(key, false);
