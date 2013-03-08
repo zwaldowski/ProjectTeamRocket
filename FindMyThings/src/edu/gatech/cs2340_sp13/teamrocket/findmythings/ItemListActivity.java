@@ -31,7 +31,7 @@ public class ItemListActivity extends FragmentActivity implements
 	 */
 	private boolean mTwoPane;
 	
-	private Item.Type mClass = Item.Type.Lost;
+	private Item.Type mType = Item.Type.Lost;
 	
 	private static final String kItemListFragmentKey = "ItemListFragment"; 
 
@@ -44,10 +44,10 @@ public class ItemListActivity extends FragmentActivity implements
 		
 		Bundle extraInfo = getIntent().getExtras();
 		if (extraInfo != null && extraInfo.containsKey(Item.Type.ID)) {
-			mClass = Item.Type.values()[extraInfo.getInt(Item.Type.ID)];
+			mType = Item.Type.values()[extraInfo.getInt(Item.Type.ID)];
 		}
 		
-		setTitle(mClass.getListActivityTitle(this));
+		setTitle(mType.getListActivityTitle(this));
 
 		ItemListFragment fragment;
 		if (savedInstanceState == null) {
@@ -131,7 +131,7 @@ public class ItemListActivity extends FragmentActivity implements
 			// fragment transaction.
 			Bundle arguments = new Bundle();
 			arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
-			arguments.putInt(Item.Type.ID, mClass.ordinal());
+			arguments.putInt(Item.Type.ID, mType.ordinal());
 			ItemDetailFragment fragment = new ItemDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
@@ -142,7 +142,7 @@ public class ItemListActivity extends FragmentActivity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 			detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
-			detailIntent.putExtra(Item.Type.ID, mClass.ordinal());
+			detailIntent.putExtra(Item.Type.ID, mType.ordinal());
 			startActivity(detailIntent);
 		}
 	}
@@ -152,7 +152,7 @@ public class ItemListActivity extends FragmentActivity implements
 	 */
 	public boolean toSubmit() {
 		Intent goToNextActivity = new Intent(ItemListActivity.this, Submit.class);
-		goToNextActivity.putExtra(Item.Type.ID, mClass.ordinal());
+		goToNextActivity.putExtra(Item.Type.ID, mType.ordinal());
 		startActivity(goToNextActivity);
 	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 	    return true;
@@ -165,7 +165,7 @@ public class ItemListActivity extends FragmentActivity implements
 		return true;
 	}
 	
-	public Item.Type getItemClass() {
-		return mClass;
+	public Item.Type getItemType() {
+		return mType;
 	}
 }

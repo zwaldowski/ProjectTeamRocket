@@ -16,7 +16,7 @@ import android.view.MenuItem;
  */
 public class ItemDetailActivity extends FragmentActivity {
 	
-	private Item.Type mClass;
+	private Item.Type mType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class ItemDetailActivity extends FragmentActivity {
 		
 		Bundle extraInfo = getIntent().getExtras();
 		if (extraInfo != null && extraInfo.containsKey(Item.Type.ID)) {
-			mClass = Item.Type.forInt(extraInfo.getInt(Item.Type.ID));
+			mType = Item.Type.forInt(extraInfo.getInt(Item.Type.ID));
 		}
 
 		// savedInstanceState is non-null when there is fragment state
@@ -69,7 +69,7 @@ public class ItemDetailActivity extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public Item.Type getItemClass() {
-		return mClass;
+	public Item.Type getItemType() {
+		return mType;
 	}
 }

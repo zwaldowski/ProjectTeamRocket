@@ -22,7 +22,7 @@ public class Submit extends Activity {
 	
 	private Controller control = Controller.shared();
 	
-	private Item.Type mClass = Item.Type.Lost;
+	private Item.Type mType = Item.Type.Lost;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class Submit extends Activity {
 		
 		Bundle extraInfo = getIntent().getExtras();
 		if (extraInfo != null && extraInfo.containsKey(Item.Type.ID)) {
-			mClass = Item.Type.forInt(extraInfo.getInt(Item.Type.ID));
+			mType = Item.Type.forInt(extraInfo.getInt(Item.Type.ID));
 		}
 		
 		// Hide the Up button in the action bar.
@@ -47,7 +47,7 @@ public class Submit extends Activity {
 		setTitle("Submit an Item");
 		
 		SubmitFrag frag = (SubmitFrag) getFragmentManager().findFragmentById(R.id.submit_fragment);
-		frag.syncTypePref(mClass);
+		frag.syncTypePref(mType);
 	}
 		
 	/**
@@ -83,7 +83,7 @@ public class Submit extends Activity {
 		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
 		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		goToNextActivity.putExtra(getString(R.string.key_nooverride_animation), true);
-		goToNextActivity.putExtra(Item.Type.ID, mClass.ordinal());
+		goToNextActivity.putExtra(Item.Type.ID, mType.ordinal());
 		finish();
 		startActivity(goToNextActivity);
 		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
@@ -103,7 +103,7 @@ public class Submit extends Activity {
 	 		temp.setDescription(desc);
 	 		temp.setLoc(loc);
 	 		//TODO: Get type and category from SubmitFrag
-	 		control.addItem(mClass, temp);
+	 		control.addItem(mType, temp);
 	 		toItemList();
 	 		
 	 		return true;
@@ -125,12 +125,12 @@ public class Submit extends Activity {
 			return super.onOptionsItemSelected(item);
 	}
 	
-	public void setItemClass(Item.Type newItemClass) {
-		mClass = newItemClass;
+	public void setItemType(Item.Type type) {
+		mType = type;
 	}
 	
-	public Item.Type getItemClass() {
-		return mClass;
+	public Item.Type getItemType() {
+		return mType;
 	}
 
 }

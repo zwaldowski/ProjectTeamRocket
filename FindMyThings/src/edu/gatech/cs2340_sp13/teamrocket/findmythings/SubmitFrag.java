@@ -30,7 +30,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         TypeListPref = (ListPreference) findPreference("type_pref");
         CatListPref = (ListPreference) findPreference("cat_pref");
         
-        syncTypePref(((Submit)getActivity()).getItemClass());
+        syncTypePref(((Submit)getActivity()).getItemType());
         
         //TODO: Create one listener class for all Preferences. Maybe.
         TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -38,7 +38,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
             public boolean onPreferenceChange(Preference preference, Object newValue) {
             	Item.Type newClass = Item.Type.forInt(Integer.parseInt((String)newValue));
             	syncTypePref(newClass);
-            	((Submit)getActivity()).setItemClass(newClass);
+            	((Submit)getActivity()).setItemType(newClass);
                 return true;
             }
         });
