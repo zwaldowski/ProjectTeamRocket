@@ -63,6 +63,7 @@ public class Submit extends Activity {
 		
 		SubmitFrag frag = (SubmitFrag) getFragmentManager().findFragmentById(R.id.submit_fragment);
 		frag.syncTypePref(mType);
+		frag.syncCatPref(mCategory);
 	}
 		
 	/**
