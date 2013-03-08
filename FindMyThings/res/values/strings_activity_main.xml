@@ -8,18 +8,16 @@
     <string name="main_summary_donations">&#8230;something that I need.</string>
     <string name="main_title_requests">Requests</string>
     <string name="main_summary_requests">&#8230;help someone needs.</string>
-    <string name="pref_title_account">My Account</string>
-    <string name="pref_title_sign_out">Sign out</string>
-
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
+    <string name="main_title_account">My Account</string>
+    <string name="main_title_signout">Sign out</string>
+    
+    <string name="main_key_lost">findmythings.main.lost</string>
+    <string name="main_key_found">findmythings.main.found</string>
+    <string name="main_key_donations">findmythings.main.donations</string>
+    <string name="main_key_requests">findmythings.main.requests</string>
+    <string name="main_key_myaccount">findmythings.main.myaccount</string>
+    <string name="main_key_signout">findmythings.main.signout</string>
+    
+    <string name="main_message_signout">Are you sure you want to log out of Find My Things?</string>
 
 </resources>

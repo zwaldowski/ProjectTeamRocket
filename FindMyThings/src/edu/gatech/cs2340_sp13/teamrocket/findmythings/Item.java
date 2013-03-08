@@ -3,14 +3,33 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.content.Context;
 import android.text.format.DateFormat;
 
 public class Item {
 	
+	public enum Class {
+		Lost(0), Found(1), Donation(2), Request(3);
+		
+		private int idx;
+		
+		private Class(int i)
+	    {
+	        idx = i;
+	    }
+		
+		public String getLocalizedValue(Context context) {
+			return context.getResources().getStringArray(R.array.item_classes)[idx];
+		}
+		
+		public String getListActivityTitle(Context context) {
+			return context.getResources().getStringArray(R.array.item_list_titles)[idx];
+		}
+	}
+	
 	private String name, loc;
 	
 	private String description = "";
-	
 	
 	private boolean open;
 	/**
@@ -29,14 +48,12 @@ public class Item {
 	
 	private int reward;
 	
-	
 	public Item (String name, int reward) {
 		open = true;
 		typ = Type.FOUND;
 		cat = Category.MISC;
 				
 		loc = "The streets";
-		
 		
 		//Gets todays date - maybe
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

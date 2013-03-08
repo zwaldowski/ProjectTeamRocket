@@ -1,18 +1,20 @@
-
-
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     
 		<PreferenceCategory android:title="@string/looking" >
-    		<Preference android:title="@string/main_title_lost" 
+    		<Preference
+    		    android:key="@string/main_key_lost"
+    		    android:title="@string/main_title_lost" 
         	    android:summary="@string/main_summary_lost">
     			<intent 
         		 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-        		 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
+        		 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
         		 android:action="android.intent.action.VIEW"
     			/>
     		</Preference>
 	
-    		<Preference android:title="@string/main_title_found" 
+    		<Preference
+    		    android:key="@string/main_key_found"
+    		    android:title="@string/main_title_found" 
     		    android:summary="@string/main_summary_found">
     			 <intent 
        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
@@ -21,17 +23,21 @@
     			/>  
     		</Preference>
 	
-    		<Preference android:title="@string/main_title_donations" 
+    		<Preference
+    		    android:key="@string/main_key_donations"
+    		    android:title="@string/main_title_donations" 
        		    android:summary="@string/main_summary_donations">
        
     			<intent 
        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
+       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
     			/>
     		</Preference>
 	
-    		<Preference android:title="@string/main_title_requests" 
+    		<Preference
+    		    android:key="@string/main_key_requests"
+    		    android:title="@string/main_title_requests" 
        		    android:summary="@string/main_summary_requests">
        
     			<intent 
@@ -42,12 +48,11 @@
    			</Preference>
                 
         </PreferenceCategory>
-		<PreferenceCategory android:title="@string/header_more" > 	
+		<PreferenceCategory android:title="@string/header_more"> 	
 	
     		<Preference
-    		    android:key="emailhere"
-    		    android:title="@string/pref_title_account" 
-    		    android:summary="Email address here.">
+    		    android:key="@string/main_key_myaccount"
+    		    android:title="@string/main_title_account">
        
     			<!-- intent 
        			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
@@ -56,17 +61,10 @@
     			/> # TODO: Intent -->
    			</Preference>
 	
-		<edu.gatech.cs2340_sp13.teamrocket.findmythings.ConfirmationDialog
-                    android:title="@string/pref_title_sign_out"
-                    android:dialogMessage="Are you sure you want to log out of Find My Things?"
-                    android:key="@string/pref_readytologout"
-                    android:summary="Log out of the app.">
-       
-    			<!-- intent 
-       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
-       			 android:action="android.intent.action.VIEW"
-    			/> # TODO: Intent -->
+    		<edu.gatech.cs2340_sp13.teamrocket.findmythings.ConfirmationDialog
+    			android:key="@string/main_key_signout"
+    			android:title="@string/main_title_signout"
+    			android:dialogMessage="@string/main_message_signout">
 			</edu.gatech.cs2340_sp13.teamrocket.findmythings.ConfirmationDialog>
 		</PreferenceCategory>
     

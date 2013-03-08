@@ -29,10 +29,21 @@ public class ItemListActivity extends FragmentActivity implements
 	 */
 	private boolean mTwoPane;
 
+	private Item.Class mClass = Item.Class.Lost;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		String listTypeKey = getString(R.string.item_list_key_class);
+		if (savedInstanceState != null && savedInstanceState.containsKey(listTypeKey)) {
+			mClass = Item.Class.values()[savedInstanceState.getInt(listTypeKey)];
+		}
+
+		setTitle(mClass.getListActivityTitle(this));
 
 		if (findViewById(R.id.item_detail_container) != null) {
 			// The detail container view will be present only in the

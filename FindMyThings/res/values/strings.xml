@@ -55,5 +55,12 @@
     
     <string name="header_more">More</string>
     
+    <string-array name="item_classes">
+        <item>Lost</item>
+        <item>Found</item>
+        <item>Donated</item>
+        <item>Requested</item>
+    </string-array>
+
 
 </resources>

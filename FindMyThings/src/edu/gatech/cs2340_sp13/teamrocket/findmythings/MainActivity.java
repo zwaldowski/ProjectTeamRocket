@@ -22,7 +22,6 @@ import android.preference.PreferenceFragment;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class MainActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
-	
 	public static class MainFragment extends PreferenceFragment {
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
