@@ -2,6 +2,8 @@
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
 import android.content.Context;
 
 public class Item {
@@ -145,7 +147,7 @@ public class Item {
 	}
 	
 	public String getDateString() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
 		return dateFormat.format(date);
 	}
 	
