@@ -12,16 +12,29 @@ import android.text.TextUtils;
 
 public class Register extends Activity {
 
+	/**
+	 * The Login manager backing this Registration window.
+	 */
 	private Login log = new Login();
 	
-	
+	/**
+	 * Form values.
+	 */
 	private String mEmail, mPassword, mCon, mPhone, mName, mAddress;
 	
+	/**
+	 * Copied email address from the login window.
+	 */
 	public static String rEmail = "";
 	
+	/**
+	 * A prefilled Member to register potentially.
+	 */
 	private Member toreg = null;
 	
-	//UI references
+	/**
+	 * UI references.
+	 */
 	private EditText mEmailView;
 	private EditText mPasswordView;
 	private EditText mPhoneView;
@@ -52,6 +65,10 @@ public class Register extends Activity {
 		mConfirmView = (EditText) findViewById(R.id.confirmpass);
 	}
 	
+	/**
+	 * Animation helper. Jumps back to the login screen.
+	 * @return true, always true. Why? Because.
+	 */
 	private boolean backToLogin() {
 		Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
     	goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

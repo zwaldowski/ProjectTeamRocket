@@ -3,7 +3,11 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 import java.util.ArrayList;
 
-
+/**
+ * A class managing how a User is authenticated.
+ * TODO: Actually authenticate users against something.
+ * @author zwaldowski
+ */
 public class Login {
 	
 	/**
@@ -25,6 +29,7 @@ public class Login {
 			
 		
 	}
+
 	/**
 	 * verify a user
 	 * @param m Member to be verified
@@ -44,6 +49,7 @@ public class Login {
 		}
 		return found;
 	}
+
 	/**
 	 * Checks whether or not the user account exists
 	 * @param m Member 
@@ -52,6 +58,7 @@ public class Login {
 	public boolean exists(Member m) {
 		return data.contains(m);
 	}
+
 	/**
 	 * adds new member to arraylist
 	 * @param name user name
@@ -63,6 +70,7 @@ public class Login {
 
 		return temp;		
 	}
+
 	/**
 	 * Updates users locked status
 	 * @param m
@@ -79,6 +87,7 @@ public class Login {
 	 * @param m
 	 */
 	public void checkAttempts(User m) {
+		// "the justin case"
 		int justincase = data.indexOf(m);
 		if(justincase!=-1)
 			((User) data.get(justincase)).setAttempts(m.getAttempts());
