@@ -96,6 +96,27 @@
 			    android:paddingRight="12dp" >
 	        	
 			</TextView>
+			
+			<TextView
+			    android:id="@+id/reward"
+			    style="@style/Header"
+			    android:paddingBottom="15dp"
+			    android:paddingTop="15dp"
+			    android:text="@string/rewardcaps" />	
+			    
+				<TextView
+			    android:id="@+id/reward_detail"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:ems="10"
+			    android:paddingBottom="15dp"
+			    android:paddingLeft="12dp"
+			    android:paddingTop="10dp"
+			    android:textIsSelectable="true"
+			    android:textSize="20sp"
+			    android:paddingRight="12dp" >
+	        	
+			</TextView>
     
         </LinearLayout>
 </ScrollView>
