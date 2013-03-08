@@ -20,56 +20,92 @@ public final class Controller {
         return mSharedInstance;
     }
 	
+	private class ItemsList {
+		
+		private ArrayList<Item> mItems = new ArrayList<Item>();
+		
+		private Map<String, Item> mItemsMap = new HashMap<String, Item>();
+		
+		public void addItem(Item i) {
+			mItems.add(i);
+			mItemsMap.put(i.getName(),i);
+		}
+		
+		/**
+		 * Gets an indexed item from our arraylist
+		 * @param key The key of the Item to return
+		 */
+		public Item getItem(Integer key) {
+			return mItems.get(key);
+		}
+		
+		/**
+		 * Gets an item from our arraylist
+		 * @param key The key of the Item to return
+		 */
+		private Item getItem(String key) {
+			return mItemsMap.get(key);
+		}
+	}
+	
 	/**
 	 * Adds a few generic items to the arraylist
 	 */
 	private Controller() {
+		
 		Item cat = new Item("Cat",0);
 		Item dog = new Item("Dog",0);
 		Item catdog = new Item("CatDog",100);
-		
 		cat.setDescription("moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo moo ");
 		dog.setDescription("oom oom oom oom oom oom oom oom oom oom oom oom ");
 		catdog.setDescription("omo omo omo omo omo omo omo omo omo omo omo ");
-		addItem(cat);
-		addItem(dog);
-		addItem(catdog);
+		
+		for (Item.Class kind : Item.Class.values()) {
+			ItemsList container = new ItemsList();
+			allItems.put(kind, container);
+			
+			addItem(kind, cat);
+			addItem(kind, dog);
+			addItem(kind, catdog);
+		}
     }
 	
-	private ArrayList<Item> items = new ArrayList<Item>();
+	private Map<Item.Class, ItemsList> allItems = new HashMap<Item.Class, ItemsList>();
 	
-	/**
-	 * Used to get the description of each item
-	 */
-	private Map<String, Item> items_map = new HashMap<String, Item>();
+	private ItemsList getContainer(Item.Class kind) {
+		return allItems.get(kind);
+	}
 	
 	/**
 	 * Adds an item to the arraylist
 	 * @param i
 	 */
-	public void addItem(Item i) {
-		items.add(i);
-		items_map.put(i.getName(),i);
+	public void addItem(Item.Class kind, Item i) {
+		ItemsList container = getContainer(kind);
+		container.addItem(i);
 	}
 	
 	/**
 	 * Gets an indexed item from our arraylist
 	 * @param key The key of the Item to return
 	 */
-	public Item getItem(Integer key) {
-		return items.get(key);
+	public Item getItem(Item.Class kind, Integer key) {
+		ItemsList container = getContainer(kind);
+		return container.getItem(key);
 	}
 	
 	/**
 	 * Gets an item from our arraylist
 	 * @param key The key of the Item to return
 	 */
-	public Item getItem(String key) {
-		return items_map.get(key);
+	public Item getItem(Item.Class kind, String key) {
+		ItemsList container = getContainer(kind);
+		return container.getItem(key);
 	}
 	
-	public ArrayAdapter<Item> newItemsAdapter(Context context, int resource, int textViewResourceId) {
-		return new ArrayAdapter<Item>(context, resource, textViewResourceId, items);
+	public ArrayAdapter<Item> newItemsAdapter(Context context, int resource, int textViewResourceId, Item.Class kind) {
+		ItemsList container = getContainer(kind);
+		return new ArrayAdapter<Item>(context, resource, textViewResourceId, container.mItems);
 	}
 	
 	/**

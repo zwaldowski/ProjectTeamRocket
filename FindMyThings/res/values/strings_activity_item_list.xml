@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <string name="item_list_key_class">findmythings.itemlist.class</string>
-    
+        
     <string-array name="item_list_titles">
         <item>Lost Items</item>
         <item>Found Items</item>

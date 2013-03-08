@@ -28,24 +28,22 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
-	        
-	        final String listTypeKey = getString(R.string.item_list_key_class);
 
 	        Intent lostIntent = findPreference(getString(R.string.main_key_lost)).getIntent();
 	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        lostIntent.putExtra(listTypeKey, Item.Class.Lost.ordinal());
+	        lostIntent.putExtra(Item.Class.ID, Item.Class.Lost.ordinal());
 	        
 	        Intent foundIntent = findPreference(getString(R.string.main_key_found)).getIntent();
 	        foundIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        foundIntent.putExtra(listTypeKey, Item.Class.Found.ordinal());
+	        foundIntent.putExtra(Item.Class.ID, Item.Class.Found.ordinal());
 	        
 	        Intent donationIntent = findPreference(getString(R.string.main_key_donations)).getIntent();
 	        donationIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        donationIntent.putExtra(listTypeKey, Item.Class.Donation.ordinal());
+	        donationIntent.putExtra(Item.Class.ID, Item.Class.Donation.ordinal());
 	        
 	        Intent requestIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        requestIntent.putExtra(listTypeKey, Item.Class.Request.ordinal());
+	        requestIntent.putExtra(Item.Class.ID, Item.Class.Request.ordinal());
 	    
 	        Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
 	        myAccount.setSummary(LoginWindow.Email);

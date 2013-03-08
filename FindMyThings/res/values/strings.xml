@@ -34,12 +34,6 @@
     <string name="item_name">Item name</string>
     <string name="i_example">Bike/Photo Album/Baby etc.</string>
     
-    
-    <string-array name="Types">
-    <item>Lost</item>
-    <item>Donate</item>
-    </string-array>
-    
     <string-array name="Categories">
     <item>Heir</item>
     <item>Keepsake</item>
@@ -60,6 +54,15 @@
         <item>Donated</item>
         <item>Requested</item>
     </string-array>
+    
+    <string-array name="item_class_descriptions">
+        <item>I\'m looking for something that is mine.</item>
+        <item>I\'m looking for the owner of something I found.</item>
+        <item>I\'m looking for someone who needs something.</item>
+        <item>I\'m looking for something I need.</item>
+    </string-array>
+    
+    
     
     <string name="key_nooverride_animation">findmythings.activity.nooverride_animation</string>
     

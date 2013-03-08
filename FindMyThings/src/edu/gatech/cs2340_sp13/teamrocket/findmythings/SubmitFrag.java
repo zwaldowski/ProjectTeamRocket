@@ -8,14 +8,20 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.widget.EditText;
 
-
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
 	
 	//UI References
 	public ListPreference TypeListPref, CatListPref;
 	
 	private Controller control = Controller.shared();
-		
+	
+	public void syncTypePref(Item.Class value) {
+    	Submit activity = (Submit)getActivity();
+		TypeListPref.setValue(((Integer)value.ordinal()).toString());
+    	TypeListPref.setTitle("Kind - " + value.getLocalizedValue(activity));
+    	TypeListPref.setSummary(value.getLocalizedDescription(activity));
+	}
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_type);
@@ -24,16 +30,18 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         TypeListPref = (ListPreference) findPreference("type_pref");
         CatListPref = (ListPreference) findPreference("cat_pref");
         
+        syncTypePref(((Submit)getActivity()).getItemClass());
+        
         //TODO: Create one listener class for all Preferences. Maybe.
         TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-            	String s = newValue.toString();
-            	TypeListPref.setSummary(s.equals("0") ?  "I'm looking for something that is mine.":"I'm looking for something I need");
-            	TypeListPref.setTitle(s.equals("0") ? "Kind - Lost":"Kind - Donate");
-                    return true;
-                }
-            });
+            	Item.Class newClass = Item.Class.forInt(Integer.parseInt((String)newValue));
+            	syncTypePref(newClass);
+            	((Submit)getActivity()).setItemClass(newClass);
+                return true;
+            }
+        });
         
         CatListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
@@ -70,7 +78,5 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
-	
 
 }

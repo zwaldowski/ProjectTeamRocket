@@ -22,24 +22,32 @@ public class Submit extends Activity {
 	
 	private Controller control = Controller.shared();
 	
+	private Item.Class mClass = Item.Class.Lost;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 				
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_submit);
 		
-		
 		//References the layout in activity_submit
 		iName = (EditText) findViewById(R.id.name);
 		description = (EditText) findViewById(R.id.description);
 		location = (EditText) findViewById(R.id.locationtext);
 		reward = (EditText) findViewById(R.id.rewardtext);
-				
+		
+		Bundle extraInfo = getIntent().getExtras();
+		if (extraInfo != null && extraInfo.containsKey(Item.Class.ID)) {
+			mClass = Item.Class.forInt(extraInfo.getInt(Item.Class.ID));
+		}
 		
 		// Hide the Up button in the action bar.
 		setupActionBar();
 		
 		setTitle("Submit an Item");
+		
+		SubmitFrag frag = getFragmentManager().findFragmentById(R.id.submit_fragment);
+		frag.syncTypePref(mClass);
 	}
 		
 	/**
@@ -75,6 +83,7 @@ public class Submit extends Activity {
 		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
 		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		goToNextActivity.putExtra(getString(R.string.key_nooverride_animation), true);
+		goToNextActivity.putExtra(Item.Class.ID, mClass.ordinal());
 		finish();
 		startActivity(goToNextActivity);
 		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
@@ -86,14 +95,14 @@ public class Submit extends Activity {
 	 	case R.id.submit_ok:
 	 		desc = description.getText().toString();
 	 		loc = location.getText().toString();
-	 		rward = reward.getText().toString()==null? 0:Integer.parseInt(reward.getText().toString());
+	 		rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 	 		name = iName.getText().toString();
 	 		
 	 		Item temp = new Item(name,rward);
 	 		temp.setDescription(desc);
 	 		temp.setLoc(loc);
 	 		//TODO: Get type and category from SubmitFrag
-	 		control.addItem(temp);
+	 		control.addItem(mClass, temp);
 	 		toItemList();
 	 		
 	 		return true;
@@ -113,6 +122,14 @@ public class Submit extends Activity {
 		}	
 			
 			return super.onOptionsItemSelected(item);
+	}
+	
+	public void setItemClass(Item.Class newItemClass) {
+		mClass = newItemClass;
+	}
+	
+	public Item.Class getItemClass() {
+		return mClass;
 	}
 
 }

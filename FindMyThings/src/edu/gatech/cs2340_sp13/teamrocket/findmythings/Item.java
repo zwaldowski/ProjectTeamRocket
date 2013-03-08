@@ -22,9 +22,19 @@ public class Item {
 			return context.getResources().getStringArray(R.array.item_classes)[idx];
 		}
 		
+		public String getLocalizedDescription(Context context) {
+			return context.getResources().getStringArray(R.array.item_class_descriptions)[idx];
+		}
+		
 		public String getListActivityTitle(Context context) {
 			return context.getResources().getStringArray(R.array.item_list_titles)[idx];
 		}
+		
+		public static Class forInt(int value) {
+			return Class.values()[value];
+		}
+		
+		public static final String ID = "item_class";
 	}
 	
 	private String name, loc;

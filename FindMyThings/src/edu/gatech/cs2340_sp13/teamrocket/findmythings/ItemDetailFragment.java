@@ -44,8 +44,8 @@ public class ItemDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = control.getItem(getArguments().getString(
-					ARG_ITEM_ID));
+			Item.Class mItemClass = ((ItemDetailActivity)getActivity()).getItemClass();
+			mItem = control.getItem(mItemClass, getArguments().getString(ARG_ITEM_ID));
 		}
 	}
 

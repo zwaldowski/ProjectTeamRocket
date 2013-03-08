@@ -32,6 +32,8 @@ public class ItemListActivity extends FragmentActivity implements
 	private boolean mTwoPane;
 	
 	private Item.Class mClass = Item.Class.Lost;
+	
+	private static final String kItemListFragmentKey = "ItemListFragment"; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,26 @@ public class ItemListActivity extends FragmentActivity implements
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		String listTypeKey = getString(R.string.item_list_key_class);
 		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(listTypeKey)) {
-			mClass = Item.Class.values()[extraInfo.getInt(listTypeKey)];
+		if (extraInfo != null && extraInfo.containsKey(Item.Class.ID)) {
+			mClass = Item.Class.values()[extraInfo.getInt(Item.Class.ID)];
 		}
 		
 		setTitle(mClass.getListActivityTitle(this));
+
+		ItemListFragment fragment;
+		if (savedInstanceState == null) {
+			// Create the detail fragment and add it to the activity
+			// using a fragment transaction.
+			Bundle arguments = new Bundle();
+			if (getIntent().getExtras() != null) arguments.putAll(getIntent().getExtras());
+			
+			fragment = new ItemListFragment();
+			fragment.setArguments(arguments);
+			getSupportFragmentManager().beginTransaction().add(R.id.item_list_container, fragment, kItemListFragmentKey).commit();
+		} else {
+			fragment = (ItemListFragment)getSupportFragmentManager().findFragmentByTag(kItemListFragmentKey);
+		}
 
 		if (findViewById(R.id.item_detail_container) != null) {
 			// The detail container view will be present only in the
@@ -57,8 +72,7 @@ public class ItemListActivity extends FragmentActivity implements
 
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
-			((ItemListFragment) getSupportFragmentManager().findFragmentById(
-					R.id.item_list)).setActivateOnItemClick(true);
+			fragment.setActivateOnItemClick(true);
 		}
 
 		// TODO: If exposing deep links into your app, handle intents here.
@@ -117,6 +131,7 @@ public class ItemListActivity extends FragmentActivity implements
 			// fragment transaction.
 			Bundle arguments = new Bundle();
 			arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
+			arguments.putInt(Item.Class.ID, mClass.ordinal());
 			ItemDetailFragment fragment = new ItemDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
@@ -127,6 +142,7 @@ public class ItemListActivity extends FragmentActivity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 			detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
+			detailIntent.putExtra(Item.Class.ID, mClass.ordinal());
 			startActivity(detailIntent);
 		}
 	}
@@ -136,7 +152,7 @@ public class ItemListActivity extends FragmentActivity implements
 	 */
 	public boolean toSubmit() {
 		Intent goToNextActivity = new Intent(ItemListActivity.this, Submit.class);
-		goToNextActivity.putExtra(getString(R.string.item_list_key_class), mClass.ordinal()); // Passes email to Register
+		goToNextActivity.putExtra(Item.Class.ID, mClass.ordinal());
 		startActivity(goToNextActivity);
 	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 	    return true;
@@ -147,5 +163,9 @@ public class ItemListActivity extends FragmentActivity implements
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_item_list, menu);
 		return true;
+	}
+	
+	public Item.Class getItemClass() {
+		return mClass;
 	}
 }
