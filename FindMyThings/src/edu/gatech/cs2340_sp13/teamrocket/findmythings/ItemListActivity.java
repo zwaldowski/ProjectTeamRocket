@@ -31,8 +31,14 @@ public class ItemListActivity extends FragmentActivity implements
 	 */
 	private boolean mTwoPane;
 	
+	/**
+	 * The class of {@link Item} displayed in this list.
+	 */
 	private Item.Type mType = Item.Type.LOST;
 	
+	/**
+	 * Identifies the item list fragment across instantiations.
+	 */
 	private static final String kItemListFragmentKey = "ItemListFragment"; 
 
 	@Override
@@ -78,6 +84,9 @@ public class ItemListActivity extends FragmentActivity implements
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
 	
+	/**
+	 * Animation helper. Goes back from an Item List to the {@link MainActivity}.
+	 */
 	private void goToParentActivity() {
     	Intent goToNextActivity = new Intent(this, MainActivity.class);
     	goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -148,7 +157,7 @@ public class ItemListActivity extends FragmentActivity implements
 	}
 	
 	/**
-	 * Goes to Submit activity
+	 * Opens a new Submit activity with the current type of item.
 	 */
 	public boolean toSubmit() {
 		Intent goToNextActivity = new Intent(ItemListActivity.this, Submit.class);
@@ -165,6 +174,10 @@ public class ItemListActivity extends FragmentActivity implements
 		return true;
 	}
 	
+	/**
+	 * Returns the kind of Item displayed in this list.
+	 * @return An enumerated Type value
+	 */
 	public Item.Type getItemType() {
 		return mType;
 	}

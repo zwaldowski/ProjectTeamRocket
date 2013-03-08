@@ -16,6 +16,9 @@ import android.view.MenuItem;
  */
 public class ItemDetailActivity extends FragmentActivity {
 	
+	/**
+	 * The class of Item displayed.
+	 */
 	private Item.Type mType;
 
 	@Override
@@ -69,6 +72,10 @@ public class ItemDetailActivity extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * A read-only getter for the kinds of Item displayed in this view.
+	 * @return An enumerated Type value.
+	 */
 	public Item.Type getItemType() {
 		return mType;
 	}
