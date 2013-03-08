@@ -18,6 +18,8 @@ public class Submit extends Activity {
 	private EditText reward;
 	private EditText iName;
 	
+	private View focusView;
+	
 	//Hold strings from the UI
 	private String desc, loc, name;
 	private int rward;
@@ -94,11 +96,9 @@ public class Submit extends Activity {
 		return true;
 	}
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		
+	public boolean checkforErrors() {
 		boolean cancel = false;
-		View focusView = null;
+		focusView = null;
 		
 		desc = description.getText().toString();
 		name = iName.getText().toString();
@@ -116,15 +116,21 @@ public class Submit extends Activity {
 			focusView = description;
 			cancel = true;
 		} 
+		return cancel;
 		
-		
-		if (cancel) //There was an error
-		focusView.requestFocus();
-		
-		else {
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+			
 			switch (item.getItemId()) {
 			case R.id.submit_ok:
-	 		
+				if (checkforErrors()) { //There was an error
+					focusView.requestFocus();
+					return false;
+				}	
+					
+				else {
 				loc = location.getText().toString();
 				rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 	 		
@@ -137,6 +143,7 @@ public class Submit extends Activity {
 				control.addItem(temp);
 				
 				return toItemList();
+				}
 			case R.id.submit_cancel:
 				return toItemList();
 			case android.R.id.home:
@@ -151,7 +158,7 @@ public class Submit extends Activity {
 			return true;	
 			}	
 		
-		}	
+			
 			return super.onOptionsItemSelected(item);
 		
 	}
