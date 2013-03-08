@@ -101,7 +101,6 @@ public class Item {
 		case 2:
 			cat = Category.MISC;
 			break;
-		
 			
 		}
 			
