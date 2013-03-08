@@ -99,6 +99,7 @@ public class Submit extends Activity {
 	 		name = iName.getText().toString();
 	 		
 	 		Item temp = new Item(name,rward);
+	 		temp.setCat(SubmitFrag.CatListPref.getValue());
 	 		temp.setDescription(desc);
 	 		temp.setLoc(loc);
 	 		//TODO: Get type and category from SubmitFrag

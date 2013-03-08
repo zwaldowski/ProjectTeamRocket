@@ -90,8 +90,12 @@ public class Item {
 		typ = i;
 	}
 	
-	public void setCat(Item.Category i) {
-		cat = i;
+	public void setCat(String s) {
+		if(s.equals("0"))
+			cat = Category.HEIR;
+		if(s.equals("1"))
+			cat = Category.KEEPSAKE;
+		else cat = Category.MISC;
 	}
 	
 	public void setDate(Date d) {

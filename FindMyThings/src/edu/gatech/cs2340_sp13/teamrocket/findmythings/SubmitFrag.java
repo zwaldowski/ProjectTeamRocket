@@ -11,7 +11,7 @@ import android.widget.EditText;
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
 	
 	//UI References
-	public ListPreference TypeListPref, CatListPref;
+	public static ListPreference TypeListPref, CatListPref;
 	
 	private Controller control = Controller.shared();
 	
@@ -21,6 +21,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
     	TypeListPref.setTitle("Kind - " + value.getLocalizedValue(activity));
     	TypeListPref.setSummary(value.getLocalizedDescription(activity));
 	}
+	
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
