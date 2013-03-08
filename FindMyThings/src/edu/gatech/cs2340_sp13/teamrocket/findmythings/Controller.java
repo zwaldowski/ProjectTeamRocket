@@ -15,12 +15,14 @@ public class Controller {
 	 */
 	public static Map<String, Item> items_map = new HashMap<String, Item>();
 	
-	/**
-	 * Adds a few generic items to the arraylist
-	 */
+	
 	public Controller() {
 				
 	}
+	
+	/**
+	 * Adds a few generic items to the arraylist
+	 */
 	static {
 		Item cat = new Item("Cat",0);
 		Item dog = new Item("Dog",0);

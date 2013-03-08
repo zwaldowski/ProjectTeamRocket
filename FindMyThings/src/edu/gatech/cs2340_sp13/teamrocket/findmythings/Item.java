@@ -38,6 +38,7 @@ public class Item {
 		loc = "The streets";
 		
 		
+		//Gets todays date - maybe
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		date = new Date();
 		dateFormat.format(date);

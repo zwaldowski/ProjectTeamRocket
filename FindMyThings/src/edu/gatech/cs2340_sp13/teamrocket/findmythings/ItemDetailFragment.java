@@ -22,15 +22,17 @@ public class ItemDetailFragment extends Fragment {
 	public static final String ARG_ITEM_ID = "item_id";
 
 	/**
-	 * The dummy content this fragment is presenting.
+	 * The content this fragment is presenting.
 	 */
 	private Item mItem;
+	
+	private Controller control = new Controller();
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
 	 */
-	private Controller control = new Controller();
+	
 	public ItemDetailFragment() {
 	}
 

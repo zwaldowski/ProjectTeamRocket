@@ -84,11 +84,7 @@ public class ItemListFragment extends ListFragment {
 				android.R.id.text1, control.items);
 		setListAdapter(adapter);
 	}
-	
-	public static void refresh() {
-		adapter.notifyDataSetChanged();
-	}
-	
+		
 	public void AddItem(View v, Item i){
 		control.addItem(i);
 		adapter.notifyDataSetChanged();
