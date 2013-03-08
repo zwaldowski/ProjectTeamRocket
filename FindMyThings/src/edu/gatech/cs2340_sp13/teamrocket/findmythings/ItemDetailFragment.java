@@ -13,24 +13,21 @@ import android.widget.TextView;
  * {@link ItemDetailActivity} on handsets.
  */
 public class ItemDetailFragment extends Fragment {
-	/**
-	 * The fragment argument representing the item ID that this fragment
-	 * represents.
-	 */
-	public static final String ARG_ITEM_ID = "item_id";
 
 	/**
 	 * The content this fragment is presenting.
 	 */
 	private Item mItem;
 	
+	/**
+	 * The data source for all Item lists (for now).
+	 */
 	private Controller control = Controller.shared();
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
 	 */
-	
 	public ItemDetailFragment() {
 	}
 
@@ -38,12 +35,12 @@ public class ItemDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (getArguments().containsKey(ARG_ITEM_ID)) {
+		if (getArguments().containsKey(Item.ID)) {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
 			Item.Type mItemClass = ((ItemDetailActivity)getActivity()).getItemType();
-			mItem = control.getItem(mItemClass, getArguments().getString(ARG_ITEM_ID));
+			mItem = control.getItem(mItemClass, getArguments().getString(Item.ID));
 		}
 	}
 

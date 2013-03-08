@@ -130,7 +130,7 @@ public class ItemListActivity extends FragmentActivity implements
 			// adding or replacing the detail fragment using a
 			// fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
+			arguments.putString(Item.ID, id);
 			arguments.putInt(Item.Type.ID, mType.ordinal());
 			ItemDetailFragment fragment = new ItemDetailFragment();
 			fragment.setArguments(arguments);
@@ -141,7 +141,7 @@ public class ItemListActivity extends FragmentActivity implements
 			// In single-pane mode, simply start the detail activity
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-			detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
+			detailIntent.putExtra(Item.ID, id);
 			detailIntent.putExtra(Item.Type.ID, mType.ordinal());
 			startActivity(detailIntent);
 		}

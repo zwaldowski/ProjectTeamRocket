@@ -48,6 +48,8 @@ public class Item {
 		}
 	};
 	
+	public static final String ID = "item_id";
+	
 	private String name, loc;
 	
 	private String description = "";
