@@ -7,10 +7,26 @@ import java.util.Map;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
+/**
+ * Shared data source for Items in the app.
+ * 
+ * Controller follows the Singleton data model. It cannot
+ * be initialized more than once.
+ * 
+ * For now, it's a complete dummy source, although in this
+ * future it should take care of pulling/caching/updating Items
+ * within the database and the server, potentially.
+ * 
+ * @author zwaldowski
+ *
+ */
 public final class Controller {
 	
 	private static Controller mSharedInstance;
 	
+	/**
+	 * Returns the shared singleton instance of 
+	 */
 	public synchronized static Controller shared() {
         if (mSharedInstance == null) {
         	mSharedInstance = new Controller();
@@ -18,6 +34,12 @@ public final class Controller {
         return mSharedInstance;
     }
 	
+	/**
+	 * An internal class used to wrap a representation of
+	 * "all items of this type". This utility class
+	 * will likely go away in the future.
+	 * @author zwaldowski
+	 */
 	private class ItemsList {
 		
 		private ArrayList<Item> mItems = new ArrayList<Item>();
@@ -29,25 +51,19 @@ public final class Controller {
 			mItemsMap.put(i.getName(),i);
 		}
 		
-		/**
-		 * Gets an indexed item from our arraylist
-		 * @param key The key of the Item to return
-		 */
 		public Item getItem(Integer key) {
 			return mItems.get(key);
 		}
 		
-		/**
-		 * Gets an item from our arraylist
-		 * @param key The key of the Item to return
-		 */
 		private Item getItem(String key) {
 			return mItemsMap.get(key);
 		}
 	}
 	
 	/**
-	 * Adds a few generic items to the arraylist
+	 * Initialize the shared controller.
+	 * 
+	 * Add a few generic items to the list for each {@link Item.Type}.
 	 */
 	private Controller() {
 		
@@ -68,8 +84,16 @@ public final class Controller {
 		}
     }
 	
+	/**
+	 * A map of all Items for all {@link Item.Type}. 
+	 */
 	private Map<Item.Type, ItemsList> allItems = new HashMap<Item.Type, ItemsList>();
 	
+	/**
+	 * Gets the item list wrapper for a kind of item.
+	 * @param kind 
+	 * @return
+	 */
 	private ItemsList getContainer(Item.Type kind) {
 		return allItems.get(kind);
 	}
@@ -106,6 +130,14 @@ public final class Controller {
 		return container.getItem(key);
 	}
 	
+	/**
+	 * Creates and returns an array adapter for all items of a certain type
+	 * @param context The current context.
+	 * @param resource The resource ID for a layout file containing a layout to use when instantiating views.
+	 * @param textViewResourceId The id of the TextView within the layout resource to be populated
+	 * @param kind The kind of item to query items for
+	 * @return An array adapter for the objects of a certain type
+	 */
 	public ArrayAdapter<Item> newItemsAdapter(Context context, int resource, int textViewResourceId, Item.Type kind) {
 		ItemsList container = getContainer(kind);
 		return new ArrayAdapter<Item>(context, resource, textViewResourceId, container.mItems);
