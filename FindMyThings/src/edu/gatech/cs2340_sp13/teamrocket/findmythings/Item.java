@@ -224,7 +224,7 @@ public class Item {
 	 * @return
 	 */
 	public String getSummary() {
-		String desc = description.length()>30? description.substring(0,30):description.substring(0,description.length());
+		String desc = description.length()>50? description.substring(0,50):description.substring(0,description.length());
 		return "\n" + desc + "...";
 	}
 	

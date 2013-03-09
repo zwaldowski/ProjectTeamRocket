@@ -1,11 +1,13 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 /**
  * An activity representing a list of Items. This activity has different
@@ -46,6 +48,7 @@ public class ItemListActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
 		
+			
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle extraInfo = getIntent().getExtras();

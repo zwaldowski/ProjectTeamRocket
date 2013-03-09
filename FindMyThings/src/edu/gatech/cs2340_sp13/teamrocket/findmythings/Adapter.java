@@ -63,6 +63,7 @@ public class Adapter extends ArrayAdapter<Item>{
 	 // Actually just makes the last span into a smaller text
 	 Spannable span2 = new SpannableString(span);
 	 span2.setSpan(new RelativeSizeSpan(0.7f),start,stop,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+	 
 	 frag.setText(span2);
 	 
 	 

@@ -61,7 +61,7 @@ public class ItemDetailFragment extends Fragment {
 			((TextView) rootView.findViewById(R.id.date_detail))
 			.setText(mItem.getDateString());
 			((TextView) rootView.findViewById(R.id.reward_detail))
-			.setText(Integer.toString(mItem.getReward()));
+			.setText("$" + Integer.toString(mItem.getReward()));
 		}
 
 		return rootView;
