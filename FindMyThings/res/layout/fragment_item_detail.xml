@@ -26,12 +26,12 @@
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:ems="10"
-			    android:paddingBottom="15dp"
+			    android:paddingBottom="5dp"
 			    android:paddingLeft="12dp"
-			    android:paddingTop="10dp"
+			    android:paddingRight="12dp"
+			    android:paddingTop="5dp"
 			    android:textIsSelectable="true"
-			    android:textSize="20sp"
-			    android:paddingRight="12dp" >
+			    android:textSize="15sp" >
 	        	
 			</TextView>
 	
@@ -46,12 +46,12 @@
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:ems="10"
-			    android:paddingBottom="15dp"
+			    android:paddingBottom="5dp"
 			    android:paddingLeft="12dp"
-			    android:paddingTop="10dp"
+			    android:paddingRight="12dp"
+			    android:paddingTop="5dp"
 			    android:textIsSelectable="true"
-			    android:textSize="20sp"
-			    android:paddingRight="12dp" >
+			    android:textSize="15sp"  >
 	        	
 			</TextView>
 
@@ -67,12 +67,12 @@
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:ems="10"
-			    android:paddingBottom="15dp"
+			    android:paddingBottom="5dp"
 			    android:paddingLeft="12dp"
-			    android:paddingTop="10dp"
+			    android:paddingRight="12dp"
+			    android:paddingTop="5dp"
 			    android:textIsSelectable="true"
-			    android:textSize="20sp"
-			    android:paddingRight="12dp" >
+			    android:textSize="15sp" >
 	        	
 			</TextView>
 			
@@ -88,12 +88,12 @@
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:ems="10"
-			    android:paddingBottom="15dp"
+			    android:paddingBottom="5dp"
 			    android:paddingLeft="12dp"
-			    android:paddingTop="10dp"
+			    android:paddingRight="12dp"
+			    android:paddingTop="5dp"
 			    android:textIsSelectable="true"
-			    android:textSize="20sp"
-			    android:paddingRight="12dp" >
+			    android:textSize="15sp" >
 	        	
 			</TextView>
 			
@@ -109,12 +109,12 @@
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:ems="10"
-			    android:paddingBottom="15dp"
+			    android:paddingBottom="5dp"
 			    android:paddingLeft="12dp"
-			    android:paddingTop="10dp"
+			    android:paddingRight="12dp"
+			    android:paddingTop="5dp"
 			    android:textIsSelectable="true"
-			    android:textSize="20sp"
-			    android:paddingRight="12dp" >
+			    android:textSize="15sp" >
 	        	
 			</TextView>
     
