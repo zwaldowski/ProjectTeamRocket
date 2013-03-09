@@ -43,7 +43,7 @@ public class ItemListFragment extends ListFragment {
 	 * selections.
 	 */
 	
-	private static ArrayAdapter<Item> adapter;
+	private static Adapter adapter;
 	
 	public interface Callbacks {
 		/**
@@ -111,7 +111,8 @@ public class ItemListFragment extends ListFragment {
 
 		mCallbacks = (Callbacks) activity;
 	}
-
+	
+	
 	@Override
 	public void onDetach() {
 		super.onDetach();
@@ -161,4 +162,5 @@ public class ItemListFragment extends ListFragment {
 
 		mActivatedPosition = position;
 	}
+	
 }

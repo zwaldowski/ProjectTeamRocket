@@ -45,6 +45,8 @@
 	<item>Misc</item>
     </string-array>
     
+    <string name="item_list">IhateXML</string>
+    
     <string-array name="item_category_descriptions">
         <item>A valuable object that has belonged to a family for several generations.</item>
         <item>A small item kept in memory of the person who gave it or originally owned it.</item>

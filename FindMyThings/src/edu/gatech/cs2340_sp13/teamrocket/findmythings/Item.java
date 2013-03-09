@@ -220,6 +220,15 @@ public class Item {
 	}
 	
 	/**
+	 * Very short description to be displayed on the ItemList
+	 * @return
+	 */
+	public String getSummary() {
+		String desc = description.length()>30? description.substring(0,30):description.substring(0,description.length());
+		return "\n" + desc + "...";
+	}
+	
+	/**
 	 * Returns whether or not the item is being displayed.
 	 * @return A boolean
 	 */
@@ -282,8 +291,8 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		String desc = description.length()>30? description.substring(0,30):description.substring(0,description.length());
-		return name + " - " + loc + "\n" + desc;
+		
+		return name ;
 	}
 
 }

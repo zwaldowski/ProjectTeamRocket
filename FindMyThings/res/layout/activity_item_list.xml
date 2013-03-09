@@ -4,4 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ItemListActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" >
+    
+    <TextView
+        android:id="@+id/item_list"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:linksClickable="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:textIsSelectable="false"
+        android:textSize="18sp" />
+    
+    </FrameLayout>

@@ -74,6 +74,9 @@ public final class Controller {
 		dog.setDescription("Goes by the name of Snoopy, hates white people.");
 		catdog.setDescription("Black Android phone, or maybe Iphone. Might actually be white, definitely a new phone though. $20 payed upon delivery");
 		
+		cat.setLoc("Colombia");
+		dog.setLoc("Santa Rosa, California");
+		catdog.setLoc("Detroit, Michigan");
 		for (Item.Type kind : Item.Type.values()) {
 			ItemsList container = new ItemsList();
 			allItems.put(kind, container);
@@ -138,9 +141,9 @@ public final class Controller {
 	 * @param kind The kind of item to query items for
 	 * @return An array adapter for the objects of a certain type
 	 */
-	public ArrayAdapter<Item> newItemsAdapter(Context context, int resource, int textViewResourceId, Item.Type kind) {
+	public Adapter newItemsAdapter(Context context, int resource, int textViewResourceId, Item.Type kind) {
 		ItemsList container = getContainer(kind);
-		return new ArrayAdapter<Item>(context, resource, textViewResourceId, container.mItems);
+		return new Adapter(context, resource, textViewResourceId, container.mItems);
 	}
 	
 	/**
