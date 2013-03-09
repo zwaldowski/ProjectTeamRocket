@@ -45,7 +45,6 @@
 	<item>Misc</item>
     </string-array>
     
-    <string name="item_list">IhateXML</string>
     
     <string-array name="item_category_descriptions">
         <item>A valuable object that has belonged to a family for several generations.</item>
