@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:linksClickable="true"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingRight="10dp"
         android:paddingTop="5dp"
         android:textIsSelectable="false"
         android:textSize="18sp" />

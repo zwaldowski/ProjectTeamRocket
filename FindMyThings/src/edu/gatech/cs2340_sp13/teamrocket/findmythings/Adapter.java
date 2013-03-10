@@ -19,8 +19,14 @@ import android.widget.TextView;
 
 public class Adapter extends ArrayAdapter<Item>{
 
+	/**
+	 * Gets context from the activity using this adapter
+	 */
 	private Context mContext;
 	
+	/**
+	 * Reference to the list passed into the adapter
+	 */
 	private List<Item> mList;
 	
 	public Adapter(Context context, int textViewResourceId, List<Item> objects) {
@@ -62,7 +68,8 @@ public class Adapter extends ArrayAdapter<Item>{
 	 //New span spans the last span so that span doesn't span the full text size.
 	 // Actually just makes the last span into a smaller text
 	 Spannable span2 = new SpannableString(span);
-	 span2.setSpan(new RelativeSizeSpan(0.7f),start,stop,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+	 int start2 = start + temp.getLoc().length() + 3;
+	 span2.setSpan(new RelativeSizeSpan(0.8f),start2,stop,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 	 
 	 frag.setText(span2);
 	 

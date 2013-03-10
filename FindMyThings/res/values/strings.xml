@@ -38,7 +38,7 @@
     <string name="i_example">Bike/Photo Album/Baby etc.</string>
     
     <string name="header_more">More</string>
-    
+        
     <string-array name="item_category">
 	<item>Heir</item>
 	<item>Keepsake</item>
