@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
-import android.widget.ArrayAdapter;
 
 /**
  * Shared data source for Items in the app.

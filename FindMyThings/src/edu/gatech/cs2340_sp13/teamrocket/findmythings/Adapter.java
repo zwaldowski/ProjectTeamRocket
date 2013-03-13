@@ -1,6 +1,5 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
