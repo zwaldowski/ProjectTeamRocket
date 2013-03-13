@@ -48,12 +48,14 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.AdminActivity"
+            android:label="@string/admin_title"
+            android:parentActivityName="edu.gatech.cs2340_sp13.teamrocket.findmythings.MainActivity">
+        </activity>
+        <activity
             android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.Submit"
             android:label="@string/title_activity_submit"
-            android:parentActivityName="edu.gatech.cs2340_sp13.teamrocket.findmythings.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.gatech.cs2340_sp13.teamrocket.findmythings.SettingsActivity" />
+            android:parentActivityName="edu.gatech.cs2340_sp13.teamrocket.findmythings.MainActivity">
         </activity>
     </application>
 
