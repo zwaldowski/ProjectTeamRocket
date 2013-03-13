@@ -20,6 +20,9 @@
     <string name="main_key_admin">findmythings.main.admin</string>
     <string name="main_key_signout">findmythings.main.signout</string>
     
+    
+    <string name="main_group_key_other">findmythings.main.othergroup</string>
+    
     <string name="main_message_signout">Are you sure you want to log out of Find My Things?</string>
 
 </resources>

@@ -48,7 +48,9 @@
    			</Preference>
                 
         </PreferenceCategory>
-		<PreferenceCategory android:title="@string/header_more"> 	
+		<PreferenceCategory
+		    android:key="@string/main_group_key_other"
+		    android:title="@string/header_more"> 	
 	
     		<Preference
     		    android:key="@string/main_key_myaccount"
