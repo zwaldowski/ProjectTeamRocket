@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -28,6 +29,13 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
+	        
+	        // TODO: we don't have a global reference to the current user
+	        /*if (!Login.User.isAdmin()) {*/
+	        	PreferenceScreen screen = getPreferenceScreen();
+	        	Preference adminLink = findPreference(getString(R.string.main_key_admin));
+	        	screen.removePreference(adminLink);
+	        /*}*/
 
 	        Intent lostIntent = findPreference(getString(R.string.main_key_lost)).getIntent();
 	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -45,6 +53,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	        requestIntent.putExtra(Item.Type.ID, Item.Type.REQUEST.ordinal());
 	    
+	        // TODO: this should use the same global user reference as above.
 	        Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
 	        myAccount.setSummary(LoginWindow.Email);
 	    }

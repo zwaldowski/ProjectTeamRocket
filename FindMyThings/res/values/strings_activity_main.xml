@@ -9,6 +9,7 @@
     <string name="main_title_requests">Requests</string>
     <string name="main_summary_requests">&#8230;help someone needs.</string>
     <string name="main_title_account">My Account</string>
+    <string name="main_title_admin">Administration</string>
     <string name="main_title_signout">Sign out</string>
     
     <string name="main_key_lost">findmythings.main.lost</string>
@@ -16,6 +17,7 @@
     <string name="main_key_donations">findmythings.main.donations</string>
     <string name="main_key_requests">findmythings.main.requests</string>
     <string name="main_key_myaccount">findmythings.main.myaccount</string>
+    <string name="main_key_admin">findmythings.main.admin</string>
     <string name="main_key_signout">findmythings.main.signout</string>
     
     <string name="main_message_signout">Are you sure you want to log out of Find My Things?</string>

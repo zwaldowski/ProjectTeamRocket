@@ -59,6 +59,17 @@
        			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
     			/> # TODO: Intent -->
+   			</Preference> 	
+	
+    		<Preference
+    		    android:key="@string/main_key_admin"
+    		    android:title="@string/main_title_admin">
+       
+    			<intent 
+       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
+       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.AdminActivity"
+       			 android:action="android.intent.action.VIEW"
+    			/>
    			</Preference>
 	
     		<edu.gatech.cs2340_sp13.teamrocket.findmythings.ConfirmationDialog

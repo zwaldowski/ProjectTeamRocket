@@ -21,6 +21,13 @@ public class Member {
 		password = pass;
 	}
 	
+	// Design scaffolding
+	
+	// TODO: this should be an abstract method
+	public boolean isAdmin() {
+		return false;
+	}
+	
 	//Getters
 	
 	/**

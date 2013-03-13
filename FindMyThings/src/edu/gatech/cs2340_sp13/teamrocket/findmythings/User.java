@@ -64,5 +64,10 @@ public class User extends Member {
 	public int getAttempts() {
 		return attempts;
 	}
+
+	@Override
+	public boolean isAdmin() {
+		return false;
+	}
 	
 }
