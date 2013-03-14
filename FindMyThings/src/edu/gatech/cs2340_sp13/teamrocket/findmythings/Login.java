@@ -66,14 +66,6 @@ public class Login {
 		return data;
 	}
 
-	/**
-	 * Checks whether or not the user account exists
-	 * @param m Member 
-	 * @return true is username has been registered
-	 */
-	public boolean exists(Member m) {
-		return data.contains(m);
-	}
 
 	/**
 	 * adds new member to arraylist
@@ -92,7 +84,7 @@ public class Login {
 	 * @param m
 	 */
 	public Member update(Member m) {
-		if(exists(m)) {
+		if(data.contains(m)) {
 			if(data.get(data.indexOf(m)) instanceof User) {
 			m = new User(m.getUser(),m.getPassword()); //Return a User 
 			(((User) m)).setAttempts(((User) data.get(data.indexOf(m))).getAttempts());

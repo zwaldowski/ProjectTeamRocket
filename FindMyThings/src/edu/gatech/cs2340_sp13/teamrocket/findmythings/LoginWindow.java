@@ -142,7 +142,7 @@ public class LoginWindow extends Activity {
 		 *or if email not empty and email hasn't been registered
 		 *go to register activity
 		 */
-		if ( mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.exists(new User(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
+		if ( mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.data.contains(new User(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
 			register();
 		else {
 			//Check for a valid password.
@@ -190,7 +190,7 @@ public class LoginWindow extends Activity {
 				}
 			}
 			
-			if(log.exists(temp)) { 
+			if(log.data.contains(temp)) { 
 				// Checks for valid user name
 				mAuthTask = new UserLoginTask();
 				mAuthTask.execute((Void) null);
