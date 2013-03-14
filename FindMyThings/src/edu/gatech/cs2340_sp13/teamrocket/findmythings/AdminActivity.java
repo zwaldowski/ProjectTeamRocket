@@ -42,7 +42,7 @@ public class AdminActivity extends ListActivity {
 		//Instantiate ArrayAdapter and tell it to display the list of Members from Login
 		mUsers = new ArrayAdapter<Member>(this,
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, Login.getData());
+				android.R.id.text1, Login.data);
 		
 		
 		mList.setAdapter(mUsers);

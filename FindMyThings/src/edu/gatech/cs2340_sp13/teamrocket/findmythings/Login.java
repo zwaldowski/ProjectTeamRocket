@@ -15,7 +15,7 @@ public class Login {
 	 * Static ArrayList to keep user information consistent even after you leave the login screen 
 	 * and come back. Probably a better way to accomplish this, but it's 1am right now so fuck it.
 	 */
-	private static ArrayList<Member> data = new ArrayList<Member>();
+	public static ArrayList<Member> data = new ArrayList<Member>();
 	
 	/**
 	 * Currently logged in user
@@ -96,6 +96,7 @@ public class Login {
 			if(data.get(data.indexOf(m)) instanceof User) {
 			m = new User(m.getUser(),m.getPassword()); //Return a User 
 			(((User) m)).setAttempts(((User) data.get(data.indexOf(m))).getAttempts());
+			(((User) m)).setLock((((User) data.get(data.indexOf(m))).locked()));
 			}
 			else m = new Admin(m.getUser(),m.getPassword()); // return admin
 		}

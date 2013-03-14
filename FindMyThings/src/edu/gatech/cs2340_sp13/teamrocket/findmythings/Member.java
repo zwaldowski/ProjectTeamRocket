@@ -33,6 +33,7 @@ public abstract class Member {
 	public boolean locked(){
 		return false;
 	}
+
 	
 	//Getters
 	
@@ -77,6 +78,7 @@ public abstract class Member {
 	}
 	
 	//Setters
+	
 	
 	/**
 	 * Sets phone number

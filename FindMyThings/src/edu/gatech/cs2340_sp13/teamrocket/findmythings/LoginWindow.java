@@ -277,7 +277,7 @@ public class LoginWindow extends Activity {
 					//Validates user info and checks to see if their account is locked
 					return true;
 			}
-			else if(log.verifyUser(temp))
+			else if(temp instanceof Admin && log.verifyUser(temp))
 					return true;
 		
 			return false;
