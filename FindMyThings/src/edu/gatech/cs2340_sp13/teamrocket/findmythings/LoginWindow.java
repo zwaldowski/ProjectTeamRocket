@@ -42,13 +42,18 @@ public class LoginWindow extends Activity {
 	/**
 	 * Member reference
 	 */
-	private Member temp = new Member("","");
+	private static Member temp = new Member("","");
+	
+	/**
+	 * Currently logged in user
+	 */
 	
 
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
 	public static String Email = "";
+	
 
 	// UI references.
 	private EditText mEmailView;
@@ -110,11 +115,11 @@ public class LoginWindow extends Activity {
 	}
 	
 	/**
-	 * Creates user object, will need to be modified once the admin class is created 
+	 * Creates Member object, will need to be modified once the admin class is created 
 	 * but I was having problems instantiating elsewhere.
 	 */
 	public void createUser() {
-		temp = new User(mEmail,mPassword);
+		temp = new Member(mEmail,mPassword);
 	}
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
@@ -179,11 +184,11 @@ public class LoginWindow extends Activity {
 			showProgress(true);
 			
 			if(mEmail!=null && !mEmail.equals("")) {
-				Member chk = new User(mEmail,mPassword);
+				Member chk = new Member(mEmail,mPassword);
 				if(temp==null || !temp.equals(chk) || !temp.getPassword().equals(chk.getPassword())) { 
 					//Instantiates member, checks to see if the username is the same on each attempt
 					createUser();
-					temp = log.	update((User) temp); 
+					temp = log.update(temp); 
 					//updates locked status of account
 				
 				}
@@ -271,10 +276,14 @@ public class LoginWindow extends Activity {
 			} catch (InterruptedException e) {
 				return false;
 			}
-			if(temp instanceof User) // Won't be necessary for admin						
+			if(temp instanceof User) { // Won't be necessary for admin						
 				if(log.verifyUser(temp) && !((User)temp).locked())
 					//Validates user info and checks to see if their account is locked
 					return true;
+			}
+			else if(log.verifyUser(temp))
+					return true;
+		
 			return false;
 			
 		}
@@ -284,10 +293,11 @@ public class LoginWindow extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 			
-			if (!((User)temp).locked() && success) { 
+			if (!(temp).locked() && success) { 
 				//User successfully logs in
-				((User) temp).setAttempts(0);
-				
+				if(temp instanceof User)
+					((User) temp).setAttempts(0);
+				Login.currUser = temp; // Store current user
 				Email = mEmail; //Remembers User's email.
 				Intent main = new Intent(getApplicationContext(), MainActivity.class);
 				finish();
@@ -296,7 +306,7 @@ public class LoginWindow extends Activity {
 				
 				
 			} else {
-				if(!((User)temp).locked()) { 
+				if(temp instanceof User && !(temp).locked()) { 
 					//Wrong password
 					((User)temp).incrment();
 					mPasswordView
@@ -305,7 +315,7 @@ public class LoginWindow extends Activity {
 
 				}
 				else {
-					if(((User) temp).locked()) //locks the account after three attempts
+					if(temp.locked()) //locks the account after three attempts
 						log.checkAttempts((User)temp);
 					mPasswordView
 					.setError("Exceeded login attempts, account locked");

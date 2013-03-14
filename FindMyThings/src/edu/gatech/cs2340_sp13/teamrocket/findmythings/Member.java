@@ -28,6 +28,14 @@ public class Member {
 		return false;
 	}
 	
+	/**
+	 * returns true if account is locked, false otherwise
+	 * @return locked
+	 */
+	public boolean locked(){
+		return false;
+	}
+	
 	//Getters
 	
 	/**

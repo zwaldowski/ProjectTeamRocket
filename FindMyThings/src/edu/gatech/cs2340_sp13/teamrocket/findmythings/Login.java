@@ -16,18 +16,28 @@ public class Login {
 	 */
 	private static ArrayList<Member> data = new ArrayList<Member>();
 	
+	/**
+	 * Currently logged in user
+	 */
+	public static Member currUser;
+	
 	
 	public Login() {
-		Member[] template = new Member[5]; //For testing login without the need for registration
-			template[0] = new User("cchu43@gatech.edu","admin","555-555-5555");
-			template[1] = new User("jcole44@gatech.edu","admin","555-555-5555");
-			template[2] = new User("tstowell3@gatech.edu","admin","555-555-5555");
-			template[3] = new User("zwaldowski@gatech.edu","admin","555-555-5555");
-			template[4] = new User("a@a.com","aaaa"); 
-			for(Member m : template)
-				data.add(m);
+		
 			
 		
+	}
+	
+	static {
+		Member[] template = new Member[6]; //For testing login without the need for registration
+		template[0] = new User("cchu43@gatech.edu","admin","555-555-5555");
+		template[1] = new User("jcole44@gatech.edu","admin","555-555-5555");
+		template[2] = new User("tstowell3@gatech.edu","admin","555-555-5555");
+		template[3] = new User("zwaldowski@gatech.edu","admin","555-555-5555");
+		template[4] = new User("a@a.com","aaaa"); 
+		template[5] = new Admin("ad@min.com","aaaa");
+		for(Member m : template)
+			data.add(m);
 	}
 
 	/**
@@ -75,11 +85,16 @@ public class Login {
 	 * Updates users locked status
 	 * @param m
 	 */
-	public User update(User m) {
-		if(exists(m)) 
-			m.setAttempts(((User) data.get(data.indexOf(m))).getAttempts());
-		
+	public Member update(Member m) {
+		if(exists(m)) {
+			if(data.get(data.indexOf(m)) instanceof User) {
+			m = new User(m.getUser(),m.getPassword()); //Return a User 
+			(((User) m)).setAttempts(((User) data.get(data.indexOf(m))).getAttempts());
+			}
+			else m = new Admin(m.getUser(),m.getPassword()); // return admin
+		}
 		return m;
+		
 	}
 	
 	/**
@@ -92,5 +107,7 @@ public class Login {
 		if(justincase!=-1)
 			((User) data.get(justincase)).setAttempts(m.getAttempts());
 	}
+	
+	
 
 }

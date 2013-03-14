@@ -32,11 +32,11 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        addPreferencesFromResource(R.xml.main_lookingfor);
 	        
 	        // TODO: we don't have a global reference to the current user
-	        /*if (!Login.User.isAdmin()) {*/
+	        if (!Login.currUser.isAdmin()) {
 	        	PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
 	        	Preference adminLink = findPreference(getString(R.string.main_key_admin));
 	        	moreCategory.removePreference(adminLink);
-	        /*}*/
+	        }
 
 	        Intent lostIntent = findPreference(getString(R.string.main_key_lost)).getIntent();
 	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
