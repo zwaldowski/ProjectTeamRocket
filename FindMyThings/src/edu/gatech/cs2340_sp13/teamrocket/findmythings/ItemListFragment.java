@@ -72,7 +72,7 @@ public class ItemListFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	
-		// TODO: replace with a real list adapter.
+		
 		Item.Type mItemClass = ((ItemListActivity)getActivity()).getItemType();
 		adapter = control.newItemsAdapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,

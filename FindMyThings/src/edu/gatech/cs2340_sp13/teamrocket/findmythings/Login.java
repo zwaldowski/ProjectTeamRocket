@@ -2,6 +2,7 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class managing how a User is authenticated.
@@ -55,6 +56,14 @@ public class Login {
 			
 		}
 		return found;
+	}
+	
+	/**
+	 * returns the list of Members
+	 * @return
+	 */
+	public static List<Member> getData() {
+		return data;
 	}
 
 	/**

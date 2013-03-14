@@ -112,4 +112,10 @@ public abstract class Member {
 		return false;
 	}
 	
+	@Override
+	public String toString() {
+		return user;
+	}
+
+	
 }
