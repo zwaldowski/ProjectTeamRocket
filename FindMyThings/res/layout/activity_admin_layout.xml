@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="Search by user" >
-        <requestFocus />
+        
     </EditText>
     
     <ListView
@@ -21,6 +21,10 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/search_bar"
         android:layout_weight="1"
-        android:drawSelectorOnTop="false" />
+        android:textFilterEnabled="true"
+        android:drawSelectorOnTop="false"
+         >
+         <requestFocus /> 
+     </ListView>
 
 </RelativeLayout>
