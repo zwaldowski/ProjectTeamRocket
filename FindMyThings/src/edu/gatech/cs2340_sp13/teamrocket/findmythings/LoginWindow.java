@@ -42,7 +42,7 @@ public class LoginWindow extends Activity {
 	/**
 	 * Member reference
 	 */
-	private Member temp = new Member("","");
+	private Member temp = new User("","");
 	
 	
 	// Values for email and password at the time of the login attempt.
@@ -115,7 +115,7 @@ public class LoginWindow extends Activity {
 	 * but I was having problems instantiating elsewhere.
 	 */
 	public void createUser() {
-		temp = new Member(mEmail,mPassword);
+		temp = new User(mEmail,mPassword);
 	}
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
@@ -142,7 +142,7 @@ public class LoginWindow extends Activity {
 		 *or if email not empty and email hasn't been registered
 		 *go to register activity
 		 */
-		if ( mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.exists(new Member(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
+		if ( mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !log.exists(new User(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
 			register();
 		else {
 			//Check for a valid password.
@@ -180,7 +180,7 @@ public class LoginWindow extends Activity {
 			showProgress(true);
 			
 			if(mEmail!=null && !mEmail.equals("")) {
-				Member chk = new Member(mEmail,mPassword);
+				Member chk = new User(mEmail,mPassword);
 				if(temp==null || !temp.equals(chk) || !temp.getPassword().equals(chk.getPassword())) { 
 					//Instantiates member, checks to see if the username is the same on each attempt
 					createUser();

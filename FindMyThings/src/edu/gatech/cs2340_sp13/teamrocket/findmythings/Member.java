@@ -1,6 +1,6 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
-public class Member {
+public abstract class Member {
 	protected String user;
 	private String name;
 	private String password;
@@ -23,10 +23,8 @@ public class Member {
 	
 	// Design scaffolding
 	
-	// TODO: this should be an abstract method
-	public boolean isAdmin() {
-		return false;
-	}
+	
+	public abstract boolean isAdmin();
 	
 	/**
 	 * returns true if account is locked, false otherwise

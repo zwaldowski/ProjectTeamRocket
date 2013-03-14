@@ -31,7 +31,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
 	        
-	        // TODO: we don't have a global reference to the current user
+	        
 	        if (!Login.currUser.isAdmin()) {
 	        	PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
 	        	Preference adminLink = findPreference(getString(R.string.main_key_admin));
@@ -54,7 +54,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	        requestIntent.putExtra(Item.Type.ID, Item.Type.REQUEST.ordinal());
 	    
-	        // TODO: this should use the same global user reference as above.
+	       
 	        Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
 	        myAccount.setSummary(LoginWindow.Email);
 	    }
