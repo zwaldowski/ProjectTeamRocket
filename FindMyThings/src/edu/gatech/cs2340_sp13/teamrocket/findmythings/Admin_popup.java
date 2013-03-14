@@ -5,6 +5,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -59,6 +60,19 @@ public class Admin_popup extends Activity implements OnPreferenceChangeListener 
 					}
 				});
 		setTitle("User Attributes");
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+	    	Intent next = new Intent(Admin_popup.this,AdminActivity.class);
+	    	finish();
+	    	startActivity(next);
+	    	return true;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
 	}
 
 	@Override
