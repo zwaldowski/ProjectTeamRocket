@@ -21,10 +21,8 @@ public class User extends Member {
 		super(user, pass);
 		// TODO Auto-generated constructor stub
 	}
-	/**
-	 * returns true if account is locked, false otherwise
-	 * @return locked
-	 */
+
+	@Override
 	public boolean locked(){
 		return locked;
 	}

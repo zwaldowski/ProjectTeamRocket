@@ -23,9 +23,6 @@ public class Login {
 	
 	
 	public Login() {
-		
-			
-		
 	}
 	
 	static {
