@@ -6,20 +6,28 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Switch;
 
 public class Admin_popup extends Activity implements OnPreferenceChangeListener {
 
 	/**
 	 * Checkbox reference
 	 */
-	private CheckBox checkLock;
+	private Switch checkLock;
 	
 	/**
 	 * Id from AdminActivity
 	 */
 	private int id;
+	
+	/**
+	 * Button reference
+	 */
+	private Button delete;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +38,9 @@ public class Admin_popup extends Activity implements OnPreferenceChangeListener 
 		id = i.getExtras().getInt("id");
 		
 		Login.getData().get(id);
-		checkLock = (CheckBox)findViewById(R.id.isLocked);
-		checkLock.setChecked(Login.getData().get(id).locked());
+		delete = (Button)findViewById(R.id.delete);
+		checkLock = (Switch)findViewById(R.id.isLocked);
+		checkLock.setChecked((Login.data.get(id).locked()));
 		
 		checkLock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -40,6 +49,15 @@ public class Admin_popup extends Activity implements OnPreferenceChangeListener 
 				   ((User)Login.data.get(id)).setLock(isChecked);
 			   }
 		});
+		
+		delete.setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Login.data.remove(id);
+						finish();
+					}
+				});
 		setTitle("User Attributes");
 	}
 
