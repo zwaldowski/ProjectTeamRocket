@@ -46,7 +46,7 @@ public class User extends Member {
 	}
 	
 	/**
-	 * 
+	 * sets the number of attempts that user has used to log in
 	 * @param i
 	 */
 	public void setAttempts(int i) {
@@ -56,13 +56,17 @@ public class User extends Member {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * returns the number of wrong attempts at login by user
+	 * @return int attempts
 	 */
 	public int getAttempts() {
 		return attempts;
 	}
 
+	/**
+	 * returns if the member (user) is a admin
+	 * @return False
+	 */
 	@Override
 	public boolean isAdmin() {
 		return false;
