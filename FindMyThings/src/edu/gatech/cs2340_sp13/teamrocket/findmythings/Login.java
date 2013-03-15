@@ -61,7 +61,7 @@ public class Login {
 	
 	/**
 	 * returns the list of Members
-	 * @return
+	 * @return the current (local-only) member list
 	 */
 	public static List<Member> getData() {
 		return data;
@@ -70,8 +70,8 @@ public class Login {
 
 	/**
 	 * adds new member to arraylist
-	 * @param name user name
-	 * @param password user pass
+	 * @param temp A created member object
+	 * @return the new Member object
 	 */
 	public Member register(Member temp) {
 		

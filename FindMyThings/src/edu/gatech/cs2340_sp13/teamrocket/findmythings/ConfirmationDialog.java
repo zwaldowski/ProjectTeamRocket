@@ -16,13 +16,6 @@ import android.util.AttributeSet;
  * - http://stackoverflow.com/questions/5365310/creating-a-dialogpreference-from-xml/8818446#8818446
  * - YesNoPreference.java in Android Private SDK
  *
- * @attr ref android.R.styleable#DialogPreference_dialogTitle
- * @attr ref android.R.styleable#DialogPreference_dialogMessage
- * @attr ref android.R.styleable#DialogPreference_dialogIcon
- * @attr ref android.R.styleable#DialogPreference_dialogLayout
- * @attr ref android.R.styleable#DialogPreference_positiveButtonText
- * @attr ref android.R.styleable#DialogPreference_negativeButtonText
- *
  */
 public class ConfirmationDialog extends DialogPreference {
     /** The Yes/No value of the box. */

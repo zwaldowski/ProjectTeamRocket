@@ -95,7 +95,7 @@ public final class Controller {
 	/**
 	 * Gets the item list wrapper for a kind of item.
 	 * @param kind 
-	 * @return
+	 * @return an ItemsList object
 	 */
 	private ItemsList getContainer(Item.Type kind) {
 		return allItems.get(kind);
@@ -149,7 +149,7 @@ public final class Controller {
 	/**
 	 * create a new item (lost, found, donated or requested) 
 	 * @param m
-	 * @return
+	 * @return Nothing, so far.
 	 */
 	public Item createItem(Member m) {
 		// TODO
@@ -159,7 +159,7 @@ public final class Controller {
 	/**
 	 * get info of item
 	 * @param i
-	 * @return
+	 * @return Nothing so far
 	 */
 	@SuppressWarnings("unused")
 	private ArrayList<Item> getInfo(Item i) {
@@ -171,7 +171,7 @@ public final class Controller {
 	 * get an arrayList of all the items that have the require characteristics
 	 * given in the parameter array
 	 * @param searches
-	 * @return
+	 * @return Nothing, so far.
 	 */
 	public ArrayList<Item> doSearch(int[] searches) {
 		// TODO

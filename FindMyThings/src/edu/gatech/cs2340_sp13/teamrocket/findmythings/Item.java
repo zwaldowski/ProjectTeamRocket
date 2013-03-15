@@ -201,7 +201,7 @@ public class Item {
 
 	/**
 	 * Sets the reward of a Lost Item
-	 * @param v An integer primitive.
+	 * @param r An integer primitive.
 	 */
 	public void setReward(int r) {
 		reward = r;
@@ -227,7 +227,7 @@ public class Item {
 	
 	/**
 	 * Very short description to be displayed on the ItemList
-	 * @return
+	 * @return A truncated description string
 	 */
 	public String getSummary() {
 		String desc = description.length()>40? description.substring(0,40):description.substring(0,description.length());
