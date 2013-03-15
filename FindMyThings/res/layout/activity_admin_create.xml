@@ -21,6 +21,7 @@
             android:paddingBottom="@dimen/form_activity_input_pad_vertical"
             android:paddingRight="@dimen/form_activity_input_pad_horizontal"
             android:paddingTop="@dimen/form_activity_input_pad_vertical" />
+        <requestFocus />
         <EditText
             android:id="@+id/admin_pass"
             android:layout_width="wrap_content"
