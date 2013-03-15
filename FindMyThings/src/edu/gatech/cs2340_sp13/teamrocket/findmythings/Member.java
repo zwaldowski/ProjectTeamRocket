@@ -31,6 +31,7 @@ public abstract class Member {
 	 * @return locked
 	 */
 	public boolean locked(){
+		//TODO: Make this method abstract 
 		return false;
 	}
 

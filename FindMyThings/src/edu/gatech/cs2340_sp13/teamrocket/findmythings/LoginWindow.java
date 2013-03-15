@@ -268,7 +268,7 @@ public class LoginWindow extends Activity {
 
 			try {
 				// Simulate network access.
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				return false;
 			}
@@ -311,7 +311,7 @@ public class LoginWindow extends Activity {
 
 				}
 				else {
-					if(temp.locked()) //locks the account after three attempts
+					if(!temp.isAdmin() && temp.locked()) //locks the account after three attempts
 						log.checkAttempts((User)temp);
 					mPasswordView
 					.setError("Exceeded login attempts, account locked");
