@@ -16,8 +16,14 @@ public class Admin_create extends Activity {
 	 */
 	private Login log = new Login();
 	
+	/**
+	 * References
+	 */
 	private EditText mEmailView, mPasswordView;
 	
+	/**
+	 * Hold email/pass for creating a new admin
+	 */
 	private String mEmail, mPassword;
 	
 	@Override
@@ -91,7 +97,7 @@ public class Admin_create extends Activity {
 					mEmailView.setError(getString(R.string.error_invalid_email));
 					focusView = mEmailView;
 					cancel = true;
-				} else if(log.data.contains(new User(mEmail,""))) {
+				} else if(log.data.contains(new Admin(mEmail,""))) {
 					mEmailView .setError("Email has already been registered.");
 					focusView = mEmailView;
 					cancel = true;
