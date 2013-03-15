@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="FindMyThings" default="javadoc">
+    <property file="local.properties" />
+    <property file="ant.properties" />
+    <property environment="env" />
+
+    <condition property="sdk.dir" value="${env.ANDROID_HOME}">
+        <isset property="env.ANDROID_HOME" />
+    </condition>
+
+    <loadproperties srcFile="project.properties" />
+
+    <fail
+            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through the ANDROID_HOME environment variable."
+            unless="sdk.dir"
+    />
+
+    <import file="custom_rules.xml" optional="true" />
+    <import file="${sdk.dir}/tools/ant/build.xml" />
+
+	<target name="init" description="Set up all properties">
+		<property name="src.dir" value="src"/>
+		<property name="doc.dir" value="docs"/>
+		<property name="build.dir" value="bin"/>
+		<property name="classes.dir" value="${build.dir}/classes"/>
+	</target>
+
+    <target name="javadoc" depends="-set-debug-mode,-build-setup,init">
+        <property name="project.target.class.path" refid="project.target.class.path"/>
+        <property name="project.all.jars.path" refid="project.all.jars.path"/>
+        <javadoc destdir="docs" author="true" version="true" use="true" source="1.7"
+
+            linkoffline="http://d.android.com/reference ${sdk.dir}/docs/reference"
+            windowtitle="${docs.window.title}" classpath="${project.target.class.path}:${project.all.jars.path}">
+            <fileset dir="${src.dir}" defaultexcludes="yes">
+                <include name="edu/gatech/cs2340_sp13/teamrocket/findmythings/*"/>
+            </fileset>
+            <doctitle><![CDATA[<h1>Find My Things</h1>]]></doctitle>
+            <bottom><![CDATA[<i>Copyright &#169; 2013 Team Rocket (CS 2340 Spring 2013 Team 32). All Rights Reserved.</i>]]></bottom>
+        </javadoc>
+    </target>
+</project>
