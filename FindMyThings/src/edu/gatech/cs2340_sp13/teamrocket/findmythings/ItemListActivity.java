@@ -24,7 +24,7 @@ import android.view.MenuItem;
  * This activity also implements the required {@link ItemListFragment.Callbacks}
  * interface to listen for item selections.
  * 
- * @author: TeamRocket
+ * @author TeamRocket
  */
 public class ItemListActivity extends FragmentActivity implements
 		ItemListFragment.Callbacks {

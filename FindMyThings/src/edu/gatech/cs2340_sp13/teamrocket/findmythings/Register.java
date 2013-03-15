@@ -14,7 +14,7 @@ import android.text.TextUtils;
  * CS 2340 - FindMyStuff Android App
  * Activity that takes care of registration of a new member
  *
- * @author: TeamRocket
+ * @author TeamRocket
  * */
 public class Register extends Activity {
 

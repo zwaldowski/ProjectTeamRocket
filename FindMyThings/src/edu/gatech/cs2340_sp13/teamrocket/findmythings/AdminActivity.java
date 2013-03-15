@@ -17,7 +17,7 @@ import android.widget.ListView;
  * CS 2340 - FindMyStuff Android App
  * Activity that deals with Admin
  *
- * @author: TeamRocket
+ * @author TeamRocket
  * */
 public class AdminActivity extends ListActivity {
 

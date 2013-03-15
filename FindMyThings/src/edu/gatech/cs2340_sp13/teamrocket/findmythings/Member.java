@@ -4,7 +4,7 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
  * CS 2340 - FindMyStuff Android App
  * This abstract class specifies features of a Member
  *
- * @author: TeamRocket
+ * @author TeamRocket
  * */
 public abstract class Member {
 	protected String user;

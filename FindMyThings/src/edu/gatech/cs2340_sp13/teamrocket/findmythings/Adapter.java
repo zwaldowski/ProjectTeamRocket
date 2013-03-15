@@ -19,7 +19,7 @@ import android.widget.TextView;
 /** 
  * CS 2340 - FindMyStuff Android App
  *
- * @author: TeamRocket
+ * @author TeamRocket
  * */
 public class Adapter extends ArrayAdapter<Item>{
 

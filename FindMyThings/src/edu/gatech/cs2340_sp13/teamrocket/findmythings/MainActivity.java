@@ -25,7 +25,7 @@ import android.preference.PreferenceScreen;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  * 
- * @author: TeamRocket
+ * @author TeamRocket
  */
 public class MainActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 		

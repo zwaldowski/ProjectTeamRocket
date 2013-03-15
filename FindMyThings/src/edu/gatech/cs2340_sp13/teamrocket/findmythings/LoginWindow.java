@@ -21,7 +21,7 @@ import android.widget.TextView;
  * CS 2340 - FindMyStuff Android App
  * Activity which displays a login screen to the user, offering registration as well. 
  *
- * @author: TeamRocket
+ * @author TeamRocket
  * */
 public class LoginWindow extends Activity {
 

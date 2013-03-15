@@ -14,7 +14,7 @@ import android.widget.TextView;
  * contained in a {@link ItemListActivity} in two-pane mode (on tablets) or a
  * {@link ItemDetailActivity} on handsets.
  * 
- * @author: TeamRocket
+ * @author TeamRocket
  */
 public class ItemDetailFragment extends Fragment {
 

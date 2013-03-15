@@ -4,7 +4,7 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
  * CS 2340 - FindMyStuff Android App
  * This class creates a new User object
  *
- * @author: TeamRocket
+ * @author TeamRocket
  * */
 public class User extends Member {
 

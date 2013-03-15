@@ -10,7 +10,7 @@ import android.content.Context;
  * CS 2340 - FindMyStuff Android App
  * This class creates a new Item
  *
- * @author: TeamRocket
+ * @author TeamRocket
  * */
 public class Item {
 	

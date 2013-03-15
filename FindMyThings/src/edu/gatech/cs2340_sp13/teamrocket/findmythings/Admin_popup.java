@@ -15,7 +15,7 @@ import android.widget.Switch;
 /** 
  * CS 2340 - FindMyStuff Android App
  *
- * @author: TeamRocket
+ * @author TeamRocket
  * */
 public class Admin_popup extends Activity implements OnPreferenceChangeListener {
 
