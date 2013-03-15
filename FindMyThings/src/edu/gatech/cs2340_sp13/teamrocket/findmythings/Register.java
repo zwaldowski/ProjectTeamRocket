@@ -139,7 +139,7 @@ public class Register extends Activity {
 			mEmailView.setError(getString(R.string.error_invalid_email));
 			focusView = mEmailView;
 			cancel = true;
-		} else if(log.data.contains(new User(mEmail,""))) {
+		} else if(Login.data.contains(new User(mEmail,""))) {
 			mEmailView .setError("Email has already been registered.");
 			focusView = mEmailView;
 			cancel = true;
