@@ -8,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
+ * CS 2340 - FindMyStuff Android App
+ * 
  * A fragment representing a single Item detail screen. This fragment is either
  * contained in a {@link ItemListActivity} in two-pane mode (on tablets) or a
  * {@link ItemDetailActivity} on handsets.
+ * 
+ * @author: TeamRocket
  */
 public class ItemDetailFragment extends Fragment {
 

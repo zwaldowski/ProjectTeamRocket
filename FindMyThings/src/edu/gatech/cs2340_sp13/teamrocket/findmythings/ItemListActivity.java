@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 /**
+ * CS 2340 - FindMyStuff Android App
+ * 
  * An activity representing a list of Items. This activity has different
  * presentations for handset and tablet-size devices. On handsets, the activity
  * presents a list of items, which when touched, lead to a
@@ -21,6 +23,8 @@ import android.view.MenuItem;
  * <p>
  * This activity also implements the required {@link ItemListFragment.Callbacks}
  * interface to listen for item selections.
+ * 
+ * @author: TeamRocket
  */
 public class ItemListActivity extends FragmentActivity implements
 		ItemListFragment.Callbacks {

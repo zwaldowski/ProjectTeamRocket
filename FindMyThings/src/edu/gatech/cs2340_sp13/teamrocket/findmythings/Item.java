@@ -1,4 +1,4 @@
- package edu.gatech.cs2340_sp13.teamrocket.findmythings;
+package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -6,6 +6,12 @@ import java.util.Locale;
 
 import android.content.Context;
 
+/** 
+ * CS 2340 - FindMyStuff Android App
+ * This class creates a new Item
+ *
+ * @author: TeamRocket
+ * */
 public class Item {
 	
 	/**

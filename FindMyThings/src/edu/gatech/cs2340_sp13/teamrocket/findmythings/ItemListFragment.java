@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ListView;
 
 /**
+ * CS 2340 - FindMyStuff Android App
+ * 
  * A list fragment representing a list of Items. This fragment also supports
  * tablet devices by allowing list items to be given an 'activated' state upon
  * selection. This helps indicate which item is currently being viewed in a
@@ -14,6 +16,8 @@ import android.widget.ListView;
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
+ * 
+ * @author TeamRocket
  */
 public class ItemListFragment extends ListFragment {
 

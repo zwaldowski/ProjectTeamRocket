@@ -7,6 +7,8 @@ import java.util.Map;
 import android.content.Context;
 
 /**
+ * CS 2340 - FindMyStuff Android App
+ * 
  * Shared data source for Items in the app.
  * 
  * Controller follows the Singleton data model. It cannot
@@ -16,8 +18,7 @@ import android.content.Context;
  * future it should take care of pulling/caching/updating Items
  * within the database and the server, potentially.
  * 
- * @author zwaldowski
- *
+ * @author TeamRocket
  */
 public final class Controller {
 	

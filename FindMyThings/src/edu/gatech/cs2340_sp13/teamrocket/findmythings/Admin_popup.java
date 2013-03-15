@@ -12,6 +12,11 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+/** 
+ * CS 2340 - FindMyStuff Android App
+ *
+ * @author: TeamRocket
+ * */
 public class Admin_popup extends Activity implements OnPreferenceChangeListener {
 
 	/**

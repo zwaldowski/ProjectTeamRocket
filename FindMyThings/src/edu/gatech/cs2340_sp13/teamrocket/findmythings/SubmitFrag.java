@@ -7,6 +7,11 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
+/** 
+ * CS 2340 - FindMyStuff Android App
+ *
+ * @author: TeamRocket
+ * */
 public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
 	
 	/**

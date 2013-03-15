@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * CS 2340 - FindMyStuff Android App
  * A class managing how a User is authenticated.
  * TODO: Actually authenticate users against something.
  * @author zwaldowski
