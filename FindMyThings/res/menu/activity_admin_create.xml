@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
+    <item android:id="@+id/admin_ok" android:title="@string/register" android:icon="@drawable/action_accept" android:showAsAction="ifRoom|withText"></item><item android:id="@+id/admin_cancel" android:icon="@drawable/action_cancel" android:title="@string/action_cancel" android:showAsAction="ifRoom|withText"></item>
+    
+
+</menu>

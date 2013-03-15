@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/admin_create"
+        android:title="@string/admin_create"
+        android:icon="@drawable/action_submit"
+        android:showAsAction="ifRoom|withText" />
+    
+</menu>

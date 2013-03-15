@@ -61,6 +61,10 @@
             android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.Admin_popup"
             android:label="@string/title_activity_admin_popup" >
         </activity>
+        <activity
+            android:name="edu.gatech.cs2340_sp13.teamrocket.findmythings.Admin_create"
+            android:label="@string/title_activity_admin_create" >
+        </activity>
     </application>
 
 </manifest>

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -35,6 +37,7 @@ public class AdminActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 			
 		setContentView(R.layout.activity_admin_layout);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		mSearch = (EditText)findViewById(R.id.search_bar);
 		mList = (ListView)findViewById(android.R.id.list);
@@ -74,6 +77,44 @@ public class AdminActivity extends ListActivity {
 		next.putExtra("id",(int)id);
 		finish();
 	    startActivity(next);
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	goToParentActivity();
+	            return true;
+	        case R.id.admin_create:
+	        	return createAdmin();
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_admin_layout, menu);
+	    return true;
+	}
+	
+	/**
+	 * Goes back to the main activity
+	 */
+	public void goToParentActivity() {
+		Intent next = new Intent(AdminActivity.this, MainActivity.class);
+		finish();
+		startActivity(next);
+	}
+	
+	/**
+	 * Goes to the activity to create a new admin account
+	 * @return true
+	 */
+	public boolean createAdmin() {
+		Intent next = new Intent(AdminActivity.this, Admin_create.class);
+		finish();
+		startActivity(next);
+		return true;
 	}
 	
 

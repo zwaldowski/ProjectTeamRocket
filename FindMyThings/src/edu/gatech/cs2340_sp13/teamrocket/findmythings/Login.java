@@ -107,6 +107,15 @@ public class Login {
 			((User) data.get(justincase)).setAttempts(m.getAttempts());
 	}
 	
+	/**
+	 * Adds a new admin account to the array
+	 * @param user
+	 * @param pass
+	 */
+	public void createAdmin(String user, String pass) {
+		data.add(new Admin(user,pass));
+	}
+	
 	
 
 }
