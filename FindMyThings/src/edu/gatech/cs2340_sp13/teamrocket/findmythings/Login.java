@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * A class managing how a User is authenticated.
  * TODO: Actually authenticate users against something.
- * @author zwaldowski
+ * @author Team Rocket
  */
 public class Login {
 	

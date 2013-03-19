@@ -11,11 +11,7 @@ import android.widget.EditText;
 
 public class Admin_create extends Activity {
 	
-	/**
-	 * reference to login
-	 */
-	private Login log = new Login();
-	
+
 	/**
 	 * References
 	 */
@@ -110,7 +106,7 @@ public class Admin_create extends Activity {
 				}
 				else {
 					Intent next = new Intent(Admin_create.this, AdminActivity.class);
-					log.createAdmin(mEmail, mPassword);
+					Login.data.add(new Admin(mEmail, mPassword));
 					finish();
 					startActivity(next);
 					return true;

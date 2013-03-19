@@ -2,6 +2,15 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="156dp"
+        android:text="Delete user" />
+
     <Switch
         android:id="@+id/isLocked"
         android:layout_width="wrap_content"
@@ -12,13 +21,14 @@
         android:paddingLeft="15dp"
         android:text="Account lock" />
 
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="156dp"
-        android:text="Delete user" />
+    <Switch
+        android:id="@+id/isAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/isLocked"
+        android:paddingLeft="15dp"
+        android:text="Admin" />
    
 </RelativeLayout>
