@@ -46,6 +46,7 @@ public class AdminActivity extends ListActivity {
 		mSearch = (EditText)findViewById(R.id.search_bar);
 		mList = (ListView)findViewById(android.R.id.list);
 		
+		mList.requestFocus();
 		//Instantiate ArrayAdapter and tell it to display the list of Members from Login
 		mUsers = new ArrayAdapter<Member>(this,
 				android.R.layout.simple_list_item_activated_1,
