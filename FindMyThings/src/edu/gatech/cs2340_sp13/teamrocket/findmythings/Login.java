@@ -2,10 +2,8 @@ package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * CS 2340 - FindMyStuff Android App
  * A class managing how a User is authenticated.
  * TODO: Actually authenticate users against something.
  * @author zwaldowski
@@ -60,18 +58,9 @@ public class Login {
 	}
 	
 	/**
-	 * returns the list of Members
-	 * @return the current (local-only) member list
-	 */
-	public static List<Member> getData() {
-		return data;
-	}
-
-
-	/**
 	 * adds new member to arraylist
-	 * @param temp A created member object
-	 * @return the new Member object
+	 * @param name user name
+	 * @param password user pass
 	 */
 	public Member register(Member temp) {
 		
@@ -106,15 +95,6 @@ public class Login {
 		int justincase = data.indexOf(m);
 		if(justincase!=-1)
 			((User) data.get(justincase)).setAttempts(m.getAttempts());
-	}
-	
-	/**
-	 * Adds a new admin account to the array
-	 * @param user
-	 * @param pass
-	 */
-	public void createAdmin(String user, String pass) {
-		data.add(new Admin(user,pass));
 	}
 	
 	
