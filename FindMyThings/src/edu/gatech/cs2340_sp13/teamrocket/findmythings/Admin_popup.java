@@ -12,17 +12,12 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-/** 
- * CS 2340 - FindMyStuff Android App
- *
- * @author TeamRocket
- * */
 public class Admin_popup extends Activity implements OnPreferenceChangeListener {
 
 	/**
-	 * Checkbox reference
+	 * Switch reference
 	 */
-	private Switch checkLock;
+	private Switch checkLock, checkAdmin;
 	
 	/**
 	 * Id from AdminActivity
@@ -38,20 +33,34 @@ public class Admin_popup extends Activity implements OnPreferenceChangeListener 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_popup);
-		
+	    	
+		//Get id from AdminActivity
 		Intent i = getIntent();
 		id = i.getExtras().getInt("id");
 		
-		Login.getData().get(id);
 		delete = (Button)findViewById(R.id.delete);
+		
+		checkAdmin = (Switch)findViewById(R.id.isAdmin);
 		checkLock = (Switch)findViewById(R.id.isLocked);
+		
+		checkAdmin.setChecked((Login.data.get(id).isAdmin()));
 		checkLock.setChecked((Login.data.get(id).locked()));
 		
 		checkLock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
 			   @Override
-			   public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+			   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				   ((User)Login.data.get(id)).setLock(isChecked);
+			   }
+		});
+		
+		checkAdmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			   @Override
+			   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				   Member temp = Login.data.get(id);
+				   Login.data.remove(id);
+				   if(isChecked) 
+					   Login.data.add(new Admin(temp.getUser(),temp.getPassword()));
+				   else Login.data.add(new User(temp.getUser(), temp.getPassword()));
 			   }
 		});
 		
