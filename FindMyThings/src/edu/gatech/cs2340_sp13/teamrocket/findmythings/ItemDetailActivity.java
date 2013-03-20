@@ -94,6 +94,7 @@ public class ItemDetailActivity extends FragmentActivity {
 	 */
 	public void toMap (View LocationButton) {
 		Intent next = new Intent(getApplicationContext(), MapsActivity.class);
+		finish();
 		startActivity(next);
 	}
 }

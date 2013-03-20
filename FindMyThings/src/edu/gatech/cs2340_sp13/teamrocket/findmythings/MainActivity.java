@@ -34,8 +34,8 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
 	        
-	        
-	        if (!Login.currUser.isAdmin()) {
+	        //For some reason currUser is occasionally null so for now i'm just going to band-aid the problem
+	        if (Login.currUser!=null || !Login.currUser.isAdmin()) {
 	        	PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
 	        	Preference adminLink = findPreference(getString(R.string.main_key_admin));
 	        	moreCategory.removePreference(adminLink);

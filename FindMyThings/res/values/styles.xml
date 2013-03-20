@@ -16,6 +16,11 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <!-- Map theme. -->
+    <style name="mapView">
+    	<item name="android:gravity">center</item>
+	</style>
 
     <style name="LoginFormContainer">
         <item name="android:layout_width">match_parent</item>
