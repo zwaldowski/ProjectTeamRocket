@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -24,13 +26,13 @@ public class ItemDetailActivity extends FragmentActivity {
 	 * The class of Item displayed.
 	 */
 	private Item.Type mType;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_detail);
 		
-
+	
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
@@ -83,5 +85,15 @@ public class ItemDetailActivity extends FragmentActivity {
 	 */
 	public Item.Type getItemType() {
 		return mType;
+	}
+	
+	/**
+	 * Method called when the location button is clicked
+	 * Goes to MapsActivity
+	 * @param LocationButton
+	 */
+	public void toMap (View LocationButton) {
+		Intent next = new Intent(getApplicationContext(), MapsActivity.class);
+		startActivity(next);
 	}
 }

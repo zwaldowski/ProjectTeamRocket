@@ -162,7 +162,7 @@ public class Item {
 	 */
 	public void setDescription(String s) {
 		if(s!=null)
-			description = s;
+			description = s.trim();
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class Item {
 	 */
 	public void setLoc(String s) {
 		if(s!=null)
-			loc=s;
+			loc=s.trim();
 	}
 
 	/**

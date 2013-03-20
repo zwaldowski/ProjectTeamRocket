@@ -1,19 +1,13 @@
 
 
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
-	    
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="vertical"
-	    tools:context=".ItemDetailFragment"  >
-
-			
+	android:orientation="vertical"
+	tools:context=".ItemDetailFragment">
+	   			
 			    
 			<TextView
 	        	android:id="@+id/describecap"
@@ -22,9 +16,10 @@
 	        	/>
 	
 			<TextView
-			    android:id="@+id/item_detail"
-			    android:layout_width="match_parent"
+			    android:id="@+id/loc_detail"
+			    android:layout_width="280dp"
 			    android:layout_height="wrap_content"
+			    android:layout_below="@+id/locationcap"
 			    android:ems="10"
 			    android:paddingBottom="5dp"
 			    android:paddingLeft="12dp"
@@ -34,28 +29,9 @@
 			    android:textSize="15sp" >
 	        	
 			</TextView>
-	
+			
 			<TextView
-	        	android:id="@+id/locationcap"
-	        	android:text="@string/locationcaps"
-	        	style="@style/Header"
-	        	/>
-	
-			<TextView
-			    android:id="@+id/loc_detail"
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:ems="10"
-			    android:paddingBottom="5dp"
-			    android:paddingLeft="12dp"
-			    android:paddingRight="12dp"
-			    android:paddingTop="5dp"
-			    android:textIsSelectable="true"
-			    android:textSize="15sp"  >
-	        	
-			</TextView>
-
-			<TextView
+			    android:layout_below="@+id/reward_detail"
 			    android:id="@+id/cat_cap"
 			    style="@style/Header"
 			    android:paddingBottom="15dp"
@@ -63,6 +39,7 @@
 			    android:text="@string/cat_caps" />
 
 			<TextView
+			    android:layout_below="@+id/cat_cap"
 			    android:id="@+id/cat_detail"
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
@@ -77,46 +54,79 @@
 			</TextView>
 			
 			<TextView
+			    android:layout_below="@+id/cat_detail"
 			    android:id="@+id/date"
 			    style="@style/Header"
 			    android:paddingBottom="15dp"
 			    android:paddingTop="15dp"
 			    android:text="@string/date_caps" />
-			
+
 				<TextView
-			    android:id="@+id/date_detail"
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:ems="10"
-			    android:paddingBottom="5dp"
-			    android:paddingLeft="12dp"
-			    android:paddingRight="12dp"
-			    android:paddingTop="5dp"
-			    android:textIsSelectable="true"
-			    android:textSize="15sp" >
-	        	
-			</TextView>
-			
-			<TextView
-			    android:id="@+id/reward"
-			    style="@style/Header"
-			    android:paddingBottom="15dp"
-			    android:paddingTop="15dp"
-			    android:text="@string/rewardcaps" />	
-			    
+				    android:layout_below="@+id/date"
+				    android:id="@+id/date_detail"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_alignParentLeft="true"
+				    android:ems="10"
+				    android:paddingBottom="5dp"
+				    android:paddingLeft="12dp"
+				    android:paddingRight="12dp"
+				    android:paddingTop="5dp"
+				    android:textIsSelectable="true"
+				    android:textSize="15sp" />
+
 				<TextView
-			    android:id="@+id/reward_detail"
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:ems="10"
-			    android:paddingBottom="5dp"
-			    android:paddingLeft="12dp"
-			    android:paddingRight="12dp"
-			    android:paddingTop="5dp"
-			    android:textIsSelectable="true"
-			    android:textSize="15sp" >
-	        	
-			</TextView>
+				    android:id="@+id/reward_detail"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_alignParentLeft="true"
+				    android:layout_below="@+id/reward"
+				    android:ems="10"
+				    android:paddingBottom="5dp"
+				    android:paddingLeft="12dp"
+				    android:paddingRight="12dp"
+				    android:paddingTop="5dp"
+				    android:textIsSelectable="true"
+				    android:textSize="15sp" />
+
+				<TextView
+				    android:id="@+id/item_detail"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_alignParentLeft="true"
+				    android:layout_below="@+id/describecap"
+				    android:ems="10"
+				    android:paddingBottom="5dp"
+				    android:paddingLeft="12dp"
+				    android:paddingRight="12dp"
+				    android:paddingTop="5dp"
+				    android:textIsSelectable="true"
+				    android:textSize="15sp" />
+
+				<TextView
+				    android:id="@+id/locationcap"
+				    style="@style/Header"
+				    android:layout_alignParentLeft="true"
+				    android:layout_below="@+id/item_detail"
+				    android:text="@string/locationcaps" />
+
+				<TextView
+				    android:id="@+id/reward"
+				    style="@style/Header"
+				    android:layout_alignParentLeft="true"
+				    android:layout_below="@+id/loc_detail"
+				    android:paddingBottom="15dp"
+				    android:paddingTop="15dp"
+				    android:text="@string/rewardcaps" />
+
+				<Button
+				    android:id="@+id/loc_button"
+				    style="?android:attr/borderlessButtonStyle"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_alignParentRight="true"
+				    android:layout_alignTop="@+id/loc_detail"
+				    android:onClick="toMap"
+				    android:text="Loc" />
     
-        </LinearLayout>
-</ScrollView>
+</RelativeLayout>

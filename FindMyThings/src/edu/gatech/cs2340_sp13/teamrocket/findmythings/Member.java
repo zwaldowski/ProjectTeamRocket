@@ -18,13 +18,13 @@ public abstract class Member {
 	public Member(String user, String pass, String phone) {
 		this(user,pass);
 		if(phone!=null)
-		this.phone=phone;
+			this.phone=phone;
 		
 	}
 
 	public Member(String user, String pass) {
-		this.user = user;
-		password = pass;
+		this.user = user.trim();
+		password = pass.trim();
 	}
 	
 	// Design scaffolding
@@ -92,7 +92,7 @@ public abstract class Member {
 	 * @param s phone number
 	 */
 	public void setPhone(String s) {
-		phone = s;
+		phone = s.trim();
 	}
 
 	/**
@@ -100,7 +100,7 @@ public abstract class Member {
 	 * @param s
 	 */
 	public void setAddress(String s) {
-		address=s;
+		address = s.trim();
 	}
 
 	/**
@@ -108,7 +108,7 @@ public abstract class Member {
 	 * @param s
 	 */
 	public void setName(String s) {
-		name = s;
+		name = s.trim();
 	}
 
 	/* Object methods */

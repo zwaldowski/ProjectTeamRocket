@@ -1,5 +1,6 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class ItemDetailFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+				
 
 		if (getArguments().containsKey(Item.ID)) {
 			// Load the dummy content specified by the fragment
@@ -66,8 +68,10 @@ public class ItemDetailFragment extends Fragment {
 			.setText(mItem.getDateString());
 			((TextView) rootView.findViewById(R.id.reward_detail))
 			.setText("$" + Integer.toString(mItem.getReward()));
+			
 		}
 
 		return rootView;
 	}
+	
 }

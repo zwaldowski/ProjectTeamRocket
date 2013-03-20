@@ -63,5 +63,6 @@
     <string name="key_nooverride_animation">findmythings.activity.nooverride_animation</string>
     <string name="title_activity_admin_popup">Admin_popup</string>
     <string name="title_activity_admin_create">Admin_create</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>
