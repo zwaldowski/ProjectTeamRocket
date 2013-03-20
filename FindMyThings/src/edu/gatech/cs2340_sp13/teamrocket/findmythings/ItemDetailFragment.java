@@ -1,6 +1,5 @@
 package edu.gatech.cs2340_sp13.teamrocket.findmythings;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
