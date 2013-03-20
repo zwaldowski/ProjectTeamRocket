@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 
-public class MapsActivity extends FragmentActivity  {
+public class MapsActivity extends FragmentActivity   {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -73,13 +73,22 @@
         <uses-library android:name="com.google.android.maps"/>
         <meta-data
    		 android:name="com.google.android.maps.v2.API_KEY"
-    	 android:value="AIzaSyCtn168leXESAaQigt4lwJMpD02aQ6XzTY"/>
+    	 android:value="AIzaSyBYUIq4aB_eQWytWQb3FApcPIYCBmqY_QA"/>
+        
     </application>
+    
     <!-- App can use WIFI to determine location -->
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
  	<!-- App can use GPS to determine location -->
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	<!-- App requests internet permission -->
+	
+	    <permission
+        android:name="com.discos2.example.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+	<!-- App requests internet permission -->    
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<!-- Required to display the map -->    	
 <uses-permission android:name="android.permission.INTERNET"/>
-    
+    <uses-feature android:glEsVersion="0x00020000" 
+        		  android:required="true" />
 </manifest>
