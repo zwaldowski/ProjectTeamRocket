@@ -29,3 +29,9 @@ You should, now, be able to import the project into Eclipse by using File > Impo
 Alright, Eclipse is very finicky… to say the freaking least. You may or may not need to add the Googke Play services library after importing the project - I don't know, I haven't tried it on anybody else's computer yet.
 
 File > Import… > Android > Existing Android Code Into Workspace. Root directory is `libproject` in the *project root* (`ProjectTeamRocket`), you should have the Play SDK pop up in projects. Same rules as before, no checkboxes, hit Finish. The project should build now...
+
+Your emulator!
+--------------
+
+If you aren't blessed enough to be running directly on a device, do note that you need the Google API's installed for your current version of Android (so, for 4.2.1, Google APIs 17 or whatever) and your AVD needs to target *that* SDK instead of just Android 17 for the app to install.
+
