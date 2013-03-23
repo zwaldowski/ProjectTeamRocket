@@ -21,7 +21,7 @@ public class ItemDetailFragment extends Fragment {
 	/**
 	 * The content this fragment is presenting.
 	 */
-	private Item mItem;
+	public static Item mItem;
 	
 	/**
 	 * The data source for all Item lists (for now).
@@ -72,5 +72,7 @@ public class ItemDetailFragment extends Fragment {
 
 		return rootView;
 	}
+	
+	
 	
 }
