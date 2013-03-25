@@ -33,7 +33,7 @@
             linkoffline="http://d.android.com/reference ${sdk.dir}/docs/reference"
             windowtitle="${docs.window.title}" classpath="${project.target.class.path}:${project.all.jars.path}">
             <fileset dir="${src.dir}" defaultexcludes="yes">
-                <include name="edu/gatech/cs2340_sp13/teamrocket/findmythings/*"/>
+                <include name="edu/gatech/oad/rocket/findmythings/*"/>
             </fileset>
             <doctitle><![CDATA[<h1>Find My Things</h1>]]></doctitle>
             <bottom><![CDATA[<i>Copyright &#169; 2013 Team Rocket (CS 2340 Spring 2013 Team 32). All Rights Reserved.</i>]]></bottom>

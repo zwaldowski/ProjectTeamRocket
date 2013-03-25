@@ -6,8 +6,8 @@
     		    android:title="@string/main_title_lost" 
         	    android:summary="@string/main_summary_lost">
     			<intent 
-        		 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-        		 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
+			 android:targetClass="edu.gatech.oad.rocket.findmythings.ItemListActivity"
         		 android:action="android.intent.action.VIEW"
     			/>
     		</Preference>
@@ -17,8 +17,8 @@
     		    android:title="@string/main_title_found" 
     		    android:summary="@string/main_summary_found">
     			 <intent 
-       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
+			 android:targetClass="edu.gatech.oad.rocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
     			/>  
     		</Preference>
@@ -29,8 +29,8 @@
        		    android:summary="@string/main_summary_donations">
        
     			<intent 
-       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
+			 android:targetClass="edu.gatech.oad.rocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
     			/>
     		</Preference>
@@ -41,8 +41,8 @@
        		    android:summary="@string/main_summary_requests">
        
     			<intent 
-       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
+			 android:targetClass="edu.gatech.oad.rocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
     			/>
    			</Preference>
@@ -57,8 +57,8 @@
     		    android:title="@string/main_title_account">
        
     			<!-- intent 
-       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.ItemListActivity"
+			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
+			 android:targetClass="edu.gatech.oad.rocket.findmythings.ItemListActivity"
        			 android:action="android.intent.action.VIEW"
     			/> # TODO: Intent -->
    			</Preference> 	
@@ -68,17 +68,17 @@
     		    android:title="@string/main_title_admin">
        
     			<intent 
-       			 android:targetPackage="edu.gatech.cs2340_sp13.teamrocket.findmythings"
-       			 android:targetClass="edu.gatech.cs2340_sp13.teamrocket.findmythings.AdminActivity"
+			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
+			 android:targetClass="edu.gatech.oad.rocket.findmythings.AdminActivity"
        			 android:action="android.intent.action.VIEW"
     			/>
    			</Preference>
 	
-    		<edu.gatech.cs2340_sp13.teamrocket.findmythings.ConfirmationDialog
+		<edu.gatech.oad.rocket.findmythings.ConfirmationDialog
     			android:key="@string/main_key_signout"
     			android:title="@string/main_title_signout"
     			android:dialogMessage="@string/main_message_signout">
-			</edu.gatech.cs2340_sp13.teamrocket.findmythings.ConfirmationDialog>
+			</edu.gatech.oad.rocket.findmythings.ConfirmationDialog>
 		</PreferenceCategory>
     
     <!-- Goes to Activity to view items -->

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Ant Test Build - M4 -->
+<!-- CS 2340 - Spring 2013 - Georgia Tech -->
+<!-- dwaldowski3.xml -->
+<project name="M4" default="all" basedir=".">
+	<target name="init" description="Set up all properties">
+		<property name="src.dir" value="src"/>
+		<property name="build.dir" value="build"/>
+		<property name="doc.dir" value="apidoc"/>
+		<property name="dist.dir" value="dist" />
+		<property name="classes.dir" value="${build.dir}/classes"/>
+
+		<property name="lib.dir" value="lib"/>
+		<property name="lib.res" value="resources.jar"/>
+
+		<property name="jar.path" value="${dist.dir}/AntLabRun.jar"/>
+		<property name="main.class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+
+		<path id="lib.classpath">
+			<fileset dir="${lib.dir}" includes="${lib.res}" />
+		</path>
+	</target>
+
+	<target name="prepare" depends="init" description="Make all required directories">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+	<target name="compile" depends="prepare" description="Compile all classes in src to build">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="lib.classpath" includeantruntime="false" />
+	</target>
+
+	<target name="jar" depends="compile" description="Package compiled classes as a JAR">
+		<manifestclasspath property="jar.classpath" jarfile="${jar.path}">
+			<classpath refid="lib.classpath" />
+		</manifestclasspath>
+		<jar destfile="${jar.path}" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Class-Path" value="${jar.classpath}" />
+				<attribute name="Main-Class" value="${main.class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="jar" description="Start program by running the result of the 'jar' task">
+		<java jar="${jar.path}" fork="true" />
+	</target>
+
+	<target name="javadoc" depends="prepare" description="Generate docs for all classes for src into apidoc">
+		<javadoc sourcepath="${src.dir}" classpath="${lib.dir}/${lib.res}" access="public" destdir="${doc.dir}/javadoc" packagenames="edu.gatech.oad.antdemo" windowtitle="CS 2340 - Milestone 4">
+			<fileset dir="${src.dir}">
+				<include name="**/*.java" />
+			</fileset>
+			<bottom>
+				<![CDATA[<i>Copyright &copy; 2013 Team Rocket, CS 2340 #32. All Rights Reserved.</i>]]>
+			</bottom>
+		</javadoc>
+	</target>
+
+	<target name="all" description="Performs all tasks except clean">
+		<antcall target="init" />
+		<antcall target="prepare" />
+		<antcall target="javadoc" />
+		<antcall target="compile" />
+		<antcall target="jar" />
+		<antcall target="run" />
+	</target>
+
+	<!-- Remove build and apidoc -->
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}"/>
+		<delete dir="${doc.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+
+</project>

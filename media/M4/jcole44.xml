@@ -1,0 +1,70 @@
+<project name="M4" default="all" basedir=".">
+
+
+	<target name="init">
+		<property name="src.dir" value="src"/>
+		<property name="build.dir" value="build"/>
+		<property name="apidoc.dir" value="apidoc"/>
+		<property name="lib.dir" value="lib"/>
+
+		<property name="lib.res" value="resources.jar"/>
+		<property name="jar.path" value="AntLabRun.jar"/>
+		<property name="main.class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+
+		<path id="classpath">
+			<fileset dir="${lib.dir}" includes="${lib.res}" />
+		</path>
+	</target>
+
+	<target name="prepare" depends="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${apidoc.dir}"/>
+		<mkdir dir="${src.dir}"/>
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" includeantruntime="false"/>
+	</target>
+
+	<target name="javadoc" depends="prepare">
+		<javadoc sourcepath="${src.dir}" classpath="${lib.dir}/${lib.res}" access="public" destdir="${apidoc.dir}" packagenames="edu.gatech.oad.antdemo" windowtitle="M4 Stuff">
+		<fileset dir="${src.dir}">
+				<include name="**/*.java" />
+			</fileset>
+		</javadoc>
+	</target>
+
+	<target name="jar" depends="compile">
+		<manifestclasspath property="jar.classpath" jarfile="${jar.path}">
+			<classpath refid="classpath" />
+		</manifestclasspath>
+		<jar destfile="${jar.path}" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Class-Path" value="${jar.classpath}" />
+				<attribute name="Main-Class" value="${main.class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+
+
+	<target name="run" depends="jar">
+        <java jar="${jar.path}" fork="true"/>
+    </target>
+
+	<target name="clean" depends="init">
+        <delete dir="${build.dir}"/>
+		<delete dir="${apidoc.dir}"/>
+		<delete file="${jar.path}"/>
+    </target>
+
+	<target name="all">
+		<antcall target="init"/>
+		<antcall target="prepare"/>
+		<antcall target="compile"/>
+		<antcall target="javadoc"/>
+		<antcall target="jar"/>
+		<antcall target="run"/>
+	</target>
+
+</project>
