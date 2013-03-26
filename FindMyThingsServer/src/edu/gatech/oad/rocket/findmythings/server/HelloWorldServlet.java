@@ -15,8 +15,8 @@ public class HelloWorldServlet extends TemplateServlet {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		write("text/plain", HTTP_STATUS_OK, "Hello, world", resp);
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		writeDocument(response, "helloworld.ftl");
 	}
 
 }

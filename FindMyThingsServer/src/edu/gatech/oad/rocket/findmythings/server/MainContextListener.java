@@ -25,7 +25,6 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 
 import edu.gatech.oad.rocket.findmythings.server.web.*;
-import freemarker.template.TemplateModelException;
 
 public class MainContextListener extends GuiceServletContextListener {
 
@@ -95,14 +94,12 @@ public class MainContextListener extends GuiceServletContextListener {
 			    // require authentication on a couple of our test endpoints
 				addFilterChain("/login", AUTHC);
 				addFilterChain("/logout", LOGOUT);
-				addFilterChain("/settings", AUTHC);
 				addFilterChain("/account/**", AUTHC);
-				addFilterChain("/listUsers", AUTHC, config(ROLES, "admin"));
+				addFilterChain("/admin/**", AUTHC, config(ROLES, "admin"));
 
 			}
 			
-			@Provides
-			@Singleton
+			@Provides @Singleton
 			Ini loadShiroIni() throws MalformedURLException {
 				URL iniUrl = servletContext.getResource("/WEB-INF/shiro.ini");
 				return Ini.fromResourcePath("url:" + iniUrl.toExternalForm());

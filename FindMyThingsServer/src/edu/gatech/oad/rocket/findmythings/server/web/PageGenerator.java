@@ -51,7 +51,7 @@ public class PageGenerator {
         IOException lastException = null;
         for (String nm : names) {
             try {
-                Template template = config.getTemplate(nm);
+                Template template = getConfig().getTemplate(nm);
                 template.setOutputEncoding(charset);
                 return template;
             } catch (IOException e) {
@@ -65,7 +65,7 @@ public class PageGenerator {
         return null;
     }
     
-    public String create(String templateName, Map<String, ?> args) throws IOException {
+    public String createPage(String templateName, Map<String, ?> args) throws IOException {
     	Template template = getTemplate(templateName);
     	if (template == null) {
     		return EMPTY_STRING;
@@ -85,11 +85,19 @@ public class PageGenerator {
     	}
     }
     
-    public void write(String templateName, Map<String, ?> args, Writer out) throws IOException {
-    	String append = create(templateName, args);
+    public String createPage(String templateName, Object... args) throws IOException {
+    	return createPage(templateName, map(args));
+    }
+    
+    public void writePage(String templateName, Writer out, Map<String, ?> args) throws IOException {
+    	String append = createPage(templateName, args);
     	if (append.length() != 0) {
     		out.write(append);
     	}
+    }
+    
+    public void writePage(String templateName, Writer out, Object... args) throws IOException {
+    	writePage(templateName, out, map(args));
     }
     
     // helper for variable argument (Object...) methods

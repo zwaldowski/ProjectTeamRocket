@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import edu.gatech.oad.rocket.findmythings.server.util.*;
 
 @Singleton
 public class LoginServlet extends TemplateServlet {
@@ -17,7 +18,7 @@ public class LoginServlet extends TemplateServlet {
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		write("text/plain", HTTP_STATUS_OK, "Login", resp);
+		write("text/plain", HTTP.STATUS_OK, "Login", resp);
 
 		@SuppressWarnings("unchecked")
 		Enumeration<String> allHeaderNames = req.getHeaderNames();
