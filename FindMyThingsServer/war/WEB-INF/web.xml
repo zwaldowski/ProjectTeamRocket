@@ -4,7 +4,23 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-	<servlet>
+	<display-name>Find My Things</display-name>
+	
+	<filter>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>guiceFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>edu.gatech.oad.rocket.findmythings.server.MainServletContextListener</listener-class>
+	</listener>
+	
+	<!-- servlet>
 		<servlet-name>FindMyThingsServer</servlet-name>
 		<servlet-class>edu.gatech.oad.rocket.findmythings.server.FindMyThingsServerServlet</servlet-class>
 	</servlet>
@@ -14,5 +30,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
-	</welcome-file-list>
+	</welcome-file-list -->
+	
 </web-app>
