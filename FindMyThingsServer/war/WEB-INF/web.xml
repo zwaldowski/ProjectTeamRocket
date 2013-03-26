@@ -17,7 +17,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</filter-mapping>
 
 	<listener>
-		<listener-class>edu.gatech.oad.rocket.findmythings.server.MainServletContextListener</listener-class>
+		<listener-class>edu.gatech.oad.rocket.findmythings.server.MainContextListener</listener-class>
 	</listener>
 	
 	<!-- servlet>
