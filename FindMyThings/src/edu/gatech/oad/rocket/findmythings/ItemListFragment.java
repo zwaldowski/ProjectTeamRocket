@@ -77,7 +77,7 @@ public class ItemListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 
 
-		Item.Type mItemClass = ((ItemListActivity)getActivity()).getItemType();
+		Type mItemClass = ((ItemListActivity)getActivity()).getItemType();
 		adapter = control.newItemsAdapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, mItemClass);
@@ -85,7 +85,7 @@ public class ItemListFragment extends ListFragment {
 	}
 
 	public void AddItem(View v, Item i){
-		Item.Type mItemClass = ((ItemListActivity)getActivity()).getItemType();
+		Type mItemClass = ((ItemListActivity)getActivity()).getItemType();
 		control.addItem(mItemClass, i);
 		adapter.notifyDataSetChanged();
 	}
@@ -131,7 +131,7 @@ public class ItemListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		Item.Type mItemClass = ((ItemListActivity)getActivity()).getItemType();
+		Type mItemClass = ((ItemListActivity)getActivity()).getItemType();
 		mCallbacks.onItemSelected(control.getItem(mItemClass, position).getName());
 	}
 

@@ -24,7 +24,7 @@ public class ItemDetailActivity extends FragmentActivity {
 	/**
 	 * The class of Item displayed.
 	 */
-	private Item.Type mType;
+	private Type mType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,9 @@ public class ItemDetailActivity extends FragmentActivity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(Item.Type.ID)) {
-			mType = Item.Type.forInt(extraInfo.getInt(Item.Type.ID));
+		if (extraInfo != null && extraInfo.containsKey(Type.ID)) {
+			int value = extraInfo.getInt(Type.ID);
+			mType = EnumHelper.forInt(value, Type.class);
 		}
 
 		// savedInstanceState is non-null when there is fragment state
@@ -82,7 +83,7 @@ public class ItemDetailActivity extends FragmentActivity {
 	 * A read-only getter for the kinds of Item displayed in this view.
 	 * @return An enumerated Type value.
 	 */
-	public Item.Type getItemType() {
+	public Type getItemType() {
 		return mType;
 	}
 

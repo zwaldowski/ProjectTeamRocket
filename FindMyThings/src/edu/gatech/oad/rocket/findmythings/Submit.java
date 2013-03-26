@@ -32,12 +32,12 @@ public class Submit extends Activity {
 	/**
 	 * The list to submit this item to.
 	 */
-	private Item.Type mType = Item.Type.LOST;
+	private Type mType = Type.LOST;
 
 	/**
 	 * Category for this item, helper for {@link SubmitFrag}.
 	 */
-	private Item.Category mCategory = Item.Category.MISC;
+	private Category mCategory = Category.MISC;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,9 @@ public class Submit extends Activity {
 		reward = (EditText) findViewById(R.id.rewardtext);
 
 		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(Item.Type.ID)) {
-			mType = Item.Type.forInt(extraInfo.getInt(Item.Type.ID));
+		if (extraInfo != null && extraInfo.containsKey(Type.ID)) {
+			int value = extraInfo.getInt(Type.ID);
+			mType = EnumHelper.forInt(value, Type.class);
 		}
 
 		// Hide the Up button in the action bar.
@@ -99,7 +100,7 @@ public class Submit extends Activity {
 		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
 		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		goToNextActivity.putExtra(getString(R.string.key_nooverride_animation), true);
-		goToNextActivity.putExtra(Item.Type.ID, mType.ordinal());
+		goToNextActivity.putExtra(Type.ID, mType.ordinal());
 		finish();
 		startActivity(goToNextActivity);
 		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
@@ -178,7 +179,7 @@ public class Submit extends Activity {
 	 * the item will be put on.
 	 * @param type An Item Type enumerated value.
 	 */
-	public void setItemType(Item.Type type) {
+	public void setItemType(Type type) {
 		mType = type;
 	}
 
@@ -186,7 +187,7 @@ public class Submit extends Activity {
 	 * Returns the list the item will be put on.
 	 * @return An Item Type enumerated value.
 	 */
-	public Item.Type getItemType() {
+	public Type getItemType() {
 		return mType;
 	}
 
@@ -194,7 +195,7 @@ public class Submit extends Activity {
 	 * Sets the item category for this submission, used for filtering
 	 * @param type An Item Category enumerated value.
 	 */
-	public void setItemCategory(Item.Category type) {
+	public void setItemCategory(Category type) {
 		mCategory = type;
 	}
 
@@ -202,7 +203,7 @@ public class Submit extends Activity {
 	 * Returns the category for the item.
 	 * @return An Item Category enumerated value.
 	 */
-	public Item.Category getItemCategory() {
+	public Category getItemCategory() {
 		return mCategory;
 	}
 

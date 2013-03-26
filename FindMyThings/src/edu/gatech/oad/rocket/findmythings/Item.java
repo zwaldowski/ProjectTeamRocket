@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.content.Context;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -13,92 +12,6 @@ import android.content.Context;
  * @author TeamRocket
  * */
 public class Item {
-
-	/**
-	 * An enumerated type representing
-	 * @author zwaldowski
-	 *
-	 */
-	public enum Type {
-		LOST, FOUND, DONATION, REQUEST;
-
-		/**
-		 * A key suitable for putting a Type into a {@link android.os.Bundle}, {@link android.content.Intent}, etc.
-		 */
-		public static final String ID = "item_type";
-
-		/**
-		 * Simply and quickly unpacks a Type for a given integer.
-		 * @param value A Type represented as an int
-		 * @return The corresponding Type for the given integer
-		 */
-		public static Type forInt(int value) {
-			return values()[value];
-		}
-
-		/**
-		 * Returns the localized name for a Type.
-		 * @param context The current context.
-		 * @return A localized string representing the receiving Type.
-		 */
-		public String getLocalizedValue(Context context) {
-			return context.getResources().getStringArray(R.array.item_type)[ordinal()];
-		}
-
-		/**
-		 * Returns a user-friendly description for a Type.
-		 * @param context The current context.
-		 * @return A localized string describing the receiving Type.
-		 */
-		public String getLocalizedDescription(Context context) {
-			return context.getResources().getStringArray(R.array.item_type_descriptions)[ordinal()];
-		}
-
-		/**
-		 * Returns a localized name for a Type suitable for the title of a {@link ItemListActivity}.
-		 * @param context The current context.
-		 * @return A localized string for the receiving Type.
-		 */
-		public String getListActivityTitle(Context context) {
-			return context.getResources().getStringArray(R.array.item_list_titles)[ordinal()];
-		}
-	}
-
-	public enum Category {
-		HEIR, KEEPSAKE, MISC;
-
-		/**
-		 * A key suitable for putting a Category into a {@link android.os.Bundle}, {@link android.content.Intent}, etc.
-		 */
-		public static final String ID = "item_category";
-
-		/**
-		 * Simply and quickly unpacks a Category for a given integer.
-		 * @param value A Category represented as an int
-		 * @return The corresponding Category for the given integer
-		 */
-		public static Category forInt(int value) {
-			return values()[value];
-		}
-
-		/**
-		 * Returns the localized name for a Category.
-		 * @param context The current context.
-		 * @return A localized string representing the receiving Category.
-		 */
-		public String getLocalizedValue(Context context) {
-			return context.getResources().getStringArray(R.array.item_category)[ordinal()];
-		}
-
-		/**
-		 * Returns a user-friendly description for a Category.
-		 * @param context The current context.
-		 * @return A localized string describing the receiving Category.
-		 */
-		public String getLocalizedDescription(Context context) {
-			return context.getResources().getStringArray(R.array.item_category_descriptions)[ordinal()];
-		}
-	};
 
 	/**
 	 * A key suitable for putting a Category into a {@link android.os.Bundle}, {@link android.content.Intent}, etc.
@@ -179,7 +92,7 @@ public class Item {
 	 * Sets the type of an Item
 	 * @param c An enumerated Type value.
 	 */
-	public void setType(Item.Type c) {
+	public void setType(Type c) {
 		mType = c;
 	}
 
@@ -187,7 +100,7 @@ public class Item {
 	 * Sets the category of an Item
 	 * @param c An enumerated Category value.
 	 */
-	public void setCategory(Item.Category c) {
+	public void setCategory(Category c) {
 		cat = c;
 	}
 
@@ -246,7 +159,7 @@ public class Item {
 	 * Returns the type of the item, i.e., which list it is displayed on.
 	 * @return A Type enumerated value.
 	 */
-	public Item.Type getType() {
+	public Type getType() {
 		return mType;
 	}
 
@@ -254,7 +167,7 @@ public class Item {
 	 * Returns the category of the item.
 	 * @return A Category enumerated value.
 	 */
-	public Item.Category getCat() {
+	public Category getCat() {
 		return cat;
 	}
 

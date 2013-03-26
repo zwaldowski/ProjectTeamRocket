@@ -63,7 +63,7 @@ public final class Controller {
 	/**
 	 * Initialize the shared controller.
 	 *
-	 * Add a few generic items to the list for each {@link Item.Type}.
+	 * Add a few generic items to the list for each {@link Type}.
 	 */
 	private Controller() {
 
@@ -77,7 +77,7 @@ public final class Controller {
 		cat.setLoc("Colombia");
 		dog.setLoc("Santa Rosa, California");
 		catdog.setLoc("Detroit, Michigan");
-		for (Item.Type kind : Item.Type.values()) {
+		for (Type kind : Type.values()) {
 			ItemsList container = new ItemsList();
 			allItems.put(kind, container);
 
@@ -88,16 +88,16 @@ public final class Controller {
     }
 
 	/**
-	 * A map of all Items for all {@link Item.Type}.
+	 * A map of all Items for all {@link Type}.
 	 */
-	private Map<Item.Type, ItemsList> allItems = new HashMap<Item.Type, ItemsList>();
+	private Map<Type, ItemsList> allItems = new HashMap<Type, ItemsList>();
 
 	/**
 	 * Gets the item list wrapper for a kind of item.
 	 * @param kind
 	 * @return an ItemsList object
 	 */
-	private ItemsList getContainer(Item.Type kind) {
+	private ItemsList getContainer(Type kind) {
 		return allItems.get(kind);
 	}
 
@@ -105,13 +105,13 @@ public final class Controller {
 	 * Adds an item to the arraylist
 	 * @param i
 	 */
-	public void addItem(Item.Type kind, Item i) {
+	public void addItem(Type kind, Item i) {
 		ItemsList container = getContainer(kind);
 		container.addItem(i);
 	}
 
 	public void addItem(Item i) {
-		Item.Type kind = i.getType();
+		Type kind = i.getType();
 		addItem(kind, i);
 	}
 
@@ -119,7 +119,7 @@ public final class Controller {
 	 * Gets an indexed item from our arraylist
 	 * @param key The key of the Item to return
 	 */
-	public Item getItem(Item.Type kind, Integer key) {
+	public Item getItem(Type kind, Integer key) {
 		ItemsList container = getContainer(kind);
 		return container.getItem(key);
 	}
@@ -128,7 +128,7 @@ public final class Controller {
 	 * Gets an item from our arraylist
 	 * @param key The key of the Item to return
 	 */
-	public Item getItem(Item.Type kind, String key) {
+	public Item getItem(Type kind, String key) {
 		ItemsList container = getContainer(kind);
 		return container.getItem(key);
 	}
@@ -141,7 +141,7 @@ public final class Controller {
 	 * @param kind The kind of item to query items for
 	 * @return An array adapter for the objects of a certain type
 	 */
-	public Adapter newItemsAdapter(Context context, int resource, int textViewResourceId, Item.Type kind) {
+	public Adapter newItemsAdapter(Context context, int resource, int textViewResourceId, Type kind) {
 		ItemsList container = getContainer(kind);
 		return new Adapter(context, resource, textViewResourceId, container.mItems);
 	}

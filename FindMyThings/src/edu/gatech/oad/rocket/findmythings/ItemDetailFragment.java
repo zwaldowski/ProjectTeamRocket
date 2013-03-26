@@ -44,7 +44,7 @@ public class ItemDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			Item.Type mItemClass = ((ItemDetailActivity)getActivity()).getItemType();
+			Type mItemClass = ((ItemDetailActivity)getActivity()).getItemType();
 			mItem = control.getItem(mItemClass, getArguments().getString(Item.ID));
 		}
 	}
@@ -61,8 +61,9 @@ public class ItemDetailFragment extends Fragment {
 					.setText(mItem.getDescription());
 			((TextView) rootView.findViewById(R.id.loc_detail))
 			.setText(mItem.getLoc());
+			String catName = EnumHelper.localizedFromArray(getActivity(), R.array.item_category, mItem.getCat());
 			((TextView) rootView.findViewById(R.id.cat_detail))
-			.setText(mItem.getCat().getLocalizedValue(getActivity()));
+			.setText(catName);
 			((TextView) rootView.findViewById(R.id.date_detail))
 			.setText(mItem.getDateString());
 			((TextView) rootView.findViewById(R.id.reward_detail))

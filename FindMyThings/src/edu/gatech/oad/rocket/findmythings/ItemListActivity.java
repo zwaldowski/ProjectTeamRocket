@@ -38,7 +38,7 @@ public class ItemListActivity extends FragmentActivity implements
 	/**
 	 * The class of {@link Item} displayed in this list.
 	 */
-	private Item.Type mType = Item.Type.LOST;
+	private Type mType = Type.LOST;
 
 	/**
 	 * Identifies the item list fragment across instantiations.
@@ -54,11 +54,11 @@ public class ItemListActivity extends FragmentActivity implements
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(Item.Type.ID)) {
-			mType = Item.Type.values()[extraInfo.getInt(Item.Type.ID)];
+		if (extraInfo != null && extraInfo.containsKey(Type.ID)) {
+			mType = Type.values()[extraInfo.getInt(Type.ID)];
 		}
-
-		setTitle(mType.getListActivityTitle(this));
+		
+		setTitle(EnumHelper.localizedFromArray(this, R.array.item_list_titles, mType));
 
 		ItemListFragment fragment;
 		if (savedInstanceState == null) {
@@ -145,7 +145,7 @@ public class ItemListActivity extends FragmentActivity implements
 			// fragment transaction.
 			Bundle arguments = new Bundle();
 			arguments.putString(Item.ID, id);
-			arguments.putInt(Item.Type.ID, mType.ordinal());
+			arguments.putInt(Type.ID, mType.ordinal());
 			ItemDetailFragment fragment = new ItemDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
@@ -156,7 +156,7 @@ public class ItemListActivity extends FragmentActivity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 			detailIntent.putExtra(Item.ID, id);
-			detailIntent.putExtra(Item.Type.ID, mType.ordinal());
+			detailIntent.putExtra(Type.ID, mType.ordinal());
 			startActivity(detailIntent);
 		}
 	}
@@ -166,7 +166,7 @@ public class ItemListActivity extends FragmentActivity implements
 	 */
 	public boolean toSubmit() {
 		Intent goToNextActivity = new Intent(ItemListActivity.this, Submit.class);
-		goToNextActivity.putExtra(Item.Type.ID, mType.ordinal());
+		goToNextActivity.putExtra(Type.ID, mType.ordinal());
 		startActivity(goToNextActivity);
 	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 	    return true;
@@ -183,7 +183,7 @@ public class ItemListActivity extends FragmentActivity implements
 	 * Returns the kind of Item displayed in this list.
 	 * @return An enumerated Type value
 	 */
-	public Item.Type getItemType() {
+	public Type getItemType() {
 		return mType;
 	}
 }

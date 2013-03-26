@@ -43,19 +43,19 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 
 	        Intent lostIntent = findPreference(getString(R.string.main_key_lost)).getIntent();
 	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        lostIntent.putExtra(Item.Type.ID, Item.Type.LOST.ordinal());
+	        lostIntent.putExtra(Type.ID, Type.LOST.ordinal());
 
 	        Intent foundIntent = findPreference(getString(R.string.main_key_found)).getIntent();
 	        foundIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        foundIntent.putExtra(Item.Type.ID, Item.Type.FOUND.ordinal());
+	        foundIntent.putExtra(Type.ID, Type.FOUND.ordinal());
 
 	        Intent donationIntent = findPreference(getString(R.string.main_key_donations)).getIntent();
 	        donationIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        donationIntent.putExtra(Item.Type.ID, Item.Type.DONATION.ordinal());
+	        donationIntent.putExtra(Type.ID, Type.DONATION.ordinal());
 
 	        Intent requestIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        requestIntent.putExtra(Item.Type.ID, Item.Type.REQUEST.ordinal());
+	        requestIntent.putExtra(Type.ID, Type.REQUEST.ordinal());
 
 
 	        Preference myAccount = findPreference(getString(R.string.main_key_myaccount));

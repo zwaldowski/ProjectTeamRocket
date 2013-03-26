@@ -22,22 +22,32 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 	 * Updates the UI based on a given Item Type.
 	 * @param value An Item Type enumerated value.
 	 */
-	public void syncTypePref(Item.Type value) {
-	Submit activity = (Submit)getActivity();
-		TypeListPref.setValue(((Integer)value.ordinal()).toString());
-		TypeListPref.setTitle(getString(R.string.pref_type) + " - " + value.getLocalizedValue(activity));
-	TypeListPref.setSummary(value.getLocalizedDescription(activity));
+	public void syncTypePref(Type value) {
+		Submit activity = (Submit)getActivity();
+		
+		String literal = EnumHelper.toIntString(value);
+		String name = getString(R.string.pref_type) + " - " + EnumHelper.localizedFromArray(activity, R.array.item_type, value);
+		String desc = EnumHelper.localizedFromArray(activity, R.array.item_type_descriptions, value);
+		
+		TypeListPref.setValue(literal);
+		TypeListPref.setTitle(name);
+		TypeListPref.setSummary(desc);
 	}
 
 	/**
 	 * Updates the UI Based on a given Item Category.
 	 * @param value An Item Category enumerated value.
 	 */
-	public void syncCatPref(Item.Category value) {
+	public void syncCatPref(Category value) {
 		Submit activity = (Submit)getActivity();
-		CatListPref.setValue(((Integer)value.ordinal()).toString());
-		CatListPref.setTitle(getString(R.string.cat_type) + " - " + value.getLocalizedValue(activity));
-		CatListPref.setSummary(value.getLocalizedDescription(activity));
+		
+		String literal = EnumHelper.toIntString(value);
+		String name = getString(R.string.cat_type) + " - " + EnumHelper.localizedFromArray(activity, R.array.item_category, value);
+		String desc = EnumHelper.localizedFromArray(activity, R.array.item_category_descriptions, value);
+		
+		CatListPref.setValue(literal);
+		CatListPref.setTitle(name);
+		CatListPref.setSummary(desc);
 	}
 
 	@Override
@@ -55,7 +65,8 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-		Item.Type newType = Item.Type.forInt(Integer.parseInt((String)newValue));
+            	String value = (String)newValue;
+            	Type newType = EnumHelper.forIntString(value, Type.class);
 				syncTypePref(newType);
 				((Submit)getActivity()).setItemType(newType);
                 return true;
@@ -65,12 +76,13 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         CatListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-			Item.Category newCategory = Item.Category.forInt(Integer.parseInt((String)newValue));
-			syncCatPref(newCategory);
-			((Submit)getActivity()).setItemCategory(newCategory);
-		return true;
-                }
-            });
+            	String value = (String)newValue;
+            	Category newCategory = EnumHelper.forIntString(value, Category.class);
+            	syncCatPref(newCategory);
+            	((Submit)getActivity()).setItemCategory(newCategory);
+            	return true;
+            }
+       });
 	}
 
 	@Override
