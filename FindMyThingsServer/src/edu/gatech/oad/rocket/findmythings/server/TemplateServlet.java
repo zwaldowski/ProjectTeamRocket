@@ -99,7 +99,6 @@ public class TemplateServlet extends HttpServlet {
     protected Map<String, Object> getCurrentPageVariables() {
     	// TODO
     	Map<String, Object> map = new HashMap<>();
-    	map.put("firstname", "USER");
     	return map;
     }
 

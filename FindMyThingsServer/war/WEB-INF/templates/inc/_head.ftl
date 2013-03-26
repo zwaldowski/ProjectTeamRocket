@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>${title}</title>
+<title>${title!"Find My Things"}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Find your lost items using Find My Things.">
 <meta name="author" content="Team Rocket, CS 2340 Spring 2013, Georgia Tech">
