@@ -1,7 +1,9 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -13,6 +15,7 @@ import org.apache.shiro.guice.aop.ShiroAopModule;
 import org.apache.shiro.guice.web.ShiroWebModule;
 import org.apache.shiro.realm.text.IniRealm;
 
+import com.google.common.base.Charsets;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
@@ -20,6 +23,9 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
+
+import edu.gatech.oad.rocket.findmythings.server.web.*;
+import freemarker.template.TemplateModelException;
 
 public class MainContextListener extends GuiceServletContextListener {
 
@@ -40,14 +46,27 @@ public class MainContextListener extends GuiceServletContextListener {
 
 	@Override
 	protected Injector getInjector() {
-		//return Guice.createInjector(securityModule, new ShiroAopModule(), new MainServletModule());
 		return Guice.createInjector(new ShiroAopModule(), securityModule, ShiroWebModule.guiceFilterModule(), new ServletModule(){
+		    private void bindString(String key, String value) {
+		        bind(String.class).annotatedWith(Names.named(key)).toInstance(value);
+		    }
+		    
 			@Override protected void configureServlets() {
+		        bind(PageGenerator.class).toInstance(createPageGenerator());
+		        bindString("email.from", Config.APP_EMAIL);
 				serve("/index.html").with(HelloWorldServlet.class);
 		        serve("/login").with(LoginServlet.class);
 			}
 		});
-		//securityModule, ShiroWebModule.guiceFilterModule(), new MainServletModule());
+	}
+	
+	private PageGenerator createPageGenerator() {
+		try {
+			URL base = servletContext.getResource("/WEB-INF/templates/");
+            return new PageGenerator(base, Locale.getDefault(), Charsets.UTF_8.name());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 	}
 	
 	protected ShiroWebModule getSecurityModule(ServletContext sc) {
