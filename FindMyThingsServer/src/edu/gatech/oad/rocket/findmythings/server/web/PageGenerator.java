@@ -136,6 +136,7 @@ public class PageGenerator {
             config.setDefaultEncoding(charset);
             config.setEncoding(locale, charset);
             config.setLocale(locale);
+            config.setSharedVariable("shiro", new PageAuthTags());
             
             config.setTemplateLoader(new URLTemplateLoader(){
                 @Override
