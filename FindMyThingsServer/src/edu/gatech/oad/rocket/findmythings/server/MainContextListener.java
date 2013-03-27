@@ -8,6 +8,8 @@ import java.util.Locale;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.config.Ini;
@@ -45,7 +47,7 @@ public class MainContextListener extends GuiceServletContextListener {
 
 	@Override
 	protected Injector getInjector() {
-		return Guice.createInjector(new ShiroAopModule(), securityModule, ShiroWebModule.guiceFilterModule(), new ServletModule(){
+		Injector inj = Guice.createInjector(new ShiroAopModule(), securityModule, ShiroWebModule.guiceFilterModule(), new ServletModule(){
 		    private void bindString(String key, String value) {
 		        bind(String.class).annotatedWith(Names.named(key)).toInstance(value);
 		    }
@@ -57,6 +59,9 @@ public class MainContextListener extends GuiceServletContextListener {
 		        serve("/login").with(LoginServlet.class);
 			}
 		});
+	    SecurityManager securityManager = inj.getInstance(SecurityManager.class);
+	    SecurityUtils.setSecurityManager(securityManager);
+		return inj;
 	}
 	
 	private PageGenerator createPageGenerator() {
@@ -79,6 +84,7 @@ public class MainContextListener extends GuiceServletContextListener {
 				// set the login redirect URL
 				// -- is this only for web sites?
 				bindConstant().annotatedWith(Names.named("shiro.loginUrl")).to("/login");
+				bindConstant().annotatedWith(Names.named("shiro.successUrl")).to("/index.html");
 				
 				// binds the built-in users from shiro.ini
 				try {

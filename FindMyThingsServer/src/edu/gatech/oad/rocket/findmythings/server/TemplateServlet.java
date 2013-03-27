@@ -2,7 +2,6 @@ package edu.gatech.oad.rocket.findmythings.server;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -93,9 +92,7 @@ public class TemplateServlet extends HttpServlet {
     }
     
     protected String createDocument(String templateName, Map<String,Object> userArgs) throws IOException {
-    	Map<String, Object> combinedArgs = new HashMap<>(userArgs);
-    	combinedArgs.putAll(getCurrentPageVariables());
-    	return generator.createPage(templateName, combinedArgs);
+    	return generator.createPage(templateName, userArgs);
     }
 
     /**
@@ -152,12 +149,6 @@ public class TemplateServlet extends HttpServlet {
     protected boolean getBoolRequestParam(HttpServletRequest request, String paramName, boolean defaultValue) {
         String s = request.getParameter(paramName);
         return (s == null) ? defaultValue : Boolean.parseBoolean(s);
-    }
-    
-    protected Map<String, Object> getCurrentPageVariables() {
-    	// TODO
-    	Map<String, Object> map = new HashMap<>();
-    	return map;
     }
 
 }

@@ -1,28 +1,22 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
-import com.google.common.collect.Maps;
 
 import edu.gatech.oad.rocket.findmythings.server.web.*;
 import edu.gatech.oad.rocket.findmythings.server.util.*;
