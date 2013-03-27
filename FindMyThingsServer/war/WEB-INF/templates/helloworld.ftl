@@ -1,4 +1,4 @@
-<#assign title="This is a test!">
+<#assign title="Find My Things &raquo; Hello World!">
 <!DOCTYPE html>
 <html lang="en">
   <head>

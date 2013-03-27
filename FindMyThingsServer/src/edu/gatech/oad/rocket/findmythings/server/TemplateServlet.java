@@ -1,6 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -10,9 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
 
 import edu.gatech.oad.rocket.findmythings.server.web.*;
 import edu.gatech.oad.rocket.findmythings.server.util.*;
@@ -23,8 +35,8 @@ public class TemplateServlet extends HttpServlet {
 	
     static final Logger LOGGER = Logger.getLogger(TemplateServlet.class.getName());
 
-    protected final String MESSAGE = "message";
-    protected final String CODE = "code";
+    protected static final String MESSAGE = "message";
+    protected static final String CODE = "code";
 
     private PageGenerator generator;
     
@@ -84,6 +96,52 @@ public class TemplateServlet extends HttpServlet {
     	Map<String, Object> combinedArgs = new HashMap<>(userArgs);
     	combinedArgs.putAll(getCurrentPageVariables());
     	return generator.createPage(templateName, combinedArgs);
+    }
+
+    /**
+     * Login and make sure you then have a new session.  This helps prevent session fixation attacks.
+     *
+     * @param token
+     * @param subject
+     */
+    protected static boolean newLogin(AuthenticationToken token, Subject subject, Map<String, Object>outInfo) {
+        Session originalSession = subject.getSession();
+
+        Map<Object, Object> attributes = Maps.newLinkedHashMap();
+        Collection<Object> keys = originalSession.getAttributeKeys();
+        for(Object key : keys) {
+            Object value = originalSession.getAttribute(key);
+            if (value != null) {
+                attributes.put(key, value);
+            }
+        }
+        originalSession.stop();
+        
+        try {
+        	subject.login(token);
+        	
+        	Session newSession = subject.getSession();
+            for(Object key : attributes.keySet() ) {
+                newSession.setAttribute(key, attributes.get(key));
+            }
+            
+            outInfo.put(Parameters.STATUS, Errors.Login.OK);
+            
+            return true;
+        } catch (UnknownAccountException e) {
+            outInfo.put(Parameters.STATUS, Errors.Login.NO_SUCH_USER);
+        } catch (IncorrectCredentialsException e) {
+            outInfo.put(Parameters.STATUS, Errors.Login.BAD_PASSWORD);
+        } catch (LockedAccountException e) {
+            outInfo.put(Parameters.STATUS, Errors.Login.ACCNT_LOCKED);
+        } catch (DisabledAccountException e) {
+            outInfo.put(Parameters.STATUS, Errors.Login.ACCT_DISABLE);
+        } catch (ExcessiveAttemptsException e) {
+            outInfo.put(Parameters.STATUS, Errors.Login.MANY_ATTEMPT);
+        } catch (AuthenticationException e) {
+            outInfo.put(Parameters.STATUS, Errors.Login.INVALID_DATA);
+        }
+        return false;
     }
 
     protected int getIntRequestParam(HttpServletRequest request, String paramName, int defaultValue) {
