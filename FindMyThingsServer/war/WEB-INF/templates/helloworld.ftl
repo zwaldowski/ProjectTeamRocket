@@ -12,7 +12,7 @@
     <div class="container">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit" style="text-align:center">
+      <div class="hero-unit text-center">
         <h1>Hi.</h1>
         <hr><p>(It works. <i class="icon-thumbs-up"></i>)</p>
       </div>

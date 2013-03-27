@@ -2,7 +2,7 @@
 <title>${title!"Find My Things"}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Find your lost items using Find My Things.">
-<meta name="author" content="Team Rocket, CS 2340 Spring 2013, Georgia Tech">
+<meta name="author" content="Team Rocket, CS 2340 at Georgia Tech">
 
 <!-- Le styles -->
 <link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -11,17 +11,6 @@
   body {
     padding-top: 60px;
     padding-bottom: 40px;
-  }
-  .pull-middle {
-    text-align: center;
-  }
-
-  .auth-none-active .auth-loggedin, .auth-none-active .auth-loggedout {
-    display: none;
-  }
-
-  .auth-guest-active .auth-loggedin, .auth-user-active .auth-loggedout, .auth-guest-active .auth-unset, .auth-user-active .auth-unset {
-    display: none;
   }
 </style>
 <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
