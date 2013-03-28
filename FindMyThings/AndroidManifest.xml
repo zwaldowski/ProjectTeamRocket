@@ -93,6 +93,6 @@
         <uses-library android:name="com.google.android.maps"/>
         <meta-data
    		 android:name="com.google.android.maps.v2.API_KEY"
-    	 android:value="AIzaSyBYUIq4aB_eQWytWQb3FApcPIYCBmqY_QA"/>
+    	 android:value="AIzaSyDsHVLhxa6R7I-Y4YSEe2HsQRO3uK542w4"/>
     </application>
 </manifest>
