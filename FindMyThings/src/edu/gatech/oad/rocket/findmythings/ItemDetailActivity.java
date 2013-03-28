@@ -1,6 +1,12 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
@@ -93,8 +99,43 @@ public class ItemDetailActivity extends FragmentActivity {
 	 * @param LocationButton
 	 */
 	public void toMap (View LocationButton) {
-		Intent next = new Intent(getApplicationContext(), MapsActivity.class);
-		finish();
-		startActivity(next);
+		if(hasInternet()) {
+			Intent next = new Intent(getApplicationContext(), MapsActivity.class);
+			finish();
+			startActivity(next);
+		}/* else {
+		AlertDialog.Builder noConnection = new AlertDialog.Builder(getApplicationContext());
+			noConnection.setMessage("Must have active internet connection to view Google Maps");
+			noConnection.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+				@Override
+			    public void onClick(DialogInterface dialog, int id) {
+                	//close	
+                }
+			});
+			noConnection.show();
+		}*/
+	}
+	
+	/**
+	 * Checks to see if the user has an active network connection 
+	 * @return
+	 */
+	public boolean hasInternet() {
+		boolean hasWifi = false;
+		boolean hasMobile = false;
+		ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+		if ( ni != null ) {
+		    if (ni.getType() == ConnectivityManager.TYPE_WIFI)
+		        if (ni.isConnectedOrConnecting())
+		        	hasWifi = true;
+		    if (ni.getType() == ConnectivityManager.TYPE_MOBILE)
+		        if (ni.isConnectedOrConnecting())
+		        	hasMobile = true;
+		}
+		if(hasWifi || hasMobile)
+			return true;
+		return false;
+		
 	}
 }
