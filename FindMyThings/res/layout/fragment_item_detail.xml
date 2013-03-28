@@ -12,7 +12,7 @@
 			<TextView
 	        	android:id="@+id/describecap"
 	        	android:text="@string/description"
-	        	style="@style/Header"
+	        	style="@style/HeaderGrey"
 	        	/>
 	
 			<TextView
@@ -33,7 +33,7 @@
 			<TextView
 			    android:layout_below="@+id/reward_detail"
 			    android:id="@+id/cat_cap"
-			    style="@style/Header"
+			    style="@style/HeaderGrey"
 			    android:paddingBottom="15dp"
 			    android:paddingTop="15dp"
 			    android:text="@string/cat_caps" />
@@ -56,7 +56,7 @@
 			<TextView
 			    android:layout_below="@+id/cat_detail"
 			    android:id="@+id/date"
-			    style="@style/Header"
+			    style="@style/HeaderGrey"
 			    android:paddingBottom="15dp"
 			    android:paddingTop="15dp"
 			    android:text="@string/date_caps" />
@@ -105,14 +105,14 @@
 
 				<TextView
 				    android:id="@+id/locationcap"
-				    style="@style/Header"
+				    style="@style/HeaderGrey"
 				    android:layout_alignParentLeft="true"
 				    android:layout_below="@+id/item_detail"
 				    android:text="@string/locationcaps" />
 
 				<TextView
 				    android:id="@+id/reward"
-				    style="@style/Header"
+				    style="@style/HeaderGrey"
 				    android:layout_alignParentLeft="true"
 				    android:layout_below="@+id/loc_detail"
 				    android:paddingBottom="15dp"
