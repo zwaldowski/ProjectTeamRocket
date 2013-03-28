@@ -11,6 +11,7 @@
     <string name="main_title_account">My Account</string>
     <string name="main_title_admin">Administration</string>
     <string name="main_title_signout">Sign out</string>
+    <string name="main_title_signin">Sign in</string>
     
     <string name="main_key_lost">findmythings.main.lost</string>
     <string name="main_key_found">findmythings.main.found</string>
@@ -19,6 +20,7 @@
     <string name="main_key_myaccount">findmythings.main.myaccount</string>
     <string name="main_key_admin">findmythings.main.admin</string>
     <string name="main_key_signout">findmythings.main.signout</string>
+    <string name="main_key_signin">findmythings.main.signin</string>
     
     
     <string name="main_group_key_other">findmythings.main.othergroup</string>

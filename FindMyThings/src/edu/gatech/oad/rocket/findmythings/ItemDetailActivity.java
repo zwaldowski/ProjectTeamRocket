@@ -104,15 +104,7 @@ public class ItemDetailActivity extends FragmentActivity {
 			finish();
 			startActivity(next);
 		} else {
-		AlertDialog.Builder noConnection = new AlertDialog.Builder(this);
-			noConnection.setMessage("Error: no active internet connection.");
-			noConnection.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				@Override
-			    public void onClick(DialogInterface dialog, int id) {
-                	//close	
-                }
-			});
-			noConnection.show();
+			new ErrorDialog("Error: no active internet connection.").getDialog(this).show();
 		}
 	}
 	

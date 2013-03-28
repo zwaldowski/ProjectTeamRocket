@@ -29,18 +29,32 @@ import android.preference.PreferenceFragment;
 public class MainActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	public static class MainFragment extends PreferenceFragment {
+		
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
+	        
 
-	        //For some reason currUser is occasionally null so for now i'm just going to band-aid the problem
-	        if (Login.currUser!=null || !Login.currUser.isAdmin()) {
+	        //Admin
+	        if (Login.currUser==null || !Login.currUser.isAdmin()) {
 			PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
 			Preference adminLink = findPreference(getString(R.string.main_key_admin));
 			moreCategory.removePreference(adminLink);
 	        }
-
+	        if(Login.currUser==null) { //Hide sign out if no one is logged in
+	        	PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
+				Preference accountLink = findPreference(getString(R.string.main_key_myaccount));
+				Preference signoutLink = findPreference(getString(R.string.main_key_signout));
+				moreCategory.removePreference(signoutLink);
+				moreCategory.removePreference(accountLink);
+			}
+	        if(Login.currUser!=null) { // Hides sign in if someone is logged in
+	        	PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
+	        	Preference signinLink =  findPreference(getString(R.string.main_key_signin));
+	           	moreCategory.removePreference(signinLink);
+	        }
+	        
 	        Intent lostIntent = findPreference(getString(R.string.main_key_lost)).getIntent();
 	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	        lostIntent.putExtra(Type.ID, Type.LOST.ordinal());
@@ -57,9 +71,10 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	        requestIntent.putExtra(Type.ID, Type.REQUEST.ordinal());
 
-
-	        Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
-	        myAccount.setSummary(LoginWindow.Email);
+	        if(Login.currUser!=null) {
+	        	Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
+	        	myAccount.setSummary(LoginWindow.Email);
+	        }
 	    }
 	}
 
@@ -73,7 +88,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			addPreferencesFromResource(R.xml.main_lookingfor);
 		} else {
@@ -100,23 +115,24 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	 * Listener responder for the Sign Out button.
 	 */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-	if (key.equals(getString(R.string.main_key_signout))) {
-		boolean shouldLogout = sharedPreferences.getBoolean(key, false);
-		if (shouldLogout) {
-			Editor prefEdit = sharedPreferences.edit();
-			prefEdit.putBoolean(key, false);
-			prefEdit.commit();
-
-			// TODO logout logic
-
-			Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
-			goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			finish();
-			startActivity(goToNextActivity);
-				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-				return;
-		}
-        }
+    	if (key.equals(getString(R.string.main_key_signout))) {
+    		boolean shouldLogout = sharedPreferences.getBoolean(key, false);
+    		if (shouldLogout) {
+    			Editor prefEdit = sharedPreferences.edit();
+    			prefEdit.putBoolean(key, false);
+    			prefEdit.commit();
+    			//Clear current user
+    			Login.currUser=null;
+    			//Redraw the activity
+    			//TODO: Redraw the activity in a way that actually makes sense
+    			finish(); 
+    			startActivity(getIntent());
+    			overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    			   			
+    		}
+     	}
+    	
     }
+   
 
 }

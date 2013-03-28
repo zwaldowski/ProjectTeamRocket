@@ -1,5 +1,7 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -165,10 +167,30 @@ public class ItemListActivity extends FragmentActivity implements
 	 * Opens a new Submit activity with the current type of item.
 	 */
 	public boolean toSubmit() {
-		Intent goToNextActivity = new Intent(ItemListActivity.this, Submit.class);
-		goToNextActivity.putExtra(Type.ID, mType.ordinal());
-		startActivity(goToNextActivity);
-	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
+		if(Login.currUser!=null) {
+			Intent goToNextActivity = new Intent(ItemListActivity.this, Submit.class);
+			goToNextActivity.putExtra(Type.ID, mType.ordinal());
+			startActivity(goToNextActivity);
+			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
+		}
+		else {
+			ErrorDialog toLogin =  new ErrorDialog("Must Sign-in to submit an item.");
+			AlertDialog.Builder temp = toLogin.getDialog(this,new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+		            	finish();
+		            	startActivity(goToNextActivity);
+		            }
+				});
+			temp.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+		            	//cancel
+		            }
+				});
+			temp.show();
+		}
 	    return true;
 	}
 
