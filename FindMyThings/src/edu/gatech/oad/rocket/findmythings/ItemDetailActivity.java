@@ -103,17 +103,17 @@ public class ItemDetailActivity extends FragmentActivity {
 			Intent next = new Intent(getApplicationContext(), MapsActivity.class);
 			finish();
 			startActivity(next);
-		}/* else {
-		AlertDialog.Builder noConnection = new AlertDialog.Builder(getApplicationContext());
-			noConnection.setMessage("Must have active internet connection to view Google Maps");
-			noConnection.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+		} else {
+		AlertDialog.Builder noConnection = new AlertDialog.Builder(this);
+			noConnection.setMessage("Error: no active internet connection.");
+			noConnection.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 				@Override
 			    public void onClick(DialogInterface dialog, int id) {
                 	//close	
                 }
 			});
 			noConnection.show();
-		}*/
+		}
 	}
 	
 	/**
