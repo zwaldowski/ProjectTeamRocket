@@ -16,7 +16,7 @@ public class Admin extends Member {
 	 */
 	public Admin(String user, String pass, String phone) {
 		super(user, pass, phone);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class Admin extends Member {
 	 */
 	public Admin(String user, String pass) {
 		super(user, pass);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**

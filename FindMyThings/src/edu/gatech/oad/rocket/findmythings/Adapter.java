@@ -35,7 +35,7 @@ public class Adapter extends ArrayAdapter<Item>{
 
 	public Adapter(Context context, int textViewResourceId, List<Item> objects) {
 		super(context, textViewResourceId, objects);
-		// TODO Auto-generated constructor stub
+		
 		mContext = context;
 		mList = objects;
 	}
@@ -45,14 +45,12 @@ public class Adapter extends ArrayAdapter<Item>{
 		super(context,resource,textViewResourceId, objects);
 		mContext=context;
 		mList = objects;
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-	 // TODO Auto-generated method stub
-	 //return super.getView(position, convertView, parent);
-
+	 
 	 View row = convertView;
 
 	 if (row == null) {

@@ -97,7 +97,7 @@ public class Admin_popup extends Activity implements OnPreferenceChangeListener 
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

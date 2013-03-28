@@ -50,7 +50,7 @@ public class AdminActivity extends ListActivity {
 		mUsers = new ArrayAdapter<Member>(this,
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, Login.data);
-		//TODO: add checkbox next to ever item in the list for quicker deletion of users
+		//TODO: add checkbox next to every item in the list for quicker deletion of users
 
 		mList.setAdapter(mUsers);
 
@@ -75,7 +75,7 @@ public class AdminActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick (ListView l, View v, int position, long id) {
-		//TODO: make some kind of activity or view to allow admin to change user attributes
+		
 		super.onListItemClick(l, v, position, id);
 		Intent next = new Intent(getApplicationContext(), Admin_popup.class);
 		next.putExtra("id",(int)id);

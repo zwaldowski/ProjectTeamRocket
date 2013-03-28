@@ -56,7 +56,6 @@ public class MapsActivity extends FragmentActivity   {
         try { //Converts the location string into a list of possible long/lag addresses
         	loc = findLoc.getFromLocationName(ItemDetailFragment.mItem.getLoc(), 1);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         //Object to store lat/long

@@ -61,7 +61,6 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 
         syncTypePref(((Submit)getActivity()).getItemType());
 
-        // TODO: Create one listener class for all Preferences. Maybe.
         TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -87,7 +86,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 
