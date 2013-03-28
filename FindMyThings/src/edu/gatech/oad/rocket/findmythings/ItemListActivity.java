@@ -175,19 +175,21 @@ public class ItemListActivity extends FragmentActivity implements
 		}
 		else {
 			ErrorDialog toLogin =  new ErrorDialog("Must Sign-in to submit an item.");
-			AlertDialog.Builder temp = toLogin.getDialog(this,new DialogInterface.OnClickListener() {
+			AlertDialog.Builder temp = toLogin.getDialog(this,
+				new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
 		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
 		            	finish();
 		            	startActivity(goToNextActivity);
 		            }
-				});
-			temp.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int id) {
-		            	//cancel
-		            }
+				}, 
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+			            	//cancel
+					}    
+			
 				});
 			temp.show();
 		}

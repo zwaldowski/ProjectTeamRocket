@@ -11,7 +11,7 @@ import android.content.DialogInterface;
  *
  */
 public class ErrorDialog {
-	private String message;
+	private String message, buttonpos, buttonneg;
 		
 	/**
 	 * 
@@ -19,6 +19,20 @@ public class ErrorDialog {
 	 */
 	public ErrorDialog(String message) {
 		this.message = message;
+		buttonpos = "Ok";
+		buttonneg = "Cancel";
+	}
+	
+	/**
+	 * 
+	 * @param message
+	 * @param pos
+	 * @param neg
+	 */
+	public ErrorDialog(String message, String pos, String neg) {
+		this.message = message;
+		buttonpos = pos;
+		buttonneg = neg;
 	}
 	/**
 	 * Returns an AlertDialog with the message given in the constructor
@@ -28,7 +42,7 @@ public class ErrorDialog {
 	public AlertDialog.Builder getDialog(Context context) {
 		AlertDialog.Builder noConnection = new AlertDialog.Builder(context);
 		noConnection.setMessage(message);
-		noConnection.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		noConnection.setPositiveButton(buttonpos, new DialogInterface.OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int id) {
             	//close	
@@ -43,13 +57,31 @@ public class ErrorDialog {
 	 * @param temp
 	 * @return
 	 */
-	public AlertDialog.Builder getDialog(Context context, DialogInterface.OnClickListener temp) {
+	public AlertDialog.Builder getDialog(Context context, DialogInterface.OnClickListener pos) {
 		AlertDialog.Builder noConnection = new AlertDialog.Builder(context);
+		
 		noConnection.setMessage(message);
-		noConnection.setPositiveButton("Ok",temp);
+		noConnection.setPositiveButton(buttonpos,pos);
 		
 		return noConnection;
 	}
+	/**
+	 * 
+	 * @param context
+	 * @param pos 
+	 * @param neg
+	 * @return
+	 */
+	public AlertDialog.Builder getDialog(Context context, DialogInterface.OnClickListener pos, DialogInterface.OnClickListener neg) {
+		AlertDialog.Builder noConnection = new AlertDialog.Builder(context);
+		
+		noConnection.setMessage(message);
+		noConnection.setPositiveButton(buttonpos,pos);
+		noConnection.setNegativeButton(buttonneg,neg);
+		
+		return noConnection;
+	}
+	
 	/**
 	 * 
 	 * @return
