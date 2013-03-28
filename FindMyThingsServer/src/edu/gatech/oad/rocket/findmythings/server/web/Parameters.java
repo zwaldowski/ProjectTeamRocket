@@ -14,4 +14,6 @@ public final class Parameters {
 	
 	public static final String SESSION_TOKEN = "token";
 
+	public static final String FAILURE_REASON = "failureReason";
+
 }

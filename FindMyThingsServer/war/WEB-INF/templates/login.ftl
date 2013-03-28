@@ -17,8 +17,8 @@
         <h1>Please log in.</h1>
       </div>
 
-      <#if loginerror??>
-      <#switch loginerror>
+      <#if failureReason??>
+      <#switch failureReason>
       <#case "noSuchUser">
       <div class="alert">
         <strong>Oh no!</strong> That user doesn't exist. <a href="/register" class="btn btn-info btn-mini">Register?</a>

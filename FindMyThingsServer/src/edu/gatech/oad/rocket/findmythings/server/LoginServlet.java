@@ -3,7 +3,6 @@ package edu.gatech.oad.rocket.findmythings.server;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
@@ -11,15 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.util.WebUtils;
-
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
-
 import edu.gatech.oad.rocket.findmythings.server.web.*;
-import edu.gatech.oad.rocket.findmythings.server.util.*;
 
 @Singleton
 public class LoginServlet extends TemplateServlet {
@@ -40,43 +31,15 @@ public class LoginServlet extends TemplateServlet {
 		writeDocument(response, "login.ftl");
 	}
 
-    @Override
+	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-        	boolean webRequest = WebUtils.isTrue(request, Parameters.WEB_LOGIN);
-        	
-            String email = WebUtils.getCleanParam(request, Parameters.USERNAME);
-            String password = WebUtils.getCleanParam(request, Parameters.PASSWORD);
-            boolean rememberMe = WebUtils.isTrue(request, Parameters.REMEMBER_ME);
-            String host = request.getRemoteHost();
-            
-            UsernamePasswordToken token = new UsernamePasswordToken(email, password, rememberMe, host);
-            Subject subject = SecurityUtils.getSubject();
-            Map<String, Object> info = new HashMap<>();
-            
-            if (newLogin(token, subject, info)) {
-            	if (webRequest) {
-            		LOGGER.log(Level.FINE, "Successful log in.");
-            		WebUtils.redirectToSavedRequest(request, response, "index.html");
-            	} else {
-            		LOGGER.log(Level.FINE, "Successful log in.", info);
-            		//info.put(Parameters.SESSION_TOKEN, null);
-            		JSONObject json = new JSONObject(info);
-            		writeJSON(response, HTTP.STATUS_OK, json);
-            	}
-            } else {
-            	if (webRequest) {
-            		LOGGER.log(Level.FINE, "Failed to log in, should redirect.");
-            		// TODO return to login page
-            	} else {
-            		LOGGER.log(Level.FINE, "Failed to log in, throwing up.");
-            		JSONObject json = new JSONObject(info);
-            		writeJSON(response, HTTP.STATUS_FORBIDDEN, json);
-            	}
-            }
-        } catch (Exception e) {
-        	write(MimeTypes.PLAINTEXT, HTTP.STATUS_INTERNAL_ERROR, "Internal error: " + e.getMessage(), response);
-        }
-    }
+		// we only get here if the login has failed.
+		Map<String, Object> extraInfo = new HashMap<>();
+		Object failureReason = request.getAttribute(Parameters.FAILURE_REASON);
+		if (failureReason != null) {
+			extraInfo.put(Parameters.FAILURE_REASON, failureReason);
+		}
+		writeDocument(response, "login.ftl", extraInfo);
+	}
 
 }
