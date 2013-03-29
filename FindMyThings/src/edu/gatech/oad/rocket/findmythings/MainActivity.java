@@ -10,6 +10,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.view.KeyEvent;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -82,6 +83,16 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        	myAccount.setSummary(LoginWindow.Email);
 	        }
 	    }
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			return false;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
 	}
 
 	/**

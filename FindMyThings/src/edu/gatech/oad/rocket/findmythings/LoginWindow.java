@@ -103,6 +103,19 @@ public class LoginWindow extends Activity {
 				});
 
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Intent i = new Intent(LoginWindow.this, MainActivity.class);
+			finish();
+			startActivity(i);
+			return true;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
