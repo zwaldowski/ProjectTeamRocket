@@ -70,6 +70,12 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        Intent requestIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	        requestIntent.putExtra(Type.ID, Type.REQUEST.ordinal());
+	        
+	        //trying new stuff
+	        Intent searchIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
+	        searchIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	        //searchIntent.putExtra(Type.ID, Type.SEARCH.ordinal());
+	        //end
 
 	        if(Login.currUser!=null) {
 	        	Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
