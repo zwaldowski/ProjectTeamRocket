@@ -8,37 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="276dp" >
 
-        <RadioButton
-            android:id="@+id/radioButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView1"
-            android:layout_below="@+id/textView1"
-            android:layout_marginLeft="26dp"
-            android:layout_marginTop="14dp"
-            android:text="Category"
-            android:textSize="20sp" />
-
-        <RadioButton
-            android:id="@+id/RadioButton01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/radioButton1"
-            android:layout_below="@+id/radioButton1"
-            android:layout_marginTop="20dp"
-            android:text="Date"
-            android:textSize="20sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/RadioButton01"
-            android:layout_below="@+id/RadioButton01"
-            android:layout_marginTop="22dp"
-            android:text="Status"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/textView1"
             android:layout_width="154dp"
@@ -49,6 +18,42 @@
             android:textAppearance="@style/HeaderGrey"
             android:textSize="24sp" />
 
+        <RadioGroup
+            android:id="@+id/searches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:layout_marginLeft="38dp" >
+
+            <RadioButton
+                android:id="@+id/categoryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Category"
+                android:textSize="20sp" 
+                android:onClick="onRadioButtonClicked"/>
+
+            <RadioButton
+                android:id="@+id/dateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Date"
+                android:textSize="20sp"
+                android:onClick="onRadioButtonClicked"/>
+
+            <RadioButton
+                android:id="@+id/statusButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="Status"
+                android:textSize="20sp" 
+                android:onClick="onRadioButtonClicked"/>
+
+        </RadioGroup>
     </RelativeLayout>
 
 </ScrollView>
