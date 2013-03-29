@@ -143,7 +143,7 @@ public class LoginWindow extends Activity {
 		 *or if email not empty and email hasn't been registered
 		 *go to register activity
 		 */
-		if ( mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !Login.data.contains(new User(mEmail,""))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
+		if ( (mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !Login.data.contains(new User(mEmail,"")))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
 			register();
 		else {
 			//Check for a valid password.

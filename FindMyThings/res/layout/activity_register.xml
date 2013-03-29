@@ -15,15 +15,16 @@
 
         <EditText
             android:id="@+id/lookingfor"
+            style="@style/HeaderLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignEnd="@+id/personface"
             android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/personface"
             android:ems="10"
             android:hint="@string/prompt_name"
             android:inputType="textPersonName"
             android:paddingBottom="@dimen/form_activity_input_pad_vertical"
-            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
             android:paddingTop="@dimen/form_activity_input_pad_vertical" >
 
             <requestFocus />
@@ -31,78 +32,93 @@
 
         <EditText
             android:id="@+id/pass"
+            style="@style/HeaderLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/email"
-            android:layout_alignRight="@id/email"
-            android:layout_below="@id/email"
+            android:layout_alignRight="@+id/lookingfor"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:ems="10"
+            android:layout_below="@id/email"
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
             android:paddingBottom="@dimen/form_activity_input_pad_vertical"
-            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
             android:paddingTop="@dimen/form_activity_input_pad_vertical" />
 
         <EditText
             android:id="@+id/confirmpass"
+            style="@style/HeaderLogin"
+            android:hint="@string/confirm_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/pass"
-            android:layout_alignRight="@+id/pass"
-            android:layout_below="@+id/pass"
+            android:layout_alignRight="@+id/lookingfor"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:ems="10"
-            android:hint="@string/confirm_password"
+            android:layout_below="@id/pass"
             android:inputType="textPassword"
             android:paddingBottom="@dimen/form_activity_input_pad_vertical"
-            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
             android:paddingTop="@dimen/form_activity_input_pad_vertical" />
 
         <EditText
             android:id="@+id/phone"
+            style="@style/HeaderLogin"
+            android:hint="@string/phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/confirmpass"
-            android:layout_alignRight="@+id/confirmpass"
-            android:layout_below="@+id/confirmpass"
+            android:layout_alignRight="@+id/lookingfor"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:ems="10"
-            android:hint="@string/phone_number"
+            android:layout_below="@+id/confirmpass"
             android:inputType="phone"
             android:paddingBottom="@dimen/form_activity_input_pad_vertical"
-            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
             android:paddingTop="@dimen/form_activity_input_pad_vertical" />
 
         <EditText
             android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@+id/phone"
-            android:layout_below="@+id/phone"
-            android:ems="10"
-            android:gravity="left|center_vertical"
+            style="@style/HeaderLogin"
             android:hint="@string/address"
-            android:inputType="textPostalAddress|textMultiLine"
-            android:lines="2"
-            android:minLines="2"
-            android:scrollHorizontally="false"
-            android:singleLine="false"
-            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
-            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
-            android:paddingTop="@dimen/form_activity_input_pad_vertical" />
-
-        <EditText
-            android:id="@id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/lookingfor"
-            android:layout_below="@+id/lookingfor"
+            android:layout_below="@+id/phone"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            
+            android:inputType="textPostalAddress|textMultiLine"
+            android:lines="2"
+            android:minLines="2"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical"
+            android:scrollHorizontally="false"
+            android:singleLine="false" />
+
+        <EditText
+            android:id="@id/email"
+            style="@style/HeaderLogin"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/address"
+            android:layout_alignRight="@+id/pass"
+            android:layout_below="@+id/personface"
             android:ems="10"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:paddingBottom="@dimen/form_activity_input_pad_vertical"
-            android:paddingRight="@dimen/form_activity_input_pad_horizontal"
             android:paddingTop="@dimen/form_activity_input_pad_vertical" />
+
+        <QuickContactBadge
+            android:id="@+id/personface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/lookingfor"
+            android:paddingLeft="7dp"
+            android:src="@drawable/default_contact" />
+
     </RelativeLayout>
 
 </ScrollView>
