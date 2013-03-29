@@ -56,11 +56,11 @@
     		    android:key="@string/main_key_myaccount"
     		    android:title="@string/main_title_account">
        
-    			<!-- intent 
+    			<intent 
 			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
-			 android:targetClass="edu.gatech.oad.rocket.findmythings.ItemListActivity"
+			 android:targetClass="edu.gatech.oad.rocket.findmythings.MyAccount"
        			 android:action="android.intent.action.VIEW"
-    			/> # TODO: Intent -->
+    			/>
    			</Preference> 	
 	
     		<Preference
