@@ -174,7 +174,7 @@ public class ItemListActivity extends FragmentActivity implements
 			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		}
 		else {
-			ErrorDialog toLogin =  new ErrorDialog("Must Sign-in to submit an item.");
+			ErrorDialog toLogin =  new ErrorDialog("Must Sign-in to submit an item.", "Sign-in", "Cancel");
 			AlertDialog.Builder temp = toLogin.getDialog(this,
 				new DialogInterface.OnClickListener() {
 				@Override
