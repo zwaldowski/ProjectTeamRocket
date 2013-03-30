@@ -307,7 +307,7 @@ public class LoginWindow extends Activity {
 				//User successfully logs in
 				if(temp instanceof User)
 					((User) temp).setAttempts(0);
-				Login.currUser = temp; // Store current user
+				Login.updateUser(temp); // Store current user
 				Email = mEmail; //Remembers User's email.
 				Intent main = new Intent(getApplicationContext(), MainActivity.class);
 				finish();

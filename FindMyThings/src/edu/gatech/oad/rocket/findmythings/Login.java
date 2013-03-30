@@ -85,7 +85,14 @@ public class Login {
 		return m;
 
 	}
-
+	
+	/**
+	 * updates currUser after successfully logging in so currUser knows more than just its email/password
+	 * @param m
+	 */
+	public static void updateUser(Member m) {
+		currUser = data.get(data.indexOf(m));
+	}
 	/**
 	 * Locks user account in the arraylist
 	 * @param m
@@ -96,6 +103,7 @@ public class Login {
 		if(justincase!=-1)
 			((User) data.get(justincase)).setAttempts(m.getAttempts());
 	}
+	
 
 
 
