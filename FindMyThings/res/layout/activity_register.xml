@@ -86,8 +86,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:ems="10"
-            
-            android:inputType="textPostalAddress|textMultiLine"
+            android:inputType="textPostalAddress"
             android:lines="2"
             android:minLines="2"
             android:paddingBottom="@dimen/form_activity_input_pad_vertical"
