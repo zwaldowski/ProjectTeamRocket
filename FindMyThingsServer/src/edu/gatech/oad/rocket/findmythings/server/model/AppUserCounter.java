@@ -1,6 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.server.model;
 
 import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindex;
 
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
  * <p> This counter should be changed relatively rarely (less than once a second)
  * so doesn't need to be sharded.
  */
-@Cache @Unindex
+@Cache @Unindex @Entity
 public class AppUserCounter {
     static final Logger LOG = Logger.getLogger(AppUserCounter.class.getName());
 

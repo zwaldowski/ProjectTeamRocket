@@ -7,10 +7,12 @@ import java.util.logging.Logger;
 import javax.persistence.Id;
 
 import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindex;
 
 @Cache
 @Unindex
+@Entity
 public class RegistrationTicket {
     static final Logger LOGGER = Logger.getLogger(RegistrationTicket.class.getName());
 
