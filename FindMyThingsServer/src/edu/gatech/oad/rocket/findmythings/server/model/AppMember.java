@@ -30,9 +30,7 @@ import com.googlecode.objectify.annotation.Unindex;
  *
  * @author TeamRocket
  * */
-@Cache
-@Unindex
-@Entity
+@Cache @Unindex @Entity
 public abstract class AppMember implements Serializable {
 
 	private static final long serialVersionUID = -9162883247171299555L;
