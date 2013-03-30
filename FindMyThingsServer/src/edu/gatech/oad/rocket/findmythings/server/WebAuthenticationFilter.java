@@ -2,7 +2,6 @@ package edu.gatech.oad.rocket.findmythings.server;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletRequest;

@@ -9,18 +9,13 @@ import java.util.Locale;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
-import org.apache.shiro.mgt.DefaultSubjectDAO;
-import org.apache.shiro.mgt.SessionStorageEvaluator;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.guice.web.ShiroWebModule;
-import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticationFilter;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 
 import com.google.common.base.Charsets;
@@ -47,8 +42,26 @@ public class MainContextListener extends GuiceServletContextListener {
     private ServletContext servletContext = null;
 
 	public MainContextListener() {}
-	
-    //
+
+	@Override
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		servletContext = servletContextEvent.getServletContext();
+		super.contextInitialized(servletContextEvent);
+	}
+
+	@Override
+	protected Injector getInjector() {
+		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule(), new MainModule());
+	}
+
+	protected PageGenerator createPageGenerator() {
+		try {
+			URL base = servletContext.getResource("/WEB-INF/templates/");
+            return new PageGenerator(base, Locale.getDefault(), Charsets.UTF_8.name());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+	}
 
 	private class MainServletModule extends ServletModule {
 	    private void bindString(String key, String value) {
@@ -75,55 +88,6 @@ public class MainContextListener extends GuiceServletContextListener {
 			// External things that don't have Guice annotations
 			bind(ObjectifyFilter.class).in(Singleton.class);
 		}
-	}
-
-	@Override
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		servletContext = servletContextEvent.getServletContext();
-		super.contextInitialized(servletContextEvent);
-	}
-
-	@Override
-	protected Injector getInjector() {
-		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule(), new MainModule());
-	}
-
-	protected PageGenerator createPageGenerator() {
-		try {
-			URL base = servletContext.getResource("/WEB-INF/templates/");
-            return new PageGenerator(base, Locale.getDefault(), Charsets.UTF_8.name());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-	}
-
-	public static class MainSessionStorageEvaluator implements SessionStorageEvaluator {
-
-		@Override
-		public boolean isSessionStorageEnabled(Subject arg0) {
-			// TODO Auto-generated method stub
-			return true;
-		}
-
-	}
-
-	public static class MainWebSecurityManager extends DefaultWebSecurityManager implements WebSecurityManager {
-
-		public MainWebSecurityManager() {
-	        super();
-	        ((DefaultSubjectDAO) this.subjectDAO).setSessionStorageEvaluator(new MainSessionStorageEvaluator());
-	    }
-
-	    public MainWebSecurityManager(Realm singleRealm) {
-	        this();
-	        setRealm(singleRealm);
-	    }
-
-	    public MainWebSecurityManager(Collection<Realm> realms) {
-	        this();
-	        setRealms(realms);
-	    }
-
 	}
 
 	private class MainShiroWebModule extends ShiroWebModule {
