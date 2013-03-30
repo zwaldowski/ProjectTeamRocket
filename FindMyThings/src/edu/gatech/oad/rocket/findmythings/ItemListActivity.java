@@ -180,9 +180,8 @@ public class ItemListActivity extends FragmentActivity implements
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
 		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
-		            	finish();
-		            	startActivity(goToNextActivity);
-		            }
+		            	startActivityForResult(goToNextActivity, 1);
+		            }	
 				}, 
 				new DialogInterface.OnClickListener() {
 					@Override

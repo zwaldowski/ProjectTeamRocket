@@ -19,6 +19,8 @@ public class MyAccountEdit extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_account_edit);
 		
+		setTitle("My Account");
+		
 		mName = (EditText) findViewById(R.id.personnameedit);
 		mEmail = (EditText) findViewById(R.id.emailedit);
 		mPhone = (EditText) findViewById(R.id.phoneedit);

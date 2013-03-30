@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -309,10 +310,16 @@ public class LoginWindow extends Activity {
 					((User) temp).setAttempts(0);
 				Login.updateUser(temp); // Store current user
 				Email = mEmail; //Remembers User's email.
-				Intent main = new Intent(getApplicationContext(), MainActivity.class);
-				finish();
-			    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-				startActivity(main);
+				
+				if(getCallingActivity()==null) { 
+					Intent main = new Intent(getApplicationContext(), MainActivity.class);
+					finish();
+				    startActivity(main);
+				} else { //Goes back to ItemListActivity
+				    finish();
+				    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+				}
+				
 
 
 			} else {

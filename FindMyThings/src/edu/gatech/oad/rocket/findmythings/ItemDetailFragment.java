@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class ItemDetailFragment extends Fragment {
 
 	/**
-	 * The content this fragment is presenting.
+	 * The content this fragment is presenting. Made static for use by MapsActivity
 	 */
 	public static Item mItem;
 	
@@ -38,8 +38,7 @@ public class ItemDetailFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-				
-
+			
 		if (getArguments().containsKey(Item.ID)) {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
@@ -47,13 +46,16 @@ public class ItemDetailFragment extends Fragment {
 			try {
 			Type mItemClass = ((ItemDetailActivity)getActivity()).getItemType();
 			mItem = control.getItem(mItemClass, getArguments().getString(Item.ID));
+			getActivity().setTitle(mItem.getName());
 			}
 			catch(NullPointerException e) {
 				//donothing
 			}
+			
 		}
 	}
-
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
