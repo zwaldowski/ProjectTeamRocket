@@ -29,7 +29,7 @@ public class WebAuthenticationFilter extends FormAuthenticationFilter {
 
 	static final Logger LOGGER = Logger.getLogger(WebAuthenticationFilter.class.getName());
 
-	WebAuthenticationFilter() {
+	public WebAuthenticationFilter() {
 		super();
 		setUsernameParam(Parameters.USERNAME);
 		setPasswordParam(Parameters.PASSWORD);
@@ -77,11 +77,11 @@ public class WebAuthenticationFilter extends FormAuthenticationFilter {
                 newSession.setAttribute(key, attributes.get(key));
             }
 
-            LOGGER.log(Level.WARNING, "Successful log in.");
+            LOGGER.fine("Creating a new instance of DatastoreRealm");
 
             return onLoginSuccess(token, subject, request, response);
         } catch (AuthenticationException e) {
-            LOGGER.log(Level.WARNING, "Failed log in.");
+            LOGGER.fine("Failed log in.");
             setFailureAttribute(request, e);
 		return onLoginFailure(token, e, request, response);
         }
