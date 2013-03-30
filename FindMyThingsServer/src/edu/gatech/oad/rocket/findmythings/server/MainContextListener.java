@@ -99,7 +99,7 @@ public class MainContextListener extends GuiceServletContextListener {
 		protected void configureShiroWeb() {
 			bindMainWebSecurityManager(bind(MainWebSecurityManager.class));
 
-			//bindRealm().to(DatastoreRealm.class);
+			bindRealm().to(DatabaseRealm.class);
 
 			// binds the built-in users from shiro.ini
 			try {
