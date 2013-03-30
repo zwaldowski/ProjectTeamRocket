@@ -1,0 +1,97 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_account_form_edit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".action_cancelaction_accept" >
+
+        <EditText
+            android:id="@+id/personnameedit"
+            style="@style/HeaderLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/personfaceedit"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/personfaceedit"
+            android:ems="10"
+            android:enabled="true"
+            android:hint="@string/prompt_name"
+            android:inputType="textPersonName"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/phoneedit"
+            style="@style/HeaderLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/personnameedit"
+            android:layout_below="@+id/emailedit"
+            android:ems="10"
+            android:enabled="true"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" />
+
+        <EditText
+            android:id="@+id/addressedit"
+            style="@style/HeaderLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/personnameedit"
+            android:layout_below="@+id/phoneedit"
+            android:ems="10"
+            android:enabled="true"
+            android:hint="@string/address"
+            android:inputType="textPostalAddress"
+            android:lines="2"
+            android:minLines="2"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical"
+            android:scrollHorizontally="false"
+            android:singleLine="false" />
+
+        <QuickContactBadge
+            android:id="@+id/personfaceedit"
+            android:layout_width="wrap_content"
+            android:focusable="false"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/personnameedit"
+            android:paddingLeft="7dp"
+            android:src="@drawable/default_contact" />
+
+        <EditText
+            android:id="@+id/emailedit"
+            style="@style/HeaderLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/phoneedit"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/personfaceedit"
+            android:ems="10"
+            android:enabled="false"
+            android:hint="@string/prompt_email"
+            android:inputType="none"
+            android:paddingBottom="@dimen/form_activity_input_pad_vertical"
+            android:paddingTop="@dimen/form_activity_input_pad_vertical" />
+
+    </RelativeLayout>
+
+</ScrollView>

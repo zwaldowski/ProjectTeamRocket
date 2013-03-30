@@ -103,6 +103,10 @@
             android:name="edu.gatech.oad.rocket.findmythings.MyAccount"
             android:label="@string/title_activity_my_account" >
         </activity>
+        <activity
+            android:name="edu.gatech.oad.rocket.findmythings.MyAccountEdit"
+            android:label="@string/title_activity_my_account_edit" >
+        </activity>
     </application>
 
 </manifest>

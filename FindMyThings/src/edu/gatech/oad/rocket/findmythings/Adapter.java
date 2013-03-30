@@ -21,7 +21,7 @@ import android.widget.TextView;
  *
  * @author TeamRocket
  * */
-public class Adapter extends ArrayAdapter<Item>{
+public class Adapter extends ArrayAdapter<Item> {
 
 	/**
 	 * Gets context from the activity using this adapter

@@ -93,6 +93,7 @@ public class Login {
 	public static void updateUser(Member m) {
 		currUser = data.get(data.indexOf(m));
 	}
+	
 	/**
 	 * Locks user account in the arraylist
 	 * @param m

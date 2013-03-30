@@ -66,5 +66,6 @@
     <string name="title_activity_admin_create">Admin_create</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_my_account">MyAccount</string>
+    <string name="title_activity_my_account_edit">MyAccountEdit</string>
 
 </resources>
