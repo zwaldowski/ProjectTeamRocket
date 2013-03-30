@@ -1,68 +1,58 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
-import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.common.base.Preconditions;
+import com.google.inject.Singleton;
+
+
 
 import edu.gatech.oad.rocket.findmythings.server.web.*;
 import edu.gatech.oad.rocket.findmythings.server.util.*;
 
-public class TemplateServlet extends HttpServlet {
+@Singleton
+public class TemplateServlet extends BaseServlet {
 
 	private static final long serialVersionUID = 8526927539799303725L;
 	
     static final Logger LOGGER = Logger.getLogger(TemplateServlet.class.getName());
-
-    private PageGenerator generator;
     
+    protected static int indexOfExtension(String filename) {
+        if (filename == null) {
+            return -1;
+        }
+        int extensionPos = filename.lastIndexOf(".");
+        int lastUnixPos = filename.lastIndexOf('/');
+        int lastWindowsPos = filename.lastIndexOf('\\');
+        return (Math.max(lastUnixPos, lastWindowsPos) > extensionPos ? -1 : extensionPos);
+    }
+
+    protected static String removeExtension(String filename) {
+        if (filename == null) {
+            return null;
+        }
+        int index = indexOfExtension(filename);
+        if (index == -1) {
+            return filename;
+        } else {
+            return filename.substring(0, index);
+        }
+    }
+    
+    protected static String replaceExtensionWith(String filename, String extension) {
+	return removeExtension(filename) + ".ftl";
+    }
+
 	public TemplateServlet() {
 		// TODO Auto-generated constructor stub
 	}
 
-	// for once we do login/user stuff
-    /*protected Provider<UserDAO> daoProvider;
-
-    protected TemplateServlet(Provider<UserDAO> daoProvider) {
-        this.daoProvider = daoProvider;
-    }*/
-
-    @Inject
-    protected void setCreate(PageGenerator nGenerator) {
-        generator = nGenerator;
-    }
-
-    protected void write(String mimeType, int returnCode, String output, HttpServletResponse response) throws IOException {
-        response.setContentType(mimeType);
-        response.setStatus(returnCode);
-        response.getWriter().println(output);
-    }
-
-    protected void writeJSON(HttpServletResponse response, int status, JSONObject obj) throws IOException {
-        write(MimeTypes.JSON, status, obj.toString(), response);
-    }
-
-    protected void writeAsJSON(HttpServletResponse response, int status, Object... args) throws IOException {
-        Preconditions.checkArgument(args.length % 2 == 0, "There must be an even number of argument strings");
-            try {
-            JSONObject obj = new JSONObject();
-            for (int i = 0; i < args.length; i += 2) {
-                obj.put((String)args[i], args[i+1]);
-            }
-            writeJSON(response, status, obj);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
     protected void writeDocument(HttpServletResponse response, String templateName, Object... args) throws IOException {
     	writeDocument(response, templateName, PageGenerator.map(args));
     }
@@ -80,14 +70,22 @@ public class TemplateServlet extends HttpServlet {
     	return generator.createPage(templateName, userArgs);
     }
 
-    protected int getIntRequestParam(HttpServletRequest request, String paramName, int defaultValue) {
-        String s = request.getParameter(paramName);
-        return (s == null) ? defaultValue : Integer.parseInt(s);
-    }
+    @Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String uri = replaceExtensionWith(request.getRequestURI(), "ftl");
+		writeDocument(response, uri, getParameterMap(request));
+	}
 
-    protected boolean getBoolRequestParam(HttpServletRequest request, String paramName, boolean defaultValue) {
-        String s = request.getParameter(paramName);
-        return (s == null) ? defaultValue : Boolean.parseBoolean(s);
-    }
+    // you really should override this in the subclass! :)
+	@Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// we only get here if the login has failed.
+		Map<String, Object> extraInfo = new HashMap<>();
+		Object failureReason = request.getAttribute(Parameters.FAILURE_REASON);
+		if (failureReason != null) {
+			extraInfo.put(Parameters.FAILURE_REASON, failureReason);
+		}
+		writeDocument(response, "login.ftl", extraInfo);
+	}
 
 }
