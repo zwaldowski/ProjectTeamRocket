@@ -11,8 +11,8 @@ import com.googlecode.objectify.annotation.Unindex;
 
 @Cache
 @Unindex
-class RegistrationString {
-    static final Logger LOGGER = Logger.getLogger(RegistrationString.class.getName());
+public class RegistrationTicket {
+    static final Logger LOGGER = Logger.getLogger(RegistrationTicket.class.getName());
 
     @Id private String ticket;
     private String email;
@@ -21,24 +21,24 @@ class RegistrationString {
 
     // for Objectify
     @SuppressWarnings("unused")
-	private RegistrationString() {}
+	private RegistrationTicket() {}
 
-    RegistrationString(String ticket, String email, long amount, TimeUnit unit) {
+    public RegistrationTicket(String ticket, String email, long amount, TimeUnit unit) {
         this.ticket = ticket;
         this.email = email;
         this.dateCreated = new Date();
         this.validityMilliseconds = unit.toMillis(amount);
     }
 
-    String getTicket() {
+    public String getTicket() {
         return ticket;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    boolean isValid() {
+    public boolean isValid() {
         return dateCreated.getTime() + validityMilliseconds > new Date().getTime();
     }
 }

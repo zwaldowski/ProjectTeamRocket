@@ -24,16 +24,21 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 
 import com.google.common.base.Charsets;
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Provides;
+import com.google.inject.Scopes;
+import com.google.inject.Singleton;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
+import com.googlecode.objectify.ObjectifyFilter;
 
 import edu.gatech.oad.rocket.findmythings.server.web.*;
+import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
 
 public class MainContextListener extends GuiceServletContextListener {
 
@@ -43,12 +48,16 @@ public class MainContextListener extends GuiceServletContextListener {
 
 	public MainContextListener() {}
 	
+    //
+
 	private class MainServletModule extends ServletModule {
 	    private void bindString(String key, String value) {
 	        bind(String.class).annotatedWith(Names.named(key)).toInstance(value);
 	    }
 
 		@Override protected void configureServlets() {
+			bind(ObjectifyFilter.class).in(Scopes.SINGLETON);
+			filter("/*").through(ObjectifyFilter.class);
 	        bind(PageGenerator.class).toInstance(createPageGenerator());
 	        bindString("email.from", Config.APP_EMAIL);
 			serve("/index.html").with(HelloWorldServlet.class);
@@ -56,6 +65,16 @@ public class MainContextListener extends GuiceServletContextListener {
 	        serve("/authtest.jsp").with(AuthTestServlet.class);
 		}
 
+	}
+
+	private static class MainModule extends AbstractModule {
+		@Override
+		protected void configure() {
+			requestStaticInjection(DatabaseFactory.class);
+
+			// External things that don't have Guice annotations
+			bind(ObjectifyFilter.class).in(Singleton.class);
+		}
 	}
 
 	@Override
@@ -66,7 +85,7 @@ public class MainContextListener extends GuiceServletContextListener {
 
 	@Override
 	protected Injector getInjector() {
-		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule());
+		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule(), new MainModule());
 	}
 
 	protected PageGenerator createPageGenerator() {
