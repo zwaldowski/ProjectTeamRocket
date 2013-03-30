@@ -3,28 +3,32 @@ package edu.gatech.oad.rocket.findmythings.server;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SessionStorageEvaluator;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
+import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.guice.web.ShiroWebModule;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.mgt.WebSecurityManager;
 
 import com.google.common.base.Charsets;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Provides;
+import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
@@ -36,11 +40,8 @@ public class MainContextListener extends GuiceServletContextListener {
 	public static final Key<WebAuthenticationFilter> WEBAUTH = Key.get(WebAuthenticationFilter.class);
 
     private ServletContext servletContext = null;
-	private ShiroWebModule securityModule = null;
 
-	public MainContextListener() {
-		// TODO Auto-generated constructor stub
-	}
+	public MainContextListener() {}
 	
 	private class MainServletModule extends ServletModule {
 	    private void bindString(String key, String value) {
@@ -57,13 +58,52 @@ public class MainContextListener extends GuiceServletContextListener {
 
 	}
 
-	private class MainSessionStorageEvaluator implements SessionStorageEvaluator {
+	@Override
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		servletContext = servletContextEvent.getServletContext();
+		super.contextInitialized(servletContextEvent);
+	}
+
+	@Override
+	protected Injector getInjector() {
+		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule());
+	}
+
+	protected PageGenerator createPageGenerator() {
+		try {
+			URL base = servletContext.getResource("/WEB-INF/templates/");
+            return new PageGenerator(base, Locale.getDefault(), Charsets.UTF_8.name());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+	}
+
+	public static class MainSessionStorageEvaluator implements SessionStorageEvaluator {
 
 		@Override
 		public boolean isSessionStorageEnabled(Subject arg0) {
 			// TODO Auto-generated method stub
 			return true;
 		}
+
+	}
+
+	public static class MainWebSecurityManager extends DefaultWebSecurityManager implements WebSecurityManager {
+
+		public MainWebSecurityManager() {
+	        super();
+	        ((DefaultSubjectDAO) this.subjectDAO).setSessionStorageEvaluator(new MainSessionStorageEvaluator());
+	    }
+
+	    public MainWebSecurityManager(Realm singleRealm) {
+	        this();
+	        setRealm(singleRealm);
+	    }
+
+	    public MainWebSecurityManager(Collection<Realm> realms) {
+	        this();
+	        setRealms(realms);
+	    }
 
 	}
 
@@ -76,6 +116,8 @@ public class MainContextListener extends GuiceServletContextListener {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void configureShiroWeb() {
+			bindMainWebSecurityManager(bind(MainWebSecurityManager.class));
+
 			//bindRealm().to(DatastoreRealm.class);
 
 			// binds the built-in users from shiro.ini
@@ -103,48 +145,25 @@ public class MainContextListener extends GuiceServletContextListener {
 		    bind(PasswordMatcher.class);
 		}
 
+	    @Override
+	    protected final void bindWebSecurityManager(AnnotatedBindingBuilder<? super WebSecurityManager> bind) {
+		bindMainWebSecurityManager(bind);
+	    }
+
+	    protected void bindMainWebSecurityManager(AnnotatedBindingBuilder<? super MainWebSecurityManager> bind) {
+	        try {
+	            bind.toConstructor(MainWebSecurityManager.class.getConstructor(Collection.class)).asEagerSingleton();
+	        } catch (NoSuchMethodException e) {
+	            throw new ConfigurationException("This really shouldn't happen.  Either something has changed in Shiro, or there's a bug in ShiroModule.", e);
+	        }
+	    }
+
 		@Provides
 		Ini loadShiroIni() throws MalformedURLException {
 			URL iniUrl = servletContext.getResource("/WEB-INF/shiro.ini");
 			return Ini.fromResourcePath("url:" + iniUrl.toExternalForm());
 		}
 
-	}
-
-	@Override
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		servletContext = servletContextEvent.getServletContext();
-		securityModule = new MainShiroWebModule(servletContext);
-
-		super.contextInitialized(servletContextEvent);
-	}
-
-	@Override
-	protected Injector getInjector() {
-		Injector inj = Guice.createInjector(securityModule, ShiroWebModule.guiceFilterModule(), new MainServletModule());
-
-		// assuming the Shiro defaults
-	    DefaultWebSecurityManager securityManager = inj.getInstance(DefaultWebSecurityManager.class);
-	    DefaultSubjectDAO subjectDAO = (DefaultSubjectDAO)securityManager.getSubjectDAO();
-	    subjectDAO.setSessionStorageEvaluator(new MainSessionStorageEvaluator());
-
-	    SecurityUtils.setSecurityManager(securityManager);
-		return inj;
-	}
-	
-	protected PageGenerator createPageGenerator() {
-		try {
-			URL base = servletContext.getResource("/WEB-INF/templates/");
-            return new PageGenerator(base, Locale.getDefault(), Charsets.UTF_8.name());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-	}
-	
-	protected WebAuthenticationFilter createWebAuthFilter() {
-		WebAuthenticationFilter out = new WebAuthenticationFilter();
-		out.setLoginUrl("/login");
-		return out;
 	}
 
 }
