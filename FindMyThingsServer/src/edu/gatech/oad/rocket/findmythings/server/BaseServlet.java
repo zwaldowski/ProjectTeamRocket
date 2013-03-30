@@ -99,7 +99,7 @@ public abstract class BaseServlet extends HttpServlet {
 
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
 		String email = getCurrentUserEmail();
-		if (email != null) params.put("user.name", email);
+		if (email != null) params.put("userEmail", email);
 	}
 
 }
