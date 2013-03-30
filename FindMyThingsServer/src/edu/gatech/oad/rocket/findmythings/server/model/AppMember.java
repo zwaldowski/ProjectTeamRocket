@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 
 import javax.persistence.Id;
 
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -19,6 +21,8 @@ import org.apache.shiro.util.SimpleByteSource;
 import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Index;
@@ -109,6 +113,14 @@ public abstract class AppMember implements Serializable {
     public abstract boolean isLocked();
 
     /** Global utilities **/
+
+    @Provides @Singleton
+    public static CredentialsMatcher getCredentialsMatcher() {
+        HashedCredentialsMatcher credentials = new HashedCredentialsMatcher(HASH_ALGORITHM);
+        credentials.setHashIterations(HASH_ITERATIONS);
+        credentials.setStoredCredentialsHexEncoded(true);
+        return credentials;
+    }
 
     private static RandomNumberGenerator salter = new SecureRandomNumberGenerator();
 
