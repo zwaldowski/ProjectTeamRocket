@@ -1,10 +1,10 @@
 package edu.gatech.oad.rocket.findmythings.server.model;
 
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindex;
 
-import javax.persistence.Id;
 import java.util.Date;
 import java.util.logging.Logger;
 
