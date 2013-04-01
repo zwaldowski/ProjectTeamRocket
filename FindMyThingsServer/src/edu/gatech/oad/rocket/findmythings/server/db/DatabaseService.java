@@ -20,12 +20,12 @@ import com.googlecode.objectify.util.cmd.LoaderWrapper;
 import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
 import com.googlecode.objectify.util.cmd.SaverWrapper;
 
-import edu.gatech.oad.rocket.findmythings.server.db.model.AppAdmin;
-import edu.gatech.oad.rocket.findmythings.server.db.model.AppAuthenticationToken;
-import edu.gatech.oad.rocket.findmythings.server.db.model.AppMember;
-import edu.gatech.oad.rocket.findmythings.server.db.model.AppUser;
-import edu.gatech.oad.rocket.findmythings.server.db.model.AppUserCounter;
-import edu.gatech.oad.rocket.findmythings.server.db.model.RegistrationTicket;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBAdmin;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBAuthenticationToken;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBUser;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBUserCounter;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBRegistrationTicket;
 
 public abstract class DatabaseService {
 
@@ -52,12 +52,12 @@ public abstract class DatabaseService {
 
 		/** Register our entity types*/
 		public DatabaseFactory() {
-			register(AppMember.class);
-			register(AppUser.class);
-			register(AppAdmin.class);
-			register(AppAdmin.class);
-			register(RegistrationTicket.class);
-			register(AppAuthenticationToken.class);
+			register(DBMember.class);
+			register(DBUser.class);
+			register(DBAdmin.class);
+			register(DBUserCounter.class);
+			register(DBRegistrationTicket.class);
+			register(DBAuthenticationToken.class);
 		}
 
 		/** Use guice to make instances instead! */
@@ -104,9 +104,9 @@ public abstract class DatabaseService {
 			transact(new VoidWork() {
 				@Override
 				public void vrun() {
-					AppUserCounter th = load().userCounter();
+					DBUserCounter th = load().userCounter();
 					if (th == null) {
-						th = new AppUserCounter();
+						th = new DBUserCounter();
 					}
 					th.delta(delta);
 					save().entity(th);
@@ -124,7 +124,7 @@ public abstract class DatabaseService {
 		 * @param userName the user name for the code
 		 */
 		public void register(final String code, final String email) {
-			AppMember user = load().memberWithEmail(email);
+			DBMember user = load().memberWithEmail(email);
 			if (user != null) {
 				user.register();
 				save().entity(user);
@@ -138,7 +138,7 @@ public abstract class DatabaseService {
 		 * @param changeCount should the user count be incremented
 		 * @return the user, after changes
 		 */
-		public AppMember updateMember(AppMember user, boolean changeCount) {
+		public DBMember updateMember(DBMember user, boolean changeCount) {
 			ofy().save().entity(user);
 			if (changeCount) {
 				changeUserCount(1);
@@ -146,7 +146,7 @@ public abstract class DatabaseService {
 			return user;
 		}
 
-		public AppMember deleteMember(AppMember user) {
+		public DBMember deleteMember(DBMember user) {
 			ofy().delete().entity(user);
 			changeUserCount(-1L);
 			return user;
@@ -154,7 +154,7 @@ public abstract class DatabaseService {
 
 		public void deleteAuthenticationTokensForEmail(String userEmail) {
 			if (userEmail == null) return;
-			Iterable<Key<AppAuthenticationToken>> allKeys = ofy().load().type(AppAuthenticationToken.class).filter("email", userEmail).keys();
+			Iterable<Key<DBAuthenticationToken>> allKeys = ofy().load().type(DBAuthenticationToken.class).filter("email", userEmail).keys();
 			ofy().delete().keys(allKeys);
 		}
 	}
@@ -166,36 +166,36 @@ public abstract class DatabaseService {
 		}
 
 		public String emailFromRegistrationCode(String code) {
-			RegistrationTicket reg = type(RegistrationTicket.class).id(code).get();
+			DBRegistrationTicket reg = type(DBRegistrationTicket.class).id(code).get();
 			return (reg == null) ?  null : (reg.isValid() ? reg.getEmail() : null);
 		}
 
 		public String emailFromAuthenticationToken(String token) {
-			AppAuthenticationToken auth = type(AppAuthenticationToken.class).id(token).get();
+			DBAuthenticationToken auth = type(DBAuthenticationToken.class).id(token).get();
 			return (auth == null) ? null : auth.getEmail();
 		}
 
 		public AppMember memberFromAuthenticationToken(String token) {
-			AppAuthenticationToken auth = type(AppAuthenticationToken.class).id(token).get();
-			return (auth == null) ? null : type(AppMember.class).id(auth.getEmail()).get();
+			DBAuthenticationToken auth = type(DBAuthenticationToken.class).id(token).get();
+			return (auth == null) ? null : type(DBMember.class).id(auth.getEmail()).get();
 		}
 
-		public AppMember memberWithEmail(String email) {
-			return type(AppMember.class).id(email).get();
+		public DBMember memberWithEmail(String email) {
+			return type(DBMember.class).id(email).get();
 		}
 
-		protected AppUserCounter userCounter() {
-			return type(AppUserCounter.class).id(AppUserCounter.COUNTER_ID).get();
+		protected DBUserCounter userCounter() {
+			return type(DBUserCounter.class).id(DBUserCounter.COUNTER_ID).get();
 		}
 
 		public long getUserCount() {
-			AppUserCounter th = userCounter();
+			DBUserCounter th = userCounter();
 			if (th == null) return 0;
 			return th.getCount();
 		}
 
 		public Date getCountLastModified() {
-			AppUserCounter th = userCounter();
+			DBUserCounter th = userCounter();
 			if (th == null) return new Date(0L);
 			return th.getLastModified();
 		}
@@ -208,14 +208,14 @@ public abstract class DatabaseService {
 			super(saver);
 		}
 
-		public RegistrationTicket registrationTicket(String ticket, String email) {
-			RegistrationTicket reg = new RegistrationTicket(ticket, email, REGISTRATION_VALID_DAYS, TimeUnit.DAYS);
+		public DBRegistrationTicket registrationTicket(String ticket, String email) {
+			DBRegistrationTicket reg = new DBRegistrationTicket(ticket, email, REGISTRATION_VALID_DAYS, TimeUnit.DAYS);
 			ofy().save().entity(reg);
 			return reg;
 		}
 
 		public String authenticationToken(String email) {
-			AppAuthenticationToken auth = new AppAuthenticationToken(email);
+			DBAuthenticationToken auth = new DBAuthenticationToken(email);
 			ofy().save().entity(auth);
 			return auth.getIdentifierString();
 		}
@@ -229,15 +229,15 @@ public abstract class DatabaseService {
 		}
 
 		public void registrationTicketWithCode(String ticket) {
-			type(RegistrationTicket.class).id(ticket);
+			type(DBRegistrationTicket.class).id(ticket);
 		}
 
 		public void authenticationTokenWithCode(String token) {
-			type(AppAuthenticationToken.class).id(token);
+			type(DBAuthenticationToken.class).id(token);
 		}
 
 		public void authenticationTokenWithCodes(String... tokens) {
-			type(AppAuthenticationToken.class).ids(tokens);
+			type(DBAuthenticationToken.class).ids(tokens);
 		}
 
 	}

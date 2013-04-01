@@ -17,13 +17,14 @@ import com.google.common.base.Preconditions;
 
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
-import edu.gatech.oad.rocket.findmythings.server.db.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
+import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 
 public class DatabaseRealm extends AuthorizingRealm {
 	private static final Logger LOG = Logger.getLogger(DatabaseRealm.class.getName());
 
 	public DatabaseRealm() {
-		super(new MemcacheManager(), AppMember.getCredentialsMatcher());
+		super(new MemcacheManager(), DBMember.getCredentialsMatcher());
 		setAuthenticationTokenClass(UsernamePasswordToken.class);
 		LOG.fine("Creating a new instance of DatabaseRealm");
 	}
@@ -36,7 +37,7 @@ public class DatabaseRealm extends AuthorizingRealm {
 			throw new NullPointerException("Can't find a principal in the collection");
 		}
 		LOG.fine("Finding authorization info for " + userEmail + " in DB");
-		AppMember member = DatabaseService.ofy().load().memberWithEmail(userEmail);
+		DBMember member = DatabaseService.ofy().load().memberWithEmail(userEmail);
 		if (member == null || !memberCanLogIn(member)) {
 			LOG.info("Rejecting user " + member.getName());
 			return null;
@@ -62,7 +63,7 @@ public class DatabaseRealm extends AuthorizingRealm {
 		Preconditions.checkNotNull(email, "Email can't be null");
 		LOG.info("Finding authentication info for " + email + " in DB");
 
-		AppMember member = DatabaseService.ofy().load().memberWithEmail(email);
+		DBMember member = DatabaseService.ofy().load().memberWithEmail(email);
 		if (member == null || !memberCanLogIn(member)) {
 			LOG.info("Rejecting user " + member.getName());
 			return null;

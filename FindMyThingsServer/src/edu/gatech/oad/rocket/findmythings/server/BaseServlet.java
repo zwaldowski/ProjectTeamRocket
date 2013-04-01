@@ -14,7 +14,7 @@ import org.apache.shiro.subject.Subject;
 import com.google.inject.Provides;
 
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
-import edu.gatech.oad.rocket.findmythings.server.db.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
 public abstract class BaseServlet extends HttpServlet {

@@ -12,8 +12,8 @@ import com.googlecode.objectify.annotation.Unindex;
 @Cache
 @Unindex
 @Entity
-public class RegistrationTicket {
-    static final Logger LOGGER = Logger.getLogger(RegistrationTicket.class.getName());
+public class DBRegistrationTicket {
+    static final Logger LOGGER = Logger.getLogger(DBRegistrationTicket.class.getName());
 
     @Id private String ticket;
     private String email;
@@ -21,9 +21,9 @@ public class RegistrationTicket {
     private long validityMilliseconds;
 
     // for Objectify
-	protected RegistrationTicket() {}
+	protected DBRegistrationTicket() {}
 
-    public RegistrationTicket(String ticket, String email, long amount, TimeUnit unit) {
+    public DBRegistrationTicket(String ticket, String email, long amount, TimeUnit unit) {
         this.ticket = ticket;
         this.email = email;
         this.dateCreated = new Date();

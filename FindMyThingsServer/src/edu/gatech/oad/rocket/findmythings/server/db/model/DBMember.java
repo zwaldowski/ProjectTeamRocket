@@ -1,6 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.server.db.model;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -27,18 +26,20 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
 
+import edu.gatech.oad.rocket.findmythings.server.model.AppMutableMember;
+
 /**
  * CS 2340 - FindMyStuff Android App
- * This abstract class specifies features of a AppMember
+ * This abstract class specifies features of a DBMember
  *
  * @author TeamRocket
  * */
 @Cache @Unindex @Entity
-public abstract class AppMember implements Serializable {
+public abstract class DBMember implements AppMutableMember {
 
 	private static final long serialVersionUID = -9162883247171299555L;
 
-	protected static final Logger LOGGER = Logger.getLogger(AppMember.class.getName());
+	protected static final Logger LOGGER = Logger.getLogger(DBMember.class.getName());
 
     private static final int HASH_ITERATIONS = 1;
     private static final String HASH_ALGORITHM = Sha256Hash.ALGORITHM_NAME;
@@ -65,32 +66,31 @@ public abstract class AppMember implements Serializable {
 	/** Constructors **/
 
     /** For objectify to create instances on retrieval */
-	protected AppMember() {
+	protected DBMember() {
         this.roles = new HashSet<String>();
         this.permissions = new HashSet<String>();
     }
 
-    AppMember(String email) {
+    DBMember(String email) {
         this(email, null, new HashSet<String>(), new HashSet<String>());
     }
 
-
-    AppMember(String email, String password) {
+    DBMember(String email, String password) {
         this(email, password, new HashSet<String>(), new HashSet<String>());
     }
 
-    public AppMember(String email, Set<String> roles, Set<String> permissions) {
+    public DBMember(String email, Set<String> roles, Set<String> permissions) {
         this(email, null, roles, permissions);
     }
 
-    public AppMember(String email, String password, Set<String> roles, Set<String> permissions) {
+    public DBMember(String email, String password, Set<String> roles, Set<String> permissions) {
         this(email, password, roles, permissions, false);
     }
 
-    AppMember(String email, String password, Set<String> roles, Set<String> permissions, boolean isRegistered) {
-        Preconditions.checkNotNull(email, "AppUser email can't be null");
-        Preconditions.checkNotNull(roles, "AppUser roles can't be null");
-        Preconditions.checkNotNull(permissions, "AppUser permissions can't be null");
+    DBMember(String email, String password, Set<String> roles, Set<String> permissions, boolean isRegistered) {
+        Preconditions.checkNotNull(email, "DBUser email can't be null");
+        Preconditions.checkNotNull(roles, "DBUser roles can't be null");
+        Preconditions.checkNotNull(permissions, "DBUser permissions can't be null");
         this.email = email;
 
         this.salt = salt().getBytes();
@@ -99,16 +99,6 @@ public abstract class AppMember implements Serializable {
         this.permissions = Collections.unmodifiableSet(permissions);
         this.dateRegistered = isRegistered ? new Date() : null;
     }
-
-    /** Definitions **/
-
-    public abstract boolean isAdmin();
-
-    /**
-	 * returns true if account is locked, false otherwise
-	 * @return locked
-	 */
-    public abstract boolean isLocked();
 
     /** Global utilities **/
 
@@ -139,8 +129,8 @@ public abstract class AppMember implements Serializable {
 
     @Override
 	public boolean equals(Object o) {
-	if (o instanceof AppMember) {
-		AppMember u = (AppMember)o;
+	if (o instanceof DBMember) {
+		DBMember u = (DBMember)o;
             return Objects.equal(getName().trim(), u.getName().trim()) &&
                    Objects.equal(getHashedPassword(), u.getHashedPassword());
         } else {
@@ -153,8 +143,11 @@ public abstract class AppMember implements Serializable {
 		return email;
 	}
 
-	/** Read-only accessors **/
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getEmail()
+	 */
 
+	@Override
 	public String getEmail() {
 		return email;
 	}
@@ -166,20 +159,25 @@ public abstract class AppMember implements Serializable {
 		return salt;
 	}
 
-	/**
-	 * @return the roles
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getRoles()
 	 */
+	@Override
 	public Set<String> getRoles() {
 		return roles;
 	}
 
-	/**
-	 * @return the permissions
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getPermissions()
 	 */
+	@Override
 	public Set<String> getPermissions() {
 		return permissions;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#isRegistered()
+	 */
 	public boolean isRegistered() {
         return getDateRegistered() != null;
     }
@@ -202,24 +200,22 @@ public abstract class AppMember implements Serializable {
         this.hashedPassword = hash(password, salt);
     }
 
-	/**
-	 *
-	 * @return name
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getName()
 	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * set name
-	 * @param s
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#setName(java.lang.String)
 	 */
 	public void setName(String s) {
 		name = s.trim();
 	}
 
-	/**
-	 * @return the dateRegistered
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getDateRegistered()
 	 */
 	public Date getDateRegistered() {
         return dateRegistered == null ? null : new Date(dateRegistered.getTime());
@@ -229,25 +225,29 @@ public abstract class AppMember implements Serializable {
         dateRegistered = new Date();
     }
 
-	public PhoneNumber getPhoneNumber() {
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getPhoneNumber()
+	 */
+	public PhoneNumber getPhone() {
 		return phone;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#setPhone(com.google.appengine.api.datastore.PhoneNumber)
+	 */
 	public void setPhone(PhoneNumber p) {
 		phone = p;
 	}
 
-	/**
-	 *
-	 * @return address
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getAddress()
 	 */
 	public String getAddress(){
 		return address;
 	}
 
-	/**
-	 * set address
-	 * @param s
+	/* (non-Javadoc)
+	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#setAddress(java.lang.String)
 	 */
 	public void setAddress(String s) {
 		address = s.trim();

@@ -18,16 +18,16 @@ import com.google.common.base.Preconditions;
 
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
-import edu.gatech.oad.rocket.findmythings.server.db.model.AppAuthenticationToken;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBAuthenticationToken;
 
 public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 	private static final Logger LOGGER = Logger.getLogger(BearerTokenAuthenticatingRealm.class.getName());
 
 	private class BearerAuthenticationInfo implements AuthenticationInfo {
 		private static final long serialVersionUID = 3470761774414912759L;
-		private AppAuthenticationToken token;
+		private DBAuthenticationToken token;
 
-		BearerAuthenticationInfo(AppAuthenticationToken token) {
+		BearerAuthenticationInfo(DBAuthenticationToken token) {
 			this.token = token;
 		}
 
@@ -56,7 +56,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 		setAuthenticationTokenClass(BearerToken.class);
 	}
 
-	private static final boolean tokenIsValid(BearerToken token, AppAuthenticationToken dbToken) {
+	private static final boolean tokenIsValid(BearerToken token, DBAuthenticationToken dbToken) {
 		return token != null && dbToken != null && dbToken.getEmail().equals((String)token.getPrincipal());
 	}
 
@@ -69,7 +69,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 		Preconditions.checkNotNull(email, "Email can't be null");
 		Preconditions.checkNotNull(token, "Token can't be null");
 
-		AppAuthenticationToken dbToken = DatabaseService.ofy().load().type(AppAuthenticationToken.class).id(creds).get();
+		DBAuthenticationToken dbToken = DatabaseService.ofy().load().type(DBAuthenticationToken.class).id(creds).get();
 		if (!tokenIsValid(token, dbToken)) {
 			LOGGER.info("Rejecting token " + creds + " for user " + email);
 			return null;
@@ -92,7 +92,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 	public final void deleteTokens(PrincipalCollection principals) {
 		Collection<String> tokens = principals.fromRealm(getName());
 		if (tokens != null) { //  && tokens.size() > 1
-			DatabaseService.ofy().delete().type(AppAuthenticationToken.class).ids(tokens);
+			DatabaseService.ofy().delete().type(DBAuthenticationToken.class).ids(tokens);
 		}
 	}
 

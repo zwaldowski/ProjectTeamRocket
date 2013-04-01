@@ -4,14 +4,16 @@ import java.util.Set;
 
 import com.googlecode.objectify.annotation.EntitySubclass;
 
+import edu.gatech.oad.rocket.findmythings.server.model.AppMutableUser;
+
 /**
  * CS 2340 - FindMyStuff Android App
- * This class creates a new AppUser object
+ * This class creates a new DBUser object
  *
  * @author TeamRocket
  * */
 @EntitySubclass
-public class AppUser extends AppMember {
+public class DBUser extends DBMember implements AppMutableUser {
 
     /**
 	 *
@@ -22,35 +24,32 @@ public class AppUser extends AppMember {
 
 	/** Constructors **/
 
-    public AppUser(String email, Set<String> roles, Set<String> permissions) {
+    public DBUser(String email, Set<String> roles, Set<String> permissions) {
 		super(email, roles, permissions);
 	}
 
-	public AppUser(String email, String password, Set<String> roles,
+	public DBUser(String email, String password, Set<String> roles,
 			Set<String> permissions, boolean isRegistered) {
 		super(email, password, roles, permissions, isRegistered);
 	}
 
-	public AppUser(String email, String password, Set<String> roles,
+	public DBUser(String email, String password, Set<String> roles,
 			Set<String> permissions) {
 		super(email, password, roles, permissions);
 	}
 
-	public AppUser(String email, String password) {
+	public DBUser(String email, String password) {
 		super(email, password);
 	}
 
-	public AppUser(String email) {
+	public DBUser(String email) {
 		super(email);
 	}
 
-	protected AppUser() {
+	protected DBUser() {
         super();
     }
 
-	/** Accessors **/
-
-	@Override
 	public boolean isLocked() {
         return isLocked;
     }
@@ -59,7 +58,6 @@ public class AppUser extends AppMember {
 	isLocked = locked;
     }
 
-	@Override
 	public boolean isAdmin() {
 		return false;
 	}

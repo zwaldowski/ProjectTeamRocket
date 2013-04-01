@@ -11,18 +11,18 @@ import com.googlecode.objectify.annotation.Index;
 
 @Cache
 @Entity
-public class AppAuthenticationToken {
+public class DBAuthenticationToken {
 
-	static final Logger LOGGER = Logger.getLogger(AppAuthenticationToken.class.getName());
+	static final Logger LOGGER = Logger.getLogger(DBAuthenticationToken.class.getName());
 
     @Id private String identifierString;
-    @Index private String email; // not a Ref<AppMember> to support super-admins
+    @Index private String email; // not a Ref<DBMember> to support super-admins
     @Ignore transient UUID identifier;
 
     // for Objectify
-    protected AppAuthenticationToken() {}
+    protected DBAuthenticationToken() {}
 
-	public AppAuthenticationToken(String email) {
+	public DBAuthenticationToken(String email) {
 		this.email = email;
 		this.identifier = UUID.randomUUID();
 		this.identifierString = identifier.toString();

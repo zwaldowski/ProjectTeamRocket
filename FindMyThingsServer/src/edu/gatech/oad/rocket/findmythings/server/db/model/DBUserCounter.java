@@ -10,15 +10,15 @@ import com.googlecode.objectify.annotation.Unindex;
 
 /**
  * This is a singleton, just holding a count of the number
- * of AppMember objects we have.
+ * of DBMember objects we have.
  * <p> The reason for using this is that counting the number of items
  * dynamically is very inefficient, and costly.
  * <p> This counter should be changed relatively rarely (less than once a second)
  * so doesn't need to be sharded.
  */
 @Cache @Unindex @Entity
-public class AppUserCounter {
-    static final Logger LOG = Logger.getLogger(AppUserCounter.class.getName());
+public class DBUserCounter {
+    static final Logger LOG = Logger.getLogger(DBUserCounter.class.getName());
 
     public static final long COUNTER_ID = 1L;
 
@@ -29,7 +29,7 @@ public class AppUserCounter {
 
     private Date lastModified;
 
-    public AppUserCounter() {
+    public DBUserCounter() {
         id = COUNTER_ID;
         lastModified = new Date(0L);
     }
