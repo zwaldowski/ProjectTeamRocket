@@ -3,11 +3,14 @@ package edu.gatech.oad.rocket.findmythings.server.security;
 import java.util.Collection;
 import java.util.logging.Logger;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.AuthenticatingRealm;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 
@@ -35,8 +38,13 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 
 		@Override
 		public PrincipalCollection getPrincipals() {
+			RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
 			SimplePrincipalCollection ret = new SimplePrincipalCollection();
-			ret.add(token.getEmail(), null);
+			for (Realm realm : manager.getRealms()) {
+				if (!(realm instanceof BearerTokenAuthenticatingRealm)) {
+					ret.add(token.getEmail(), realm.getName());
+				}
+			}
 			ret.add(token.getIdentifierString(), getName());
 			return ret;
 		}
