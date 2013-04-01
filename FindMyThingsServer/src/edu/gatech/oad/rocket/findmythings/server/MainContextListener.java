@@ -81,7 +81,7 @@ public class MainContextListener extends GuiceServletContextListener {
 			
 	        bindString("email.from", Config.APP_EMAIL);
 			serve("/index.html").with(TemplateServlet.class);
-	        serve("/api/authtest.jsp").with(TemplateServlet.class);
+	        serve("/api/authtest.jsp").with(AuthTestEndpoint.class);
 	        serve("/authtest.jsp").with(TemplateServlet.class);
 	        serve("/login.jsp").with(LoginServlet.class);
 		}

@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
+import com.google.inject.Singleton;
+
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
+@Singleton
 public class AuthTestEndpoint extends BaseServlet {
 
 	/**
