@@ -92,7 +92,7 @@
         <h1>You're already logged in!</h1>
       </div>
 
-      <h2><a href="/logout" class="btn btn-inverse btn-large">Log out instead?</a></h2>
+      <h2><li><a href="/logout.jsp">" class="btn btn-inverse btn-large">Log out instead?</a></li></h2>
 
       </@>
 
