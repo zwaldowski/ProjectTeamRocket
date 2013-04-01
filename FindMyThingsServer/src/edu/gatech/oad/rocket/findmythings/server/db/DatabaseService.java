@@ -175,7 +175,7 @@ public abstract class DatabaseService {
 			return (auth == null) ? null : auth.getEmail();
 		}
 
-		public AppMember memberFromAuthenticationToken(String token) {
+		public DBMember memberFromAuthenticationToken(String token) {
 			DBAuthenticationToken auth = type(DBAuthenticationToken.class).id(token).get();
 			return (auth == null) ? null : type(DBMember.class).id(auth.getEmail()).get();
 		}
