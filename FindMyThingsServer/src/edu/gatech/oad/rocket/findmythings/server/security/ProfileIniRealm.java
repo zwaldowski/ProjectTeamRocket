@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.appengine.api.datastore.PhoneNumber;
+import com.google.inject.Inject;
 
 import edu.gatech.oad.rocket.findmythings.server.model.AppAdmin;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
@@ -125,8 +126,11 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 		super();
 	}
 
+	@Inject
 	public ProfileIniRealm(Ini ini) {
-		super(ini);
+		this();
+		setIni(ini);
+		init();
 	}
 
     public ProfileIniRealm(String resourcePath) {
@@ -135,68 +139,68 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
     @Override
     protected void processUserDefinitions(Map<String, String> userDefs) {
-        if (userDefs == null || userDefs.isEmpty()) {
-            return;
-        }
+	if (userDefs == null || userDefs.isEmpty()) {
+		return;
+	}
 
-        Ini.Section usersSection = getIni().getSection(USERS_SECTION_NAME);
+	Ini.Section profilesSection = getIni().getSection(PROFILES_SECTION_NAME);
 
-        for (String email : userDefs.keySet()) {
-            String value = userDefs.get(email);
-            String[] passwordAndRolesArray = StringUtils.split(value);
-            String password = passwordAndRolesArray[0];
+	for (String email : userDefs.keySet()) {
+		String value = userDefs.get(email);
+		String[] passwordAndRolesArray = StringUtils.split(value);
+		String password = passwordAndRolesArray[0];
 
-            String profileValue = usersSection.get(email);
-            String[] profileValuesArray = null;
-            String name = null;
-            PhoneNumber phone = null;
-            String address = null;
+		String profileValue = profilesSection.get(email);
+		String[] profileValuesArray = null;
+		String name = null;
+		PhoneNumber phone = null;
+		String address = null;
 
-            if (profileValue != null) {
-		profileValuesArray = StringUtils.split(profileValue);
-		if (profileValuesArray.length == 3) {
-			name = profileValuesArray[0];
-			phone = profileValuesArray[1] == null ? null : new PhoneNumber(profileValuesArray[1]);
-			address = profileValuesArray[2];
-                }
-            }
+		if (profileValue != null) {
+			profileValuesArray = StringUtils.split(profileValue, ',', '"', '"', false, true);
+			if (profileValuesArray.length == 3) {
+				name = profileValuesArray[0];
+				phone = profileValuesArray[1] == null ? null : new PhoneNumber(profileValuesArray[1]);
+				address = profileValuesArray[2];
+			}
+		}
 
-            SimpleAccount account = getUser(email);
+		SimpleAccount account = getUser(email);
 
-            if (account != null &&
-		(name != null || phone != null || address != null) &&
-		!(account instanceof IniMemberAccount)) {
-		this.users.remove(email);
-		account = null;
-            }
+		if (account != null &&
+				(name != null || phone != null || address != null) &&
+				!(account instanceof IniMemberAccount)) {
+			this.users.remove(email);
+			account = null;
+		}
 
-            Set<String> roles = null;
-            Set<Permission> permissions = null;
+		Set<String> roles = null;
+		Set<Permission> permissions = null;
 
-            if (passwordAndRolesArray.length > 1) {
-                for (int i = 1; i < passwordAndRolesArray.length; i++) {
-			if (roles == null) roles = new HashSet<>();
-                    String rolename = passwordAndRolesArray[i];
-                    //account.addRole(rolename);
+		if (passwordAndRolesArray.length > 1) {
+			for (int i = 1; i < passwordAndRolesArray.length; i++) {
+				if (roles == null) roles = new HashSet<>();
+				String rolename = passwordAndRolesArray[i];
+				roles.add(rolename);
 
-                    SimpleRole role = getRole(rolename);
-                    if (role != null) {
-			if (permissions == null) permissions = new HashSet<>();
-			permissions.addAll(role.getPermissions());
-                    }
-                }
-            }
+				SimpleRole role = getRole(rolename);
+				if (role != null) {
+					if (permissions == null) permissions = new HashSet<>();
+					permissions.addAll(role.getPermissions());
+				}
+			}
+		}
 
-            if (account == null) {
-		if (roles.contains("admin")) {
-			account = new IniAdminAccount(email, password, getName());
-                } else {
-			account = new IniUserAccount(email, password, getName());
-                }
-            }
+		if (account == null) {
+			if (roles.contains("admin")) {
+				account = new IniAdminAccount(email, password, getName());
+			} else {
+				account = new IniUserAccount(email, password, getName());
+			}
+		}
 
-            account.setCredentials(password);
-            account.setRoles(roles);
+		account.setCredentials(password);
+		account.setRoles(roles);
 		if (permissions != null) account.addObjectPermissions(permissions);
 
 		if (account instanceof IniMemberAccount) {
@@ -204,7 +208,7 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 			((IniMemberAccount) account).setPhone(phone);
 			((IniMemberAccount) account).setAddress(address);
 		}
-        }
+	}
     }
 
     @Override
