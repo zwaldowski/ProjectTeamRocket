@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.inject.Singleton;
 
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
+import edu.gatech.oad.rocket.findmythings.server.util.HTTP.Status;
 import edu.gatech.oad.rocket.findmythings.server.util.MimeTypes;
 import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
@@ -46,28 +47,27 @@ public class TemplateServlet extends BaseServlet {
     }
     
     protected static String replaceExtensionWith(String filename, String extension) {
-	return removeExtension(filename) + ".ftl";
+    	return removeExtension(filename) + ".ftl";
     }
 
 	public TemplateServlet() {
 		// TODO Auto-generated constructor stub
 	}
-
-    protected void writeDocument(HttpServletResponse response, String templateName, Object... args) throws IOException {
-    	writeDocument(response, templateName, PageGenerator.map(args));
-    }
     
-    protected void writeDocument(HttpServletResponse response, String templateName, Map<String,Object> args) throws IOException {
-    	String html = createDocument(templateName, args);
-    	write(MimeTypes.HTML, HTTP.STATUS_OK, html, response);
+    protected String createDocument(String templateName, Map<String,Object> userArgs) throws IOException {
+    	return generator.createPage(templateName, userArgs);
     }
     
     protected String createDocument(String templateName, Object... args) throws IOException {
     	return createDocument(templateName, PageGenerator.map(args));
     }
     
-    protected String createDocument(String templateName, Map<String,Object> userArgs) throws IOException {
-    	return generator.createPage(templateName, userArgs);
+    protected void writeDocument(HttpServletResponse response, String templateName, Map<String,Object> args) throws IOException {
+    	HTTP.write(response, MimeTypes.HTML, Status.OK, createDocument(templateName, args));
+    }
+
+    protected void writeDocument(HttpServletResponse response, String templateName, Object... args) throws IOException {
+    	writeDocument(response, templateName, PageGenerator.map(args));
     }
 
     @Override

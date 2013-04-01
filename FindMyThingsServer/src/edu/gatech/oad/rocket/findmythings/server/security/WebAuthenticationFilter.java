@@ -10,18 +10,13 @@ import javax.servlet.ServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
 import com.google.common.collect.Maps;
 
-import edu.gatech.oad.rocket.findmythings.server.util.Errors;
+import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 public class WebAuthenticationFilter extends FormAuthenticationFilter {
@@ -37,19 +32,7 @@ public class WebAuthenticationFilter extends FormAuthenticationFilter {
 
 	@Override
 	protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {
-		if (ae instanceof UnknownAccountException) {
-			request.setAttribute(Parameters.FAILURE_REASON, Errors.Login.NO_SUCH_USER);
-		} else if (ae instanceof IncorrectCredentialsException) {
-			request.setAttribute(Parameters.FAILURE_REASON, Errors.Login.BAD_PASSWORD);
-		} else if (ae instanceof LockedAccountException) {
-			request.setAttribute(Parameters.FAILURE_REASON, Errors.Login.ACCNT_LOCKED);
-		} else if (ae instanceof DisabledAccountException) {
-			request.setAttribute(Parameters.FAILURE_REASON, Errors.Login.ACCT_DISABLE);
-		} else if (ae instanceof ExcessiveAttemptsException) {
-			request.setAttribute(Parameters.FAILURE_REASON, Errors.Login.MANY_ATTEMPT);
-		} else {
-			request.setAttribute(Parameters.FAILURE_REASON, Errors.Login.INVALID_DATA);
-		}
+		request.setAttribute(Parameters.FAILURE_REASON, Messages.Login.getMessage(ae));
 	}
 
 	@Override

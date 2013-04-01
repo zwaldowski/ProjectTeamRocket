@@ -32,7 +32,8 @@ import com.googlecode.objectify.ObjectifyFilter;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticatingRealm;
-import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticationFilter;
+import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticatingFilter;
+import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenRevokeFilter;
 import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
 import edu.gatech.oad.rocket.findmythings.server.security.WebAuthenticationFilter;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
@@ -41,7 +42,8 @@ import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 public class MainContextListener extends GuiceServletContextListener {
 
 	public static final Key<WebAuthenticationFilter> FORMAUTHC = Key.get(WebAuthenticationFilter.class);
-	public static final Key<BearerTokenAuthenticationFilter> TOKENAUTHC = Key.get(BearerTokenAuthenticationFilter.class);
+	public static final Key<BearerTokenAuthenticatingFilter> TOKENAUTHC = Key.get(BearerTokenAuthenticatingFilter.class);
+	public static final Key<BearerTokenRevokeFilter> TOKENLOGOUT = Key.get(BearerTokenRevokeFilter.class);
 
     private ServletContext servletContext = null;
 
@@ -79,6 +81,7 @@ public class MainContextListener extends GuiceServletContextListener {
 			
 	        bindString("email.from", Config.APP_EMAIL);
 			serve("/index.html").with(TemplateServlet.class);
+	        serve("/api/authtest.jsp").with(TemplateServlet.class);
 	        serve("/authtest.jsp").with(TemplateServlet.class);
 	        serve("/login.jsp").with(LoginServlet.class);
 		}
@@ -122,9 +125,9 @@ public class MainContextListener extends GuiceServletContextListener {
 			addFilterChain("/logout.jsp", LOGOUT);
 			addFilterChain("/account/**", FORMAUTHC);
 			addFilterChain("/api/login.jsp", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/api/logout.jsp", NO_SESSION_CREATION, LOGOUT);
+			addFilterChain("/api/logout.jsp", NO_SESSION_CREATION, TOKENLOGOUT);
 			addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/api/**", NO_SESSION_CREATION, ANON);
+			addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
 
 			// set the login redirect URL
 			bindConstant().annotatedWith(Names.named("shiro.loginUrl")).to("/login.jsp");
