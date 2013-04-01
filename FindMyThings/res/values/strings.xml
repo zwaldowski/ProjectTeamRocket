@@ -37,6 +37,7 @@
     <string name="i_example">Bike/Photo Album/Baby etc.</string>
     <string name="header_more">More</string>
     <string name="admin_create">Create admin</string>
+    <string name="search">Search</string>
 
     <!-- Extra stuff added -->
     <string-array name="search_criteria">
