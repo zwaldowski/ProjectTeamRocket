@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+      <item
+        android:id="@+id/menu_list_search"
+        android:title="Search"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="ifRoom|withText" />	
     <item
         android:id="@+id/item_list_submit"
         android:title="@string/action_submit"

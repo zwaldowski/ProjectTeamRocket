@@ -120,6 +120,11 @@ public class ItemListActivity extends FragmentActivity implements
 	            return true;
 	        case R.id.item_list_submit:
 			return toSubmit();
+	        case R.id.menu_list_search:
+	        	Intent i = new Intent(ItemListActivity.this, Search_Main.class);
+				finish();
+				startActivity(i);
+				return true;
 	    }
 	    return super.onOptionsItemSelected(item);
 	}

@@ -79,7 +79,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        	Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
 	        	myAccount.setSummary(LoginWindow.Email);
 	        }
-	    }
+	    }	
 	}
 	
 	@Override
