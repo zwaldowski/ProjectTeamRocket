@@ -20,7 +20,12 @@ import com.googlecode.objectify.util.cmd.LoaderWrapper;
 import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
 import com.googlecode.objectify.util.cmd.SaverWrapper;
 
-import edu.gatech.oad.rocket.findmythings.server.db.model.*;
+import edu.gatech.oad.rocket.findmythings.server.db.model.AppAdmin;
+import edu.gatech.oad.rocket.findmythings.server.db.model.AppAuthenticationToken;
+import edu.gatech.oad.rocket.findmythings.server.db.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.db.model.AppUser;
+import edu.gatech.oad.rocket.findmythings.server.db.model.AppUserCounter;
+import edu.gatech.oad.rocket.findmythings.server.db.model.RegistrationTicket;
 
 public abstract class DatabaseService {
 

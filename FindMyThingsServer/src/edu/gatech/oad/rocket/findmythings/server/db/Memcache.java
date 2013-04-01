@@ -1,15 +1,16 @@
 package edu.gatech.oad.rocket.findmythings.server.db;
 
-import com.google.appengine.api.memcache.AsyncMemcacheService;
-import com.google.appengine.api.memcache.Expiration;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import org.apache.shiro.cache.Cache;
-import org.apache.shiro.cache.CacheException;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheException;
+
+import com.google.appengine.api.memcache.AsyncMemcacheService;
+import com.google.appengine.api.memcache.Expiration;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 /**
  * Shiro cache for App Engine memcached.  Some simplifications are made as Memcached

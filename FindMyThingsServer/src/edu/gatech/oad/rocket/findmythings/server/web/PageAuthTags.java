@@ -3,8 +3,17 @@
  */
 package edu.gatech.oad.rocket.findmythings.server.web;
 
-import edu.gatech.oad.rocket.findmythings.server.web.tags.*;
-import freemarker.template.*;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.AuthenticatedTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.GuestTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.HasAnyRolesTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.HasPermissionTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.HasRoleTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.LacksPermissionTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.LacksRoleTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.NotAuthenticatedTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.PrincipalTag;
+import edu.gatech.oad.rocket.findmythings.server.web.tags.UserTag;
+import freemarker.template.SimpleHash;
 
 /**
  * Injecting Shiro auth tags into FreeMarker

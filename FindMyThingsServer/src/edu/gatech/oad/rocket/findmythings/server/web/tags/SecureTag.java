@@ -1,11 +1,18 @@
 package edu.gatech.oad.rocket.findmythings.server.web.tags;
 
-import freemarker.core.Environment;
-import freemarker.template.*;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import java.io.IOException;
 import java.util.Map;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
+import freemarker.core.Environment;
+import freemarker.template.SimpleScalar;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateDirectiveModel;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
 
 /**
  * <p>Equivalent to {@link org.apache.shiro.web.tags.SecureTag}</p>

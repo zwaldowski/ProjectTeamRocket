@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Singleton;
 
-
-
-import edu.gatech.oad.rocket.findmythings.server.web.*;
-import edu.gatech.oad.rocket.findmythings.server.util.*;
+import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
+import edu.gatech.oad.rocket.findmythings.server.util.MimeTypes;
+import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
+import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
 @Singleton
 public class TemplateServlet extends BaseServlet {

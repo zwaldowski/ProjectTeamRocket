@@ -1,10 +1,11 @@
 package edu.gatech.oad.rocket.findmythings.server.web.tags;
 
+import java.io.IOException;
+import java.util.Map;
+
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * <p>Equivalent to {@link org.apache.shiro.web.tags.RoleTag}</p>

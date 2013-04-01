@@ -1,16 +1,16 @@
 package edu.gatech.oad.rocket.findmythings.server.web.tags;
 
-import freemarker.core.Environment;
-import freemarker.log.Logger;
-import freemarker.template.TemplateDirectiveBody;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateModelException;
-
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.Map;
+
+import freemarker.core.Environment;
+import freemarker.log.Logger;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModelException;
 
 /**
  * <p>Tag used to print out the String value of a user's default principal,

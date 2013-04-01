@@ -21,8 +21,8 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
 import com.google.common.collect.Maps;
 
-import edu.gatech.oad.rocket.findmythings.server.util.*;
-import edu.gatech.oad.rocket.findmythings.server.web.*;
+import edu.gatech.oad.rocket.findmythings.server.util.Errors;
+import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 public class WebAuthenticationFilter extends FormAuthenticationFilter {
 

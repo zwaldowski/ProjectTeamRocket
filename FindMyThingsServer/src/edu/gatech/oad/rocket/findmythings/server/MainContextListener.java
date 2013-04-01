@@ -16,7 +16,6 @@ import org.apache.shiro.guice.web.ShiroWebModule;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
-import org.apache.shiro.web.filter.authc.AuthenticationFilter;
 
 import com.google.common.base.Charsets;
 import com.google.inject.AbstractModule;
@@ -30,11 +29,14 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.googlecode.objectify.ObjectifyFilter;
 
-import edu.gatech.oad.rocket.findmythings.server.security.*;
-import edu.gatech.oad.rocket.findmythings.server.util.*;
-import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
+import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticatingRealm;
+import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticationFilter;
+import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
+import edu.gatech.oad.rocket.findmythings.server.security.WebAuthenticationFilter;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
+import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
 public class MainContextListener extends GuiceServletContextListener {
 
