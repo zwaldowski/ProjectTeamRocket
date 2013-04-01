@@ -2,10 +2,12 @@ package edu.gatech.oad.rocket.findmythings.server.db;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
@@ -18,13 +20,12 @@ import com.googlecode.objectify.util.cmd.LoaderWrapper;
 import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
 import com.googlecode.objectify.util.cmd.SaverWrapper;
 
-import edu.gatech.oad.rocket.findmythings.server.model.AppAdmin;
-import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
-import edu.gatech.oad.rocket.findmythings.server.model.AppUser;
-import edu.gatech.oad.rocket.findmythings.server.model.AppUserCounter;
-import edu.gatech.oad.rocket.findmythings.server.model.RegistrationTicket;
+import edu.gatech.oad.rocket.findmythings.server.model.*;
 
 public abstract class DatabaseService {
+
+	@SuppressWarnings("unused")
+	private static final Logger LOGGER = Logger.getLogger(DatabaseService.class.getName());
 
 	private static final long REGISTRATION_VALID_DAYS = 1;
 
@@ -46,11 +47,12 @@ public abstract class DatabaseService {
 
 		/** Register our entity types*/
 		public DatabaseFactory() {
-			this.register(AppMember.class);
-			this.register(AppUser.class);
-			this.register(AppAdmin.class);
-			this.register(AppAdmin.class);
-			this.register(RegistrationTicket.class);
+			register(AppMember.class);
+			register(AppUser.class);
+			register(AppAdmin.class);
+			register(AppAdmin.class);
+			register(RegistrationTicket.class);
+			register(AppAuthenticationToken.class);
 		}
 
 		/** Use guice to make instances instead! */
@@ -144,6 +146,12 @@ public abstract class DatabaseService {
 			changeUserCount(-1L);
 			return user;
 		}
+
+		public void deleteAuthenticationTokensForEmail(String userEmail) {
+			if (userEmail == null) return;
+			Iterable<Key<AppAuthenticationToken>> allKeys = ofy().load().type(AppAuthenticationToken.class).filter("email", userEmail).keys();
+			ofy().delete().keys(allKeys);
+		}
 	}
 
 	public static class DatabaseLoader extends LoaderWrapper<DatabaseLoader> {
@@ -155,6 +163,16 @@ public abstract class DatabaseService {
 		public String emailFromRegistrationCode(String code) {
 			RegistrationTicket reg = type(RegistrationTicket.class).id(code).get();
 			return (reg == null) ?  null : (reg.isValid() ? reg.getEmail() : null);
+		}
+
+		public String emailFromAuthenticationToken(String token) {
+			AppAuthenticationToken auth = type(AppAuthenticationToken.class).id(token).get();
+			return (auth == null) ? null : auth.getEmail();
+		}
+
+		public AppMember memberFromAuthenticationToken(String token) {
+			AppAuthenticationToken auth = type(AppAuthenticationToken.class).id(token).get();
+			return (auth == null) ? null : type(AppMember.class).id(auth.getEmail()).get();
 		}
 
 		public AppMember memberWithEmail(String email) {
@@ -191,6 +209,12 @@ public abstract class DatabaseService {
 			return reg;
 		}
 
+		public String authenticationToken(String email) {
+			AppAuthenticationToken auth = new AppAuthenticationToken(email);
+			ofy().save().entity(auth);
+			return auth.getIdentifierString();
+		}
+
 	}
 
 	public static class DatabaseDeleter extends DeleterWrapper {
@@ -201,6 +225,14 @@ public abstract class DatabaseService {
 
 		public void registrationTicketWithCode(String ticket) {
 			type(RegistrationTicket.class).id(ticket);
+		}
+
+		public void authenticationTokenWithCode(String token) {
+			type(AppAuthenticationToken.class).id(token);
+		}
+
+		public void authenticationTokenWithCodes(String... tokens) {
+			type(AppAuthenticationToken.class).ids(tokens);
 		}
 
 	}

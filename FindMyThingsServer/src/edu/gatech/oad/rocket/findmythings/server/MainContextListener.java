@@ -3,7 +3,6 @@ package edu.gatech.oad.rocket.findmythings.server;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -11,10 +10,12 @@ import javax.servlet.ServletContextEvent;
 
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
-import org.apache.shiro.config.ConfigurationException;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.guice.web.ShiroWebModule;
 import org.apache.shiro.realm.text.IniRealm;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.web.filter.authc.AuthenticationFilter;
 
 import com.google.common.base.Charsets;
@@ -24,7 +25,6 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
@@ -32,6 +32,7 @@ import com.googlecode.objectify.ObjectifyFilter;
 
 import edu.gatech.oad.rocket.findmythings.server.web.*;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
+import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 
 public class MainContextListener extends GuiceServletContextListener {
 
@@ -96,6 +97,10 @@ public class MainContextListener extends GuiceServletContextListener {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void configureShiroWeb() {
+            bind(SessionDAO.class).to(EnterpriseCacheSessionDAO.class);
+            bind(CacheManager.class).to(MemcacheManager.class);
+
+			bindRealm().to(BearerTokenAuthenticatingRealm.class);
 			bindRealm().to(DatabaseRealm.class);
 
 			// binds the built-in users from shiro.ini
@@ -108,11 +113,16 @@ public class MainContextListener extends GuiceServletContextListener {
 			bind(AuthenticationFilter.class).to(WebAuthenticationFilter.class);
 			Key<WebAuthenticationFilter> loginFormAuth = Key.get(WebAuthenticationFilter.class);
 
+			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
 			addFilterChain("/authtest.jsp", ANON);
+			addFilterChain("/register.jsp", ANON);
 			addFilterChain("/login.jsp", loginFormAuth);
 			addFilterChain("/logout.jsp", LOGOUT);
 			addFilterChain("/account/**", loginFormAuth);
-			addFilterChain("/admin/**", loginFormAuth, config(ROLES, "admin"));
+			//addFilterChain("/api/login.jsp", NO_SESSION_CREATION);
+			//addFilterChain("/api/logout.jsp", NO_SESSION_CREATION);
+			//addFilterChain("/api/user/**", NO_SESSION_CREATION);
+			addFilterChain("/api/**", NO_SESSION_CREATION, ANON);
 
 			// set the login redirect URL
 			bindConstant().annotatedWith(Names.named("shiro.loginUrl")).to("/login.jsp");

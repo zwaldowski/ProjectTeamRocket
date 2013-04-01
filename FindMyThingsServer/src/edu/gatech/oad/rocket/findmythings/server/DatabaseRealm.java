@@ -23,6 +23,7 @@ public class DatabaseRealm extends AuthorizingRealm {
 
 	public DatabaseRealm() {
 		super(new MemcacheManager(), AppMember.getCredentialsMatcher());
+		setAuthenticationTokenClass(UsernamePasswordToken.class);
 		LOG.fine("Creating a new instance of DatabaseRealm");
 	}
 
