@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server.web;
+package edu.gatech.oad.rocket.findmythings.server.util;
 
 public final class Parameters {
 	

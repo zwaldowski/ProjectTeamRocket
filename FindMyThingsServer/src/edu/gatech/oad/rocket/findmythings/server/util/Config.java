@@ -1,6 +1,6 @@
-package edu.gatech.oad.rocket.findmythings.server;
+package edu.gatech.oad.rocket.findmythings.server.util;
 
-final class Config {
+public final class Config {
 	
 	private Config() {}
 

@@ -19,7 +19,7 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Provides;
 
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
-import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.db.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.util.MimeTypes;
 import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 

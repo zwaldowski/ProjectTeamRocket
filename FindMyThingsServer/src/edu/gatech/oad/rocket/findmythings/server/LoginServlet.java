@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 
-import edu.gatech.oad.rocket.findmythings.server.web.*;
+import edu.gatech.oad.rocket.findmythings.server.util.*;
 
 @Singleton
 public class LoginServlet extends TemplateServlet {

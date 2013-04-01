@@ -20,7 +20,7 @@ import com.googlecode.objectify.util.cmd.LoaderWrapper;
 import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
 import com.googlecode.objectify.util.cmd.SaverWrapper;
 
-import edu.gatech.oad.rocket.findmythings.server.model.*;
+import edu.gatech.oad.rocket.findmythings.server.db.model.*;
 
 public abstract class DatabaseService {
 

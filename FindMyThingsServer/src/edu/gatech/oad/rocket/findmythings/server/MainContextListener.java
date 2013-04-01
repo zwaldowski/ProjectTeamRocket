@@ -1,8 +1,8 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -30,7 +30,9 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.googlecode.objectify.ObjectifyFilter;
 
-import edu.gatech.oad.rocket.findmythings.server.web.*;
+import edu.gatech.oad.rocket.findmythings.server.security.*;
+import edu.gatech.oad.rocket.findmythings.server.util.*;
+import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 
@@ -53,23 +55,26 @@ public class MainContextListener extends GuiceServletContextListener {
 		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule(), new MainModule());
 	}
 
-	protected PageGenerator createPageGenerator() {
-		try {
-			URL base = servletContext.getResource("/WEB-INF/templates/");
-            return new PageGenerator(base, Locale.getDefault(), Charsets.UTF_8.name());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-	}
-
 	private class MainServletModule extends ServletModule {
 	    private void bindString(String key, String value) {
 	        bind(String.class).annotatedWith(Names.named(key)).toInstance(value);
 	    }
+	    
+	    private <T> void bindNamed(String key, Class<T> clazz, T value) {
+	        bind(clazz).annotatedWith(Names.named(key)).toInstance(value);
+	    }
 
 		@Override protected void configureServlets() {
 			filter("/*").through(ObjectifyFilter.class);
-	        bind(PageGenerator.class).toInstance(createPageGenerator());
+			
+			try {
+				bindNamed(PageGenerator.TEMPLATES, URL.class, servletContext.getResource("/WEB-INF/templates/"));
+				bindNamed(PageGenerator.LOCALE, Locale.class, Locale.getDefault());
+				bindNamed(PageGenerator.CHARSET, Charset.class, Charsets.UTF_8);
+			} catch (MalformedURLException e) {
+				throw new RuntimeException(e);
+			}
+			
 	        bindString("email.from", Config.APP_EMAIL);
 			serve("/index.html").with(TemplateServlet.class);
 	        serve("/authtest.jsp").with(TemplateServlet.class);

@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server.model;
+package edu.gatech.oad.rocket.findmythings.server.db.model;
 
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Cache;

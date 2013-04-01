@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server;
+package edu.gatech.oad.rocket.findmythings.server.security;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;

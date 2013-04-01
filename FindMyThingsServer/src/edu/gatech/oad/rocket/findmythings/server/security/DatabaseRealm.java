@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server;
+package edu.gatech.oad.rocket.findmythings.server.security;
 
 import java.util.logging.Logger;
 
@@ -16,7 +16,7 @@ import org.apache.shiro.util.SimpleByteSource;
 import com.google.common.base.Preconditions;
 
 import edu.gatech.oad.rocket.findmythings.server.db.*;
-import edu.gatech.oad.rocket.findmythings.server.model.*;
+import edu.gatech.oad.rocket.findmythings.server.db.model.*;
 
 public class DatabaseRealm extends AuthorizingRealm {
 	private static final Logger LOG = Logger.getLogger(DatabaseRealm.class.getName());

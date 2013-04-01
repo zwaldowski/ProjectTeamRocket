@@ -13,7 +13,9 @@ import java.util.logging.Logger;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
 import freemarker.cache.URLTemplateLoader;
 import freemarker.template.Configuration;
@@ -22,6 +24,10 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 public class PageGenerator {
+	
+	public static final String TEMPLATES = "FMTTemplateDirectory";
+	public static final String LOCALE = "FMTTemplateLocale";
+	public static final String CHARSET = "FMTTemplateCharset";
 	
     private static final Logger LOGGER = Logger.getLogger(PageGenerator.class.getName());
     private static final String EMPTY_STRING = "";
@@ -32,18 +38,18 @@ public class PageGenerator {
      */
     private final URL templateBase;
     private final Locale locale;
-    private final String charset;
+    private final Charset charset;
     private Configuration config;
     
-    public PageGenerator(URL iTemplateBase, Locale iLocale, String iCharset) throws IOException {
-        Preconditions.checkNotNull(iTemplateBase);
-        Preconditions.checkNotNull(iLocale);
-        Preconditions.checkNotNull(iCharset);
-        Preconditions.checkNotNull(Charset.forName(iCharset));
+    @Inject
+    PageGenerator(@Named(TEMPLATES) URL templateBase, @Named(LOCALE) Locale locale, @Named(CHARSET) Charset charset) throws IOException {
+        Preconditions.checkNotNull(templateBase);
+        Preconditions.checkNotNull(locale);
+        Preconditions.checkNotNull(charset);
         
-        templateBase = iTemplateBase;
-        locale = iLocale;
-        charset = iCharset;
+        this.templateBase = templateBase;
+        this.locale = locale;
+        this.charset = charset;
     }
     
     Template getTemplate(String templateName) throws IOException {
@@ -52,7 +58,7 @@ public class PageGenerator {
         for (String nm : names) {
             try {
                 Template template = getConfig().getTemplate(nm);
-                template.setOutputEncoding(charset);
+                template.setOutputEncoding(charset.name());
                 return template;
             } catch (IOException e) {
                 lastException = e;
@@ -133,8 +139,9 @@ public class PageGenerator {
                 LOGGER.warning("Can't set freemarker cache (not fatal) " + e.getMessage());
             }
 
-            config.setDefaultEncoding(charset);
-            config.setEncoding(locale, charset);
+            String charsetName = charset.name();
+            config.setDefaultEncoding(charsetName);
+            config.setEncoding(locale, charsetName);
             config.setLocale(locale);
             config.setSharedVariable("shiro", new PageAuthTags());
             

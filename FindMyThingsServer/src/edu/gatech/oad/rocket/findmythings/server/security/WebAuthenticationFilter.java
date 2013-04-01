@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server;
+package edu.gatech.oad.rocket.findmythings.server.security;
 
 import java.util.Collection;
 import java.util.Map;

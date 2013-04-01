@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server;
+package edu.gatech.oad.rocket.findmythings.server.security;
 
 import java.util.Collection;
 import java.util.logging.Logger;
@@ -15,7 +15,7 @@ import com.google.common.base.Preconditions;
 
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
-import edu.gatech.oad.rocket.findmythings.server.model.AppAuthenticationToken;
+import edu.gatech.oad.rocket.findmythings.server.db.model.AppAuthenticationToken;
 
 public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 	private static final Logger LOGGER = Logger.getLogger(BearerTokenAuthenticatingRealm.class.getName());

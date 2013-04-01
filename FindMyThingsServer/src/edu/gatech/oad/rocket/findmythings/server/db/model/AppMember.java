@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server.model;
+package edu.gatech.oad.rocket.findmythings.server.db.model;
 
 import java.io.Serializable;
 import java.util.Collections;

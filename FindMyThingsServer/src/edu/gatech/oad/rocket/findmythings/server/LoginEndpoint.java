@@ -1,8 +1,7 @@
-package edu.gatech.oad.rocket.findmythings.server.api;
+package edu.gatech.oad.rocket.findmythings.server;
 
 import com.google.inject.Singleton;
 
-import edu.gatech.oad.rocket.findmythings.server.BaseServlet;
 
 @Singleton
 public class LoginEndpoint extends BaseServlet {
