@@ -38,7 +38,8 @@ import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 
 public class MainContextListener extends GuiceServletContextListener {
 
-	public static final Key<WebAuthenticationFilter> WEBAUTH = Key.get(WebAuthenticationFilter.class);
+	public static final Key<WebAuthenticationFilter> FORMAUTHC = Key.get(WebAuthenticationFilter.class);
+	public static final Key<BearerTokenAuthenticationFilter> TOKENAUTHC = Key.get(BearerTokenAuthenticationFilter.class);
 
     private ServletContext servletContext = null;
 
@@ -66,9 +67,8 @@ public class MainContextListener extends GuiceServletContextListener {
 
 		@Override protected void configureServlets() {
 			filter("/*").through(ObjectifyFilter.class);
-			
 			try {
-				bindNamed(PageGenerator.TEMPLATES, URL.class, servletContext.getResource("/WEB-INF/templates/"));
+				bindNamed(PageGenerator.TEMPLATES, URL.class, getServletContext().getResource("/WEB-INF/templates/"));
 				bindNamed(PageGenerator.LOCALE, Locale.class, Locale.getDefault());
 				bindNamed(PageGenerator.CHARSET, Charset.class, Charsets.UTF_8);
 			} catch (MalformedURLException e) {
@@ -105,28 +105,23 @@ public class MainContextListener extends GuiceServletContextListener {
             bind(SessionDAO.class).to(EnterpriseCacheSessionDAO.class);
             bind(CacheManager.class).to(MemcacheManager.class);
 
-			bindRealm().to(BearerTokenAuthenticatingRealm.class);
-			bindRealm().to(DatabaseRealm.class);
-
-			// binds the built-in users from shiro.ini
 			try {
-                bindRealm().toConstructor(IniRealm.class.getConstructor(Ini.class));
+				bindRealm().to(BearerTokenAuthenticatingRealm.class);
+				bindRealm().to(DatabaseRealm.class);
+				bindRealm().toConstructor(IniRealm.class.getConstructor(Ini.class));
             } catch (NoSuchMethodException e) {
                 addError(e);
             }
 
-			bind(AuthenticationFilter.class).to(WebAuthenticationFilter.class);
-			Key<WebAuthenticationFilter> loginFormAuth = Key.get(WebAuthenticationFilter.class);
-
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
 			addFilterChain("/authtest.jsp", ANON);
 			addFilterChain("/register.jsp", ANON);
-			addFilterChain("/login.jsp", loginFormAuth);
+			addFilterChain("/login.jsp", FORMAUTHC);
 			addFilterChain("/logout.jsp", LOGOUT);
-			addFilterChain("/account/**", loginFormAuth);
-			//addFilterChain("/api/login.jsp", NO_SESSION_CREATION);
-			//addFilterChain("/api/logout.jsp", NO_SESSION_CREATION);
-			//addFilterChain("/api/user/**", NO_SESSION_CREATION);
+			addFilterChain("/account/**", FORMAUTHC);
+			addFilterChain("/api/login.jsp", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/api/logout.jsp", NO_SESSION_CREATION, LOGOUT);
+			addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
 			addFilterChain("/api/**", NO_SESSION_CREATION, ANON);
 
 			// set the login redirect URL
