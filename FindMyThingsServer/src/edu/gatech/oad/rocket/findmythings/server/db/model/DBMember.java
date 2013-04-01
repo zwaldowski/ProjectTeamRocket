@@ -1,5 +1,6 @@
 package edu.gatech.oad.rocket.findmythings.server.db.model;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -163,7 +164,7 @@ public abstract class DBMember implements AppMutableMember {
 	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getRoles()
 	 */
 	@Override
-	public Set<String> getRoles() {
+	public Collection<String> getRoles() {
 		return roles;
 	}
 
@@ -171,7 +172,7 @@ public abstract class DBMember implements AppMutableMember {
 	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getPermissions()
 	 */
 	@Override
-	public Set<String> getPermissions() {
+	public Collection<String> getStringPermissions() {
 		return permissions;
 	}
 

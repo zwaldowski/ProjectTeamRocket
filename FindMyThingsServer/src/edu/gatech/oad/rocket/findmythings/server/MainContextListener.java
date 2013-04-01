@@ -13,7 +13,6 @@ import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.guice.web.ShiroWebModule;
-import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 
@@ -35,6 +34,7 @@ import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticat
 import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticatingFilter;
 import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenRevokeFilter;
 import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
+import edu.gatech.oad.rocket.findmythings.server.security.ProfileIniRealm;
 import edu.gatech.oad.rocket.findmythings.server.security.WebAuthenticationFilter;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
@@ -78,7 +78,7 @@ public class MainContextListener extends GuiceServletContextListener {
 			} catch (MalformedURLException e) {
 				throw new RuntimeException(e);
 			}
-			
+
 	        bindString("email.from", Config.APP_EMAIL);
 			serve("/index.html").with(TemplateServlet.class);
 	        serve("/api/authtest.jsp").with(AuthTestEndpoint.class);
@@ -114,7 +114,7 @@ public class MainContextListener extends GuiceServletContextListener {
 			try {
 				bindRealm().to(BearerTokenAuthenticatingRealm.class);
 				bindRealm().to(DatabaseRealm.class);
-				bindRealm().toConstructor(IniRealm.class.getConstructor(Ini.class));
+				bindRealm().toConstructor(ProfileIniRealm.class.getConstructor(Ini.class));
             } catch (NoSuchMethodException e) {
                 addError(e);
             }

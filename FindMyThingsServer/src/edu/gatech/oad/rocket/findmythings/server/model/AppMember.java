@@ -1,20 +1,17 @@
 package edu.gatech.oad.rocket.findmythings.server.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 
 import com.google.appengine.api.datastore.PhoneNumber;
 
 public interface AppMember extends Serializable {
-
-	/** Definitions **/
 
 	/**
 	 *
 	 * @return admin
 	 */
 	public abstract boolean isAdmin();
-
 
 	/**
 	 * returns true if account is locked, false otherwise
@@ -27,8 +24,6 @@ public interface AppMember extends Serializable {
 	 * @return registered
 	 */
 	public abstract boolean isRegistered();
-
-	/** Read-only profile accessors **/
 
 	/**
 	 *
@@ -54,16 +49,16 @@ public interface AppMember extends Serializable {
 	 */
 	public abstract String getAddress();
 
-	/** Permissions-related accessors **/
+	/**
+	 *
+	 * @return roles
+	 */
+	public abstract Collection<String> getRoles();
 
 	/**
-	 * @return the roles
+	 *
+	 * @return permissions
 	 */
-	public abstract Set<String> getRoles();
-
-	/**
-	 * @return the permissions
-	 */
-	public abstract Set<String> getPermissions();
+	public abstract Collection<String> getStringPermissions();
 
 }

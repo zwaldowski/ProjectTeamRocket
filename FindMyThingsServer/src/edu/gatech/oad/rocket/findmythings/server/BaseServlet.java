@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.mgt.RealmSecurityManager;
 
 import com.google.inject.Provides;
 
-import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
 public abstract class BaseServlet extends HttpServlet {
@@ -49,9 +51,20 @@ public abstract class BaseServlet extends HttpServlet {
 	}
 
 	protected AppMember getCurrentUser() {
-	    Subject subject = SecurityUtils.getSubject();
-	    String email = (String)subject.getPrincipal();
-	    return email == null ? null : DatabaseService.ofy().load().memberWithEmail(email);
+		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
+		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+	    if (principals == null || principals.isEmpty()) return null;
+	    String email = (String)principals.getPrimaryPrincipal();
+	    if (email == null || email.length() == 0) return null;
+
+	    for (Realm realm : manager.getRealms()) {
+			if (realm instanceof ProfileRealm) {
+				AppMember potential = ((ProfileRealm) realm).getAccount(email);
+				if (potential != null && potential.getEmail().equals(email)) return potential;
+			}
+		}
+
+	    return null;
 	}
 
 	protected String getCurrentUserEmail() {

@@ -41,8 +41,11 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 			RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
 			SimplePrincipalCollection ret = new SimplePrincipalCollection();
 			for (Realm realm : manager.getRealms()) {
-				if (!(realm instanceof BearerTokenAuthenticatingRealm)) {
-					ret.add(token.getEmail(), realm.getName());
+				if (realm instanceof ProfileRealm) {
+					String email = token.getEmail();
+					if (((ProfileRealm) realm).accountExists(email)) {
+						ret.add(email, realm.getName());
+					}
 				}
 			}
 			ret.add(token.getIdentifierString(), getName());

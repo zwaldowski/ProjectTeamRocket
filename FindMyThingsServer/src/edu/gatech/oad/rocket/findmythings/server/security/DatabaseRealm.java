@@ -1,5 +1,6 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
+import java.util.HashSet;
 import java.util.logging.Logger;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -20,7 +21,7 @@ import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 
-public class DatabaseRealm extends AuthorizingRealm {
+public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 	private static final Logger LOG = Logger.getLogger(DatabaseRealm.class.getName());
 
 	public DatabaseRealm() {
@@ -45,8 +46,9 @@ public class DatabaseRealm extends AuthorizingRealm {
 
 		LOG.fine("Found " + userEmail + " in DB");
 
-		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(member.getRoles());
-		info.setStringPermissions(member.getPermissions());
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		info.addRoles(member.getRoles());
+		info.addStringPermissions(member.getStringPermissions());
 		return info;
 	}
 
@@ -70,13 +72,25 @@ public class DatabaseRealm extends AuthorizingRealm {
 		}
 
 		SimpleAccount account = new SimpleAccount(member.getEmail(), member.getHashedPassword(), new SimpleByteSource(member.getSalt()), getName());
-		account.setRoles(member.getRoles());
-		account.setStringPermissions(member.getPermissions());
+		account.setRoles(new HashSet<String>(member.getRoles()));
+		account.setStringPermissions(new HashSet<String>(member.getStringPermissions()));
 		return account;
 	}
 
 	private static boolean memberCanLogIn(AppMember member) {
 		return member.isRegistered() && !member.isLocked();
 	}
+
+    @Override
+	public boolean accountExists(String email) {
+	if (email == null) return false;
+	return DatabaseService.ofy().load().type(DBMember.class).id(email) != null;
+	}
+
+    @Override
+    public AppMember getAccount(String email) {
+	if (email == null) return null;
+	return DatabaseService.ofy().load().type(DBMember.class).id(email).get();
+    }
 
 }
