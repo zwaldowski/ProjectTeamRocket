@@ -11,6 +11,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -71,11 +73,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        Intent requestIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	        requestIntent.putExtra(Type.ID, Type.REQUEST.ordinal());
-	        
-	        //trying new stuff
-	        Intent searchIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
-	        searchIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        //end
+	   
 
 	        if(Login.currUser!=null) {
 	        	Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
@@ -92,6 +90,25 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	    }
 
 	    return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_search:
+			Intent i = new Intent(MainActivity.this, Search_Main.class);
+			finish();
+			startActivity(i);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**
