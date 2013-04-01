@@ -16,7 +16,6 @@ import org.apache.shiro.config.Ini;
 import org.apache.shiro.guice.web.ShiroWebModule;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.web.filter.authc.AuthenticationFilter;
-import org.apache.shiro.web.mgt.WebSecurityManager;
 
 import com.google.common.base.Charsets;
 import com.google.inject.AbstractModule;
@@ -97,8 +96,6 @@ public class MainContextListener extends GuiceServletContextListener {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void configureShiroWeb() {
-			bindMainWebSecurityManager(bind(MainWebSecurityManager.class));
-
 			bindRealm().to(DatabaseRealm.class);
 
 			// binds the built-in users from shiro.ini
@@ -125,19 +122,6 @@ public class MainContextListener extends GuiceServletContextListener {
 		    bind(CredentialsMatcher.class).to(PasswordMatcher.class);
 		    bind(PasswordMatcher.class);
 		}
-
-	    @Override
-	    protected final void bindWebSecurityManager(AnnotatedBindingBuilder<? super WebSecurityManager> bind) {
-		bindMainWebSecurityManager(bind);
-	    }
-
-	    protected void bindMainWebSecurityManager(AnnotatedBindingBuilder<? super MainWebSecurityManager> bind) {
-	        try {
-	            bind.toConstructor(MainWebSecurityManager.class.getConstructor(Collection.class)).asEagerSingleton();
-	        } catch (NoSuchMethodException e) {
-	            throw new ConfigurationException("This really shouldn't happen.  Either something has changed in Shiro, or there's a bug in ShiroModule.", e);
-	        }
-	    }
 
 		@Provides
 		Ini loadShiroIni() throws MalformedURLException {
