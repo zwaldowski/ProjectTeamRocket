@@ -42,6 +42,10 @@ public class AppAdmin extends AppMember {
 		super(email);
 	}
 
+	protected AppAdmin() {
+		super();
+	}
+
 	/** Accessors **/
 
 	@Override

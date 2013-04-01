@@ -21,8 +21,7 @@ public class RegistrationTicket {
     private long validityMilliseconds;
 
     // for Objectify
-    @SuppressWarnings("unused")
-	private RegistrationTicket() {}
+	protected RegistrationTicket() {}
 
     public RegistrationTicket(String ticket, String email, long amount, TimeUnit unit) {
         this.ticket = ticket;

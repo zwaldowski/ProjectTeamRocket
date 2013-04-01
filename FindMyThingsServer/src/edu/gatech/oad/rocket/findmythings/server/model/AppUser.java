@@ -44,6 +44,10 @@ public class AppUser extends AppMember {
 		super(email);
 	}
 
+	protected AppUser() {
+        super();
+    }
+
 	/** Accessors **/
 
 	@Override

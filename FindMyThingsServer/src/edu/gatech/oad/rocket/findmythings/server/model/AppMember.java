@@ -65,8 +65,7 @@ public abstract class AppMember implements Serializable {
 	/** Constructors **/
 
     /** For objectify to create instances on retrieval */
-    @SuppressWarnings("unused")
-	private AppMember() {
+	protected AppMember() {
         this.roles = new HashSet<String>();
         this.permissions = new HashSet<String>();
     }
