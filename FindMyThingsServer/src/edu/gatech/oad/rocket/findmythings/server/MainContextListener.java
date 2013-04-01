@@ -120,6 +120,10 @@ public class MainContextListener extends GuiceServletContextListener {
             }
 
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
+			
+			// Example for requiring admin
+			// this.addFilterChain("/admin/**", AUTHC, config(ROLES, "admin"));
+			
 			addFilterChain("/authtest.jsp", ANON);
 			addFilterChain("/register.jsp", ANON);
 			addFilterChain("/login.jsp", FORMAUTHC);
@@ -139,7 +143,7 @@ public class MainContextListener extends GuiceServletContextListener {
 		    bind(PasswordMatcher.class);
 		}
 
-		@Provides
+		@Provides @Singleton
 		Ini loadShiroIni() throws MalformedURLException {
 			URL iniUrl = servletContext.getResource("/WEB-INF/shiro.ini");
 			return Ini.fromResourcePath("url:" + iniUrl.toExternalForm());
