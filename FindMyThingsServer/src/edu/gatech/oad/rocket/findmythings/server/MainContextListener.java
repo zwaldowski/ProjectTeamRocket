@@ -84,6 +84,7 @@ public class MainContextListener extends GuiceServletContextListener {
 	        serve("/api/authtest.jsp").with(AuthTestEndpoint.class);
 	        serve("/authtest.jsp").with(TemplateServlet.class);
 	        serve("/login.jsp").with(LoginServlet.class);
+	        serve("/register.jsp").with(RegisterServlet.class);
 		}
 
 	}
