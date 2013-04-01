@@ -21,6 +21,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	
 	protected static final String AUTHORIZATION_HEADER = "Authorization";
 	protected static final String AUTHORIZATION_SCHEME = "FMTTOKEN";
+	protected static final String AUTHORIZATION_SCHEME_ALT = "Basic";
 
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(BearerTokenAuthenticatingFilter.class.getName());
@@ -138,7 +139,9 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	
 	protected boolean isLoginAttempt(String authzHeader) {
         String authzScheme = AUTHORIZATION_SCHEME.toLowerCase(Locale.ENGLISH);
-        return authzHeader.toLowerCase(Locale.ENGLISH).startsWith(authzScheme);
+        String authzSchemeAlt = AUTHORIZATION_SCHEME_ALT.toLowerCase(Locale.ENGLISH);
+        String test = authzHeader.toLowerCase(Locale.ENGLISH);
+        return test.startsWith(authzScheme) || test.startsWith(authzSchemeAlt);
     }
 	
 	protected String[] getPrincipalsAndCredentials(String authorizationHeader, ServletRequest request) {
@@ -163,6 +166,14 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 
     protected String getPassword(ServletRequest request) {
         return WebUtils.getCleanParam(request, passwordParam);
+    }
+    
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {    	
+    	if (!isLoginRequest(request, response) && isPermissive(mappedValue) && hasAuthorizationToken(request, response)) {
+    		return false;
+    	}
+        return super.isAccessAllowed(request, response, mappedValue) || (!isLoginRequest(request, response) && isPermissive(mappedValue) && !hasAuthorizationToken(request, response));
     }
 
 }
