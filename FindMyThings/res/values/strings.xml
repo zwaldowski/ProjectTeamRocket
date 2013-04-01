@@ -38,6 +38,13 @@
     <string name="header_more">More</string>
     <string name="admin_create">Create admin</string>
 
+    <!-- Extra stuff added -->
+    <string-array name="search_criteria">
+        <item>Category</item>
+        <item>Status</item>
+        <item>Date</item>
+    </string-array>
+    
     <string-array name="item_category">
         <item>Heir</item>
         <item>Keepsake</item>

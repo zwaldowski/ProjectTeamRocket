@@ -1,5 +1,15 @@
 package edu.gatech.oad.rocket.findmythings;
 
+
+/**
+ * FOR NOW THIS IS NOT BEEN USED -- RANDOM STUFF
+ * 
+ * 
+ */
+
+
+
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -13,13 +23,6 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
 
-/**
- * CS 2340 - FindMyStuff Android App
- *
- * An activity for the Search Window.
- * 
- * @author TeamRocket
- */
 public class SearchActivity extends FragmentActivity {
 
 	@Override
@@ -29,20 +32,41 @@ public class SearchActivity extends FragmentActivity {
 	}
 
 
-	public void onRadioButtonClicked(View view) {
+	//Addd SEARCH button
+	//when category button, show buttons
+	//when date, show textView
+	//when status, show buttons
+	
+
+	public int onRadioButtonClicked(View view) {
+		int x = (Integer) null;
 		switch(view.getId()) {
 			case R.id.categoryButton:
-					//do something
+				x = 0;
 				break;
 			case R.id.dateButton:
-					//do something
+				x = 1;
 				break;
 			case R.id.statusButton:
-					//do something
+				x = 2;
 				break;
 		}
-		
+		return x;
 	}
+
+	/*
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.admin_ok:
+			return createAdmin();
+		case R.id.admin_cancel:
+		case android.R.id.home:
+			return goToParentActivity();
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	*/
 	
 	//might be useful
 	/**

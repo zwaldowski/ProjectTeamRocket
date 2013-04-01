@@ -13,6 +13,14 @@
     <string name="main_title_signout">Sign out</string>
     <string name="main_title_signin">Sign in</string>
     
+    <!-- New Stuff Added -->
+    <string name="main_title_searches">Search</string>
+    <string name="main_summary_searches">&#8230;search by criteria.</string>
+    
+    <string name="main_key_searches">findmythings.main.requests</string>
+    <!-- End -->
+    
+    
     <string name="main_key_lost">findmythings.main.lost</string>
     <string name="main_key_found">findmythings.main.found</string>
     <string name="main_key_donations">findmythings.main.donations</string>

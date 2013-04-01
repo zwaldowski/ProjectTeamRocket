@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="276dp" >
+        android:layout_height="264dp" >
 
         <TextView
             android:id="@+id/textView1"
@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/textView1"
             android:layout_below="@+id/textView1"
             android:layout_marginLeft="38dp" >
 
@@ -54,6 +55,18 @@
                 android:onClick="onRadioButtonClicked"/>
 
         </RadioGroup>
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/searches"
+            android:layout_marginRight="16dp"
+            android:text="NEXT"
+            android:textColor="@color/LightSkyBlue"
+            android:textColorHint="@color/LightGrey" />
+
     </RelativeLayout>
 
 </ScrollView>
