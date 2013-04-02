@@ -12,6 +12,12 @@
     padding-top: 60px;
     padding-bottom: 40px;
   }
+  #inputAddress { resize: none }
+  .input-prepend textarea {
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+  }
 </style>
 <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
 

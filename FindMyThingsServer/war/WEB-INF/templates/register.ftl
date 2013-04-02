@@ -14,34 +14,29 @@
       <@shiro.notAuthenticated>
 
       <div class="page-header">
-        <h1>Register:</h1>
+        <h1>Tell us a little about you.</h1>
       </div>
 
       <#if failureReason??>
       <#switch failureReason>
-      <#case "noSuchUser">
-      <div class="alert">
-        <strong>Oh no!</strong> That user doesn't exist. <a href="/register" class="btn btn-info btn-mini">Register?</a>
+      <#case "alreadyUser">
+      <div class="alert alert-error">
+        <strong>Hey there!</strong> A user with that email already exists. <a href="/forgot.jsp" class="btn btn-warning btn-mini">Forgot?</a></a>
       </div>
       <#break>
       <#case "badPassword">
-      <div class="alert alert-error">
-        <strong>Oh no!</strong> Your password was rejected. <a href="/forgot" class="btn btn-warning btn-mini">Forgot?</a>
+      <div class="alert">
+        <strong>Whoops!</strong> Your password was too short. Try again.</a>
       </div>
       <#break>
-      <#case "accountLocked">
-      <div class="alert alert-error">
-        <strong>Oh no!</strong> Your account has been locked. <a href="/contact" class="btn btn-warning btn-mini">Ask us why?</a>
+      <#case "passwdMatch">
+      <div class="alert">
+        <strong>Whoops!</strong> The two passwords didn't match. Try again.</a>
       </div>
       <#break>
-      <#case "accountDisabled">
-      <div class="alert alert-error">
-        <strong>Oh no!</strong> Your account has been disabled. <a href="/contact" class="btn btn-warning btn-mini">Ask us why?</a>
-      </div>
-      <#break>
-      <#case "tooManyAttempts">
-      <div class="alert alert-error">
-        <strong>Whoa there, buddy.</strong> Too many attempts have been made. Slow down.
+      <#case "badPhoneNum">
+      <div class="alert">
+        <strong>Ring-a-ding!</strong> That's not a valid phone number. Try again.</a>
       </div>
       <#break>
       <#default>
@@ -57,7 +52,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-pencil"></i></span>
-              <input name="password" id="inputName" type="text" placeholder="Name">
+              <input name="name" id="inputName" type="text" placeholder="Name" autofocus required>
             </div>
           </div>
         </div>
@@ -66,7 +61,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-envelope"></i></span>
-              <input name="username" id="inputEmail" type="text" placeholder="Email">
+              <input name="username" id="inputEmail" type="email" placeholder="Email" required>
             </div>
           </div>
         </div>
@@ -75,7 +70,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-key"></i></span>
-              <input name="password" id="inputPassword" type="password" placeholder="Password">
+              <input name="password" id="inputPassword" type="password" placeholder="Password" required>
             </div>
           </div>
         </div>
@@ -84,7 +79,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-key"></i></span>
-              <input name="confirmpassword" id="inputConfirmPassword" type="password" placeholder="Confirm Password">
+              <input name="password_alt" id="inputConfirmPassword" type="password" placeholder="Confirm Password" required>
             </div>
           </div>
         </div>
@@ -93,23 +88,23 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-th"></i></span>
-              <input name="phone" id="inputPhone" type="tel" placeholder="Phone #">
+              <input name="phone" id="inputPhone" type="tel" placeholder="Phone Number" pattern="[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}">
             </div>
+            <span class="help-block">i.e., <em>1-555-212-8403</em></span>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="inputAddress">Address</label>
+          <label class="control-label" for="inputAddress">Location</label>
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-th"></i></span>
-              <input name="address" id="inputAddress" type="text" placeholder="Address">
+              <textarea name="address" rows="3" id="inputAddress" type="text" placeholder="Address or Neighborhood"></textarea>
             </div>
           </div>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn">Register</button>
+          <button type="submit" class="btn btn-large btn-primary">Register</button>
         </div>
-        <input type="hidden" name="isWebLogin" value="true"/>
       </form>
 
       </@>
