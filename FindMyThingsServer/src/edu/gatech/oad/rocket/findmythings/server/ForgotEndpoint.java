@@ -10,7 +10,6 @@ import org.apache.shiro.web.util.WebUtils;
 import com.google.inject.Singleton;
 
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 @Singleton
 public class ForgotEndpoint extends RegisterEndpoint {
@@ -23,7 +22,7 @@ public class ForgotEndpoint extends RegisterEndpoint {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			String email = WebUtils.getCleanParam(request, Parameters.USERNAME);
+			String email = WebUtils.getCleanParam(request, getUsernameParam());
 			 
 			if (!emailIsValid(email)) {
 				sendError(request, response, Messages.Register.BADEMAILADDR);

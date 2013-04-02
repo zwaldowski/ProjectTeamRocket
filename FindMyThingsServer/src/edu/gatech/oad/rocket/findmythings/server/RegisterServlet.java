@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
 @Singleton
 public class RegisterServlet extends RegisterEndpoint {
@@ -22,7 +22,7 @@ public class RegisterServlet extends RegisterEndpoint {
 
 	@Override
 	protected void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Register message) {
-		request.setAttribute(Parameters.FAILURE_REASON, message.toString());
+		request.setAttribute(Responses.FAILURE_REASON, message.toString());
 		try {
 			doGet(request, response);
 		} catch (IOException e) {
@@ -47,12 +47,6 @@ public class RegisterServlet extends RegisterEndpoint {
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
 		super.addParametersToMap(request, params);
-		
-		Object failureReason = request.getAttribute(Parameters.FAILURE_REASON);
-		if (failureReason != null) {
-			params.put(Parameters.FAILURE_REASON, failureReason);
-		}
-
-		params.put(Parameters.FORGOTPASSWORD, false);
+		params.put(FORGOTPASSWORD, false);
 	}
 }

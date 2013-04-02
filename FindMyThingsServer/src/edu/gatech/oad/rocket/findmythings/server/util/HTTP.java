@@ -46,24 +46,24 @@ public final class HTTP {
 		}
 	}
 
-	public static void writeJSON(HttpServletResponse response, Status returnCode, JSONObject obj) {
-		write(response, MimeTypes.JSON, returnCode, obj.toString());
+	public static void writeJSON(HttpServletResponse response, JSONObject obj) {
+		write(response, MimeTypes.JSON, Status.OK, obj.toString());
 	}
 
-	public static void writeJSON(ServletResponse response, Status returnCode, JSONObject obj) {
-		write(response, MimeTypes.JSON, returnCode, obj.toString());
+	public static void writeJSON(ServletResponse response, JSONObject obj) {
+		write(response, MimeTypes.JSON, Status.OK, obj.toString());
 	}
 
-	public static void writeAsJSON(HttpServletResponse response, Status returnCode, Object... args) {
-		writeJSON(response, returnCode, JSON.fromArgs(args));
+	public static void writeAsJSON(HttpServletResponse response, Object... args) {
+		writeJSON(response, JSON.fromArgs(args));
 	}
 
-	public static void writeAsJSON(ServletResponse response, Status returnCode, Object... args) {
-		writeJSON(response, returnCode, JSON.fromArgs(args));
+	public static void writeAsJSON(ServletResponse response, Object... args) {
+		writeJSON(response, JSON.fromArgs(args));
 	}
 	
-	public static void writeOKJSON(ServletResponse response) {
-		HTTP.writeAsJSON(response, HTTP.Status.OK, Parameters.STATUS, Messages.Status.OK.toString());
+	public static void writeOKJSON(HttpServletResponse response) {
+		HTTP.writeAsJSON(response, Responses.STATUS, HTTP.Status.OK, Responses.MESSAGE, Messages.Status.OK.toString());
 	}
 
 }

@@ -18,46 +18,41 @@ import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
 public class WebAuthenticationFilter extends FormAuthenticationFilter {
 	static final Logger LOGGER = Logger.getLogger(WebAuthenticationFilter.class.getName());
-
-	public static final String LOGINURL = "FMTLoginURL";
-	public static final String SUCCESSURL = "FMTLoginSuccessURL";
-	public static final String USERNAME = "FMTLoginUsername";
-	public static final String PASSWORD = "FMTLoginPassword";
-	public static final String REMEMBER_ME = "FMTLoginRememberMe";
 	
 	@Inject
-	public void setUsernameParam(@Named(USERNAME) String usernameParam) {
+	public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {
 		super.setUsernameParam(usernameParam);
 	}
 	
 	@Inject
-	public void setPasswordParam(@Named(PASSWORD) String passwordParam) {
+	public void setPasswordParam(@Named(Config.Keys.PASSWORD) String passwordParam) {
 		super.setPasswordParam(passwordParam);
 	}
 	
 	@Inject
-	public void setRememberMeParam(@Named(REMEMBER_ME) String rememberMeParam) {
+	public void setRememberMeParam(@Named(Config.Keys.REMEMBER_ME) String rememberMeParam) {
 		super.setRememberMeParam(rememberMeParam);
 	}
 	
 	@Inject
-	public void setLoginUrl(@Named(LOGINURL) String loginUrl) {
+	public void setLoginUrl(@Named(Config.Keys.LOGIN_URL) String loginUrl) {
 		super.setLoginUrl(loginUrl);
 	}
 	
 	@Inject
-	public void setSuccessUrl(@Named(SUCCESSURL) String successUrl) {
+	public void setSuccessUrl(@Named(Config.Keys.LOGIN_SUCCESS_URL) String successUrl) {
 		super.setSuccessUrl(successUrl);
 	}
 
 	@Override
 	protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {
-		request.setAttribute(Parameters.FAILURE_REASON, Messages.Login.getMessage(ae));
+		request.setAttribute(Responses.FAILURE_REASON, Messages.Login.getMessage(ae));
 	}
 
 	@Override

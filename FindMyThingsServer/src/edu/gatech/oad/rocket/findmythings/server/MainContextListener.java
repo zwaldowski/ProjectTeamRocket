@@ -38,7 +38,6 @@ import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileIniRealm;
 import edu.gatech.oad.rocket.findmythings.server.security.WebAuthenticationFilter;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
-import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
 public class MainContextListener extends GuiceServletContextListener {
@@ -78,25 +77,24 @@ public class MainContextListener extends GuiceServletContextListener {
 				throw new RuntimeException(e);
 			}
 	        
-	        serve("/sendMail").with(MailboxServlet.class);
-	        
-	        serve("/api/login").with(LoginEndpoint.class);
-	        serve("/login").with(LoginServlet.class);
-	        
-	        serve("/api/register").with(RegisterEndpoint.class);
-	        serve("/register").with(RegisterServlet.class);
-	        
-	        serve("/api/forgot").with(ForgotEndpoint.class);
-	        serve("/forgot").with(ForgotEndpoint.class);
-	        
-	        serve("/api/authtest").with(AuthTestEndpoint.class);
-	        serve("/authtest").with(BasicTemplateServlet.class);
-	        
-	        serve("/").with(BasicTemplateServlet.class);
-	        serve("/about").with(BasicTemplateServlet.class);
-	        serve("/contact").with(BasicTemplateServlet.class);
-	        
-	        serve("/_ah/mail/*").with(MailmanServlet.class);
+			serve("/sendMail").with(MailboxServlet.class);
+
+			serve("/api/login").with(LoginEndpoint.class);
+			serve("/api/register").with(RegisterEndpoint.class);
+			serve("/api/forgot").with(ForgotEndpoint.class);
+
+			serve("/login").with(BasicTemplateServlet.class);
+			serve("/register").with(RegisterServlet.class);
+			serve("/forgot").with(ForgotEndpoint.class);
+
+			serve("/api/authtest").with(AuthTestEndpoint.class);
+			serve("/authtest").with(BasicTemplateServlet.class);
+
+			serve("/").with(BasicTemplateServlet.class);
+			serve("/about").with(BasicTemplateServlet.class);
+			serve("/contact").with(BasicTemplateServlet.class);
+
+			serve("/_ah/mail/*").with(MailmanServlet.class);
 		}
 
 	}
@@ -154,15 +152,13 @@ public class MainContextListener extends GuiceServletContextListener {
 			// set the login redirect URLs
 			bindConstant(Envelope.SENDER).to(Config.APP_EMAIL);
 			
-			bindConstant(WebAuthenticationFilter.LOGINURL).to(Config.LOGIN_URL);
-			bindConstant(WebAuthenticationFilter.SUCCESSURL).to(Config.SUCCESS_URL);
-			bindConstant(WebAuthenticationFilter.USERNAME).to(Parameters.USERNAME);
-			bindConstant(WebAuthenticationFilter.PASSWORD).to(Parameters.PASSWORD);
-			bindConstant(WebAuthenticationFilter.REMEMBER_ME).to(Parameters.REMEMBER_ME);
-
-			bindConstant(BearerTokenAuthenticatingFilter.LOGINURL).to(Config.LOGIN_API_URL);
-			bindConstant(BearerTokenAuthenticatingFilter.USERNAME).to(Parameters.USERNAME);
-			bindConstant(BearerTokenAuthenticatingFilter.PASSWORD).to(Parameters.PASSWORD);
+			bindConstant(Config.Keys.LOGIN_URL).to(Config.LOGIN_URL);
+			bindConstant(Config.Keys.LOGIN_SUCCESS_URL).to(Config.SUCCESS_URL);
+			bindConstant(Config.Keys.LOGIN_API_URL).to(Config.LOGIN_API_URL);
+			
+			bindConstant(Config.Keys.USERNAME).to(Config.USERNAME_PARAM);
+			bindConstant(Config.Keys.PASSWORD).to(Config.PASSWORD_PARAM);
+			bindConstant(Config.Keys.REMEMBER_ME).to(Config.REMEMBER_ME_PARAM);
 
 			// bind all password matching to the secure password hash
 		    bind(CredentialsMatcher.class).to(PasswordMatcher.class);

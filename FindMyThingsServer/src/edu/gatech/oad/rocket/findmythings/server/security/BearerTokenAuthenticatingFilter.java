@@ -18,14 +18,13 @@ import org.apache.shiro.web.util.WebUtils;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
-import edu.gatech.oad.rocket.findmythings.server.util.*;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
+import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
+import edu.gatech.oad.rocket.findmythings.server.util.Messages;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
 public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
-	
-	public static final String LOGINURL = "FMTLoginAPIURL";
-	public static final String USERNAME = "FMTLoginAPIUsernameParam";
-	public static final String PASSWORD = "FMTLoginAPIPasswordParam";
-	
+		
 	protected static final String AUTHORIZATION_HEADER = "Authorization";
 	protected static final String AUTHORIZATION_SCHEME = "FMTTOKEN";
 	protected static final String AUTHORIZATION_SCHEME_ALT = "Basic";
@@ -37,17 +36,17 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
     private String passwordParam;
     
     @Inject
-    public void setLoginUrl(@Named(LOGINURL) String loginUrl) {
+    public void setLoginUrl(@Named(Config.Keys.LOGIN_API_URL) String loginUrl) {
     	super.setLoginUrl(loginUrl);
     }
     
     @Inject
-    public void setUsernameParam(String usernameParam) {
+    public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {
     	this.usernameParam = usernameParam;
     }
     
     @Inject
-    public void setPasswordParam(String passwordParam) {
+    public void setPasswordParam(@Named(Config.Keys.PASSWORD) String passwordParam) {
     	this.passwordParam = passwordParam;
     }
     
@@ -85,9 +84,10 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	}
 	
 	private boolean stopWithNoToken(ServletResponse response) {
-		HTTP.writeAsJSON(response, HTTP.Status.UNAUTHORIZED,
-				Parameters.STATUS, Messages.Status.UNAUTHORIZED.toString(),
-				Parameters.FAILURE_REASON, Messages.Permissions.REQUIRES_LOGIN.toString());
+		HTTP.writeAsJSON(response,
+				Responses.STATUS, HTTP.Status.UNAUTHORIZED,
+				Responses.MESSAGE, Messages.Status.UNAUTHORIZED.toString(),
+				Responses.FAILURE_REASON, Messages.Permissions.REQUIRES_LOGIN.toString());
 		return false;
 	}
 
@@ -107,10 +107,11 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		if (isLoginRequest(request, response)) {
 			String email = (String)subject.getPrincipal();
 			String newToken = BearerTokenAuthenticatingRealm.createNewToken(email);
-			HTTP.writeAsJSON(response, HTTP.Status.OK,
-					Parameters.STATUS, Messages.Status.OK.toString(),
-					getUsernameParam(), email,
-					Parameters.TOKEN, newToken);
+			HTTP.writeAsJSON(response,
+					Responses.STATUS, HTTP.Status.OK,
+					Responses.MESSAGE, Messages.Status.OK.toString(),
+					Responses.TOKEN, newToken,
+					getUsernameParam(), email);
 			return false;
 		} else {
 			return true;
@@ -121,9 +122,9 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e,
             ServletRequest request, ServletResponse response) {
 		if (isLoginRequest(request, response)) {
-			HTTP.writeAsJSON(response, HTTP.Status.UNAUTHORIZED,
-					Parameters.STATUS, Messages.Status.UNAUTHORIZED.toString(),
-					Parameters.FAILURE_REASON, Messages.Login.getMessage(e));			
+			HTTP.writeAsJSON(response,
+					Responses.STATUS, HTTP.Status.UNAUTHORIZED,
+					Responses.MESSAGE, Messages.Login.getMessage(e));		
 		} else {
 			return stopWithNoToken(response);
 		}

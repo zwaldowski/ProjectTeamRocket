@@ -44,7 +44,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-envelope"></i></span>
-              <input name="username" id="inputEmail" type="email" placeholder="Email" autofocus required>
+              <input name="${usernameParam!"username"}" id="inputEmail" type="email" placeholder="Email" autofocus required>
             </div>
             <span class="help-block">Enter the email address of the account you forgot the password to.</span>
           </div>
@@ -110,7 +110,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-envelope"></i></span>
-              <input name="username" id="inputEmail" type="email" placeholder="Email" required>
+              <input name="${usernameParam!"username"}" id="inputEmail" type="email" placeholder="Email" required>
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-key"></i></span>
-              <input name="password" id="inputPassword" type="password" placeholder="Password" required>
+              <input name="${passwordParam!"password"}" id="inputPassword" type="password" placeholder="Password" required>
             </div>
           </div>
         </div>

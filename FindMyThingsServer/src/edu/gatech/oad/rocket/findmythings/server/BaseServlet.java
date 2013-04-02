@@ -14,9 +14,12 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.mgt.RealmSecurityManager;
 
 import com.google.inject.Provides;
+import com.google.inject.name.Named;
 
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
 public abstract class BaseServlet extends HttpServlet {
@@ -31,8 +34,39 @@ public abstract class BaseServlet extends HttpServlet {
 
 	protected PageGenerator generator;
 
+	protected String usernameParam;
+	protected String passwordParam;
+	protected String rememberMeParam;
+	
 	public BaseServlet() {
 		super();
+	}
+	
+	public String getUsernameParam() {
+		return usernameParam;
+	}
+	
+	@Inject
+	public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {
+		this.usernameParam = usernameParam;
+	}
+	
+	public String getPasswordParam() {
+		return passwordParam;
+	}
+	
+	@Inject
+	public void setPasswordParam(@Named(Config.Keys.PASSWORD) String passwordParam) {
+		this.passwordParam = passwordParam;
+	}
+	
+	public String getRememberMeParam() {
+		return rememberMeParam;
+	}
+	
+	@Inject
+	public void setRememberMeParam(@Named(Config.Keys.REMEMBER_ME) String rememberMeParam) {
+		this.rememberMeParam = rememberMeParam;
 	}
 
 	@Inject
@@ -94,6 +128,13 @@ public abstract class BaseServlet extends HttpServlet {
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
 		String email = getCurrentUserEmail();
 		if (email != null) params.put("userEmail", email);
+		
+		Object failureReason = request.getAttribute(Responses.FAILURE_REASON);
+		if (failureReason != null) params.put(Responses.FAILURE_REASON, failureReason);
+		
+		params.put("usernameParam", getUsernameParam());
+		params.put("passwordParam", getPasswordParam());
+		params.put("rememberMeParam", getRememberMeParam());
 	}
 
 }

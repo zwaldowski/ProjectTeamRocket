@@ -57,7 +57,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-envelope"></i></span>
-              <input name="username" id="inputEmail" type="text" placeholder="Email">
+              <input name="${usernameParam!"username"}" id="inputEmail" type="text" placeholder="Email">
             </div>
           </div>
         </div>
@@ -66,14 +66,14 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-key"></i></span>
-              <input name="password" id="inputPassword" type="password" placeholder="Password">
+              <input name="${passwordParam!"password"}" id="inputPassword" type="password" placeholder="Password">
             </div>
           </div>
         </div>
         <div class="control-group">
           <div class="controls">
             <label class="checkbox">
-              <input name="rememberMe" type="checkbox"> Remember me
+              <input name="${rememberMeParam!"rememberMe"}" type="checkbox"> Remember me
             </label>
           </div>
         </div>

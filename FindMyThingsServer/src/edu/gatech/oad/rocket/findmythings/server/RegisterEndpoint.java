@@ -19,13 +19,19 @@ import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.EmailValidator;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
 
 @Singleton
 public class RegisterEndpoint extends TemplateServlet {
 	static final Logger LOGGER = Logger.getLogger(RegisterEndpoint.class.getName());
+	public static final String REALNAME = "name";
+	public static final String PASSWORD_CONFIRM = "password_alt";
+	public static final String PHONE = "phone";
+	public static final String ADDRESS = "address";
+	public static final String FORGOTPASSWORD = "iForgot";
+	public static final String TICKET = "ticket";
 	
 	/**
 	 * 
@@ -49,7 +55,7 @@ public class RegisterEndpoint extends TemplateServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			String email = WebUtils.getCleanParam(request, Parameters.USERNAME);
+			String email = WebUtils.getCleanParam(request, getUsernameParam());
 			 
 			if (!emailIsValid(email)) {
 				sendError(request, response, Messages.Register.BADEMAILADDR);
@@ -63,8 +69,8 @@ public class RegisterEndpoint extends TemplateServlet {
 				return;
 			}
 			
-			String password = WebUtils.getCleanParam(request, Parameters.PASSWORD);
-			String passwordAlt = WebUtils.getCleanParam(request, Parameters.PASSWORD_CONFIRM);
+			String password = WebUtils.getCleanParam(request, getPasswordParam());
+			String passwordAlt = WebUtils.getCleanParam(request, PASSWORD_CONFIRM);
 			
 			if (password == null || password.length() < 3 || passwordAlt == null || passwordAlt.length() < 3) {
 				sendError(request, response, Messages.Register.BAD_PASSWORD);
@@ -76,16 +82,16 @@ public class RegisterEndpoint extends TemplateServlet {
 				return;
 			}
 			
-			String phoneString = WebUtils.getCleanParam(request, Parameters.PHONE);
+			String phoneString = WebUtils.getCleanParam(request, PHONE);
 			
 			if (!getPhoneNumberValidator().isValid(phoneString)) {
 				sendError(request, response, Messages.Register.INVALIDPHONE);
 				return;
 			}
 
-			String name = WebUtils.getCleanParam(request, Parameters.REALNAME);
+			String name = WebUtils.getCleanParam(request, REALNAME);
 			PhoneNumber phone = new PhoneNumber(phoneString);
-			String address = WebUtils.getCleanParam(request, Parameters.ADDRESS);
+			String address = WebUtils.getCleanParam(request, ADDRESS);
 			
 			if (user == null) {
 				DatabaseService.ofy().createMember(email, password, name, phone, address);
@@ -110,17 +116,17 @@ public class RegisterEndpoint extends TemplateServlet {
 		// send email with registrationToken
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.add(TaskOptions.Builder.withUrl("/sendMail")
-				.param(Parameters.USERNAME, email)
-				.param(Parameters.FORGOTPASSWORD, Boolean.toString(isForgot))
-				.param(Parameters.TICKET, registrationToken));
+				.param(getUsernameParam(), email)
+				.param(FORGOTPASSWORD, Boolean.toString(isForgot))
+				.param(TICKET, registrationToken));
 		
 		sendOK(request, response);
 	}
 	
 	protected void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Register message) {
 		HTTP.writeAsJSON(response, HTTP.Status.BAD_REQUEST,
-				Parameters.STATUS, Messages.Status.FAILED.toString(),
-				Parameters.FAILURE_REASON, message.toString());
+				Responses.STATUS, Messages.Status.FAILED.toString(),
+				Responses.FAILURE_REASON, message.toString());
 	}
 	
 	protected void sendOK(HttpServletRequest request, HttpServletResponse response) {

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.inject.Singleton;
 
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
 @Singleton
 public class ForgotServlet extends ForgotEndpoint {
@@ -21,7 +21,7 @@ public class ForgotServlet extends ForgotEndpoint {
 
 	@Override
 	protected void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Register message) {
-		request.setAttribute(Parameters.FAILURE_REASON, message.toString());
+		request.setAttribute(Responses.FAILURE_REASON, message.toString());
 		try {
 			doGet(request, response);
 		} catch (IOException e) {
@@ -46,13 +46,7 @@ public class ForgotServlet extends ForgotEndpoint {
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
 		super.addParametersToMap(request, params);
-		
-		Object failureReason = request.getAttribute(Parameters.FAILURE_REASON);
-		if (failureReason != null) {
-			params.put(Parameters.FAILURE_REASON, failureReason);
-		}
-
-		params.put(Parameters.FORGOTPASSWORD, true);
+		params.put(FORGOTPASSWORD, true);
 	}
 
 }

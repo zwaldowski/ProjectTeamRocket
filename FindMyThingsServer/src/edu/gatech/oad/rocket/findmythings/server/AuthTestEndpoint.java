@@ -12,7 +12,7 @@ import org.apache.shiro.subject.Subject;
 import com.google.inject.Singleton;
 
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
-import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
 @Singleton
 public class AuthTestEndpoint extends BaseServlet {
@@ -32,9 +32,9 @@ public class AuthTestEndpoint extends BaseServlet {
 		Subject subject = SecurityUtils.getSubject();
 		if (subject != null && subject.isAuthenticated()) {
 			String message = "Howdy, " + subject.getPrincipal() + "!";
-			HTTP.writeAsJSON(response, HTTP.Status.OK, Parameters.STATUS, message);
+			HTTP.writeAsJSON(response, Responses.STATUS, HTTP.Status.OK, Responses.MESSAGE, message);
 		} else {
-			HTTP.writeAsJSON(response, HTTP.Status.OK, Parameters.STATUS, "You're not logged in.");
+			HTTP.writeAsJSON(response, Responses.STATUS, HTTP.Status.OK, Responses.MESSAGE, "You're not logged in.");
 		}
 	}
 
