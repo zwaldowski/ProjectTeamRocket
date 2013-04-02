@@ -57,3 +57,5 @@ local.properties
 .Trashes
 Icon?
 
+
+/FindMyThingsServer/war/WEB-INF/appengine-generated/
