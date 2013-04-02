@@ -81,7 +81,6 @@
           <button type="submit" class="btn">Sign in</button>
           <a href="/forgot" class="btn btn-warning">Forgot Password</a>
         </div>
-        <input type="hidden" name="isWebLogin" value="true"/>
       </form>
 
       </@>

@@ -103,7 +103,8 @@
           </div>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn btn-large btn-primary">Register</button>
+          <button type="submit" class="btn btn-primary">Register</button>
+          <a href="/" class="btn">Cancel</a>
         </div>
       </form>
 
