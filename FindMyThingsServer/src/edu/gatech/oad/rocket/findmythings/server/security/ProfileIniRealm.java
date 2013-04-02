@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.authz.SimpleRole;
 import org.apache.shiro.authz.Permission;

@@ -1,6 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 @Singleton
 public class LoginEndpoint extends BaseServlet {
+    static final Logger LOGGER = Logger.getLogger(LoginEndpoint.class.getName());
 
 	private static final long serialVersionUID = 7162845201201231985L;
 

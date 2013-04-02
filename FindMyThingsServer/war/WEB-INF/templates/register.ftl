@@ -104,7 +104,7 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Register</button>
-          <a href="/" class="btn">Cancel</a>
+          <a href="/index.jsp" class="btn">Cancel</a>
         </div>
       </form>
 

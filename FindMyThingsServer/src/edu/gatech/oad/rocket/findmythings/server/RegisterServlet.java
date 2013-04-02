@@ -1,27 +1,28 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 @Singleton
-public class RegisterServlet extends TemplateServlet {
+public class RegisterServlet extends RegisterEndpoint {
 	static final Logger LOGGER = Logger.getLogger(RegisterServlet.class.getName());
 	
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = -7032016092040490069L;
-
-	public RegisterServlet() {
-		// TODO Auto-generated constructor stub
-	}
 	
-	// plain page GET handled by superclass
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		writeDocument(response, getDefaultTemplateURI(request), getParameterMap(request));
+	}
 	
 	// register workflow
 	// GET register.jsp -> POST register.jsp -> validate for errors

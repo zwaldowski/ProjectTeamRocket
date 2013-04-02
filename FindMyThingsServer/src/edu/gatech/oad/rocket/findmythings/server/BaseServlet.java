@@ -49,6 +49,17 @@ public abstract class BaseServlet extends HttpServlet {
 	    String s = request.getParameter(paramName);
 	    return (s == null) ? defaultValue : Boolean.parseBoolean(s);
 	}
+	
+	protected boolean memberExistsWithEmail(String email) {
+	    if (email == null || email.length() == 0) return false;
+	    RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
+	    for (Realm realm : manager.getRealms()) {
+			if (realm instanceof ProfileRealm) {
+				if (((ProfileRealm) realm).accountExists(email)) return true;
+			}
+		}
+	    return false;
+	}
 
 	protected AppMember getCurrentUser() {
 		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();

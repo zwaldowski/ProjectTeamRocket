@@ -80,11 +80,19 @@ public class MainContextListener extends GuiceServletContextListener {
 			}
 
 	        bindString("email.from", Config.APP_EMAIL);
-			serve("/index.html").with(TemplateServlet.class);
-	        serve("/api/authtest.jsp").with(AuthTestEndpoint.class);
-	        serve("/authtest.jsp").with(TemplateServlet.class);
+	        
+	        serve("/api/login.jsp").with(LoginEndpoint.class);
 	        serve("/login.jsp").with(LoginServlet.class);
+	        
+	        serve("/api/register.jsp").with(RegisterEndpoint.class);
 	        serve("/register.jsp").with(RegisterServlet.class);
+	        
+	        serve("/api/authtest.jsp").with(AuthTestEndpoint.class);
+	        serve("/authtest.jsp").with(BasicTemplateServlet.class);
+	        
+	        serve("/index.jsp").with(BasicTemplateServlet.class);
+	        serve("/about.jsp").with(BasicTemplateServlet.class);
+	        serve("/contact.jsp").with(BasicTemplateServlet.class);
 		}
 
 	}
@@ -120,18 +128,21 @@ public class MainContextListener extends GuiceServletContextListener {
             }
 
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
-			
-			// Example for requiring admin
-			// this.addFilterChain("/admin/**", AUTHC, config(ROLES, "admin"));
-			
-			addFilterChain("/authtest.jsp", ANON);
-			addFilterChain("/register.jsp", ANON);
 			addFilterChain("/login.jsp", FORMAUTHC);
+			addFilterChain("/register.jsp", ANON);
 			addFilterChain("/logout.jsp", LOGOUT);
-			addFilterChain("/account/**", FORMAUTHC);
+			
 			addFilterChain("/api/login.jsp", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/api/register.jsp", NO_SESSION_CREATION, ANON);
 			addFilterChain("/api/logout.jsp", NO_SESSION_CREATION, TOKENLOGOUT);
+			
+			addFilterChain("/account.jsp", FORMAUTHC);
+			
+			addFilterChain("/authtest.jsp", ANON); // api covered by last rule
+			
+			addFilterChain("/admin/**", FORMAUTHC, config(ROLES, "admin"));
 			addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
 			addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
 
 			// set the login redirect URL

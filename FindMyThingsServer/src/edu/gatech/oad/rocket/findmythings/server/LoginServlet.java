@@ -9,14 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 @Singleton
-public class LoginServlet extends TemplateServlet {
+public class LoginServlet extends BasicTemplateServlet {
     static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
 
 	private static final long serialVersionUID = 2721131296252754856L;
-
-	public LoginServlet() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
