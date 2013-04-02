@@ -109,20 +109,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		if (!WebUtils.toHttp(request).getMethod().equals(POST_METHOD)) {
 			WebUtils.toHttp(response).sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method must be POST");
 		} else if (isLoginRequest(request, response) && hasAuthorizationToken(request, response)) {
-			String authorizationHeader = getAuthorizationHeader(request);
-			String[] prinCred = getPrincipalsAndCredentials(authorizationHeader, request);
-	        if (prinCred != null && prinCred.length == 2) {
-		        String email = prinCred[0];
-		        String token = prinCred[1];
-		        
-				HTTP.writeAsJSON(response, HTTP.Status.OK,
-						Parameters.STATUS, Messages.Status.OK.toString(),
-						Parameters.USERNAME, email,
-						Parameters.TOKEN, token);
-	        } else {
-	        	HTTP.writeAsJSON(response, HTTP.Status.OK, Parameters.STATUS, Messages.Status.OK.toString());
-	        }
-			return false;
+			return true;
 		}
 		return super.onPreHandle(request, response, mappedValue);
 	}
