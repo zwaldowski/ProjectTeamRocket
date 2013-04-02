@@ -21,22 +21,22 @@
       <#switch failureReason>
       <#case "noSuchUser">
       <div class="alert">
-        <strong>Oh no!</strong> That user doesn't exist. <a href="/register.jsp" class="btn btn-info btn-mini">Register?</a>
+        <strong>Oh no!</strong> That user doesn't exist. <a href="/register" class="btn btn-info btn-mini">Register?</a>
       </div>
       <#break>
       <#case "badPassword">
       <div class="alert alert-error">
-        <strong>Oh no!</strong> Your password was rejected. <a href="/forgot.jsp" class="btn btn-warning btn-mini">Forgot?</a>
+        <strong>Oh no!</strong> Your password was rejected. <a href="/forgot" class="btn btn-warning btn-mini">Forgot?</a>
       </div>
       <#break>
       <#case "accountLocked">
       <div class="alert alert-error">
-        <strong>Oh no!</strong> Your account has been locked. <a href="/contact.jsp" class="btn btn-warning btn-mini">Ask us why?</a>
+        <strong>Oh no!</strong> Your account has been locked. <a href="/contact" class="btn btn-warning btn-mini">Ask us why?</a>
       </div>
       <#break>
       <#case "accountDisabled">
       <div class="alert alert-error">
-        <strong>Oh no!</strong> Your account has been disabled. <a href="/contact.jsp" class="btn btn-warning btn-mini">Ask us why?</a>
+        <strong>Oh no!</strong> Your account has been disabled. <a href="/contact" class="btn btn-warning btn-mini">Ask us why?</a>
       </div>
       <#break>
       <#case "tooManyAttempts">
@@ -91,7 +91,7 @@
         <h1>You're already logged in!</h1>
       </div>
 
-      <h2><a href="/logout.jsp" class="btn btn-inverse btn-large">Log out instead?</a></h2>
+      <h2><a href="/logout" class="btn btn-inverse btn-large">Log out instead?</a></h2>
 
       </@>
 

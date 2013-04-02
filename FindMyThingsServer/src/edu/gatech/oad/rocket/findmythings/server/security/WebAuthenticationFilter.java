@@ -15,19 +15,44 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 public class WebAuthenticationFilter extends FormAuthenticationFilter {
-
 	static final Logger LOGGER = Logger.getLogger(WebAuthenticationFilter.class.getName());
 
-	public WebAuthenticationFilter() {
-		super();
-		setUsernameParam(Parameters.USERNAME);
-		setPasswordParam(Parameters.PASSWORD);
-		setRememberMeParam(Parameters.REMEMBER_ME);
+	public static final String LOGINURL = "FMTLoginURL";
+	public static final String SUCCESSURL = "FMTLoginSuccessURL";
+	public static final String USERNAME = "FMTLoginUsername";
+	public static final String PASSWORD = "FMTLoginPassword";
+	public static final String REMEMBER_ME = "FMTLoginRememberMe";
+	
+	@Inject
+	public void setUsernameParam(@Named(USERNAME) String usernameParam) {
+		super.setUsernameParam(usernameParam);
+	}
+	
+	@Inject
+	public void setPasswordParam(@Named(PASSWORD) String passwordParam) {
+		super.setPasswordParam(passwordParam);
+	}
+	
+	@Inject
+	public void setRememberMeParam(@Named(REMEMBER_ME) String rememberMeParam) {
+		super.setRememberMeParam(rememberMeParam);
+	}
+	
+	@Inject
+	public void setLoginUrl(@Named(LOGINURL) String loginUrl) {
+		super.setLoginUrl(loginUrl);
+	}
+	
+	@Inject
+	public void setSuccessUrl(@Named(SUCCESSURL) String successUrl) {
+		super.setSuccessUrl(successUrl);
 	}
 
 	@Override

@@ -38,11 +38,11 @@ public class RegisterEndpoint extends TemplateServlet {
 	}
 	
 	// register workflow
-	// GET register.jsp -> POST register.jsp -> validate for errors
+	// GET register -> POST register -> validate for errors
 	//  - if errors, set attr so addParametersToMap picks it up, call doGet
 	//  - if no errors, create user in DB, create auth ticket
 	// email link with token to user
-	// user clicks link, GET on activate.jsp with URL param, activates user
+	// user clicks link, GET on activate with URL param, activates user
 	
 	// fun fact: password recovery is almost identical
 	
@@ -109,7 +109,7 @@ public class RegisterEndpoint extends TemplateServlet {
 		
 		// send email with registrationToken
 		Queue queue = QueueFactory.getDefaultQueue();
-		queue.add(TaskOptions.Builder.withUrl("/sendMail.jsp")
+		queue.add(TaskOptions.Builder.withUrl("/sendMail")
 				.param(Parameters.USERNAME, email)
 				.param(Parameters.FORGOTPASSWORD, Boolean.toString(isForgot))
 				.param(Parameters.TICKET, registrationToken));

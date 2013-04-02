@@ -15,9 +15,16 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 import edu.gatech.oad.rocket.findmythings.server.util.*;
 
 public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
+	
+	public static final String LOGINURL = "FMTLoginAPIURL";
+	public static final String USERNAME = "FMTLoginAPIUsernameParam";
+	public static final String PASSWORD = "FMTLoginAPIPasswordParam";
 	
 	protected static final String AUTHORIZATION_HEADER = "Authorization";
 	protected static final String AUTHORIZATION_SCHEME = "FMTTOKEN";
@@ -26,12 +33,31 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(BearerTokenAuthenticatingFilter.class.getName());
 
-    private String usernameParam = Parameters.USERNAME;
-    private String passwordParam = Parameters.PASSWORD;
-
-	public BearerTokenAuthenticatingFilter() {
-		setLoginUrl("/api/login.jsp");
-	}
+    private String usernameParam;
+    private String passwordParam;
+    
+    @Inject
+    public void setLoginUrl(@Named(LOGINURL) String loginUrl) {
+    	super.setLoginUrl(loginUrl);
+    }
+    
+    @Inject
+    public void setUsernameParam(String usernameParam) {
+    	this.usernameParam = usernameParam;
+    }
+    
+    @Inject
+    public void setPasswordParam(String passwordParam) {
+    	this.passwordParam = passwordParam;
+    }
+    
+    public String getUsernameParam() {
+    	return usernameParam;
+    }
+    
+    public String getPasswordParam() {
+    	return passwordParam;
+    }
 
 	@Override
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
@@ -83,7 +109,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 			String newToken = BearerTokenAuthenticatingRealm.createNewToken(email);
 			HTTP.writeAsJSON(response, HTTP.Status.OK,
 					Parameters.STATUS, Messages.Status.OK.toString(),
-					Parameters.USERNAME, email,
+					getUsernameParam(), email,
 					Parameters.TOKEN, newToken);
 			return false;
 		} else {
@@ -148,11 +174,11 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
     }
 
     protected String getUsername(ServletRequest request) {
-        return WebUtils.getCleanParam(request, usernameParam);
+        return WebUtils.getCleanParam(request, getUsernameParam());
     }
 
     protected String getPassword(ServletRequest request) {
-        return WebUtils.getCleanParam(request, passwordParam);
+        return WebUtils.getCleanParam(request, getUsernameParam());
     }
     
     @Override

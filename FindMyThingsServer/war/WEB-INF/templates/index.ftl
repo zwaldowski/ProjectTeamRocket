@@ -21,7 +21,7 @@
         <hr>
         <p>
         <a class="btn btn-large btn-info disabled" href="#"><i class="icon-download"></i> Download from Google Play</a>
-        <a class="btn btn-large btn-success" href="/register.jsp"><i class="icon-pencil"></i> Register now</a>
+        <a class="btn btn-large btn-success" href="/register"><i class="icon-pencil"></i> Register now</a>
       </p>
       </div>
 

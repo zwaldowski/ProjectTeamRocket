@@ -23,6 +23,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.binder.ConstantBindingBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
@@ -37,6 +38,7 @@ import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileIniRealm;
 import edu.gatech.oad.rocket.findmythings.server.security.WebAuthenticationFilter;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
+import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
 public class MainContextListener extends GuiceServletContextListener {
@@ -61,16 +63,13 @@ public class MainContextListener extends GuiceServletContextListener {
 	}
 
 	private class MainServletModule extends ServletModule {
-	    private void bindString(String key, String value) {
-	        bind(String.class).annotatedWith(Names.named(key)).toInstance(value);
-	    }
-	    
 	    private <T> void bindNamed(String key, Class<T> clazz, T value) {
 	        bind(clazz).annotatedWith(Names.named(key)).toInstance(value);
 	    }
 
 		@Override protected void configureServlets() {
 			filter("/*").through(ObjectifyFilter.class);
+			
 			try {
 				bindNamed(PageGenerator.TEMPLATES, URL.class, getServletContext().getResource("/WEB-INF/templates/"));
 				bindNamed(PageGenerator.LOCALE, Locale.class, Locale.getDefault());
@@ -78,26 +77,24 @@ public class MainContextListener extends GuiceServletContextListener {
 			} catch (MalformedURLException e) {
 				throw new RuntimeException(e);
 			}
-
-	        bindString(Envelope.SENDER, Config.APP_EMAIL);
 	        
-	        serve("/sendMail.jsp").with(MailboxServlet.class);
+	        serve("/sendMail").with(MailboxServlet.class);
 	        
-	        serve("/api/login.jsp").with(LoginEndpoint.class);
-	        serve("/login.jsp").with(LoginServlet.class);
+	        serve("/api/login").with(LoginEndpoint.class);
+	        serve("/login").with(LoginServlet.class);
 	        
-	        serve("/api/register.jsp").with(RegisterEndpoint.class);
-	        serve("/register.jsp").with(RegisterServlet.class);
+	        serve("/api/register").with(RegisterEndpoint.class);
+	        serve("/register").with(RegisterServlet.class);
 	        
-	        serve("/api/forgot.jsp").with(ForgotEndpoint.class);
-	        serve("/forgot.jsp").with(ForgotEndpoint.class);
+	        serve("/api/forgot").with(ForgotEndpoint.class);
+	        serve("/forgot").with(ForgotEndpoint.class);
 	        
-	        serve("/api/authtest.jsp").with(AuthTestEndpoint.class);
-	        serve("/authtest.jsp").with(BasicTemplateServlet.class);
+	        serve("/api/authtest").with(AuthTestEndpoint.class);
+	        serve("/authtest").with(BasicTemplateServlet.class);
 	        
 	        serve("/").with(BasicTemplateServlet.class);
-	        serve("/about.jsp").with(BasicTemplateServlet.class);
-	        serve("/contact.jsp").with(BasicTemplateServlet.class);
+	        serve("/about").with(BasicTemplateServlet.class);
+	        serve("/contact").with(BasicTemplateServlet.class);
 	        
 	        serve("/_ah/mail/*").with(MailmanServlet.class);
 		}
@@ -119,6 +116,10 @@ public class MainContextListener extends GuiceServletContextListener {
 		public MainShiroWebModule(ServletContext servletContext) {
 			super(servletContext);
 		}
+		
+		private ConstantBindingBuilder bindConstant(String key) {
+			return bindConstant().annotatedWith(Names.named(key));
+		}
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -135,14 +136,14 @@ public class MainContextListener extends GuiceServletContextListener {
             }
 
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
-			addFilterChain("/login.jsp", FORMAUTHC);
-			addFilterChain("/account.jsp", FORMAUTHC);
-			addFilterChain("/logout.jsp", LOGOUT);
+			addFilterChain("/login", FORMAUTHC);
+			addFilterChain("/account", FORMAUTHC);
+			addFilterChain("/logout", LOGOUT);
 			
-			addFilterChain("/api/login.jsp", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/api/register.jsp", NO_SESSION_CREATION, ANON);
-			addFilterChain("/api/forgot.jsp", NO_SESSION_CREATION, ANON);
-			addFilterChain("/api/logout.jsp", NO_SESSION_CREATION, TOKENLOGOUT);
+			addFilterChain("/api/login", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/api/register", NO_SESSION_CREATION, ANON);
+			addFilterChain("/api/forgot", NO_SESSION_CREATION, ANON);
+			addFilterChain("/api/logout", NO_SESSION_CREATION, TOKENLOGOUT);
 			
 			addFilterChain("/admin/**", FORMAUTHC, config(ROLES, "admin"));
 			addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
@@ -150,9 +151,18 @@ public class MainContextListener extends GuiceServletContextListener {
 			addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
 			addFilterChain("/**", ANON);
 
-			// set the login redirect URL
-			bindConstant().annotatedWith(Names.named("shiro.loginUrl")).to("/login.jsp");
-			bindConstant().annotatedWith(Names.named("shiro.successUrl")).to("/index.html");
+			// set the login redirect URLs
+			bindConstant(Envelope.SENDER).to(Config.APP_EMAIL);
+			
+			bindConstant(WebAuthenticationFilter.LOGINURL).to(Config.LOGIN_URL);
+			bindConstant(WebAuthenticationFilter.SUCCESSURL).to(Config.SUCCESS_URL);
+			bindConstant(WebAuthenticationFilter.USERNAME).to(Parameters.USERNAME);
+			bindConstant(WebAuthenticationFilter.PASSWORD).to(Parameters.PASSWORD);
+			bindConstant(WebAuthenticationFilter.REMEMBER_ME).to(Parameters.REMEMBER_ME);
+
+			bindConstant(BearerTokenAuthenticatingFilter.LOGINURL).to(Config.LOGIN_API_URL);
+			bindConstant(BearerTokenAuthenticatingFilter.USERNAME).to(Parameters.USERNAME);
+			bindConstant(BearerTokenAuthenticatingFilter.PASSWORD).to(Parameters.PASSWORD);
 
 			// bind all password matching to the secure password hash
 		    bind(CredentialsMatcher.class).to(PasswordMatcher.class);

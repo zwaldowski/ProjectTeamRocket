@@ -10,8 +10,8 @@
       <div class="nav-collapse collapse">
         <ul class="nav">
           <li><a href="/"><i class="icon-home"></i> Home</a></li>
-          <li><a href="/about.jsp"><i class="icon-info-sign"></i> About</a></li>
-          <li><a href="/contact.jsp"><i class="icon-comment"></i> Contact</a></li>
+          <li><a href="/about"><i class="icon-info-sign"></i> About</a></li>
+          <li><a href="/contact"><i class="icon-comment"></i> Contact</a></li>
         </ul>
         <ul class="nav pull-right">
           <@shiro.authenticated>
@@ -22,14 +22,14 @@
               <b class="caret"></b>
               </a>
             <ul class="dropdown-menu">
-              <li><a href="/account.jsp"><i class="icon-book"></i> My Account</a></li>
-              <li><a href="/logout.jsp"><i class="icon-signout"></i> Log Out</a></li>
+              <li><a href="/account"><i class="icon-book"></i> My Account</a></li>
+              <li><a href="/logout"><i class="icon-signout"></i> Log Out</a></li>
             </ul>
           </li>
           </@>
           <@shiro.notAuthenticated>
-          <li><a href="/login.jsp"><i class="icon-signin"></i> Login</a></li>
-          <li><a href="/register.jsp"><i class="icon-check"></i> Register</a></li>
+          <li><a href="/login"><i class="icon-signin"></i> Login</a></li>
+          <li><a href="/register"><i class="icon-check"></i> Register</a></li>
           </@>
         </ul>
       </div><!--/.nav-collapse -->

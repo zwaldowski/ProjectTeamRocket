@@ -28,7 +28,7 @@
       <#break>
       <#case "superForgot">
       <div class="alert alert-error">
-        <strong>Sure about that?</strong> No user exists with that email address. <a href="/register.jsp" class="btn btn-warning btn-mini">Register?</a></a>
+        <strong>Sure about that?</strong> No user exists with that email address. <a href="/register" class="btn btn-warning btn-mini">Register?</a></a>
       </div>
       <#break>
       <#default>
@@ -65,7 +65,7 @@
       <#switch failureReason>
       <#case "alreadyUser">
       <div class="alert alert-error">
-        <strong>Hey there!</strong> A user with that email already exists. <a href="/forgot.jsp" class="btn btn-warning btn-mini">Forgot?</a></a>
+        <strong>Hey there!</strong> A user with that email already exists. <a href="/forgot" class="btn btn-warning btn-mini">Forgot?</a></a>
       </div>
       <#break>
       <#case "badEmailAdd">
@@ -167,7 +167,7 @@
         <h1>You're already logged in!</h1>
       </div>
 
-      <h2><a href="/logout.jsp" class="btn btn-inverse btn-large">Log out instead?</a></h2>
+      <h2><a href="/logout" class="btn btn-inverse btn-large">Log out instead?</a></h2>
 
       </@>
 
