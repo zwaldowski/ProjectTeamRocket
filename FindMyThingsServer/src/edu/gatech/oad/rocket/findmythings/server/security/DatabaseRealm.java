@@ -81,16 +81,16 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 		return member.isRegistered() && !member.isLocked();
 	}
 
-    @Override
+	@Override
 	public boolean accountExists(String email) {
-	if (email == null) return false;
-	return DatabaseService.ofy().load().type(DBMember.class).id(email) != null;
+		if (email == null) return false;
+		return DatabaseService.ofy().load().type(DBMember.class).id(email) != null;
 	}
 
-    @Override
-    public AppMember getAccount(String email) {
-	if (email == null) return null;
-	return DatabaseService.ofy().load().type(DBMember.class).id(email).get();
-    }
+	@Override
+	public AppMember getAccount(String email) {
+		if (email == null) return null;
+		return DatabaseService.ofy().load().type(DBMember.class).id(email).get();
+	}
 
 }
