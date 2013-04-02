@@ -10,13 +10,21 @@ import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 @Singleton
 public class RegisterServlet extends TemplateServlet {
-    static final Logger LOGGER = Logger.getLogger(RegisterServlet.class.getName());
-
-	private static final long serialVersionUID = 2721131296252754856L;
+	static final Logger LOGGER = Logger.getLogger(RegisterServlet.class.getName());
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7032016092040490069L;
 
 	public RegisterServlet() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	// Messages.Register.ALREADYAUSER
+	// Messages.Register.BAD_PASSWORD
+	// Messages.Register.PASSNOTMATCH
+	// Messages.Register.INVALIDPHONE
 
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
