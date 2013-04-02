@@ -83,4 +83,22 @@ public final class Messages {
 		}
 	}
 	
+	public enum Register {
+		ALREADYAUSER("alreadyUser"),
+		BAD_PASSWORD("badPassword"),
+		PASSNOTMATCH("passwdMatch"),
+		INVALIDPHONE("badPhoneNum");
+		
+	    private final String text;
+
+	    private Register(final String text) {
+	        this.text = text;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return text;
+	    }
+	}
+	
 }
