@@ -21,10 +21,29 @@ public class RegisterServlet extends TemplateServlet {
 		// TODO Auto-generated constructor stub
 	}
 	
+	// plain page GET handled by superclass
+	
+	// register workflow
+	// GET register.jsp -> POST register.jsp -> validate for errors
+	//  - if errors, set attr so addParametersToMap picks it up, call doGet
+	//  - if no errors, create user in DB, create auth ticket
+	// email link with token to user
+	// user clicks link, GET on activate.jsp with URL param, activates user
+	
+	// fun fact: password recovery is almost identical
+	
 	// Messages.Register.ALREADYAUSER
 	// Messages.Register.BAD_PASSWORD
 	// Messages.Register.PASSNOTMATCH
 	// Messages.Register.INVALIDPHONE
+	// or any message (generic box)
+	
+	// real name = name
+	// email = username
+	// pass = password
+	// pass confirm = password_alt
+	// phone num = phone in format 1-555-555-5555
+	// address = address
 
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
