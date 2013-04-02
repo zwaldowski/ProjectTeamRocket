@@ -4,6 +4,13 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.util.ByteSource;
+import org.apache.shiro.util.SimpleByteSource;
+
+import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -131,6 +138,29 @@ public abstract class DatabaseService {
 			}
 			delete().registrationTicketWithCode(code);
 		}
+		
+		public DBUser createMember(String email, String password, String name, PhoneNumber phone, String address) {
+			DBUser newUser = new DBUser(email, password);
+			newUser.setPhone(phone);
+			newUser.setName(name);
+			newUser.setAddress(name);
+			newUser.save();
+			return newUser;
+		}
+
+		/**
+		 * Save user with authorization information
+		 * @param user  User
+		 * @param changeCount should the user count be incremented
+		 * @return the user, after changes
+		 */
+		public void updateMember(DBMember user, String password, String name, PhoneNumber phone, String address) {
+			user.setPassword(password);
+			user.setPhone(phone);
+			user.setName(name);
+			user.setAddress(name);
+			ofy().save().entity(user);
+		}
 
 		/**
 		 * Save user with authorization information
@@ -212,6 +242,16 @@ public abstract class DatabaseService {
 			DBRegistrationTicket reg = new DBRegistrationTicket(ticket, email, REGISTRATION_VALID_DAYS, TimeUnit.DAYS);
 			ofy().save().entity(reg);
 			return reg;
+		}
+		
+		private static final RandomNumberGenerator magic = new SecureRandomNumberGenerator();
+
+		public String registrationTicket(String email) {
+			ByteSource salt = magic.nextBytes();
+	        String ticket = new Sha256Hash(email, new SimpleByteSource(salt), 63).toHex().substring(0,10);
+			DBRegistrationTicket reg = new DBRegistrationTicket(ticket, email, REGISTRATION_VALID_DAYS, TimeUnit.DAYS);
+			ofy().save().entity(reg);
+			return ticket;
 		}
 
 		public String authenticationToken(String email) {

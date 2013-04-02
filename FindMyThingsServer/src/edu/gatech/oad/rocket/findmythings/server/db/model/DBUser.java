@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.googlecode.objectify.annotation.EntitySubclass;
 
+import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMutableUser;
 
 /**
@@ -55,11 +56,15 @@ public class DBUser extends DBMember implements AppMutableUser {
     }
 
     public void setLocked(boolean locked) {
-	isLocked = locked;
+    	isLocked = locked;
     }
 
 	public boolean isAdmin() {
 		return false;
+	}
+	
+	public void save() {
+		DatabaseService.ofy().save().entity(this);
 	}
 
 }

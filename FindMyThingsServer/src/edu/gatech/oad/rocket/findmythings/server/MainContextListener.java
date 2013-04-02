@@ -79,7 +79,9 @@ public class MainContextListener extends GuiceServletContextListener {
 				throw new RuntimeException(e);
 			}
 
-	        bindString("email.from", Config.APP_EMAIL);
+	        bindString(Envelope.SENDER, Config.APP_EMAIL);
+	        
+	        serve("/sendMail.jsp").with(MailboxServlet.class);
 	        
 	        serve("/api/login.jsp").with(LoginEndpoint.class);
 	        serve("/login.jsp").with(LoginServlet.class);
@@ -87,12 +89,17 @@ public class MainContextListener extends GuiceServletContextListener {
 	        serve("/api/register.jsp").with(RegisterEndpoint.class);
 	        serve("/register.jsp").with(RegisterServlet.class);
 	        
+	        serve("/api/forgot.jsp").with(ForgotEndpoint.class);
+	        serve("/forgot.jsp").with(ForgotEndpoint.class);
+	        
 	        serve("/api/authtest.jsp").with(AuthTestEndpoint.class);
 	        serve("/authtest.jsp").with(BasicTemplateServlet.class);
 	        
 	        serve("/index.jsp").with(BasicTemplateServlet.class);
 	        serve("/about.jsp").with(BasicTemplateServlet.class);
 	        serve("/contact.jsp").with(BasicTemplateServlet.class);
+	        
+	        serve("/_ah/mail/*").with(MailmanServlet.class);
 		}
 
 	}
@@ -129,21 +136,19 @@ public class MainContextListener extends GuiceServletContextListener {
 
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
 			addFilterChain("/login.jsp", FORMAUTHC);
-			addFilterChain("/register.jsp", ANON);
+			addFilterChain("/account.jsp", FORMAUTHC);
 			addFilterChain("/logout.jsp", LOGOUT);
 			
 			addFilterChain("/api/login.jsp", NO_SESSION_CREATION, TOKENAUTHC);
 			addFilterChain("/api/register.jsp", NO_SESSION_CREATION, ANON);
+			addFilterChain("/api/forgot.jsp", NO_SESSION_CREATION, ANON);
 			addFilterChain("/api/logout.jsp", NO_SESSION_CREATION, TOKENLOGOUT);
-			
-			addFilterChain("/account.jsp", FORMAUTHC);
-			
-			addFilterChain("/authtest.jsp", ANON); // api covered by last rule
 			
 			addFilterChain("/admin/**", FORMAUTHC, config(ROLES, "admin"));
 			addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
 			addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
 			addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
+			addFilterChain("/**", ANON);
 
 			// set the login redirect URL
 			bindConstant().annotatedWith(Names.named("shiro.loginUrl")).to("/login.jsp");

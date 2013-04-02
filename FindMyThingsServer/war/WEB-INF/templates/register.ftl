@@ -13,6 +13,50 @@
 
       <@shiro.notAuthenticated>
 
+      <#if iForgot>
+
+      <div class="page-header">
+        <h1>Forgot something?</h1>
+      </div>
+
+      <#if failureReason??>
+      <#switch failureReason>
+      <#case "badEmailAdd">
+      <div class="alert">
+        <strong>Hey there!</strong> Your email wasn't valid. Care to try again?</a>
+      </div>
+      <#break>
+      <#case "superForgot">
+      <div class="alert alert-error">
+        <strong>Sure about that?</strong> No user exists with that email address. <a href="/register.jsp" class="btn btn-warning btn-mini">Register?</a></a>
+      </div>
+      <#break>
+      <#default>
+      <div class="alert">
+        <strong>Oh no!</strong> That's invalid information. Try again?
+      </div>
+      </#switch>
+      </#if>
+
+      <form class="form-horizontal" method="post">
+      <div class="control-group">
+          <label class="control-label" for="inputName">Name</label>
+          <div class="controls">
+            <div class="input-prepend">
+              <span class="add-on"><i class="icon-envelope"></i></span>
+              <input name="username" id="inputEmail" type="email" placeholder="Email" autofocus required>
+            </div>
+            <span class="help-block">Enter the email address of the account you forgot the password to.</span>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Recover Password</button>
+          <a href="/index.jsp" class="btn">Cancel</a>
+        </div>
+      </form>
+
+      <#else>
+
       <div class="page-header">
         <h1>Tell us a little about you.</h1>
       </div>
@@ -22,6 +66,11 @@
       <#case "alreadyUser">
       <div class="alert alert-error">
         <strong>Hey there!</strong> A user with that email already exists. <a href="/forgot.jsp" class="btn btn-warning btn-mini">Forgot?</a></a>
+      </div>
+      <#break>
+      <#case "badEmailAdd">
+      <div class="alert">
+        <strong>Whoops!</strong> Your email wasn't valid. Care to try again?</a>
       </div>
       <#break>
       <#case "badPassword">
@@ -107,6 +156,8 @@
           <a href="/index.jsp" class="btn">Cancel</a>
         </div>
       </form>
+
+      </#if>
 
       </@>
 

@@ -7,5 +7,7 @@ public interface AppMutableUser extends AppUser, AppMutableMember {
 	 * @param locked
 	 */
 	public abstract void setLocked(boolean locked);
+	
+	public abstract void save();
 
 }

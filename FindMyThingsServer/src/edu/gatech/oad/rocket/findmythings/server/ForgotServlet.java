@@ -2,23 +2,22 @@ package edu.gatech.oad.rocket.findmythings.server;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.inject.Singleton;
 
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
 
 @Singleton
-public class RegisterServlet extends RegisterEndpoint {
-	static final Logger LOGGER = Logger.getLogger(RegisterServlet.class.getName());
-	
-    /**
+public class ForgotServlet extends ForgotEndpoint {
+
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7032016092040490069L;
+	private static final long serialVersionUID = 6533847551106261631L;
 
 	@Override
 	protected void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Register message) {
@@ -41,7 +40,7 @@ public class RegisterServlet extends RegisterEndpoint {
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		writeDocument(response, getDefaultTemplateURI(request), getParameterMap(request));
+		writeDocument(response, "register.ftl", getParameterMap(request));
 	}
 
 	@Override
@@ -53,6 +52,7 @@ public class RegisterServlet extends RegisterEndpoint {
 			params.put(Parameters.FAILURE_REASON, failureReason);
 		}
 
-		params.put(Parameters.FORGOTPASSWORD, false);
+		params.put(Parameters.FORGOTPASSWORD, true);
 	}
+
 }

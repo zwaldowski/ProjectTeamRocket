@@ -15,6 +15,7 @@ public final class HTTP {
 	
 	public static enum Status {
 		OK(200),
+		BAD_REQUEST(400),
 		UNAUTHORIZED(401),
 	    NOT_FOUND(404),
 	    FORBIDDEN(403),
@@ -59,6 +60,10 @@ public final class HTTP {
 
 	public static void writeAsJSON(ServletResponse response, Status returnCode, Object... args) {
 		writeJSON(response, returnCode, JSON.fromArgs(args));
+	}
+	
+	public static void writeOKJSON(ServletResponse response) {
+		HTTP.writeAsJSON(response, HTTP.Status.OK, Parameters.STATUS, Messages.Status.OK.toString());
 	}
 
 }

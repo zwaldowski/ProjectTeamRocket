@@ -60,14 +60,10 @@ public abstract class BaseServlet extends HttpServlet {
 		}
 	    return false;
 	}
-
-	protected AppMember getCurrentUser() {
+	
+	protected AppMember memberWithEmail(String email) {
+		if (email == null || email.length() == 0) return null;
 		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
-		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
-	    if (principals == null || principals.isEmpty()) return null;
-	    String email = (String)principals.getPrimaryPrincipal();
-	    if (email == null || email.length() == 0) return null;
-
 	    for (Realm realm : manager.getRealms()) {
 			if (realm instanceof ProfileRealm) {
 				AppMember potential = ((ProfileRealm) realm).getAccount(email);
@@ -78,8 +74,14 @@ public abstract class BaseServlet extends HttpServlet {
 	    return null;
 	}
 
+	protected AppMember getCurrentUser() {
+	    return memberWithEmail(getCurrentUserEmail());
+	}
+
 	protected String getCurrentUserEmail() {
-	    return (String)SecurityUtils.getSubject().getPrincipal();
+		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+	    if (principals == null || principals.isEmpty()) return null;
+	    return (String)principals.getPrimaryPrincipal();
 	}
 
 	@Provides

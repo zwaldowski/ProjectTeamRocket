@@ -13,6 +13,7 @@ public final class Messages {
 	
 	public enum Status {
 		OK("ok"),
+		FAILED("nope"),
 		UNAUTHORIZED("nopeNopeNope");
 		
 	    private final String text;
@@ -85,9 +86,12 @@ public final class Messages {
 	
 	public enum Register {
 		ALREADYAUSER("alreadyUser"),
+		BADEMAILADDR("badEmailAdd"),
 		BAD_PASSWORD("badPassword"),
 		PASSNOTMATCH("passwdMatch"),
-		INVALIDPHONE("badPhoneNum");
+		INVALIDPHONE("badPhoneNum"),
+		INVALID_DATA("invalidData"),
+		NOSUCHMEMBER("superForgot");
 		
 	    private final String text;
 

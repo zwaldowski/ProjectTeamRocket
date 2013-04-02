@@ -1,8 +1,27 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.shiro.web.util.WebUtils;
+
+import com.google.appengine.api.datastore.PhoneNumber;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.inject.Singleton;
+
+import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
+import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
+import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
+import edu.gatech.oad.rocket.findmythings.server.util.Messages;
+import edu.gatech.oad.rocket.findmythings.server.util.Parameters;
+import edu.gatech.oad.rocket.findmythings.server.util.validation.EmailValidator;
+import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
 
 @Singleton
 public class RegisterEndpoint extends TemplateServlet {
@@ -12,5 +31,100 @@ public class RegisterEndpoint extends TemplateServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 7637940962711953379L;
+	
+	@Singleton
+	private static RegexValidator getPhoneNumberValidator() {
+		return new RegexValidator("[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}", false);
+	}
+	
+	// register workflow
+	// GET register.jsp -> POST register.jsp -> validate for errors
+	//  - if errors, set attr so addParametersToMap picks it up, call doGet
+	//  - if no errors, create user in DB, create auth ticket
+	// email link with token to user
+	// user clicks link, GET on activate.jsp with URL param, activates user
+	
+	// fun fact: password recovery is almost identical
+	
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try {
+			String email = WebUtils.getCleanParam(request, Parameters.USERNAME);
+			 
+			if (!emailIsValid(email)) {
+				sendError(request, response, Messages.Register.BADEMAILADDR);
+				return;
+			}
+
+			AppMember user = memberWithEmail(email);
+			
+			if (user != null && user.isRegistered()) {
+				sendError(request, response, Messages.Register.ALREADYAUSER);
+				return;
+			}
+			
+			String password = WebUtils.getCleanParam(request, Parameters.PASSWORD);
+			String passwordAlt = WebUtils.getCleanParam(request, Parameters.PASSWORD_CONFIRM);
+			
+			if (password == null || password.length() < 3 || passwordAlt == null || passwordAlt.length() < 3) {
+				sendError(request, response, Messages.Register.BAD_PASSWORD);
+				return;
+			}
+			
+			if (!password.equals(passwordAlt)) {
+				sendError(request, response, Messages.Register.PASSNOTMATCH);
+				return;
+			}
+			
+			String phoneString = WebUtils.getCleanParam(request, Parameters.PHONE);
+			
+			if (!getPhoneNumberValidator().isValid(phoneString)) {
+				sendError(request, response, Messages.Register.INVALIDPHONE);
+				return;
+			}
+
+			String name = WebUtils.getCleanParam(request, Parameters.REALNAME);
+			PhoneNumber phone = new PhoneNumber(phoneString);
+			String address = WebUtils.getCleanParam(request, Parameters.ADDRESS);
+			
+			if (user == null) {
+				DatabaseService.ofy().createMember(email, password, name, phone, address);
+			} else {
+				DatabaseService.ofy().updateMember((DBMember)user, password, name, phone, address);
+			} 
+			
+			mailAuthenticationTokenSendOK(request, response, email, false);
+		} catch (Exception e) {
+			sendError(request, response, Messages.Register.INVALID_DATA);
+			return;
+		}
+	}
+	
+	protected boolean emailIsValid(String email) {
+		return email != null && email.length() > 0 && EmailValidator.getInstance().isValid(email);
+	}
+
+	protected void mailAuthenticationTokenSendOK(HttpServletRequest request, HttpServletResponse response, String email, boolean isForgot) {
+		String registrationToken = DatabaseService.ofy().save().authenticationToken(email);
+		
+		// send email with registrationToken
+		Queue queue = QueueFactory.getDefaultQueue();
+		queue.add(TaskOptions.Builder.withUrl("/sendMail.jsp")
+				.param(Parameters.USERNAME, email)
+				.param(Parameters.FORGOTPASSWORD, Boolean.toString(isForgot))
+				.param(Parameters.TICKET, registrationToken));
+		
+		sendOK(request, response);
+	}
+	
+	protected void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Register message) {
+		HTTP.writeAsJSON(response, HTTP.Status.BAD_REQUEST,
+				Parameters.STATUS, Messages.Status.FAILED.toString(),
+				Parameters.FAILURE_REASON, message.toString());
+	}
+	
+	protected void sendOK(HttpServletRequest request, HttpServletResponse response) {
+		HTTP.writeOKJSON(response);
+	}
 
 }
