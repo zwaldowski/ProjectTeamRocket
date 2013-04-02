@@ -6,10 +6,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="brand" href="/index.jsp">Find My Things</a>
+      <a class="brand" href="/">Find My Things</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li><a href="/index.jsp"><i class="icon-home"></i> Home</a></li>
+          <li><a href="/"><i class="icon-home"></i> Home</a></li>
           <li><a href="/about.jsp"><i class="icon-info-sign"></i> About</a></li>
           <li><a href="/contact.jsp"><i class="icon-comment"></i> Contact</a></li>
         </ul>

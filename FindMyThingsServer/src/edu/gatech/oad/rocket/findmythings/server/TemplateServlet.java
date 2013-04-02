@@ -45,11 +45,14 @@ public abstract class TemplateServlet extends BaseServlet {
     }
     
     protected static String replaceExtensionWith(String filename, String extension) {
-    	return removeExtension(filename) + ".ftl";
+    	return removeExtension(filename) + "." + extension;
     }
     
     protected static String getDefaultTemplateURI(HttpServletRequest request) {
-    	return replaceExtensionWith(request.getRequestURI(), "ftl");
+    	String URI = request.getRequestURI();
+    	if (URI.endsWith("/")) URI = URI.substring(0, URI.length() - 1);
+    	if (URI.length() == 0) URI = "index.html";
+    	return replaceExtensionWith(URI, "ftl");
     }
     
     protected String createDocument(String templateName, Map<String,Object> userArgs) throws IOException {

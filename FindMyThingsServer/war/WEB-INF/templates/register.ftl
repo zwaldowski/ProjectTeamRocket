@@ -51,7 +51,7 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Recover Password</button>
-          <a href="/index.jsp" class="btn">Cancel</a>
+          <a href="/" class="btn">Cancel</a>
         </div>
       </form>
 
@@ -153,7 +153,7 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Register</button>
-          <a href="/index.jsp" class="btn">Cancel</a>
+          <a href="/" class="btn">Cancel</a>
         </div>
       </form>
 
