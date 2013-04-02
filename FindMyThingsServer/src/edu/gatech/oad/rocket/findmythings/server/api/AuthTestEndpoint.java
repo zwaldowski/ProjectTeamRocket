@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server;
+package edu.gatech.oad.rocket.findmythings.server.api;
 
 import java.io.IOException;
 
@@ -11,11 +11,12 @@ import org.apache.shiro.subject.Subject;
 
 import com.google.inject.Singleton;
 
+import edu.gatech.oad.rocket.findmythings.server.PageServlet;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
 @Singleton
-public class AuthTestEndpoint extends BaseServlet {
+public class AuthTestEndpoint extends PageServlet {
 
 	/**
 	 * 

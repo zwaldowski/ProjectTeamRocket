@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP.Status;
 import edu.gatech.oad.rocket.findmythings.server.util.MimeTypes;
-import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
-public abstract class TemplateServlet extends BaseServlet {
+public abstract class TemplateServlet extends PageServlet {
 
 	private static final long serialVersionUID = 8526927539799303725L;
 	

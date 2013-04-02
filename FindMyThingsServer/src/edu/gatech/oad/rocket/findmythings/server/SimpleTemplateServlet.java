@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.inject.Singleton;
 
 @Singleton
-public class BasicTemplateServlet extends TemplateServlet {
+public class SimpleTemplateServlet extends TemplateServlet {
 
 	/**
 	 * 

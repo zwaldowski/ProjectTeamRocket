@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server.web.tags;
+package edu.gatech.oad.rocket.findmythings.server.util.tags;
 
 /**
  * <p>Equivalent to {@link org.apache.shiro.web.tags.HasPermissionTag}</p>

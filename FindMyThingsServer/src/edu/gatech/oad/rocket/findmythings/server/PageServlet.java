@@ -20,9 +20,8 @@ import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
-import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
 
-public abstract class BaseServlet extends HttpServlet {
+public abstract class PageServlet extends HttpServlet {
 
     @SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(TemplateServlet.class.getName());
@@ -38,7 +37,7 @@ public abstract class BaseServlet extends HttpServlet {
 	protected String passwordParam;
 	protected String rememberMeParam;
 	
-	public BaseServlet() {
+	public PageServlet() {
 		super();
 	}
 	

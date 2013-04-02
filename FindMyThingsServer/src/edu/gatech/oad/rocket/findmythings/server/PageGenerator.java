@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server.web;
+package edu.gatech.oad.rocket.findmythings.server;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
+import edu.gatech.oad.rocket.findmythings.server.util.tags.PageAuthTags;
 import freemarker.cache.URLTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;

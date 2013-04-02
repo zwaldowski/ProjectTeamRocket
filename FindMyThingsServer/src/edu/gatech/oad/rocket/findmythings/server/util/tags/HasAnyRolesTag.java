@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server.web.tags;
+package edu.gatech.oad.rocket.findmythings.server.util.tags;
 
 import org.apache.shiro.subject.Subject;
 

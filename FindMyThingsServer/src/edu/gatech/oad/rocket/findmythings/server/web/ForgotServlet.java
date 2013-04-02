@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server;
+package edu.gatech.oad.rocket.findmythings.server.web;
 
 import java.io.IOException;
 import java.util.Map;
@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Singleton;
 
+import edu.gatech.oad.rocket.findmythings.server.api.ForgotEndpoint;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 

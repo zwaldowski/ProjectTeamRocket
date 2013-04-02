@@ -29,6 +29,10 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.googlecode.objectify.ObjectifyFilter;
 
+import edu.gatech.oad.rocket.findmythings.server.api.AuthTestEndpoint;
+import edu.gatech.oad.rocket.findmythings.server.api.ForgotEndpoint;
+import edu.gatech.oad.rocket.findmythings.server.api.LoginEndpoint;
+import edu.gatech.oad.rocket.findmythings.server.api.RegisterEndpoint;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticatingRealm;
@@ -37,8 +41,11 @@ import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenRevokeFilte
 import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileIniRealm;
 import edu.gatech.oad.rocket.findmythings.server.security.WebAuthenticationFilter;
+import edu.gatech.oad.rocket.findmythings.server.service.MailboxServlet;
+import edu.gatech.oad.rocket.findmythings.server.service.MailmanServlet;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
-import edu.gatech.oad.rocket.findmythings.server.web.PageGenerator;
+import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
+import edu.gatech.oad.rocket.findmythings.server.web.RegisterServlet;
 
 public class MainContextListener extends GuiceServletContextListener {
 
@@ -83,16 +90,16 @@ public class MainContextListener extends GuiceServletContextListener {
 			serve("/api/register").with(RegisterEndpoint.class);
 			serve("/api/forgot").with(ForgotEndpoint.class);
 
-			serve("/login").with(BasicTemplateServlet.class);
+			serve("/login").with(SimpleTemplateServlet.class);
 			serve("/register").with(RegisterServlet.class);
 			serve("/forgot").with(ForgotEndpoint.class);
 
 			serve("/api/authtest").with(AuthTestEndpoint.class);
-			serve("/authtest").with(BasicTemplateServlet.class);
+			serve("/authtest").with(SimpleTemplateServlet.class);
 
-			serve("/").with(BasicTemplateServlet.class);
-			serve("/about").with(BasicTemplateServlet.class);
-			serve("/contact").with(BasicTemplateServlet.class);
+			serve("/").with(SimpleTemplateServlet.class);
+			serve("/about").with(SimpleTemplateServlet.class);
+			serve("/contact").with(SimpleTemplateServlet.class);
 
 			serve("/_ah/mail/*").with(MailmanServlet.class);
 		}
