@@ -117,6 +117,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 			Intent i = new Intent(MainActivity.this, Search_Main.class);
 			finish();
 			startActivity(i);
+		    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

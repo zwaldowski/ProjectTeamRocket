@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,4 +68,25 @@ public class Search_Main extends Activity{
 			}
 		});
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+	    	if(getCallingActivity()==null) { //Goes to Main
+	    		Intent main = new Intent(getApplicationContext(), MainActivity.class);
+	    		finish();
+	    	    startActivity(main);
+			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+			    return true;
+	    	} else { //Goes back to ItemListActivity
+	    	    finish();
+			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+			    return true;
+	    	}
+	    }
+
+	    return super.onKeyDown(keyCode, event);
+	}
+	
 }
