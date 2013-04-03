@@ -33,9 +33,9 @@ public class AuthTestEndpoint extends PageServlet {
 		Subject subject = SecurityUtils.getSubject();
 		if (subject != null && subject.isAuthenticated()) {
 			String message = "Howdy, " + subject.getPrincipal() + "!";
-			HTTP.writeAsJSON(response, Responses.STATUS, HTTP.Status.OK, Responses.MESSAGE, message);
+			HTTP.writeAsJSON(response, Responses.STATUS, HTTP.Status.OK.toInt(), Responses.MESSAGE, message);
 		} else {
-			HTTP.writeAsJSON(response, Responses.STATUS, HTTP.Status.OK, Responses.MESSAGE, "You're not logged in.");
+			HTTP.writeAsJSON(response, Responses.STATUS, HTTP.Status.OK.toInt(), Responses.MESSAGE, "You're not logged in.");
 		}
 	}
 

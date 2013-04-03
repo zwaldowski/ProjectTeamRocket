@@ -21,7 +21,7 @@ public class BearerTokenRevokeFilter extends LogoutFilter {
         Subject subject = getSubject(request, response);
         subject.logout();
         HTTP.writeAsJSON(response,
-        		Responses.STATUS, HTTP.Status.OK,
+        		Responses.STATUS, HTTP.Status.OK.toInt(),
         		Responses.MESSAGE, Messages.Status.OK.toString());
         return false;
     }

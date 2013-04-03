@@ -124,8 +124,9 @@ public class RegisterEndpoint extends TemplateServlet {
 	}
 	
 	protected void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Register message) {
-		HTTP.writeAsJSON(response, HTTP.Status.BAD_REQUEST,
-				Responses.STATUS, Messages.Status.FAILED.toString(),
+		HTTP.writeAsJSON(response,
+				Responses.STATUS, HTTP.Status.BAD_REQUEST.toInt(),
+				Responses.MESSAGE, Messages.Status.FAILED.toString(),
 				Responses.FAILURE_REASON, message.toString());
 	}
 	

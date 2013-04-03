@@ -27,7 +27,7 @@ public final class HTTP {
 			this.code = code;
 		}
 		
-		int toInt() {
+		public int toInt() {
 			return code;
 		}
 	}

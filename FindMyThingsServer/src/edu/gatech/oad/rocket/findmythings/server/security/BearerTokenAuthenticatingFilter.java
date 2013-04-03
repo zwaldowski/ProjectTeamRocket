@@ -85,7 +85,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	
 	private boolean stopWithNoToken(ServletResponse response) {
 		HTTP.writeAsJSON(response,
-				Responses.STATUS, HTTP.Status.UNAUTHORIZED,
+				Responses.STATUS, HTTP.Status.UNAUTHORIZED.toInt(),
 				Responses.MESSAGE, Messages.Status.UNAUTHORIZED.toString(),
 				Responses.FAILURE_REASON, Messages.Permissions.REQUIRES_LOGIN.toString());
 		return false;
@@ -108,7 +108,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 			String email = (String)subject.getPrincipal();
 			String newToken = BearerTokenAuthenticatingRealm.createNewToken(email);
 			HTTP.writeAsJSON(response,
-					Responses.STATUS, HTTP.Status.OK,
+					Responses.STATUS, HTTP.Status.OK.toInt(),
 					Responses.MESSAGE, Messages.Status.OK.toString(),
 					Responses.TOKEN, newToken,
 					getUsernameParam(), email);
@@ -123,7 +123,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
             ServletRequest request, ServletResponse response) {
 		if (isLoginRequest(request, response)) {
 			HTTP.writeAsJSON(response,
-					Responses.STATUS, HTTP.Status.UNAUTHORIZED,
+					Responses.STATUS, HTTP.Status.UNAUTHORIZED.toInt(),
 					Responses.MESSAGE, Messages.Login.getMessage(e));		
 		} else {
 			return stopWithNoToken(response);
