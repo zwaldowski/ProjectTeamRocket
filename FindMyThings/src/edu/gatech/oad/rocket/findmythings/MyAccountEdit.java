@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+
 public class MyAccountEdit extends Activity {
 
 	/**

@@ -1,6 +1,9 @@
-package edu.gatech.oad.rocket.findmythings;
+package edu.gatech.oad.rocket.findmythings.NonActivity;
 
 import java.util.List;
+
+import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
+import edu.gatech.oad.rocket.findmythings.R;
 
 import android.app.Activity;
 import android.content.Context;

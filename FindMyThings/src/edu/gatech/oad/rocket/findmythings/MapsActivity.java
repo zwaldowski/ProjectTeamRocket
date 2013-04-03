@@ -16,6 +16,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 
+import edu.gatech.oad.rocket.findmythings.Helpers.*;
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+
 public class MapsActivity extends FragmentActivity   {
 	
 	/**
@@ -56,7 +59,7 @@ public class MapsActivity extends FragmentActivity   {
         try { //Converts the location string into a list of possible long/lag addresses
         	loc = findLoc.getFromLocationName(ItemDetailFragment.mItem.getLoc(), 1);
 		} catch (IOException e) {
-			e.printStackTrace();
+			new ErrorDialog("Unable to reach Google Maps at this time, please check your connection strength.").getDialog(this).show();
 		}
         //Object to store lat/long
         LatLng currlocation = new LatLng(loc.get(0).getLatitude(),loc.get(0).getLongitude());

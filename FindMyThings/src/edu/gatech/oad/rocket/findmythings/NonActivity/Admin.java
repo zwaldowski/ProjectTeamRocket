@@ -1,4 +1,6 @@
-package edu.gatech.oad.rocket.findmythings;
+package edu.gatech.oad.rocket.findmythings.NonActivity;
+
+import edu.gatech.oad.rocket.findmythings.NonActivity.Member;
 
 /**
  * CS 2340 - FindMyStuff Android App

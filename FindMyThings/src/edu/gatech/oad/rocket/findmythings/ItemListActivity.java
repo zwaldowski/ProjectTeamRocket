@@ -9,6 +9,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+import edu.gatech.oad.rocket.findmythings.Helpers.*;
 /**
  * CS 2340 - FindMyStuff Android App
  *

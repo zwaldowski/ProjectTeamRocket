@@ -1,8 +1,10 @@
-package edu.gatech.oad.rocket.findmythings;
+package edu.gatech.oad.rocket.findmythings.NonActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
 
 
 /**

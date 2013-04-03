@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.text.TextUtils;
 
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+
 /**
  * CS 2340 - FindMyStuff Android App
  * Activity that takes care of registration of a new member

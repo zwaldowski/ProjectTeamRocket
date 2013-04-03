@@ -77,11 +77,11 @@
     			/>  
    			 </Preference>
 	
-		<edu.gatech.oad.rocket.findmythings.ConfirmationDialog
+		<edu.gatech.oad.rocket.findmythings.Helpers.ConfirmationDialog
     			android:key="@string/main_key_signout"
     			android:title="@string/main_title_signout"
     			android:dialogMessage="@string/main_message_signout">
-			</edu.gatech.oad.rocket.findmythings.ConfirmationDialog>
+			</edu.gatech.oad.rocket.findmythings.Helpers.ConfirmationDialog>
 		</PreferenceCategory>
     
     <!-- Goes to Activity to view items -->

@@ -1,7 +1,10 @@
-package edu.gatech.oad.rocket.findmythings;
+package edu.gatech.oad.rocket.findmythings.NonActivity;
 
 
 import java.util.ArrayList;
+
+import edu.gatech.oad.rocket.findmythings.NonActivity.Member;
+import edu.gatech.oad.rocket.findmythings.NonActivity.User;
 
 /**
  * A class managing how a User is authenticated.

@@ -6,6 +6,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+
 /**
  * CS 2340 - FindMyStuff Android App
  *

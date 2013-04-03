@@ -1,8 +1,12 @@
-package edu.gatech.oad.rocket.findmythings;
+package edu.gatech.oad.rocket.findmythings.NonActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
+import edu.gatech.oad.rocket.findmythings.NonActivity.Member;
+import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
 
 import android.content.Context;
 

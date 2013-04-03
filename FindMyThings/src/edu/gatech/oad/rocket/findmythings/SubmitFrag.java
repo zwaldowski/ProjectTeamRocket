@@ -6,6 +6,8 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
+import edu.gatech.oad.rocket.findmythings.Helpers.*;
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
 /**
  * CS 2340 - FindMyStuff Android App
  *

@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+
+
 public class Admin_popup extends Activity implements OnPreferenceChangeListener {
 
 	/**

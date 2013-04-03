@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings;
+package edu.gatech.oad.rocket.findmythings.NonActivity;
 
 /**
  * An enumerated type representing

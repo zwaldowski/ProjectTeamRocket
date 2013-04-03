@@ -1,9 +1,6 @@
 package edu.gatech.oad.rocket.findmythings;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,6 +9,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
+
+import edu.gatech.oad.rocket.findmythings.Helpers.*;
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
 
 /**
  * CS 2340 - FindMyStuff Android App

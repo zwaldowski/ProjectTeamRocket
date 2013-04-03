@@ -17,6 +17,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+
 /**
  * CS 2340 - FindMyStuff Android App
  * Activity which displays a login screen to the user, offering registration as well.
