@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	    
+		<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		    
+			<View
+			    android:id="@+id/leftPadder"
+				android:layout_width="@dimen/form_activity_standard_padding"
+				android:layout_height="fill_parent"
+				android:layout_alignParentLeft="true" />
+			<View
+			    android:id="@+id/rightPadder"
+				android:layout_width="@dimen/form_activity_standard_padding"
+				android:layout_height="fill_parent"
+				android:layout_alignParentRight="true" />
+			    
+			<TextView
+	        	android:id="@+id/fil_stat"
+	        	android:text="@string/filter_status"
+	        	style="@style/HeaderGrey"
+	        	android:layout_alignParentTop="true"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder" />
+			<Spinner
+	        	android:id="@+id/status_spinner"
+	        	android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:ems="10"
+	        	android:entries="@array/status_array"
+	        	android:hint="@string/no_selection"
+	           	android:layout_below="@id/fil_stat"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder">
+	        	<requestFocus />
+			</Spinner>
+	
+						    
+			<TextView
+	        	android:id="@+id/fil_cat"
+	        	android:text="@string/filter_category"
+	        	style="@style/HeaderGrey"
+	        	android:layout_below="@id/status_spinner"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder" />
+	
+			<Spinner
+	        	android:id="@+id/cat_spinner"
+	        	android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:ems="10"
+	        	android:entries="@array/category_array"
+	           	android:layout_below="@id/fil_cat"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder">
+	       </Spinner>
+	
+			<TextView
+	        	android:id="@+id/fil_date"
+	        	android:text="@string/filter_date"
+	        	style="@style/HeaderGrey"
+	        	android:layout_below="@id/cat_spinner"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder" />
+			
+			<Spinner
+	        	android:id="@+id/date_spinner"
+	        	android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:ems="10"
+	        	android:entries="@array/date_array"
+	           	android:layout_below="@id/fil_date"
+			    android:layout_toLeftOf="@id/rightPadder"
+			    android:layout_toRightOf="@id/leftPadder">
+	       </Spinner>
+    
+        </RelativeLayout>
+</ScrollView>

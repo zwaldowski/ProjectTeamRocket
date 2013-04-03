@@ -41,12 +41,12 @@
 
     <!-- Extra stuff added -->
     <string name="title_activity_searches">Search</string>
+
     <string-array name="search_criteria">
         <item>Category</item>
         <item>Status</item>
         <item>Date</item>
     </string-array>
-    
     <string-array name="item_category">
         <item>Heir</item>
         <item>Keepsake</item>
@@ -76,5 +76,6 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_my_account">MyAccount</string>
     <string name="title_activity_my_account_edit">MyAccountEdit</string>
+    <string name="title_activity_filter">FilterActivity</string>
 
 </resources>

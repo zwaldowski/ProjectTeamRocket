@@ -123,7 +123,7 @@ public class ItemListActivity extends FragmentActivity implements
 	        case R.id.item_list_submit:
 			return toSubmit();
 	        case R.id.menu_list_search:
-	        	Intent i = new Intent(ItemListActivity.this, Search_Main.class);
+	        	Intent i = new Intent(ItemListActivity.this, FilterActivity.class);
 				startActivityForResult(i, 1);
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 				return true;
