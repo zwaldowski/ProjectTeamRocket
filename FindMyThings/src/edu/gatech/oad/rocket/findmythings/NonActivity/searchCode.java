@@ -1,6 +1,8 @@
-package edu.gatech.oad.rocket.findmythings;
+package edu.gatech.oad.rocket.findmythings.NonActivity;
 
 import java.util.ArrayList;
+
+import edu.gatech.oad.rocket.findmythings.NonActivity.*;
 
 /* Simple code/logic for searching --> needs to be implemented into the actual app */
 
