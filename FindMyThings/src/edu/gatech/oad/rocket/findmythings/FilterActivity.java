@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class FilterActivity extends Activity implements OnItemSelectedListener {
 	
@@ -29,6 +28,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 		
 		mDate = (Spinner)findViewById(R.id.date_spinner);
 		mDate.setOnItemSelectedListener(this);
+		
+		setTitle("Filtering " + "whatevs"/*placeholder*/);
 	}
 
 	@Override
