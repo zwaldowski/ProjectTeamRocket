@@ -13,7 +13,7 @@
 
       <@shiro.notAuthenticated>
 
-      <#if iForgot>
+      <#if forgot??>
 
       <div class="page-header">
         <h1>Forgot something?</h1>

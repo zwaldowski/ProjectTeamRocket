@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.gatech.oad.rocket.findmythings.server.api.RegisterEndpoint;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
@@ -48,6 +49,6 @@ public class RegisterServlet extends RegisterEndpoint {
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
 		super.addParametersToMap(request, params);
-		params.put(FORGOTPASSWORD, false);
+		params.put(Config.FORGOTPASSWORD_PARAM, false);
 	}
 }

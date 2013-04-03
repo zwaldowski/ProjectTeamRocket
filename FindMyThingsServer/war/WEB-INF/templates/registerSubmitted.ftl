@@ -11,7 +11,7 @@
 
     <div class="container">
 
-      <#if iForgot>
+      <#if forgot??>
 
       <div class="page-header">
         <h1>Almost there...</h1>

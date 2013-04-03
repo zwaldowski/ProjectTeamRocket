@@ -18,6 +18,7 @@ import edu.gatech.oad.rocket.findmythings.server.TemplateServlet;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
@@ -31,8 +32,6 @@ public class RegisterEndpoint extends TemplateServlet {
 	public static final String PASSWORD_CONFIRM = "password_alt";
 	public static final String PHONE = "phone";
 	public static final String ADDRESS = "address";
-	public static final String FORGOTPASSWORD = "iForgot";
-	public static final String TICKET = "ticket";
 	
 	/**
 	 * 
@@ -118,8 +117,8 @@ public class RegisterEndpoint extends TemplateServlet {
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.add(TaskOptions.Builder.withUrl("/sendMail")
 				.param(getUsernameParam(), email)
-				.param(FORGOTPASSWORD, Boolean.toString(isForgot))
-				.param(TICKET, registrationToken));
+				.param(Config.FORGOTPASSWORD_PARAM, Boolean.toString(isForgot))
+				.param(Config.TICKET_PARAM, registrationToken));
 		
 		sendOK(request, response);
 	}

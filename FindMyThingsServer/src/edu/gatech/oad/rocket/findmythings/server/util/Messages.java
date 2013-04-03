@@ -105,4 +105,23 @@ public final class Messages {
 	    }
 	}
 	
+	public enum Activate {
+		CODE_EXPIRED("expiredCode"),
+		NO_SUCH_USER("noSuchUser"),
+		BAD_PASSWORD("badPassword"),
+		PASSNOTMATCH("passwdMatch"),
+		INVALID_DATA("invalidData");
+		
+	    private final String text;
+
+	    private Activate(final String text) {
+	        this.text = text;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return text;
+	    }
+	}
+	
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.inject.Singleton;
 
 import edu.gatech.oad.rocket.findmythings.server.api.ForgotEndpoint;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
@@ -47,7 +48,7 @@ public class ForgotServlet extends ForgotEndpoint {
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
 		super.addParametersToMap(request, params);
-		params.put(FORGOTPASSWORD, true);
+		params.put(Config.FORGOTPASSWORD_PARAM, true);
 	}
 
 }

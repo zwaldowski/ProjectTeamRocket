@@ -132,9 +132,14 @@ public abstract class DatabaseService {
 		 */
 		public void register(final String code, final String email) {
 			DBMember user = load().memberWithEmail(email);
+			register(user, code);
+		}
+		
+		public void register(final DBMember user, final String code) {
 			if (user != null) {
+				boolean wasRegistered = user.isRegistered();
 				user.register();
-				save().entity(user);
+				updateMember(user, !wasRegistered);
 			}
 			delete().registrationTicketWithCode(code);
 		}
@@ -155,10 +160,21 @@ public abstract class DatabaseService {
 		 * @return the user, after changes
 		 */
 		public void updateMember(DBMember user, String password, String name, PhoneNumber phone, String address) {
-			user.setPassword(password);
-			user.setPhone(phone);
-			user.setName(name);
-			user.setAddress(name);
+			if (password != null) user.setPassword(password);
+			if (phone != null) user.setPhone(phone);
+			if (name != null) user.setName(name);
+			if (address != null) user.setAddress(address);
+			ofy().save().entity(user);
+		}
+
+		/**
+		 * Save user with authorization information
+		 * @param user  User
+		 * @param changeCount should the user count be incremented
+		 * @return the user, after changes
+		 */
+		public void updateMember(DBMember user, String password) {
+			if (password != null) user.setPassword(password);
 			ofy().save().entity(user);
 		}
 

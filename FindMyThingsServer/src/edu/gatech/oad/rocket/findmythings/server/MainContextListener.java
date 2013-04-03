@@ -45,6 +45,7 @@ import edu.gatech.oad.rocket.findmythings.server.service.MailboxServlet;
 import edu.gatech.oad.rocket.findmythings.server.service.MailmanServlet;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
+import edu.gatech.oad.rocket.findmythings.server.web.ActivateServlet;
 import edu.gatech.oad.rocket.findmythings.server.web.RegisterServlet;
 
 public class MainContextListener extends GuiceServletContextListener {
@@ -97,6 +98,7 @@ public class MainContextListener extends GuiceServletContextListener {
 			serve("/login").with(SimpleTemplateServlet.class);
 			serve("/register").with(RegisterServlet.class);
 			serve("/forgot").with(ForgotEndpoint.class);
+			serve("/activate").with(ActivateServlet.class);
 
 			serve("/api/authtest").with(AuthTestEndpoint.class);
 			serve("/authtest").with(SimpleTemplateServlet.class);

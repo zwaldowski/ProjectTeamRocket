@@ -2,6 +2,9 @@ package edu.gatech.oad.rocket.findmythings.server.util;
 
 public final class Config {
 	
+	public static final String FORGOTPASSWORD_PARAM = "forgot";
+	public static final String TICKET_PARAM = "ticket";
+	
 	public static final class Keys {
 		
 		private Keys() {}
