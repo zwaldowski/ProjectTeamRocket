@@ -3,6 +3,7 @@ package edu.gatech.oad.rocket.findmythings.server.security;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -12,8 +13,6 @@ import org.apache.shiro.authz.Permission;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.inject.Inject;
@@ -25,7 +24,7 @@ import edu.gatech.oad.rocket.findmythings.server.model.AppUser;
 public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
 	@SuppressWarnings("unused")
-	private static transient final Logger LOG = LoggerFactory.getLogger(ProfileIniRealm.class);
+	private static final Logger LOG = Logger.getLogger(ProfileIniRealm.class.getName());
 
 	public static final String PROFILES_SECTION_NAME = "profiles";
 
@@ -132,14 +131,11 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
 	@Inject
 	public ProfileIniRealm(Ini ini) {
-		this();
+		super();
+		setAuthenticationTokenClass(UsernamePasswordToken.class);
+		setCredentialsMatcher(new PasswordMatcher());
 		setIni(ini);
-		init();
 	}
-
-    public ProfileIniRealm(String resourcePath) {
-	super(resourcePath);
-    }
 
     @Override
     protected void processUserDefinitions(Map<String, String> userDefs) {
@@ -218,18 +214,18 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
     }
 
     @Override
-	public boolean accountExists(String email) {
-	if (email == null) return false;
-		return getUser(email) != null;
-	}
+    public boolean accountExists(String email) {
+    	if (email == null) return false;
+    	return getUser(email) != null;
+    }
 
     @Override
     public AppMember getAccount(String email) {
-	if (email == null) return null;
-	SimpleAccount account = getUser(email);
-	if (account instanceof AppMember)
-		return (AppMember)account;
-	return null;
+    	if (email == null) return null;
+    	SimpleAccount account = getUser(email);
+    	if (account instanceof AppMember)
+    		return (AppMember)account;
+    	return null;
     }
 
 }
