@@ -92,7 +92,11 @@
             android:label="@string/title_activity_maps"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-
+        <activity 
+            android:name = "edu.gatech.oad.rocket.findmythings.Search_Main"
+            android:label = "@string/title_activity_searches">
+        </activity>"
+        
         <uses-library android:name="com.google.android.maps" />
 
         <meta-data

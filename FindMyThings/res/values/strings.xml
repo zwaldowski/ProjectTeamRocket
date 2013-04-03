@@ -40,6 +40,7 @@
     <string name="search">Search</string>
 
     <!-- Extra stuff added -->
+    <string name="title_activity_searches">Search</string>
     <string-array name="search_criteria">
         <item>Category</item>
         <item>Status</item>

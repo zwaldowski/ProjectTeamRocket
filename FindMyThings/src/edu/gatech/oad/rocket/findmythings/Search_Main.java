@@ -53,13 +53,13 @@ public class Search_Main extends Activity{
 			public void onClick(View v) {
 				switch (v.getId()) {
 				case R.id.categoryButton:
-					//should go to category
+					//should search by category
 					break;
 				case R.id.statusButton:
-					//should go to status
+					//should search by status
 					break;
 				case R.id.dateButton:
-					//should go to date
+					//should search by date
 					break; 
 				default:
 					break;
