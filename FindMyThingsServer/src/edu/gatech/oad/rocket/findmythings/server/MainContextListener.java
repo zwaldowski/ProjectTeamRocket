@@ -72,6 +72,10 @@ public class MainContextListener extends GuiceServletContextListener {
 	    private <T> void bindNamed(String key, Class<T> clazz, T value) {
 	        bind(clazz).annotatedWith(Names.named(key)).toInstance(value);
 	    }
+		
+		private ConstantBindingBuilder bindConstant(String key) {
+			return bindConstant().annotatedWith(Names.named(key));
+		}
 
 		@Override protected void configureServlets() {
 			filter("/*").through(ObjectifyFilter.class);
@@ -102,6 +106,17 @@ public class MainContextListener extends GuiceServletContextListener {
 			serve("/contact").with(SimpleTemplateServlet.class);
 
 			serve("/_ah/mail/*").with(MailmanServlet.class);
+
+			// set the login redirect URLs
+			bindConstant(Envelope.SENDER).to(Config.APP_EMAIL);
+									
+			bindConstant(Config.Keys.LOGIN_URL).to(Config.LOGIN_URL);
+			bindConstant(Config.Keys.LOGIN_SUCCESS_URL).to(Config.SUCCESS_URL);
+			bindConstant(Config.Keys.LOGIN_API_URL).to(Config.LOGIN_API_URL);
+			
+			bindConstant(Config.Keys.USERNAME).to(Config.USERNAME_PARAM);
+			bindConstant(Config.Keys.PASSWORD).to(Config.PASSWORD_PARAM);
+			bindConstant(Config.Keys.REMEMBER_ME).to(Config.REMEMBER_ME_PARAM);
 		}
 
 	}
@@ -120,10 +135,6 @@ public class MainContextListener extends GuiceServletContextListener {
 
 		public MainShiroWebModule(ServletContext servletContext) {
 			super(servletContext);
-		}
-		
-		private ConstantBindingBuilder bindConstant(String key) {
-			return bindConstant().annotatedWith(Names.named(key));
 		}
 
 		@SuppressWarnings("unchecked")
@@ -155,17 +166,6 @@ public class MainContextListener extends GuiceServletContextListener {
 			addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
 			addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
 			addFilterChain("/**", ANON);
-
-			// set the login redirect URLs
-			bindConstant(Envelope.SENDER).to(Config.APP_EMAIL);
-			
-			bindConstant(Config.Keys.LOGIN_URL).to(Config.LOGIN_URL);
-			bindConstant(Config.Keys.LOGIN_SUCCESS_URL).to(Config.SUCCESS_URL);
-			bindConstant(Config.Keys.LOGIN_API_URL).to(Config.LOGIN_API_URL);
-			
-			bindConstant(Config.Keys.USERNAME).to(Config.USERNAME_PARAM);
-			bindConstant(Config.Keys.PASSWORD).to(Config.PASSWORD_PARAM);
-			bindConstant(Config.Keys.REMEMBER_ME).to(Config.REMEMBER_ME_PARAM);
 
 			// bind all password matching to the secure password hash
 		    bind(CredentialsMatcher.class).to(PasswordMatcher.class);
