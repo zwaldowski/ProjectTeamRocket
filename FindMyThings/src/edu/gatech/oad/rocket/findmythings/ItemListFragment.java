@@ -1,7 +1,8 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -40,17 +41,23 @@ public class ItemListFragment extends ListFragment {
 	 * The current activated item position. Only used on tablets.
 	 */
 	private int mActivatedPosition = ListView.INVALID_POSITION;
-
+	
+	/**
+	 * Reference to Singleton class
+	 */
 	private Controller control = Controller.shared();
-
+	
+	/**
+	 * The ArrayAdapter to be displayed
+	 */
+	public static Adapter adapter;
+	
+	
 	/**
 	 * A callback interface that all activities containing this fragment must
 	 * implement. This mechanism allows activities to be notified of item
 	 * selections.
 	 */
-	
-	private static Adapter adapter;
-
 	public interface Callbacks {
 		/**
 		 * Callback for when an item has been selected.
@@ -78,12 +85,10 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-
-		Type mItemClass = ((MainActivity)getActivity()).getItemType();
+				
 		adapter = control.newItemsAdapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, mItemClass);
+				android.R.id.text1, Type.LOST);
 		setListAdapter(adapter);
 	}
 
@@ -91,6 +96,9 @@ public class ItemListFragment extends ListFragment {
 		Type mItemClass = ((MainActivity)getActivity()).getItemType();
 		control.addItem(mItemClass, i);
 		adapter.notifyDataSetChanged();
+	}
+	public static void update(ArrayList<Item> tempList) {
+		adapter.setList(tempList);		
 	}
 
 	@Override
@@ -104,7 +112,7 @@ public class ItemListFragment extends ListFragment {
 					.getInt(STATE_ACTIVATED_POSITION));
 		}
 	}
-
+	
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -117,7 +125,7 @@ public class ItemListFragment extends ListFragment {
 
 		mCallbacks = (Callbacks) activity;
 	}
-
+	
 
 	@Override
 	public void onDetach() {

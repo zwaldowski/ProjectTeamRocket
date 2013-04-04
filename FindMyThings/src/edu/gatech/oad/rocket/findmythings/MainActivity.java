@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TabHost;
 
 import edu.gatech.oad.rocket.findmythings.NonActivity.*;
 import edu.gatech.oad.rocket.findmythings.Helpers.*;
@@ -45,7 +44,7 @@ public class MainActivity extends FragmentActivity implements
 	/**
 	 * The class of {@link Item} displayed in this list.
 	 */
-	private Type mType = Type.LOST;
+	public static Type mType = Type.LOST;
 
 	/**
 	 * Identifies the item list fragment across instantiations.
@@ -74,9 +73,7 @@ public class MainActivity extends FragmentActivity implements
 	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	    actionBar.setDisplayShowTitleEnabled(false);
 	    createTabs();
-	    
-	    //TODO: Create tab listener class
-	    
+	   
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle extraInfo = getIntent().getExtras();
@@ -114,7 +111,7 @@ public class MainActivity extends FragmentActivity implements
 
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
-
+	
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -122,7 +119,6 @@ public class MainActivity extends FragmentActivity implements
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			return false;
 	    }
-
 	    return super.onKeyDown(keyCode, event);
 	}
 
@@ -155,7 +151,6 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onResume() {
 	    super.onResume();
-
 	    String noOverKey = getString(R.string.key_nooverride_animation);
 	    Bundle extraInfo = getIntent().getExtras();
 		if (extraInfo == null || (extraInfo != null && !extraInfo.getBoolean(noOverKey))) {
@@ -248,7 +243,6 @@ public class MainActivity extends FragmentActivity implements
 			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
 			adminMenu.setVisible(false);
 		}
-				
 		return true;
 	}
 	
@@ -267,12 +261,12 @@ public class MainActivity extends FragmentActivity implements
 	    		tabName = "Donations";
 	    		break;
 	    	case 3:
-	    		tabName = "Reqeusts";
+	    		tabName = "Requests";
 	    		break;
 	    	}
 	    	tab = actionBar.newTab()
 		            .setText(tabName)
-		    		.setTabListener(new TabHelp());
+		    		.setTabListener(new TabHelp(tabName));
 	    	 actionBar.addTab(tab);
 	    }
 	}

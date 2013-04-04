@@ -50,16 +50,28 @@ public class Adapter extends ArrayAdapter<Item> {
 		mList = objects;
 		
 	}
+	
+	public void setList(List<Item> l) {
+		if (!l.isEmpty()) {
+			mList = l;
+		}
+		else mList = null;
+		
+		notifyDataSetChanged();
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 	 
 	 View row = convertView;
 
-	 if (row == null) {
+	 if (row == null || mList == null) {
          LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
          row = inflater.inflate (R.layout.activity_item_list, parent, false);
 	 }
+	 if(mList == null || mList.isEmpty()) 
+		 return row;
+	 
 	 Item temp = mList.get(position);
 
 	 Spannable span = new SpannableString(temp.toString() + " - " + temp.getLoc() + temp.getSummary());
@@ -80,6 +92,7 @@ public class Adapter extends ArrayAdapter<Item> {
 
 
 	 return row;
-
+	 
+	 
 	}
 }

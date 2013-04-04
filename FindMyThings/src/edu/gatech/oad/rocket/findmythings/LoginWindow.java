@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
