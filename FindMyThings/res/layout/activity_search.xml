@@ -34,7 +34,7 @@
                 android:layout_marginTop="24dp"
                 android:text="Category"
                 android:textSize="20sp" 
-                android:onClick="onRadioButtonClicked"/>
+                android:onClick="onClick"/>
 
             <RadioButton
                 android:id="@+id/dateButton"
@@ -43,7 +43,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Date"
                 android:textSize="20sp"
-                android:onClick="onRadioButtonClicked"/>
+                android:onClick="onClick"/>
 
             <RadioButton
                 android:id="@+id/statusButton"
@@ -52,7 +52,7 @@
                 android:layout_marginTop="22dp"
                 android:text="Status"
                 android:textSize="20sp" 
-                android:onClick="onRadioButtonClicked"/>
+                android:onClick="onClick"/>
 
         </RadioGroup>
 
@@ -65,7 +65,8 @@
             android:layout_marginRight="16dp"
             android:text="NEXT"
             android:textColor="@color/LightSkyBlue"
-            android:textColorHint="@color/LightGrey" />
+            android:textColorHint="@color/LightGrey"
+            android:onClick="showResults" />
 
     </RelativeLayout>
 
