@@ -82,7 +82,8 @@ public abstract class PageServlet extends HttpServlet {
 	    String s = request.getParameter(paramName);
 	    return (s == null) ? defaultValue : Boolean.parseBoolean(s);
 	}
-	
+
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	protected boolean memberExistsWithEmail(String email) {
 	    if (email == null || email.length() == 0) return false;
 	    RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();

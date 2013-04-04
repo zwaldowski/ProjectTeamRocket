@@ -59,22 +59,22 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 		setAuthenticationTokenClass(BearerToken.class);
 	}
 
-	private static boolean tokenIsValid(BearerToken token, DBAuthenticationToken dbToken) {
-		return token != null && dbToken != null && dbToken.getEmail().equals(token.getPrincipal());
+	private static boolean tokenIsInvalid(BearerToken token, DBAuthenticationToken dbToken) {
+		return token == null || dbToken == null || !dbToken.getEmail().equals(token.getPrincipal());
 	}
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0) throws AuthenticationException {
 		BearerToken token = (BearerToken)arg0;
 		String email = (String)token.getPrincipal();
-		String creds = (String)token.getCredentials();
+		String credentials = (String)token.getCredentials();
 
 		Preconditions.checkNotNull(email, "Email can't be null");
 		Preconditions.checkNotNull(token, "Token can't be null");
 
-		DBAuthenticationToken dbToken = DatabaseService.ofy().load().type(DBAuthenticationToken.class).id(creds).get();
-		if (!tokenIsValid(token, dbToken)) {
-			LOGGER.info("Rejecting token " + creds + " for user " + email);
+		DBAuthenticationToken dbToken = DatabaseService.ofy().load().type(DBAuthenticationToken.class).id(credentials).get();
+		if (tokenIsInvalid(token, dbToken)) {
+			LOGGER.info("Rejecting token " + credentials + " for user " + email);
 			return null;
 		}
 

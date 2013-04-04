@@ -104,7 +104,8 @@ public class RegisterEndpoint extends TemplateServlet {
 			sendError(request, response, Messages.Register.INVALID_DATA);
 		}
 	}
-	
+
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	protected boolean emailIsValid(String email) {
 		return email != null && email.length() > 0 && EmailValidator.getInstance().isValid(email);
 	}

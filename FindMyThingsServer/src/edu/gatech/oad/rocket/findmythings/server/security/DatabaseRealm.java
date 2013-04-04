@@ -39,7 +39,7 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 		}
 		LOG.fine("Finding authorization info for " + userEmail + " in DB");
 		DBMember member = DatabaseService.ofy().load().memberWithEmail(userEmail);
-		if (member == null || !memberCanLogIn(member)) {
+		if (memberCannotLogIn(member)) {
 			LOG.info("Rejecting user " + userEmail);
 			return null;
 		}
@@ -66,7 +66,7 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 		LOG.info("Finding authentication info for " + email + " in DB");
 
 		DBMember member = DatabaseService.ofy().load().memberWithEmail(email);
-		if (member == null || !memberCanLogIn(member)) {
+		if (memberCannotLogIn(member)) {
 			LOG.info("Rejecting user " + email);
 			return null;
 		}
@@ -77,8 +77,8 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 		return account;
 	}
 
-	private static boolean memberCanLogIn(AppMember member) {
-		return member.isRegistered() && !member.isLocked();
+	private static boolean memberCannotLogIn(AppMember member) {
+		return member == null || !member.isRegistered() || member.isLocked();
 	}
 
 	@Override
