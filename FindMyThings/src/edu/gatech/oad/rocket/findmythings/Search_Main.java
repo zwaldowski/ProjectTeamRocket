@@ -11,7 +11,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,66 +26,49 @@ import android.widget.TextView;
  *
  */
 public class Search_Main extends Activity{
-	private RadioGroup searches;
-	private RadioButton categoryButton, statusButton, dateButton;
-	private TextView textView1;
-	private Button nextButton;
+	private int checked;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 		
-		addListenerOnButton();
+		//addListenerOnButton();
 	}
 
-	private void addListenerOnButton() {
-		searches = (RadioGroup)findViewById(R.id.searches);
-		categoryButton = (RadioButton)findViewById(R.id.categoryButton);
-		statusButton = (RadioButton)findViewById(R.id.statusButton);
-		dateButton = (RadioButton)findViewById(R.id.dateButton);
-		textView1 = (TextView)findViewById(R.id.textView1);
-		nextButton = (Button)findViewById(R.id.nextButton); 
-		categoryButton.setChecked(true);
+	//the method that decides which intent to show
+	public void showResults(View view) {
+		//Intent results = new Intent(getActivity(),results.class);
+		 boolean isChecked = ((RadioButton) view).isChecked();
+		 
+		 switch(checked) {
+		 case 0:
+			 //go by category
+			 break;
+		 case 1:
+			 //go by status
+			 break;
+		 case 2:
+			 //go by date
+			 break;
+		 default:
+			 
+		 }
 		
-		nextButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				switch (v.getId()) {
-				case R.id.categoryButton:
-					//should search by category
-					break;
-				case R.id.statusButton:
-					//should search by status
-					break;
-				case R.id.dateButton:
-					//should search by date
-					break; 
-				default:
-					break;
-				} 
-			}
-		});
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event)  {
-		//Tells Activity what to do when back key is pressed
-	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-	    	if(getCallingActivity()==null) { //Goes to Main
-	    		Intent main = new Intent(getApplicationContext(), MainActivity.class);
-	    		finish();
-	    	    startActivity(main);
-			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
-			    return true;
-	    	} else { //Goes back to ItemListActivity
-	    	    finish();
-			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
-			    return true;
-	    	}
-	    }
-
-	    return super.onKeyDown(keyCode, event);
 	}
 	
+	public void onClick(View view) {
+		 switch (view.getId()) {
+		 case R.id.categoryButton:
+			 checked = 0;
+			 break;
+		 case R.id.statusButton:
+			 checked = 1;
+			 break;
+		 case R.id.dateButton:
+			 checked = 2;
+			 break; 
+		 default:
+			 break;
+		 }
+	}
 }
