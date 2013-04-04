@@ -64,18 +64,19 @@
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Reset Password</button>
         </div>
-        <input type="hidden" name="${usernameParam!"username"}" value="${username??}">
-        <input type="hidden" name="ticket" value="${code??}">
+        <input type="hidden" name="${usernameParam!"username"}" value="${username!""}">
+        <input type="hidden" name="ticket" value="${code!""}">
         <input type="hidden" name="forgot" value="true">
       </form>
 
       <#else>
 
+      <#if failureReason??>
+
       <div class="page-header">
         <h1>Oh no!</h1>
       </div>
 
-      <#if failureReason??>
       <#switch failureReason>
       <#case "expiredCode">
       <p>The registration code was either invalid or expired.</p>
@@ -83,13 +84,12 @@
       <#default>
       <p>Invalid data was recieved and we can't continue.</p>
       </#switch>
-      </#if>
 
       <p>You may attempt to reset your password to continue.</p>
 
       <p>
-        <a class="btn btn-large btn-primary" href="/login">Login</button>
-        <a class="btn btn-large btn-warning" href="/forgot">Reset Password</button>
+        <a class="btn btn-large btn-primary" href="/login">Login</a>
+        <a class="btn btn-large btn-warning" href="/forgot">Reset Password</a>
       </p>
 
       <#else>
@@ -106,6 +106,7 @@
         <a class="btn btn-large btn-primary" href="/login">Login</button>
       </p>
 
+      <#/if>
       <#/if>
       
       <#include "inc/footer.ftl">
