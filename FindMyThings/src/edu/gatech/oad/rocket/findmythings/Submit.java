@@ -100,7 +100,7 @@ public class Submit extends Activity {
 	 * Returns to Item List activity. Animation and ID helper.
 	 */
 	public boolean toItemList() {
-		Intent goToNextActivity = new Intent(getApplicationContext(), ItemListActivity.class);
+		Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
 		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		goToNextActivity.putExtra(getString(R.string.key_nooverride_animation), true);
 		goToNextActivity.putExtra(Type.ID, mType.ordinal());

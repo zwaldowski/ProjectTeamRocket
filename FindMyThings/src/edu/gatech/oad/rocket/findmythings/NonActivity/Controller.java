@@ -81,6 +81,7 @@ public final class Controller {
 		cat.setLoc("Colombia");
 		dog.setLoc("Santa Rosa, California");
 		catdog.setLoc("Detroit, Michigan");
+		cat.setType(Type.FOUND);
 		for (Type kind : Type.values()) {
 			ItemsList container = new ItemsList();
 			allItems.put(kind, container);

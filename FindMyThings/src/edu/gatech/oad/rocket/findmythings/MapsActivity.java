@@ -52,17 +52,20 @@ public class MapsActivity extends FragmentActivity   {
         //Geocoder object to convert a text address into an Address object
         findLoc = new Geocoder(getApplicationContext());
         
+        LatLng currlocation = null;
+        
         //Used to add a marker to the map
         MarkerOptions options = new MarkerOptions();
         
         
         try { //Converts the location string into a list of possible long/lag addresses
         	loc = findLoc.getFromLocationName(ItemDetailFragment.mItem.getLoc(), 1);
+        	currlocation = new LatLng(loc.get(0).getLatitude(),loc.get(0).getLongitude());
 		} catch (IOException e) {
 			new ErrorDialog("Unable to reach Google Maps at this time, please check your connection strength.").getDialog(this).show();
 		}
         //Object to store lat/long
-        LatLng currlocation = new LatLng(loc.get(0).getLatitude(),loc.get(0).getLongitude());
+       
         //Sets the markers position
         options.position(currlocation);
         //Tells the camera where to go

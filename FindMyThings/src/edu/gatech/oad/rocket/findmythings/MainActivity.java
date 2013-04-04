@@ -1,75 +1,116 @@
 package edu.gatech.oad.rocket.findmythings;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ActionBar.Tab;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TabHost;
 
-import edu.gatech.oad.rocket.findmythings.Helpers.TabHelp;
 import edu.gatech.oad.rocket.findmythings.NonActivity.*;
-
+import edu.gatech.oad.rocket.findmythings.Helpers.*;
 /**
  * CS 2340 - FindMyStuff Android App
  *
- * A {@link PreferenceActivity} that presents a set of application settings. On
- * handset devices, settings are presented as a single list. On tablets,
- * settings are split by category, with category headers shown to the left of
- * the list of settings.
+ * An activity representing a list of Items. This activity has different
+ * presentations for handset and tablet-size devices. On handsets, the activity
+ * presents a list of items, which when touched, lead to a
+ * {@link ItemDetailActivity} representing item details. On tablets, the
+ * activity presents the list of items and item details side-by-side using two
+ * vertical panes.
  * <p>
- * See <a href="http://developer.android.com/design/patterns/settings.html">
- * Android Design: Settings</a> for design guidelines and the <a
- * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
- * API Guide</a> for more information on developing a Settings UI.
+ * The activity makes heavy use of fragments. The list of items is a
+ * {@link ItemListFragment} and the item details (if present) is a
+ * {@link ItemDetailFragment}.
+ * <p>
+ * This activity also implements the required {@link ItemListFragment.Callbacks}
+ * interface to listen for item selections.
  *
  * @author TeamRocket
  */
-public class MainActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class MainActivity extends FragmentActivity implements
+		ItemListFragment.Callbacks {
+
+	/**
+	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
+	 * device.
+	 */
+	private boolean mTwoPane;
+
+	/**
+	 * The class of {@link Item} displayed in this list.
+	 */
+	private Type mType = Type.LOST;
+
+	/**
+	 * Identifies the item list fragment across instantiations.
+	 */
+	private static final String kItemListFragmentKey = "ItemListFragment";
 	
-	public static class MainFragment extends PreferenceFragment {
+	/**
+	 * Reference to the actionbar (the thing at the top of every activity)
+	 */
+	private ActionBar actionBar;
+	
+
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_item_list);
 		
-	    @Override
-	    public void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        addPreferencesFromResource(R.xml.main_lookingfor);
-	      	        	        
-	        Intent lostIntent = findPreference(getString(R.string.main_key_lost)).getIntent();
-	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        lostIntent.putExtra(Type.ID, Type.LOST.ordinal());
-
-	        Intent foundIntent = findPreference(getString(R.string.main_key_found)).getIntent();
-	        foundIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        foundIntent.putExtra(Type.ID, Type.FOUND.ordinal());
-
-	        Intent donationIntent = findPreference(getString(R.string.main_key_donations)).getIntent();
-	        donationIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        donationIntent.putExtra(Type.ID, Type.DONATION.ordinal());
-
-	        Intent requestIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
-	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        requestIntent.putExtra(Type.ID, Type.REQUEST.ordinal());
-	        
-	        //trying new stuff
-	        //Intent searchIntent = findPreference(getString(R.string.main_key_searches)).getIntent();
-	        //searchIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	        Intent searchIntent =  new Intent(getActivity(), Search_Main.class);
+		//Create tabs and hide title
+		actionBar = getActionBar();
+	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	    actionBar.setDisplayShowTitleEnabled(false);
+	    createTabs();
 	    
-	        //Intent(Context packageContext, Class<?> cls)
-	        
-	        //MainFragment.this,Search_Main.class
-	        //end
+	    //TODO: Create tab listener class
+	    
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-	    }	
+		Bundle extraInfo = getIntent().getExtras();
+		if (extraInfo != null && extraInfo.containsKey(Type.ID)) {
+			mType = Type.values()[extraInfo.getInt(Type.ID)];
+		}
+		
+		setTitle(EnumHelper.localizedFromArray(this, R.array.item_list_titles, mType));
+
+		ItemListFragment fragment;
+		if (savedInstanceState == null) {
+			// Create the detail fragment and add it to the activity
+			// using a fragment transaction.
+			Bundle arguments = new Bundle();
+			if (getIntent().getExtras() != null) arguments.putAll(getIntent().getExtras());
+
+			fragment = new ItemListFragment();
+			fragment.setArguments(arguments);
+			getSupportFragmentManager().beginTransaction().add(R.id.item_list_container, fragment, kItemListFragmentKey).commit();
+		} else {
+			fragment = (ItemListFragment)getSupportFragmentManager().findFragmentByTag(kItemListFragmentKey);
+		}
+
+		if (findViewById(R.id.item_detail_container) != null) {
+			// The detail container view will be present only in the
+			// large-screen layouts (res/values-large and
+			// res/values-sw600dp). If this view is present, then the
+			// activity should be in two-pane mode.
+			mTwoPane = true;
+
+			// In two-pane mode, list items should be given the
+			// 'activated' state when touched.
+			fragment.setActivateOnItemClick(true);
+		}
+
+		// TODO: If exposing deep links into your app, handle intents here.
 	}
-	
+
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -79,17 +120,115 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 
 	    return super.onKeyDown(keyCode, event);
 	}
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.item_list_submit:
+			return toSubmit();
+	        case R.id.menu_list_search:
+	        	Intent i = new Intent(MainActivity.this, FilterActivity.class);
+				startActivityForResult(i, 1);
+			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+				return true;
+	        case R.id.menu_search:
+				Intent im = new Intent(MainActivity.this, Search_Main.class);
+				finish();
+				startActivity(im);
+			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+				return true;
+			case R.id.menu_login: 
+				return Login.currUser==null? toLogin():logOut(); 
+			case R.id.menu_account: 
+				return toAccount();
+			case R.id.menu_admin:
+				return toAdmin();
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onResume() {
+	    super.onResume();
+
+	    String noOverKey = getString(R.string.key_nooverride_animation);
+	    Bundle extraInfo = getIntent().getExtras();
+		if (extraInfo == null || (extraInfo != null && !extraInfo.getBoolean(noOverKey))) {
+			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+		}
+	}
+
+	/**
+	 * Callback method from {@link ItemListFragment.Callbacks} indicating that
+	 * the item with the given ID was selected.
+	 */
+	@Override
+	public void onItemSelected(String id) {
+		if (mTwoPane) {
+			// In two-pane mode, show the detail view in this activity by
+			// adding or replacing the detail fragment using a
+			// fragment transaction.
+			Bundle arguments = new Bundle();
+			arguments.putString(Item.ID, id);
+			arguments.putInt(Type.ID, mType.ordinal());
+			ItemDetailFragment fragment = new ItemDetailFragment();
+			fragment.setArguments(arguments);
+			getSupportFragmentManager().beginTransaction()
+					.replace(R.id.item_detail_container, fragment).commit();
+
+		} else {
+			// In single-pane mode, simply start the detail activity
+			// for the selected item ID.
+			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
+			detailIntent.putExtra(Item.ID, id);
+			detailIntent.putExtra(Type.ID, mType.ordinal());
+			startActivity(detailIntent);
+		}
+	}
+
+	/**
+	 * Opens a new Submit activity with the current type of item.
+	 */
+	public boolean toSubmit() {
+		if(Login.currUser!=null) {
+			Intent goToNextActivity = new Intent(MainActivity.this, Submit.class);
+			goToNextActivity.putExtra(Type.ID, mType.ordinal());
+			startActivity(goToNextActivity);
+			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
+		}
+		else {
+			ErrorDialog toLogin =  new ErrorDialog("Must Sign-in to submit an item.", "Sign-in", "Cancel");
+			AlertDialog.Builder temp = toLogin.getDialog(this,
+				new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+		            	startActivityForResult(goToNextActivity, 1);
+		            }	
+				}, 
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+			            	//cancel
+					}    
+			
+				});
+			temp.show();
+		}
+	    return true;
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_item_list, menu);
 		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
 		
 		//Set Login Title
 		MenuItem loginMenu = menu.findItem(R.id.menu_login);
-        String title = Login.currUser==null? "Login":"Logout";
-	    loginMenu.setTitle(title);
-				
+		String title = Login.currUser==null? "Login":"Logout";
+		loginMenu.setTitle(title);
+						
 		//Set Login Title
 		MenuItem accountMenu = menu.findItem(R.id.menu_account);
 		if(Login.currUser!=null) {
@@ -98,49 +237,18 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 		} else { 
 			accountMenu.setVisible(false);
 		}
-		
+				
 		//Show/Hide admin button
 		if(Login.currUser==null || !Login.currUser.isAdmin()) {
 			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
-        	adminMenu.setVisible(false);
+			adminMenu.setVisible(false);
 		}
+				
 		return true;
 	}
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_search:
-			Intent i = new Intent(MainActivity.this, Search_Main.class);
-			finish();
-			startActivity(i);
-		    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
-			return true;
-		case R.id.menu_login: 
-			return Login.currUser==null? toLogin():logOut(); 
-		case R.id.menu_account: 
-			return toAccount();
-		case R.id.menu_admin:
-			return toAdmin();
-			
-	}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A reference to the fragment this activity is displaying.
-	 * Undefined on Android versions less than Honeycomb.
-	 */
-	private MainFragment settingsListFragment;
-
-	@SuppressWarnings("deprecation")
-	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-		ActionBar actionBar = getActionBar();
-	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	    actionBar.setDisplayShowTitleEnabled(true);
-
-	    Tab tab;
+	public void createTabs() {
+		Tab tab;
 	    String tabName = "";
 	    for(int i = 0; i <4;i++) {
 	    	switch(i) { //Create tabs
@@ -160,67 +268,19 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	    	tab = actionBar.newTab()
 		            .setText(tabName)
 		    		.setTabListener(new TabHelp());
-		    actionBar.addTab(tab);
+	    	 actionBar.addTab(tab);
 	    }
-	    
-	   
-	    
-	   
-		super.onCreate(savedInstanceState);
-		
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			addPreferencesFromResource(R.xml.main_lookingfor);
-		} else {
-			settingsListFragment = new MainFragment();
-			getFragmentManager().beginTransaction().replace(android.R.id.content,
-					settingsListFragment).commit();
-		}
-
-	}
-
-	@Override
-	protected void onResume() {
-	    super.onResume();
-	    settingsListFragment.getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	public void onPause() {
-		settingsListFragment.getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-		super.onPause();
 	}
 
 	/**
-	 * Listener responder for the Sign Out button.
+	 * Returns the kind of Item displayed in this list.
+	 * @return An enumerated Type value
 	 */
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    	if (key.equals(getString(R.string.main_key_signout))) {
-    		boolean shouldLogout = sharedPreferences.getBoolean(key, false);
-    		if (shouldLogout) {
-    			Editor prefEdit = sharedPreferences.edit();
-    			prefEdit.putBoolean(key, false);
-    			prefEdit.commit();
-    			   			
-    		}
-     	}
-    	
-    }
-    
-    /**
-     * Logout
-     */
-    public boolean logOut() {
-    	//Clear current user
-		Login.currUser=null;
-		//Redraw the activity
-		//TODO: Redraw the activity in a way that actually makes sense
-		finish(); 
-		startActivity(getIntent());
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-		return true;
-    }
-    
-    /**
+	public Type getItemType() {
+		return mType;
+	}
+	
+	   /**
      * Go to LoginWindow
      */
     public boolean toLogin() {
@@ -254,7 +314,17 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 		return true;
     }
     
-    
-   
-
+    /**
+     * Logout
+     */
+    public boolean logOut() {
+    	//Clear current user
+		Login.currUser=null;
+		//Redraw the activity
+		//TODO: Redraw the activity in a way that actually makes sense
+		finish(); 
+		startActivity(getIntent());
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		return true;
+    }
 }

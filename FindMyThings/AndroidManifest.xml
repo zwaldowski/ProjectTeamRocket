@@ -57,15 +57,10 @@
                 android:value=".LoginWindow" />
         </activity>
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.ItemListActivity"
-            android:label="@string/title_item_list" >
-        </activity>
-        <activity
             android:name="edu.gatech.oad.rocket.findmythings.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
+           		<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -110,10 +105,6 @@
         <activity
             android:name="edu.gatech.oad.rocket.findmythings.MyAccountEdit"
             android:label="@string/title_activity_my_account_edit" >
-        </activity>
-        <activity
-            android:name="edu.gatech.oad.rocket.findmythings.Search_Main"
-            android:label="@string/search" >
         </activity>
         <activity
             android:name="edu.gatech.oad.rocket.findmythings.FilterActivity"

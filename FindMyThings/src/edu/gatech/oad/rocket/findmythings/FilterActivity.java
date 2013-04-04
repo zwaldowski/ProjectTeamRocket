@@ -1,7 +1,6 @@
 package edu.gatech.oad.rocket.findmythings;
 
 import android.os.Bundle;
-import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
