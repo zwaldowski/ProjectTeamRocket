@@ -69,6 +69,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
             	String value = (String)newValue;
             	Type newType = EnumHelper.forIntString(value, Type.class);
 				syncTypePref(newType);
+				
 				((Submit)getActivity()).setItemType(newType);
                 return true;
             }

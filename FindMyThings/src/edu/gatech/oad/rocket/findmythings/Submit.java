@@ -35,7 +35,7 @@ public class Submit extends Activity {
 	/**
 	 * The list to submit this item to.
 	 */
-	private Type mType = Type.LOST;
+	private Type mType = Type.FOUND;
 
 	/**
 	 * Category for this item, helper for {@link SubmitFrag}.

@@ -23,7 +23,7 @@ public final class EnumHelper {
 	 * @return The corresponding enumerated type for the given integer string
 	 */
 	public static <T extends Enum<?>> T forIntString(String value, Class<T> aClass) {
-		int intValue = 0;
+		int intValue = Integer.parseInt(value);
 		return aClass.getEnumConstants()[intValue];
 	}
 	
