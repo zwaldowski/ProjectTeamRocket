@@ -98,12 +98,13 @@ public class ItemDetailActivity extends FragmentActivity {
 	 * @param LocationButton
 	 */
 	public void toMap (View LocationButton) {
-		if(hasInternet()) {
+		if(hasInternet() && ItemDetailFragment.mItem.getLoc()!=null && ItemDetailFragment.mItem.getLoc().length()>0) {
 			Intent next = new Intent(getApplicationContext(), MapsActivity.class);
 			finish();
 			startActivity(next);
 		} else {
-			new ErrorDialog("Error: no active internet connection.").getDialog(this).show();
+			if(ItemDetailFragment.mItem.getLoc()!=null && ItemDetailFragment.mItem.getLoc().length()>0)
+				new ErrorDialog("Error: no active internet connection.").getDialog(this).show();
 		}
 	}
 	
