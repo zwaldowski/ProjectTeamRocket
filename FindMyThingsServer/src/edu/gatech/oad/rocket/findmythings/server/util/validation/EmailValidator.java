@@ -111,6 +111,7 @@ public class EmailValidator implements Serializable {
      *              value is considered invalid.
      * @return true if the email address is valid.
      */
+    @SuppressWarnings({"SimplifiableIfStatement", "RedundantIfStatement"})
     public boolean isValid(String email) {
         if (email == null) {
             return false;
@@ -135,7 +136,11 @@ public class EmailValidator implements Serializable {
             return false;
         }
 
-		return isValidDomain(emailMatcher.group(2));
+		if (!isValidDomain(emailMatcher.group(2))) {
+			return false;
+		}
+
+		return true;
 	}
 
     /**
