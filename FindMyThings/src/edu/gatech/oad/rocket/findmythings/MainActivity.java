@@ -193,6 +193,7 @@ public class MainActivity extends FragmentActivity implements
 		if(Login.currUser!=null) {
 			Intent goToNextActivity = new Intent(MainActivity.this, Submit.class);
 			goToNextActivity.putExtra(Type.ID, mType.ordinal());
+			finish();
 			startActivity(goToNextActivity);
 			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		}
@@ -203,7 +204,7 @@ public class MainActivity extends FragmentActivity implements
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
 		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
-		            	startActivityForResult(goToNextActivity, 1);
+		               	startActivityForResult(goToNextActivity, 1);
 		            }	
 				}, 
 				new DialogInterface.OnClickListener() {

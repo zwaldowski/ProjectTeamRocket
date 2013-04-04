@@ -155,6 +155,7 @@ public class Submit extends Activity {
 				temp.setLoc(loc);
 
 				control.addItem(temp);
+				//ItemListFragment.update(control.getItem(temp.getType()));
 
 				return toItemList();
 				}

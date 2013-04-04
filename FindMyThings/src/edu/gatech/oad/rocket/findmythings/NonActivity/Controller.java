@@ -82,14 +82,16 @@ public final class Controller {
 		dog.setLoc("Santa Rosa, California");
 		catdog.setLoc("Detroit, Michigan");
 		cat.setType(Type.FOUND);
+		dog.setType(Type.DONATION);
+		catdog.setType(Type.LOST);
 		for (Type kind : Type.values()) {
 			ItemsList container = new ItemsList();
 			allItems.put(kind, container);
-
-			addItem(kind, cat);
-			addItem(kind, dog);
-			addItem(kind, catdog);
 		}
+
+		addItem(cat.getType(), cat);
+		addItem(dog.getType(), dog);
+		addItem(catdog.getType(), catdog);
     }
 
 	/**

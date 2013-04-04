@@ -59,6 +59,13 @@ public class Adapter extends ArrayAdapter<Item> {
 		
 		notifyDataSetChanged();
 	}
+	
+	@Override
+	public int getCount() {
+		if(mList==null)
+			return 0;
+	    return mList.size();
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -69,11 +76,11 @@ public class Adapter extends ArrayAdapter<Item> {
          LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
          row = inflater.inflate (R.layout.activity_item_list, parent, false);
 	 }
-	 if(mList == null || mList.isEmpty()) 
+	 if(mList == null || mList.isEmpty() || position>mList.size()) 
 		 return row;
-	 
+	
 	 Item temp = mList.get(position);
-
+	 
 	 Spannable span = new SpannableString(temp.toString() + " - " + temp.getLoc() + temp.getSummary());
 	 int start = temp.toString().length();
 	 int stop = temp.getLoc().length()+ temp.toString().length() +  temp.getSummary().length()+ 3;
@@ -89,7 +96,6 @@ public class Adapter extends ArrayAdapter<Item> {
 	 span2.setSpan(new RelativeSizeSpan(0.8f),start2,stop,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 	 frag.setText(span2);
-
 
 	 return row;
 	 

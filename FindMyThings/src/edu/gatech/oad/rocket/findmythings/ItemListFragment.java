@@ -92,11 +92,7 @@ public class ItemListFragment extends ListFragment {
 		setListAdapter(adapter);
 	}
 
-	public void AddItem(View v, Item i){
-		Type mItemClass = ((MainActivity)getActivity()).getItemType();
-		control.addItem(mItemClass, i);
-		adapter.notifyDataSetChanged();
-	}
+	
 	public static void update(ArrayList<Item> tempList) {
 		adapter.setList(tempList);		
 	}
