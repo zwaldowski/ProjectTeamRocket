@@ -144,13 +144,12 @@ public abstract class DatabaseService {
 			delete().registrationTicketWithCode(code);
 		}
 		
-		public DBUser createMember(String email, String password, String name, PhoneNumber phone, String address) {
+		public void createMember(String email, String password, String name, PhoneNumber phone, String address) {
 			DBUser newUser = new DBUser(email, password);
 			newUser.setPhone(phone);
 			newUser.setName(name);
-			newUser.setAddress(name);
+			newUser.setAddress(address);
 			newUser.save();
-			return newUser;
 		}
 
 		/**
@@ -187,12 +186,11 @@ public abstract class DatabaseService {
 		 * @param changeCount should the user count be incremented
 		 * @return the user, after changes
 		 */
-		public DBMember updateMember(DBMember user, boolean changeCount) {
+		public void updateMember(DBMember user, boolean changeCount) {
 			ofy().save().entity(user);
 			if (changeCount) {
 				changeUserCount(1);
 			}
-			return user;
 		}
 
 		public DBMember deleteMember(DBMember user) {
