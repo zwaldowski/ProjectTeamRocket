@@ -184,10 +184,10 @@ public final class Controller {
 	/**
 	 * get an arrayList of all the items that have the require characteristics
 	 * given in the parameter array
-	 * @param searches
+	 * @param int criteria (0 = Category), (1 = Status), (2 = Date)
 	 * @return Nothing, so far.
 	 */
-	public ArrayList<Item> doSearch(int[] searches) {
+	public ArrayList<Item> doSearch(int searches) {
 		// TODO
 		return null;
 	}

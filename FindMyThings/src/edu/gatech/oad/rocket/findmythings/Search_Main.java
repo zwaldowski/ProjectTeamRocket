@@ -1,5 +1,6 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,18 +32,24 @@ public class Search_Main extends Activity{
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_search);
+		setContentView(R.layout.activity_search_new);
+		//change to activity_search if it doesnt work
+		
 		
 		//addListenerOnButton();
 	}
-
+	
+	
 	//the method that decides which intent to show
 	public void showResults(View view) {
 		//Intent results = new Intent(getActivity(),results.class);
 		 boolean isChecked = ((RadioButton) view).isChecked();
 		 
+		 Controller cnt = Controller.shared();
+		 
 		 switch(checked) {
 		 case 0:
+			 
 			 //go by category
 			 break;
 		 case 1:
