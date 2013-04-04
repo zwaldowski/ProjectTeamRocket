@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-3.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-servlet-3.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/shiro-core-1.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/shiro-guice-1-1.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/shiro-web-1.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-14.0.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-codec-1.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/freemarker-gae-2.3.19.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-4.0b2.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-multibindings-3.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-jdk14-1.7.5.jar"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>
