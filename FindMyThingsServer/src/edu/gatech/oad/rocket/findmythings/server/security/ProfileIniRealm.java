@@ -131,23 +131,22 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
 	@Inject
 	public ProfileIniRealm(Ini ini) {
-		super();
+		this();
 		setAuthenticationTokenClass(UsernamePasswordToken.class);
 		setCredentialsMatcher(new PasswordMatcher());
 		setIni(ini);
 	}
 
     @Override
-    protected void processUserDefinitions(Map<String, String> userDefs) {
-    	if (userDefs == null || userDefs.isEmpty()) {
+    protected void processUserDefinitions(Map<String, String> users) {
+	if (users == null || users.isEmpty()) {
     		return;
     	}
 
     	Ini.Section profilesSection = getIni().getSection(PROFILES_SECTION_NAME);
 
-    	for (String email : userDefs.keySet()) {
-    		String value = userDefs.get(email);
-    		String[] passwordAndRolesArray = StringUtils.split(value);
+	for (String email : users.keySet()) {
+		String[] passwordAndRolesArray = StringUtils.split(users.get(email));
     		String password = passwordAndRolesArray[0];
 
     		String profileValue = profilesSection.get(email);
@@ -155,6 +154,7 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
     		String name = null;
     		PhoneNumber phone = null;
     		String address = null;
+			boolean hasProfile = false;
 
     		if (profileValue != null) {
     			profileValuesArray = StringUtils.split(profileValue, ',', '"', '"', false, true);
@@ -163,33 +163,28 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
     				phone = profileValuesArray[1] == null ? null : new PhoneNumber(profileValuesArray[1]);
     				address = profileValuesArray[2];
     			}
+				hasProfile = (name != null || phone != null || address != null);
     		}
 
     		SimpleAccount account = getUser(email);
 
-    		if (account != null &&
-    				(name != null || phone != null || address != null) &&
-    				!(account instanceof IniMemberAccount)) {
+		if (!(account instanceof IniMemberAccount) && hasProfile) {
     			this.users.remove(email);
     			account = null;
     		}
 
-    		Set<String> roles = null;
-    		Set<Permission> permissions = null;
+		Set<String> roles = new HashSet<>();
+		Set<Permission> permissions = new HashSet<>();
 
-    		if (passwordAndRolesArray.length > 1) {
-    			for (int i = 1; i < passwordAndRolesArray.length; i++) {
-    				if (roles == null) roles = new HashSet<>();
-    				String rolename = passwordAndRolesArray[i];
-    				roles.add(rolename);
+			for (int i = 1; i < passwordAndRolesArray.length; i++) {
+				String roleName = passwordAndRolesArray[i];
+				roles.add(roleName);
 
-    				SimpleRole role = getRole(rolename);
-    				if (role != null) {
-    					if (permissions == null) permissions = new HashSet<>();
-    					permissions.addAll(role.getPermissions());
-    				}
-    			}
-    		}
+				SimpleRole role = getRole(roleName);
+				if (role != null) {
+					permissions.addAll(role.getPermissions());
+				}
+			}
 
     		if (account == null) {
     			if (roles.contains("admin")) {
@@ -201,9 +196,9 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
     		account.setCredentials(password);
     		account.setRoles(roles);
-    		if (permissions != null) account.addObjectPermissions(permissions);
+			account.addObjectPermissions(permissions);
 
-    		if (account instanceof IniMemberAccount) {
+		if (hasProfile) {
     			((IniMemberAccount) account).setName(name);
     			((IniMemberAccount) account).setPhone(phone);
     			((IniMemberAccount) account).setAddress(address);
