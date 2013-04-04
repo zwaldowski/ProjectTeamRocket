@@ -184,7 +184,6 @@ public abstract class DatabaseService {
 		 * Save user with authorization information
 		 * @param user  User
 		 * @param changeCount should the user count be incremented
-		 * @return the user, after changes
 		 */
 		public void updateMember(DBMember user, boolean changeCount) {
 			ofy().save().entity(user);

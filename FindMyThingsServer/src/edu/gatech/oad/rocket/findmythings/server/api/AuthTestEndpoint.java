@@ -22,10 +22,6 @@ public class AuthTestEndpoint extends PageServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 6058248835620387583L;
-
-	public AuthTestEndpoint() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

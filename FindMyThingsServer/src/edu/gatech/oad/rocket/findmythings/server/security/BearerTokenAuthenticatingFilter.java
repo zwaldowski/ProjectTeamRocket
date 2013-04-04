@@ -83,12 +83,11 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		return null;
 	}
 	
-	private boolean stopWithNoToken(ServletResponse response) {
+	private void sendNoTokenError(ServletResponse response) {
 		HTTP.writeAsJSON(response,
 				Responses.STATUS, HTTP.Status.UNAUTHORIZED.toInt(),
 				Responses.MESSAGE, Messages.Status.UNAUTHORIZED.toString(),
 				Responses.FAILURE_REASON, Messages.Permissions.REQUIRES_LOGIN.toString());
-		return false;
 	}
 
 	@Override
@@ -98,7 +97,8 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		if (authTokenized || isLogin) {
 			return executeLogin(request, response);
 		} else {
-			return stopWithNoToken(response);
+			sendNoTokenError(response);
+			return false;
 		}
 	}
 	
@@ -126,7 +126,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 					Responses.STATUS, HTTP.Status.UNAUTHORIZED.toInt(),
 					Responses.MESSAGE, Messages.Login.getMessage(e));		
 		} else {
-			return stopWithNoToken(response);
+			sendNoTokenError(response);
 		}
 		return false;
 	}
@@ -140,7 +140,8 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		}
 		return super.onPreHandle(request, response, mappedValue);
 	}
-	
+
+	@SuppressWarnings("UnusedParameters")
 	protected boolean hasAuthorizationToken(ServletRequest request, ServletResponse response) {
 		String authzHeader = getAuthorizationHeader(request);
 		return authzHeader != null && isLoginAttempt(authzHeader);
@@ -157,7 +158,8 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
         String test = authzHeader.toLowerCase(Locale.ENGLISH);
         return test.startsWith(authzScheme) || test.startsWith(authzSchemeAlt);
     }
-	
+
+	@SuppressWarnings("UnusedParameters")
 	protected String[] getPrincipalsAndCredentials(String authorizationHeader, ServletRequest request) {
         if (authorizationHeader == null) {
             return null;
@@ -168,7 +170,8 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
         }
         return getPrincipalsAndCredentials(authTokens[0], authTokens[1]);
     }
-	
+
+	@SuppressWarnings("UnusedParameters")
 	protected String[] getPrincipalsAndCredentials(String scheme, String encoded) {
         String decoded = Base64.decodeToString(encoded);
         return decoded.split(":", 2);
@@ -179,7 +182,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
     }
 
     protected String getPassword(ServletRequest request) {
-        return WebUtils.getCleanParam(request, getUsernameParam());
+        return WebUtils.getCleanParam(request, getPasswordParam());
     }
     
     @Override
