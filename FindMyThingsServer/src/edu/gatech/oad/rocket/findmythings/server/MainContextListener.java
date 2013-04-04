@@ -8,6 +8,7 @@ import java.util.Locale;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
+import edu.gatech.oad.rocket.findmythings.server.web.ForgotServlet;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -97,7 +98,7 @@ public class MainContextListener extends GuiceServletContextListener {
 
 			serve("/login").with(SimpleTemplateServlet.class);
 			serve("/register").with(RegisterServlet.class);
-			serve("/forgot").with(ForgotEndpoint.class);
+			serve("/forgot").with(ForgotServlet.class);
 			serve("/activate").with(ActivateServlet.class);
 
 			serve("/api/authtest").with(AuthTestEndpoint.class);
