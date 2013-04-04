@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="userEmail" type="java.lang.String" -->
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">

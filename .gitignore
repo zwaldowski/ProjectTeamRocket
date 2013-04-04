@@ -40,3 +40,4 @@ appengine-generated/
 .idea/workspace.xml
 .idea/uiDesigner.xml
 .idea/dictionaries
+out

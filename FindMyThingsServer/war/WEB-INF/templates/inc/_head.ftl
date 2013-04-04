@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="title" type="java.lang.String" -->
 <meta charset="utf-8">
 <title>${title!"Find My Things"}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,7 @@
     padding-top: 60px;
     padding-bottom: 40px;
   }
-  #inputAddress { resize: none }
+  #inputAddress { resize: vertical }
   .input-prepend textarea {
     -moz-border-radius-topleft: 0;
     -webkit-border-top-left-radius: 0;

@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="code" type="java.lang.String" -->
 <#assign title="Find My Things &raquo; Register">
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +83,7 @@
       <p>The registration code was either invalid or expired.</p>
       <#break>
       <#default>
-      <p>Invalid data was recieved and we can't continue.</p>
+      <p>Invalid data was received and we can't continue.</p>
       </#switch>
 
       <p>You may attempt to reset your password to continue.</p>

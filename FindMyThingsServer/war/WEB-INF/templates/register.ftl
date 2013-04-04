@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="usernameParam" type="java.lang.String" -->
 <#assign title="Find My Things &raquo; Register">
 <!DOCTYPE html>
 <html lang="en">
@@ -23,12 +24,12 @@
       <#switch failureReason>
       <#case "badEmailAdd">
       <div class="alert">
-        <strong>Hey there!</strong> Your email wasn't valid. Care to try again?</a>
+        <strong>Hey there!</strong> Your email wasn't valid. Care to try again?
       </div>
       <#break>
       <#case "superForgot">
       <div class="alert alert-error">
-        <strong>Sure about that?</strong> No user exists with that email address. <a href="/register" class="btn btn-warning btn-mini">Register?</a></a>
+        <strong>Sure about that?</strong> No user exists with that email address. <a href="/register" class="btn btn-warning btn-mini">Register?</a>
       </div>
       <#break>
       <#default>

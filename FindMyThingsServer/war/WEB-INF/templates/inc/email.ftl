@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="email" type="java.lang.String" -->
+<#-- @ftlvariable name="href" type="java.lang.String" -->
 <h1>Thanks for being a user of <a href="http://rocket-findmythings.appspot.com">Find My Things</a></h1>
 
 <#if forgot??>
@@ -18,7 +20,7 @@
 
 <p>Alternatively, if you are unable to click the link, you may copy and paste the following address into your web browser:</p>
 
-<p><pre>${href}</pre></p>
+<pre>${href}</pre>
 
 <#if forgot??>
 <p>Note that if you did not initiate this request, feel free to ignore this message. Your account is safe.</p>
