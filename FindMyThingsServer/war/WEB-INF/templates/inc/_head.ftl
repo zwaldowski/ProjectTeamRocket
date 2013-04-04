@@ -13,8 +13,8 @@
     padding-top: 60px;
     padding-bottom: 40px;
   }
-  #inputAddress { resize: vertical }
   .input-prepend textarea {
+    resize: vertical;
     -moz-border-radius-topleft: 0;
     -webkit-border-top-left-radius: 0;
     border-top-left-radius: 0;

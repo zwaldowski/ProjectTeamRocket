@@ -66,27 +66,27 @@
       <#switch failureReason>
       <#case "alreadyUser">
       <div class="alert alert-error">
-        <strong>Hey there!</strong> A user with that email already exists. <a href="/forgot" class="btn btn-warning btn-mini">Forgot?</a></a>
+        <strong>Hey there!</strong> A user with that email already exists. <a href="/forgot" class="btn btn-warning btn-mini">Forgot?</a>
       </div>
       <#break>
       <#case "badEmailAdd">
       <div class="alert">
-        <strong>Whoops!</strong> Your email wasn't valid. Care to try again?</a>
+        <strong>Whoops!</strong> Your email wasn't valid. Care to try again?
       </div>
       <#break>
       <#case "badPassword">
       <div class="alert">
-        <strong>Whoops!</strong> Your password was too short. Try again.</a>
+        <strong>Whoops!</strong> Your password was too short. Try again.
       </div>
       <#break>
       <#case "passwdMatch">
       <div class="alert">
-        <strong>Whoops!</strong> The two passwords didn't match. Try again.</a>
+        <strong>Whoops!</strong> The two passwords didn't match. Try again.
       </div>
       <#break>
       <#case "badPhoneNum">
       <div class="alert">
-        <strong>Ring-a-ding!</strong> That's not a valid phone number. Try again.</a>
+        <strong>Ring-a-ding!</strong> That's not a valid phone number. Try again.
       </div>
       <#break>
       <#default>

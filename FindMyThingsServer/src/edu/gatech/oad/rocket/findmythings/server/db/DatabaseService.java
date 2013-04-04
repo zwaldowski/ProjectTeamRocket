@@ -128,7 +128,7 @@ public abstract class DatabaseService {
 		 * I can't see as too much of a problem, although they will need to be cleaned up with
 		 * a task on a regular basis (after they expire)..
 		 * @param code  The registration code
-		 * @param userName the user name for the code
+		 * @param email the user name for the code
 		 */
 		public void register(final String code, final String email) {
 			DBMember user = load().memberWithEmail(email);
@@ -154,12 +154,15 @@ public abstract class DatabaseService {
 		}
 
 		/**
-		 * Save user with authorization information
-		 * @param user  User
-		 * @param changeCount should the user count be incremented
-		 * @return the user, after changes
+		 * Save member with authorization and profile information
+		 * @param user  Member instance (required)
+		 * @param password  New password for the member (optional, null not allowed)
+		 * @param name  New name for the member (optional)
+		 * @param phone  New phone number for the member (optional)
+		 * @param address  New location for the member (optional)
 		 */
 		public void updateMember(DBMember user, String password, String name, PhoneNumber phone, String address) {
+			if (user == null) return;
 			if (password != null) user.setPassword(password);
 			if (phone != null) user.setPhone(phone);
 			if (name != null) user.setName(name);
@@ -168,12 +171,12 @@ public abstract class DatabaseService {
 		}
 
 		/**
-		 * Save user with authorization information
-		 * @param user  User
-		 * @param changeCount should the user count be incremented
-		 * @return the user, after changes
+		 * Save member with authorization information
+		 * @param user  Member instance (required)
+		 * @param password New password for the user (optional, null not allowed)
 		 */
 		public void updateMember(DBMember user, String password) {
+			if (user == null) return;
 			if (password != null) user.setPassword(password);
 			ofy().save().entity(user);
 		}
