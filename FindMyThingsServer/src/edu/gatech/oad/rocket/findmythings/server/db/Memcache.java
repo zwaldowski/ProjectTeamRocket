@@ -76,10 +76,10 @@ public class Memcache<K, V> implements Cache<K, V> {
     }
 
     public Set<K> keys() {
-        return new HashSet<K>(); // you just can't list a distributed cache
+        return new HashSet<>(); // you just can't list a distributed cache
     }
 
     public Collection<V> values() {
-        return new HashSet<V>(); // you can't list a distributed cache
+        return new HashSet<>(); // you can't list a distributed cache
     }
 }

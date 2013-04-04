@@ -79,17 +79,14 @@ public class PageGenerator {
     	}
     	
     	ByteArrayOutputStream os = new ByteArrayOutputStream();
-    	Writer outLocal = new OutputStreamWriter(os, charset);
-    	try {
-    		template.process(args, outLocal);
-    		outLocal.close();
-    		return new String(os.toByteArray(), charset);
-    	} catch (TemplateException e) {
-    		LOGGER.severe("Error processing template " + e.getMessage());
-    		return EMPTY_STRING;
-    	} finally {
-    		outLocal.close();
-    	}
+		try (Writer outLocal = new OutputStreamWriter(os, charset)) {
+			template.process(args, outLocal);
+			outLocal.close();
+			return new String(os.toByteArray(), charset);
+		} catch (TemplateException e) {
+			LOGGER.severe("Error processing template " + e.getMessage());
+			return EMPTY_STRING;
+		}
     }
     
     public String createPage(String templateName, Object... args) throws IOException {

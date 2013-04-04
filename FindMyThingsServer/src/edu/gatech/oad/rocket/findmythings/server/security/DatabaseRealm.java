@@ -40,7 +40,7 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 		LOG.fine("Finding authorization info for " + userEmail + " in DB");
 		DBMember member = DatabaseService.ofy().load().memberWithEmail(userEmail);
 		if (member == null || !memberCanLogIn(member)) {
-			LOG.info("Rejecting user " + member == null ? userEmail : member.getName());
+			LOG.info("Rejecting user " + userEmail);
 			return null;
 		}
 
@@ -67,13 +67,13 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 
 		DBMember member = DatabaseService.ofy().load().memberWithEmail(email);
 		if (member == null || !memberCanLogIn(member)) {
-			LOG.info("Rejecting user " + member == null ? email : member.getName());
+			LOG.info("Rejecting user " + email);
 			return null;
 		}
 
 		SimpleAccount account = new SimpleAccount(member.getEmail(), member.getHashedPassword(), new SimpleByteSource(member.getSalt()), getName());
-		account.setRoles(new HashSet<String>(member.getRoles()));
-		account.setStringPermissions(new HashSet<String>(member.getStringPermissions()));
+		account.setRoles(new HashSet<>(member.getRoles()));
+		account.setStringPermissions(new HashSet<>(member.getStringPermissions()));
 		return account;
 	}
 

@@ -6,6 +6,6 @@ import org.apache.shiro.cache.CacheManager;
 
 public class MemcacheManager implements CacheManager {
     public <K, V> Cache<K, V> getCache(String name) throws CacheException {
-        return new Memcache<K, V>(name);
+        return new Memcache<>(name);
     }
 }

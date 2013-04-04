@@ -68,8 +68,8 @@ public abstract class DBMember implements AppMutableMember {
 
     /** For objectify to create instances on retrieval */
 	protected DBMember() {
-        this.roles = new HashSet<String>();
-        this.permissions = new HashSet<String>();
+        this.roles = new HashSet<>();
+        this.permissions = new HashSet<>();
     }
 
     DBMember(String email) {
