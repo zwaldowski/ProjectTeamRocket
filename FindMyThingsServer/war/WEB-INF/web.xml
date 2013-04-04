@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns="http://java.sun.com/xml/ns/javaee"
-xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<display-name>Find My Things</display-name>
@@ -23,17 +22,5 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<listener>
 		<listener-class>edu.gatech.oad.rocket.findmythings.server.MainContextListener</listener-class>
 	</listener>
-	
-	<!-- servlet>
-		<servlet-name>FindMyThingsServer</servlet-name>
-		<servlet-class>edu.gatech.oad.rocket.findmythings.server.FindMyThingsServerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>FindMyThingsServer</servlet-name>
-		<url-pattern>/findmythingsserver</url-pattern>
-	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-	</welcome-file-list -->
 	
 </web-app>
