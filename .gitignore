@@ -35,3 +35,7 @@ tmp/**/*
 
 # Local DB
 appengine-generated/
+
+# IntelliJ
+.idea/workspace.xml
+.idea/uiDesigner.xml

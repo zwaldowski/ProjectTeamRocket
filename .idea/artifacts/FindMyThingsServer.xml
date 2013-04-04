@@ -1,0 +1,32 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="FindMyThingsServer">
+    <output-path>$PROJECT_DIR$/out/artifacts/FindMyThingsServer</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="FindMyThingsServer/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="FindMyThingsServer" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="aopalliance.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="guice-3.0.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="guice-servlet-3.0.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="shiro-core-1.2.1.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="shiro-guice-1-1.2.1.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="shiro-web-1.2.1.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="guava-14.0.1.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="commons-beanutils-1.8.3.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="commons-codec-1.5.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="commons-lang-2.5.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="commons-logging-1.1.1.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="freemarker-gae-2.3.19.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="objectify-4.0b2.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="guice-multibindings-3.0.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="slf4j-api-1.7.5.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="slf4j-jdk14-1.7.5.jar" module-name="FindMyThingsServer" />
+          <element id="library" level="project" name="AppEngine API" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
