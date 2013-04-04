@@ -35,8 +35,8 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 
     private String usernameParam;
     private String passwordParam;
-    
-    @Override @Inject
+
+	@Override @Inject @SuppressWarnings("EmptyMethod")
     public void setLoginUrl(@Named(Config.Keys.LOGIN_API_URL) String loginUrl) {
     	super.setLoginUrl(loginUrl);
     }
