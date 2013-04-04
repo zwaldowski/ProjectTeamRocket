@@ -183,7 +183,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
     }
     
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {    	
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
     	if (!isLoginRequest(request, response) && isPermissive(mappedValue) && hasAuthorizationToken(request, response)) {
     		return false;
     	}

@@ -83,7 +83,7 @@ public abstract class DatabaseService {
 	/**
 	 * @return our extension to Objectify
 	 */
-	public static final Database ofy() {
+	public static Database ofy() {
 		return (Database)ObjectifyService.ofy();
 	}
 

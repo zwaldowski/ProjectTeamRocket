@@ -171,7 +171,6 @@ public class MainContextListener extends GuiceServletContextListener {
 
 			// bind all password matching to the secure password hash
 		    bind(CredentialsMatcher.class).to(PasswordMatcher.class);
-		    bind(PasswordMatcher.class);
 		}
 
 		@Provides @Singleton

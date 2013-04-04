@@ -59,7 +59,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 		setAuthenticationTokenClass(BearerToken.class);
 	}
 
-	private static final boolean tokenIsValid(BearerToken token, DBAuthenticationToken dbToken) {
+	private static boolean tokenIsValid(BearerToken token, DBAuthenticationToken dbToken) {
 		return token != null && dbToken != null && dbToken.getEmail().equals((String)token.getPrincipal());
 	}
 
@@ -87,7 +87,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 		deleteTokens(principals);
     }
 
-	public static final String createNewToken(String email) {
+	public static String createNewToken(String email) {
 		return DatabaseService.ofy().save().authenticationToken(email);
 	}
 
