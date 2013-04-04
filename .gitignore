@@ -39,3 +39,4 @@ appengine-generated/
 # IntelliJ
 .idea/workspace.xml
 .idea/uiDesigner.xml
+.idea/dictionaries
