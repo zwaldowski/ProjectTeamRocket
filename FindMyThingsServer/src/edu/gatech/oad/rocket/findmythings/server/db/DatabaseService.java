@@ -1,5 +1,6 @@
 package edu.gatech.oad.rocket.findmythings.server.db;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -45,13 +46,6 @@ public abstract class DatabaseService {
 		ObjectifyService.setFactory(new DatabaseFactory());
 	}
 
-	/**
-	 * @return our extension to ObjectifyFactory
-	 */
-	public static DatabaseFactory factory() {
-		return (DatabaseFactory)ObjectifyService.factory();
-	}
-
 	@Singleton
 	public static class DatabaseFactory extends ObjectifyFactory {
 
@@ -93,25 +87,11 @@ public abstract class DatabaseService {
 			super(base);
 		}
 
-		/** More wrappers, fun */
-		@Override
-		public DatabaseLoader load() {
-			return new DatabaseLoader(super.load());
-		}
-		@Override
-		public DatabaseSaver save() {
-			return new DatabaseSaver(super.save());
-		}
-		@Override
-		public DatabaseDeleter delete() {
-			return new DatabaseDeleter(super.delete());
-		}
-
 		private void changeUserCount(final long delta) {
 			transact(new VoidWork() {
 				@Override
 				public void vrun() {
-					DBUserCounter th = load().userCounter();
+					DBUserCounter th = userCounter();
 					if (th == null) {
 						th = new DBUserCounter();
 					}
@@ -131,8 +111,7 @@ public abstract class DatabaseService {
 		 * @param email the user name for the code
 		 */
 		public void register(final String code, final String email) {
-			DBMember user = load().memberWithEmail(email);
-			register(user, code);
+			register(memberWithEmail(email), code);
 		}
 		
 		public void register(final DBMember user, final String code) {
@@ -141,7 +120,7 @@ public abstract class DatabaseService {
 				user.register();
 				updateMember(user, !wasRegistered);
 			}
-			delete().registrationTicketWithCode(code);
+			deleteRegistrationTicket(code);
 		}
 		
 		public void createMember(String email, String password, String name, PhoneNumber phone, String address) {
@@ -203,35 +182,28 @@ public abstract class DatabaseService {
 			Iterable<Key<DBAuthenticationToken>> allKeys = ofy().load().type(DBAuthenticationToken.class).filter("email", userEmail).keys();
 			ofy().delete().keys(allKeys);
 		}
-	}
-
-	public static class DatabaseLoader extends LoaderWrapper<DatabaseLoader> {
-
-		public DatabaseLoader(Loader base) {
-			super(base);
-		}
 
 		public String emailFromRegistrationCode(String code) {
-			DBRegistrationTicket reg = type(DBRegistrationTicket.class).id(code).get();
+			DBRegistrationTicket reg = load().type(DBRegistrationTicket.class).id(code).get();
 			return (reg == null) ?  null : (reg.isValid() ? reg.getEmail() : null);
 		}
 
 		public String emailFromAuthenticationToken(String token) {
-			DBAuthenticationToken auth = type(DBAuthenticationToken.class).id(token).get();
+			DBAuthenticationToken auth = load().type(DBAuthenticationToken.class).id(token).get();
 			return (auth == null) ? null : auth.getEmail();
 		}
 
 		public DBMember memberFromAuthenticationToken(String token) {
-			DBAuthenticationToken auth = type(DBAuthenticationToken.class).id(token).get();
-			return (auth == null) ? null : type(DBMember.class).id(auth.getEmail()).get();
+			DBAuthenticationToken auth = load().type(DBAuthenticationToken.class).id(token).get();
+			return (auth == null) ? null : load().type(DBMember.class).id(auth.getEmail()).get();
 		}
 
 		public DBMember memberWithEmail(String email) {
-			return type(DBMember.class).id(email).get();
+			return load().type(DBMember.class).id(email).get();
 		}
 
 		protected DBUserCounter userCounter() {
-			return type(DBUserCounter.class).id(DBUserCounter.COUNTER_ID).get();
+			return load().type(DBUserCounter.class).id(DBUserCounter.COUNTER_ID).get();
 		}
 
 		public long getUserCount() {
@@ -246,54 +218,43 @@ public abstract class DatabaseService {
 			return th.getLastModified();
 		}
 
-	}
+		/** Creation methods **/
 
-	public static class DatabaseSaver extends SaverWrapper {
-
-		public DatabaseSaver(Saver saver) {
-			super(saver);
-		}
-
-		public DBRegistrationTicket registrationTicket(String ticket, String email) {
+		public DBRegistrationTicket createRegistrationTicket(String ticket, String email) {
 			DBRegistrationTicket reg = new DBRegistrationTicket(ticket, email, REGISTRATION_VALID_DAYS, TimeUnit.DAYS);
-			ofy().save().entity(reg);
+			save().entity(reg);
 			return reg;
 		}
-		
+
 		private static final RandomNumberGenerator magic = new SecureRandomNumberGenerator();
 
-		public String registrationTicket(String email) {
+		public String createRegistrationTicket(String email) {
 			ByteSource salt = magic.nextBytes();
-	        String ticket = new Sha256Hash(email, new SimpleByteSource(salt), 63).toHex().substring(0,10);
-			DBRegistrationTicket reg = new DBRegistrationTicket(ticket, email, REGISTRATION_VALID_DAYS, TimeUnit.DAYS);
-			ofy().save().entity(reg);
+			String ticket = new Sha256Hash(email, new SimpleByteSource(salt), 63).toHex().substring(0,10);
+			createRegistrationTicket(ticket, email);
 			return ticket;
 		}
 
-		public String authenticationToken(String email) {
+		public String createAuthenticationToken(String email) {
 			DBAuthenticationToken auth = new DBAuthenticationToken(email);
-			ofy().save().entity(auth);
+			save().entity(auth);
 			return auth.getIdentifierString();
 		}
 
-	}
-
-	public static class DatabaseDeleter extends DeleterWrapper {
-
-		public DatabaseDeleter(Deleter deleter) {
-			super(deleter);
+		public void deleteRegistrationTicket(String ticket) {
+			delete().type(DBRegistrationTicket.class).id(ticket);
 		}
 
-		public void registrationTicketWithCode(String ticket) {
-			type(DBRegistrationTicket.class).id(ticket);
+		public void deleteAuthenticationToken(String token) {
+			delete().type(DBAuthenticationToken.class).id(token);
 		}
 
-		public void authenticationTokenWithCode(String token) {
-			type(DBAuthenticationToken.class).id(token);
+		public void deleteAuthenticationTokens(String... tokens) {
+			delete().type(DBAuthenticationToken.class).ids(tokens);
 		}
 
-		public void authenticationTokenWithCodes(String... tokens) {
-			type(DBAuthenticationToken.class).ids(tokens);
+		public void deleteAuthenticationTokens(Collection<String> tokens) {
+			delete().type(DBAuthenticationToken.class).ids(tokens);
 		}
 
 	}

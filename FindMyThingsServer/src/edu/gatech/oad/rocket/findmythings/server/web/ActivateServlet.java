@@ -46,7 +46,7 @@ public class ActivateServlet extends TemplateServlet {
     		// display password reset form
     		writeDocument(response, getDefaultTemplateURI(request), getParameterMap(request));
     	} else {
-    		String userNameFromCode = DatabaseService.ofy().load().emailFromRegistrationCode(code);
+		String userNameFromCode = DatabaseService.ofy().emailFromRegistrationCode(code);
     		if (userNameFromCode == null) {
     			request.setAttribute(Responses.FAILURE_REASON, Messages.Activate.CODE_EXPIRED.toString());
     		} else {

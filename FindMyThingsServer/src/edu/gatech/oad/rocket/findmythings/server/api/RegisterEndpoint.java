@@ -111,7 +111,7 @@ public class RegisterEndpoint extends TemplateServlet {
 	}
 
 	protected void mailAuthenticationTokenSendOK(HttpServletRequest request, HttpServletResponse response, String email, boolean isForgot) {
-		String registrationToken = DatabaseService.ofy().save().authenticationToken(email);
+		String registrationToken = DatabaseService.ofy().createRegistrationTicket(email);
 		
 		// send email with registrationToken
 		Queue queue = QueueFactory.getDefaultQueue();

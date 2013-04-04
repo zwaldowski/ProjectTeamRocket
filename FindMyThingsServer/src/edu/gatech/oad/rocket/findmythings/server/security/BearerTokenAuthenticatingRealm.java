@@ -87,15 +87,11 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 		deleteTokens(principals);
     }
 
-	public static String createNewToken(String email) {
-		return DatabaseService.ofy().save().authenticationToken(email);
-	}
-
 	@SuppressWarnings("unchecked")
 	public final void deleteTokens(PrincipalCollection principals) {
 		Collection<String> tokens = principals.fromRealm(getName());
 		if (tokens != null) { //  && tokens.size() > 1
-			DatabaseService.ofy().delete().type(DBAuthenticationToken.class).ids(tokens);
+			DatabaseService.ofy().deleteAuthenticationTokens(tokens);
 		}
 	}
 

@@ -38,7 +38,7 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 			throw new NullPointerException("Can't find a principal in the collection");
 		}
 		LOG.fine("Finding authorization info for " + userEmail + " in DB");
-		DBMember member = DatabaseService.ofy().load().memberWithEmail(userEmail);
+		DBMember member = DatabaseService.ofy().memberWithEmail(userEmail);
 		if (memberCannotLogIn(member)) {
 			LOG.info("Rejecting user " + userEmail);
 			return null;
@@ -65,7 +65,7 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 		Preconditions.checkNotNull(email, "Email can't be null");
 		LOG.info("Finding authentication info for " + email + " in DB");
 
-		DBMember member = DatabaseService.ofy().load().memberWithEmail(email);
+		DBMember member = DatabaseService.ofy().memberWithEmail(email);
 		if (memberCannotLogIn(member)) {
 			LOG.info("Rejecting user " + email);
 			return null;

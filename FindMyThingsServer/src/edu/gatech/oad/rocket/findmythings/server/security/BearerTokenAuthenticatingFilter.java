@@ -8,6 +8,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.codec.Base64;
@@ -106,7 +107,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
 		if (isLoginRequest(request, response)) {
 			String email = (String)subject.getPrincipal();
-			String newToken = BearerTokenAuthenticatingRealm.createNewToken(email);
+			String newToken = DatabaseService.ofy().createAuthenticationToken(email);
 			HTTP.writeAsJSON(response,
 					Responses.STATUS, HTTP.Status.OK.toInt(),
 					Responses.MESSAGE, Messages.Status.OK.toString(),
