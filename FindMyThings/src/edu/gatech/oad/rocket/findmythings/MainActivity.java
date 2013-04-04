@@ -85,7 +85,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 		
 		setTitle(EnumHelper.localizedFromArray(this, R.array.item_list_titles, mType));
-
+		
 		ItemListFragment fragment;
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity

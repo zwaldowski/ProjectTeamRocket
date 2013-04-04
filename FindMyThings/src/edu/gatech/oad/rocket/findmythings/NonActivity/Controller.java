@@ -150,6 +150,15 @@ public final class Controller {
 		ItemsList container = getContainer(kind);
 		return new Adapter(context, resource, textViewResourceId, container.mItems);
 	}
+	
+	/**
+	 * Returns a List of all items of the same type
+	 * @param kind
+	 * @return
+	 */
+	public ArrayList<Item> getItem(Type kind) {
+		return getContainer(kind).mItems;
+	}
 
 	/**
 	 * create a new item (lost, found, donated or requested)

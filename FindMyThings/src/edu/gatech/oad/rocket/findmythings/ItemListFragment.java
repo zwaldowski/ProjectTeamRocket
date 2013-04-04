@@ -48,7 +48,7 @@ public class ItemListFragment extends ListFragment {
 	 * implement. This mechanism allows activities to be notified of item
 	 * selections.
 	 */
-
+	
 	private static Adapter adapter;
 
 	public interface Callbacks {
