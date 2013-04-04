@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Singleton;
 import edu.gatech.oad.rocket.findmythings.server.api.RegisterEndpoint;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;

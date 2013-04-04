@@ -3,12 +3,11 @@ package edu.gatech.oad.rocket.findmythings.server.util;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.google.appengine.api.mail.MailService;
 import com.google.appengine.api.mail.MailServiceFactory;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
 @Singleton
 public class Envelope {
