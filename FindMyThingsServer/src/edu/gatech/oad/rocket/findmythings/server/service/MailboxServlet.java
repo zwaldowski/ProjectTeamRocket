@@ -15,13 +15,16 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class MailboxServlet extends HttpServlet {
+	static final Logger LOG = Logger.getLogger(MailboxServlet.class.getName());
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5510648263425183234L;
-	
-    static final Logger LOG = Logger.getLogger(MailboxServlet.class.getName());
+
+	public MailboxServlet() {
+		super();
+	}
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)

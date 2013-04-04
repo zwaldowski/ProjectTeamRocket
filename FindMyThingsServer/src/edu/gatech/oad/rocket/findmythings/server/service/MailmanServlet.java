@@ -18,14 +18,18 @@ import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
 
 @Singleton
 public class MailmanServlet extends TemplateServlet {
+	static final Logger LOG = Logger.getLogger(MailmanServlet.class.getName());
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7698678204988659041L;
-    static final Logger LOG = Logger.getLogger(MailmanServlet.class.getName());
 
-    private final Envelope emailWrapper;
+    private Envelope emailWrapper = null;
+
+	MailmanServlet() {
+		super();
+	}
 
     @Inject
     MailmanServlet(Envelope emailWrapper) {
