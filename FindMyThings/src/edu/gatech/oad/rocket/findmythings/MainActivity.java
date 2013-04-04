@@ -16,6 +16,7 @@ import android.preference.PreferenceFragment;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import edu.gatech.oad.rocket.findmythings.Helpers.TabHelp;
 import edu.gatech.oad.rocket.findmythings.NonActivity.*;
@@ -36,34 +37,14 @@ import edu.gatech.oad.rocket.findmythings.NonActivity.*;
  * @author TeamRocket
  */
 public class MainActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
-
+	
 	public static class MainFragment extends PreferenceFragment {
 		
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
-	        
-	        
-	        //Admin
-	        if (Login.currUser==null || !Login.currUser.isAdmin()) {
-			PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
-			Preference adminLink = findPreference(getString(R.string.main_key_admin));
-			moreCategory.removePreference(adminLink);
-	        }
-	        if(Login.currUser==null) { //Hide sign out if no one is logged in
-	        	PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
-				Preference accountLink = findPreference(getString(R.string.main_key_myaccount));
-				Preference signoutLink = findPreference(getString(R.string.main_key_signout));
-				moreCategory.removePreference(signoutLink);
-				moreCategory.removePreference(accountLink);
-			}
-	        if(Login.currUser!=null) { // Hides sign in if someone is logged in
-	        	PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
-	        	Preference signinLink =  findPreference(getString(R.string.main_key_signin));
-	           	moreCategory.removePreference(signinLink);
-	        }
-	        
+	      	        	        
 	        Intent lostIntent = findPreference(getString(R.string.main_key_lost)).getIntent();
 	        lostIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	        lostIntent.putExtra(Type.ID, Type.LOST.ordinal());
@@ -79,14 +60,17 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        Intent requestIntent = findPreference(getString(R.string.main_key_requests)).getIntent();
 	        requestIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	        requestIntent.putExtra(Type.ID, Type.REQUEST.ordinal());
+	        
+	        //trying new stuff
+	        //Intent searchIntent = findPreference(getString(R.string.main_key_searches)).getIntent();
+	        //searchIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	        Intent searchIntent =  new Intent(getActivity(), Search_Main.class);
 	    
-	    	Intent searchIntent = findPreference(getString(R.string.main_key_searches)).getIntent();
-	        searchIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	        //Intent(Context packageContext, Class<?> cls)
+	        
+	        //MainFragment.this,Search_Main.class
+	        //end
 
-	        if(Login.currUser!=null) {
-	        	Preference myAccount = findPreference(getString(R.string.main_key_myaccount));
-	        	myAccount.setSummary(LoginWindow.Email);
-	        }
 	    }	
 	}
 	
@@ -104,6 +88,26 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+		
+		//Set Login Title
+		MenuItem loginMenu = menu.findItem(R.id.menu_login);
+        String title = Login.currUser==null? "Login":"Logout";
+	    loginMenu.setTitle(title);
+				
+		//Set Login Title
+		MenuItem accountMenu = menu.findItem(R.id.menu_account);
+		if(Login.currUser!=null) {
+			String account = LoginWindow.Email;
+			accountMenu.setTitle(account);
+		} else { 
+			accountMenu.setVisible(false);
+		}
+		
+		//Show/Hide admin button
+		if(Login.currUser==null || !Login.currUser.isAdmin()) {
+			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
+        	adminMenu.setVisible(false);
+		}
 		return true;
 	}
 	
@@ -116,7 +120,14 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 			startActivity(i);
 		    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 			return true;
-		}
+		case R.id.menu_login: 
+			return Login.currUser==null? toLogin():logOut(); 
+		case R.id.menu_account: 
+			return toAccount();
+		case R.id.menu_admin:
+			return toAdmin();
+			
+	}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -157,6 +168,8 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	    }
 	    
 	   
+	    
+	   
 		super.onCreate(savedInstanceState);
 		
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
@@ -191,18 +204,61 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
     			Editor prefEdit = sharedPreferences.edit();
     			prefEdit.putBoolean(key, false);
     			prefEdit.commit();
-    			//Clear current user
-    			Login.currUser=null;
-    			//Redraw the activity
-    			//TODO: Redraw the activity in a way that actually makes sense
-    			finish(); 
-    			startActivity(getIntent());
-    			overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     			   			
     		}
      	}
     	
     }
+    
+    /**
+     * Logout
+     */
+    public boolean logOut() {
+    	//Clear current user
+		Login.currUser=null;
+		//Redraw the activity
+		//TODO: Redraw the activity in a way that actually makes sense
+		finish(); 
+		startActivity(getIntent());
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		return true;
+    }
+    
+    /**
+     * Go to LoginWindow
+     */
+    public boolean toLogin() {
+    	Intent toLogin = new Intent(MainActivity.this, LoginWindow.class);
+		finish();
+		startActivity(toLogin);
+		overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+		return true;
+    }
+    
+    /**
+     * Go to MyAccount
+     */
+    public boolean toAccount() {
+    	Intent toAccount = new Intent(MainActivity.this, MyAccount.class);
+		finish();
+		startActivity(toAccount);
+		overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+		return true;
+    }
+    
+    /**
+     * Go to AdminActivity
+     * @return
+     */
+    public boolean toAdmin() {
+    	Intent toAccount = new Intent(MainActivity.this, AdminActivity.class);
+		finish();
+		startActivity(toAccount);
+		overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+		return true;
+    }
+    
+    
    
 
 }

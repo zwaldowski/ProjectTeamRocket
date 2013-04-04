@@ -35,69 +35,14 @@
     			/>
     		</Preference>
     		
-    		<Preference 
-    		android:key="@string/main_key_requests" 
-    		android:title="@string/main_title_requests"
-    		android:summary="@string/main_summary_requests">
-    			<intent 
-    			android:targetPackage="edu.gatech.oad.rocket.findmythings" 
-    			android:targetClass="edu.gatech.oad.rocket.findmythings.ItemListActivity" 
-    			android:action="android.intent.action.VIEW" />
+    		<Preference android:key="@string/main_key_requests" android:title="@string/main_title_requests" android:summary="@string/main_summary_requests">
+       
+    			<intent android:targetPackage="edu.gatech.oad.rocket.findmythings" android:targetClass="edu.gatech.oad.rocket.findmythings.ItemListActivity" android:action="android.intent.action.VIEW" />
    			</Preference>
-   			
-   		<Preference 
-    		    android:summary="@string/main_summary_searches" 
-    		    android:key="@string/main_key_searches" 
-    		    android:title="@string/main_title_searches">
-				<intent
-			android:targetPackage="edu.gatech.oad.rocket.findmythings"
-			android:targetClass="edu.gatech.oad.rocket.findmythings.Search_Main"
-			android:action="android.intent.action.VIEW" />
-			</Preference>
 
            
         </PreferenceCategory>
-		<PreferenceCategory
-		    android:key="@string/main_group_key_other"
-		    android:title="@string/header_more"> 	
-	
-    		<Preference
-    		    android:key="@string/main_key_myaccount"
-    		    android:title="@string/main_title_account">
-       
-    			<intent 
-			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
-			 android:targetClass="edu.gatech.oad.rocket.findmythings.MyAccount"
-       			 android:action="android.intent.action.VIEW"
-    			/>
-   			</Preference> 	
-	
-    		<Preference
-    		    android:key="@string/main_key_admin"
-    		    android:title="@string/main_title_admin">
-       
-    			<intent 
-			 android:targetPackage="edu.gatech.oad.rocket.findmythings"
-			 android:targetClass="edu.gatech.oad.rocket.findmythings.AdminActivity"
-       			 android:action="android.intent.action.VIEW"
-    			/>
-   			</Preference>
-   			<Preference 
-   			    android:key="@string/main_key_signin"
-   			    android:title="@string/main_title_signin" >
-   			    <intent 
-			 	android:targetPackage="edu.gatech.oad.rocket.findmythings"
-				android:targetClass="edu.gatech.oad.rocket.findmythings.LoginWindow"
-       			android:action="android.intent.action.VIEW"
-    			/>  
-   			 </Preference>
-	
-		<edu.gatech.oad.rocket.findmythings.Helpers.ConfirmationDialog
-    			android:key="@string/main_key_signout"
-    			android:title="@string/main_title_signout"
-    			android:dialogMessage="@string/main_message_signout">
-			</edu.gatech.oad.rocket.findmythings.Helpers.ConfirmationDialog>
-		</PreferenceCategory>
+		
     
     <!-- Goes to Activity to view items -->
     <!-- EditPreferenceActivity. -->

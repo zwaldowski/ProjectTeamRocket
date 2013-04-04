@@ -5,5 +5,16 @@
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
         android:showAsAction="ifRoom|withText" />
+     
+     <item android:id="@+id/menu_account"
+          android:title="My Account"
+          />
+    <item android:id="@+id/menu_login"
+          android:icon="@drawable/ic_action_user"
+          android:title="Login" >
+    </item> 		
+    <item android:id="@+id/menu_admin"
+    	  android:title="@string/main_title_admin">
+    </item>
 
 </menu>

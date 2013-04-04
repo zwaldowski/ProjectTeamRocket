@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,6 +85,17 @@ public class AdminActivity extends ListActivity {
 		next.putExtra("id",(int)id);
 		finish();
 	    startActivity(next);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+	    	goToParentActivity();
+			return true;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
