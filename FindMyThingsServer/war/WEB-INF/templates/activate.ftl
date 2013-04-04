@@ -17,7 +17,7 @@
       <#switch failureReason>
       <#case "expiredCode">
       <div class="alert">
-        <strong>Whoops!</strong> The password reset attempt expired. <a href="/forgot" class="btn btn-warning btn-info">Try again.</a></a>
+        <strong>Whoops!</strong> The password reset attempt expired. <a href="/forgot" class="btn btn-warning btn-info">Try again.</a>
       </div>
       <#break>
       <#case "noSuchUser">
@@ -27,12 +27,12 @@
       <#break>
       <#case "badPassword">
       <div class="alert">
-        <strong>Whoops!</strong> Your password was too short. Try again.</a>
+        <strong>Whoops!</strong> Your password was too short. Try again.
       </div>
       <#break>
       <#case "passwdMatch">
       <div class="alert">
-        <strong>Whoops!</strong> The two passwords didn't match. Try again.</a>
+        <strong>Whoops!</strong> The two passwords didn't match. Try again.
       </div>
       <#break>
       <#default>
@@ -103,11 +103,11 @@
       <p>You may now log in.</p>
 
       <p>
-        <a class="btn btn-large btn-primary" href="/login">Login</button>
+        <a class="btn btn-large btn-primary" href="/login">Login</a>
       </p>
 
-      <#/if>
-      <#/if>
+      </#if>
+      </#if>
       
       <#include "inc/footer.ftl">
 
