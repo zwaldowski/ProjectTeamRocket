@@ -57,6 +57,11 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	private ActionBar actionBar;
 	
+	/**
+	 * Used for the AlertDialog when user tries to sign out
+	 */
+	private boolean logOut = false;
+	
 
 
 	@Override
@@ -138,7 +143,7 @@ public class MainActivity extends FragmentActivity implements
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 				return true;
 			case R.id.menu_login: 
-				return Login.currUser==null? toLogin():logOut(); 
+				return Login.currUser==null? logIn():logOut(); 
 			case R.id.menu_account: 
 				return toAccount();
 			case R.id.menu_admin:
@@ -154,7 +159,7 @@ public class MainActivity extends FragmentActivity implements
 	    String noOverKey = getString(R.string.key_nooverride_animation);
 	    Bundle extraInfo = getIntent().getExtras();
 		if (extraInfo == null || (extraInfo != null && !extraInfo.getBoolean(noOverKey))) {
-			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+			//overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 		}
 	}
 
@@ -283,7 +288,7 @@ public class MainActivity extends FragmentActivity implements
 	   /**
      * Go to LoginWindow
      */
-    public boolean toLogin() {
+    public boolean logIn() {
     	Intent toLogin = new Intent(MainActivity.this, LoginWindow.class);
 		finish();
 		startActivity(toLogin);
@@ -318,13 +323,29 @@ public class MainActivity extends FragmentActivity implements
      * Logout
      */
     public boolean logOut() {
-    	//Clear current user
-		Login.currUser=null;
-		//Redraw the activity
-		//TODO: Redraw the activity in a way that actually makes sense
-		finish(); 
-		startActivity(getIntent());
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-		return true;
+    	ErrorDialog toLogin =  new ErrorDialog("Really log out?", "Sign out", "Cancel");
+		AlertDialog.Builder temp = toLogin.getDialog(this,
+			new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				//Clear current user
+				Login.currUser=null;
+				//Redraw the activity
+				//TODO: Redraw the activity in a way that actually makes sense
+				finish(); 
+				startActivity(getIntent());
+				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+				logOut = true;
+	            }	
+			}, 
+			new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					logOut = false;
+				}    
+		
+			});
+		temp.show();
+    	return logOut;    	
     }
 }
