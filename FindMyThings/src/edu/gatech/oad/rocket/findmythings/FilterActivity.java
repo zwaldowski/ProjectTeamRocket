@@ -1,14 +1,18 @@
 package edu.gatech.oad.rocket.findmythings;
 
 import android.os.Bundle;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
-public class FilterActivity extends Activity implements OnItemSelectedListener {
+public class FilterActivity extends Activity implements OnItemSelectedListener, TabListener {
 	
 	/**
 	 * References to layout
@@ -28,7 +32,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 		
 		mDate = (Spinner)findViewById(R.id.date_spinner);
 		mDate.setOnItemSelectedListener(this);
-		
+			
 		setTitle("Filtering " + "whatevs"/*placeholder*/);
 	}
 
@@ -49,6 +53,24 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
 	}

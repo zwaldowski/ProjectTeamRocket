@@ -1,5 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.NonActivity;
 
+import java.util.ArrayList;
+
 /**
  * CS 2340 - FindMyStuff Android App
  * This class creates a new User object
@@ -17,6 +19,11 @@ public class User extends Member {
 	 * The number of login attempts.
 	 */
 	private int attempts = 0;
+	
+	/**
+	 * Store all items the user has submitted
+	 */
+	private ArrayList<Item> currSubmits; //TODO: this
 
 	public User(String user, String pass, String phone) {
 		super(user, pass, phone);

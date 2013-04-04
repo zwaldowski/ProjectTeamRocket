@@ -1,5 +1,8 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -14,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.gatech.oad.rocket.findmythings.Helpers.TabHelp;
 import edu.gatech.oad.rocket.findmythings.NonActivity.*;
 
 /**
@@ -40,7 +44,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	        super.onCreate(savedInstanceState);
 	        addPreferencesFromResource(R.xml.main_lookingfor);
 	        
-
+	        
 	        //Admin
 	        if (Login.currUser==null || !Login.currUser.isAdmin()) {
 			PreferenceCategory moreCategory = (PreferenceCategory) findPreference(getString(R.string.main_group_key_other));
@@ -132,6 +136,34 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	@SuppressWarnings("deprecation")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+		ActionBar actionBar = getActionBar();
+	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	    actionBar.setDisplayShowTitleEnabled(true);
+
+	    Tab tab;
+	    String tabName = "";
+	    for(int i = 0; i <4;i++) {
+	    	switch(i) { //Create tabs
+	    	case 0:
+	    		tabName = "Lost";
+	    		break;
+	    	case 1:
+	    		tabName = "Found";
+	    		break;
+	    	case 2: 
+	    		tabName = "Donations";
+	    		break;
+	    	case 3:
+	    		tabName = "Reqeusts";
+	    		break;
+	    	}
+	    	tab = actionBar.newTab()
+		            .setText(tabName)
+		    		.setTabListener(new TabHelp());
+		    actionBar.addTab(tab);
+	    }
+	    
+	   
 		super.onCreate(savedInstanceState);
 		
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
