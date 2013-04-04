@@ -147,7 +147,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-th"></i></span>
-              <textarea name="address" rows="3" id="inputAddress" type="text" placeholder="Address or Neighborhood"></textarea>
+              <textarea name="address" rows="3" id="inputAddress" placeholder="Address or Neighborhood"></textarea>
             </div>
           </div>
         </div>
