@@ -36,7 +36,7 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 		private String address = null;
 
 		IniMemberAccount(String principal, String credentials, String realmName) {
-			super((Object)principal, (Object)credentials, realmName);
+			super(principal, credentials, realmName);
 		}
 
 		@Override
@@ -151,7 +151,7 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
     		String password = passwordAndRolesArray[0];
 
     		String profileValue = profilesSection.get(email);
-    		String[] profileValuesArray = null;
+    		String[] profileValuesArray;
     		String name = null;
     		PhoneNumber phone = null;
     		String address = null;
@@ -215,9 +215,8 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
     @Override
     public boolean accountExists(String email) {
-    	if (email == null) return false;
-    	return getUser(email) != null;
-    }
+		return email != null && getUser(email) != null;
+	}
 
     @Override
     public AppMember getAccount(String email) {

@@ -37,7 +37,6 @@ public class ForgotEndpoint extends RegisterEndpoint {
 			mailAuthenticationTokenSendOK(request, response, email, true);
 		} catch (Exception e) {
 			sendError(request, response, Messages.Register.INVALID_DATA);
-			return;
 		}
 	}
 	

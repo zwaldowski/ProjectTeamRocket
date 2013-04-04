@@ -102,7 +102,6 @@ public class RegisterEndpoint extends TemplateServlet {
 			mailAuthenticationTokenSendOK(request, response, email, false);
 		} catch (Exception e) {
 			sendError(request, response, Messages.Register.INVALID_DATA);
-			return;
 		}
 	}
 	

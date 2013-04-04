@@ -60,7 +60,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 	}
 
 	private static boolean tokenIsValid(BearerToken token, DBAuthenticationToken dbToken) {
-		return token != null && dbToken != null && dbToken.getEmail().equals((String)token.getPrincipal());
+		return token != null && dbToken != null && dbToken.getEmail().equals(token.getPrincipal());
 	}
 
 	@Override

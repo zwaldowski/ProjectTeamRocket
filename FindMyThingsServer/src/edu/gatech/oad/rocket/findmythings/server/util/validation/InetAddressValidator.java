@@ -81,7 +81,7 @@ public class InetAddressValidator implements Serializable {
                 return false;
             }
 
-            int iIpSegment = 0;
+            int iIpSegment;
 
             try {
                 iIpSegment = Integer.parseInt(ipSegment);

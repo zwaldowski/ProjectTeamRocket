@@ -95,7 +95,6 @@ public class ActivateServlet extends TemplateServlet {
 			writeDocument(response, getDefaultTemplateURI(request), getParameterMap(request));
 		} catch (Exception e) {
 			sendError(request, response, Messages.Activate.INVALID_DATA);
-			return;
 		}
 	}
 
