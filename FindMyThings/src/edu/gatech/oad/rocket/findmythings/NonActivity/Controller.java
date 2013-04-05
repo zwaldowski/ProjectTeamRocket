@@ -84,7 +84,7 @@ public final class Controller {
 		cat.setLoc("Colombia");
 		dog.setLoc("Santa Rosa, California");
 		catdog.setLoc("Detroit, Michigan");
-		reqStuff.setDescription("Georgia Institute of Technology");
+		reqStuff.setLoc("Georgia Institute of Technology");
 		
 		reqStuff.setType(Type.REQUEST);
 		cat.setType(Type.FOUND);
