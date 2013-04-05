@@ -28,17 +28,20 @@ public class TabHelp implements TabListener{
 		if(name.equals("Lost")) {
 			if(ItemListFragment.adapter!=null) {
 				ItemListFragment.update(control.getItem(Type.LOST));
+				MainActivity.mType = Type.LOST;
 			}
 		}
 		if(name.equals("Found")) {
 			ItemListFragment.update(control.getItem(Type.FOUND));
-			
+			MainActivity.mType = Type.FOUND;			
 		}
 		if(name.equals("Donations")) {
 			ItemListFragment.update(control.getItem(Type.DONATION));
+			MainActivity.mType = Type.DONATION;
 		}
 		if(name.equals("Requests")) {
 			ItemListFragment.update(control.getItem(Type.REQUEST));
+			MainActivity.mType = Type.REQUEST;
 		}
 		
 	}

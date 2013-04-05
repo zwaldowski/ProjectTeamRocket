@@ -52,6 +52,11 @@ public class ItemListFragment extends ListFragment {
 	 */
 	public static Adapter adapter;
 	
+	/**
+	 * Current list the Adapter is displaying
+	 */
+	public static ArrayList<Item> currList;
+	
 	
 	/**
 	 * A callback interface that all activities containing this fragment must
@@ -85,15 +90,16 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-				
-		adapter = control.newItemsAdapter(getActivity(),
+		currList = control.getItem(Type.LOST);
+		adapter = new Adapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, Type.LOST);
+				android.R.id.text1, currList);
 		setListAdapter(adapter);
 	}
 
 	
 	public static void update(ArrayList<Item> tempList) {
+		currList = tempList;
 		adapter.setList(tempList);		
 	}
 
@@ -139,7 +145,9 @@ public class ItemListFragment extends ListFragment {
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
 		Type mItemClass = ((MainActivity)getActivity()).getItemType();
-		mCallbacks.onItemSelected(control.getItem(mItemClass, position).getName());
+		String s = currList.get(position).getName();
+		mCallbacks.onItemSelected(s);
+		//mCallbacks.onItemSelected(control.getItem(mItemClass, position).getName());
 	}
 
 	@Override
