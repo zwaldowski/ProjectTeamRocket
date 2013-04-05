@@ -190,18 +190,6 @@ public final class Controller {
 		return getContainer(kind).mItems;
 	}
 	
-	/**
-	 * Returns all Items 
-	 */
-	public ArrayList<Item> getAllItems() {
-		ArrayList<Item> all = new ArrayList<Item>();
-		all.addAll(getItem(Type.LOST));
-		all.addAll(getItem(Type.FOUND));
-		all.addAll(getItem(Type.DONATION));
-		all.addAll(getItem(Type.REQUEST));
-		return all;
-	 }
-	
 
 	/**
 	 * create a new item (lost, found, donated or requested)
