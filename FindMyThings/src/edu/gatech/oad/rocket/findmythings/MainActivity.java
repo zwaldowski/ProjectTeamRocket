@@ -109,6 +109,7 @@ public class MainActivity extends FragmentActivity implements
 			fragment.setActivateOnItemClick(true);
 		}
 		setTitle("Find My Things");
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
 	

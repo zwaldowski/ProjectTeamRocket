@@ -90,7 +90,9 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		currList = control.getItem(null);
+		//Array to be represented by the adapter
+		currList = control.getItem(((MainActivity)getActivity()).getItemType());
+		//Takes the array and creates individual views for each item
 		adapter = new Adapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, currList);
