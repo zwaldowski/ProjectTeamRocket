@@ -63,7 +63,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 
 		filter.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				ArrayList<Item> results = cnt.doSearch(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());	
+				ArrayList<Item> results = cnt.filter(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());	
 				
 				/**trying to create new ItemList with results of filter*/
 				//Intent i = new Intent(getActivity(),R.layout.activity_item_list);

@@ -202,7 +202,7 @@ public final class Controller {
 	 * @param int Date --> 0=all, 1=yesterday, 2=14days, 3=30days 
 	 * @return Nothing, so far.
 	 */
-	public ArrayList<Item> doSearch(Type kind, int category, int status, int date) {
+	public ArrayList<Item> filter(Type kind, int category, int status, int date) {
 		ArrayList<Item> all = getItem(kind);
 		ArrayList<Item> cat = new ArrayList<Item>();
 		ArrayList<Item> stat = new ArrayList<Item>();
@@ -289,6 +289,15 @@ public final class Controller {
 		}
 	
 		return results;
+	}
+	
+	
+	/**
+	 * get an array of items with the given 
+	 * @return
+	 */
+	public ArrayList<Item> doSearch() {
+		return null;
 	}
 
 
