@@ -1,9 +1,9 @@
 package edu.gatech.oad.rocket.findmythings.NonActivity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -56,6 +56,12 @@ public final class Controller {
 		public void addItem(Item i) {
 			mItems.add(i);
 			mItemsMap.put(i.getName(),i);
+		}
+		
+		public void addAll(ItemsList c) {
+			mItems.addAll(c.mItems);
+			mItemsMap.putAll(mItemsMap);
+			
 		}
 
 		public Item getItem(Integer key) {
@@ -115,7 +121,18 @@ public final class Controller {
 	 * @return an ItemsList object
 	 */
 	private ItemsList getContainer(Type kind) {
+		if(kind == null)
+			return getContainer();
 		return allItems.get(kind);
+	}
+	
+	private ItemsList getContainer() {
+		ItemsList all = new ItemsList();
+		all.addAll(allItems.get(Type.LOST));
+		all.addAll(allItems.get(Type.FOUND));
+		all.addAll(allItems.get(Type.DONATION));
+		all.addAll(allItems.get(Type.REQUEST));
+		return all;
 	}
 
 	/**
@@ -137,7 +154,7 @@ public final class Controller {
 	 * @param key The key of the Item to return
 	 */
 	public Item getItem(Type kind, Integer key) {
-		ItemsList container = getContainer(kind);
+		ItemsList container = kind==null? getContainer():getContainer(kind);
 		return container.getItem(key);
 	}
 
@@ -172,6 +189,19 @@ public final class Controller {
 	public ArrayList<Item> getItem(Type kind) {
 		return getContainer(kind).mItems;
 	}
+	
+	/**
+	 * Returns all Items 
+	 */
+	public ArrayList<Item> getAllItems() {
+		ArrayList<Item> all = new ArrayList<Item>();
+		all.addAll(getItem(Type.LOST));
+		all.addAll(getItem(Type.FOUND));
+		all.addAll(getItem(Type.DONATION));
+		all.addAll(getItem(Type.REQUEST));
+		return all;
+	 }
+	
 
 	/**
 	 * create a new item (lost, found, donated or requested)

@@ -90,7 +90,7 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		currList = control.getItem(Type.LOST);
+		currList = control.getItem(null);
 		adapter = new Adapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, currList);
@@ -146,6 +146,7 @@ public class ItemListFragment extends ListFragment {
 		// fragment is attached to one) that an item has been selected.
 		Type mItemClass = ((MainActivity)getActivity()).getItemType();
 		mCallbacks.onItemSelected(control.getItem(mItemClass, position).getName());
+		
 	}
 
 	@Override

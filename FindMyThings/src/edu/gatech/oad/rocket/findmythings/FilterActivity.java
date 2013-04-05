@@ -8,6 +8,7 @@ import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
+import edu.gatech.oad.rocket.findmythings.NonActivity.Login;
 import android.widget.Button;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
 import android.content.Intent;
@@ -78,6 +80,19 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		getMenuInflater().inflate(R.menu.filter, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.filter_ok:
+			//dostuff
+	        case R.id.filter_cancel:
+	        //dolessstuff	
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
+	
+	
 	
 
 	@Override

@@ -140,7 +140,7 @@ public class Submit extends Activity {
 			switch (item.getItemId()) {
 			case R.id.submit_ok:
 				if (checkforErrors()) { //There was an error
-					focusView.requestFocus();
+					focusView.requestFocus(); //Show error
 					return false;
 				}
 

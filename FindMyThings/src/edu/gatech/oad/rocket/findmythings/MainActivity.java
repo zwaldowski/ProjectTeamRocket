@@ -44,7 +44,7 @@ public class MainActivity extends FragmentActivity implements
 	/**
 	 * The class of {@link Item} displayed in this list.
 	 */
-	public static Type mType = Type.LOST;
+	public static Type mType = null;
 
 	/**
 	 * Identifies the item list fragment across instantiations.
@@ -82,7 +82,6 @@ public class MainActivity extends FragmentActivity implements
 			mType = Type.values()[extraInfo.getInt(Type.ID)];
 		}
 		
-		setTitle(EnumHelper.localizedFromArray(this, R.array.item_list_titles, mType));
 		
 		ItemListFragment fragment;
 		if (savedInstanceState == null) {
@@ -182,6 +181,7 @@ public class MainActivity extends FragmentActivity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 			detailIntent.putExtra(Item.ID, id);
+			if(mType!=null)
 			detailIntent.putExtra(Type.ID, mType.ordinal());
 			startActivity(detailIntent);
 		}
@@ -251,19 +251,22 @@ public class MainActivity extends FragmentActivity implements
 	public void createTabs() {
 		Tab tab;
 	    String tabName = "";
-	    for(int i = 0; i <4;i++) {
+	    for(int i = 0; i <5;i++) {
 	    	switch(i) { //Create tabs
 	    	case 0:
-	    		tabName = "Lost";
+	    		tabName = "ALL";
 	    		break;
 	    	case 1:
-	    		tabName = "Found";
+	    		tabName = "LOST";
 	    		break;
-	    	case 2: 
-	    		tabName = "Donations";
+	    	case 2:
+	    		tabName = "FOUND";
 	    		break;
-	    	case 3:
-	    		tabName = "Requests";
+	    	case 3: 
+	    		tabName = "DONATIONS";
+	    		break;
+	    	case 4:
+	    		tabName = "REQUESTS";
 	    		break;
 	    	}
 	    	tab = actionBar.newTab()

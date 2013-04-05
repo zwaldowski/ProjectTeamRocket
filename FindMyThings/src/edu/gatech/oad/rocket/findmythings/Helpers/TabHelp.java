@@ -25,21 +25,27 @@ public class TabHelp implements TabListener{
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		if(name.equals("Lost")) {
+		if(name.equals("ALL")) {
+			if(ItemListFragment.adapter!=null) {
+				ItemListFragment.update(control.getAllItems());
+				MainActivity.mType = null;
+			}
+		}
+		if(name.equals("LOST")) {
 			if(ItemListFragment.adapter!=null) {
 				ItemListFragment.update(control.getItem(Type.LOST));
 				MainActivity.mType = Type.LOST;
 			}
 		}
-		if(name.equals("Found")) {
+		else if(name.equals("FOUND")) {
 			ItemListFragment.update(control.getItem(Type.FOUND));
 			MainActivity.mType = Type.FOUND;			
 		}
-		if(name.equals("Donations")) {
+		else if(name.equals("DONATIONS")) {
 			ItemListFragment.update(control.getItem(Type.DONATION));
 			MainActivity.mType = Type.DONATION;
 		}
-		if(name.equals("Requests")) {
+		else if(name.equals("REQUESTS")) {
 			ItemListFragment.update(control.getItem(Type.REQUEST));
 			MainActivity.mType = Type.REQUEST;
 		}
