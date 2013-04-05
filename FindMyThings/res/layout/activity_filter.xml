@@ -79,17 +79,6 @@
 			    android:layout_toLeftOf="@id/rightPadder"
 			    android:layout_toRightOf="@id/leftPadder">
 	       </Spinner>
-
-			<Button
-			    android:id="@+id/filter_button"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_alignRight="@+id/fil_date"
-			    android:layout_below="@+id/date_spinner"
-			    android:text="FILTER"
-			    android:textAllCaps="true"
-			    android:textColor="@color/LightSkyBlue"
-			    android:textColorHint="@color/LightGrey" />
     
         </RelativeLayout>
 </ScrollView>

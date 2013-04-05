@@ -30,7 +30,6 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	 * References to layout
 	 */
 	private Spinner mStatus, mCat, mDate;
-	private Button filter;
 	private Controller cnt = Controller.shared();
 	private Type kind = Type.LOST;
 	
@@ -58,19 +57,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	 * listener for button FILTER --> should filter the current list of items by the selected criteria
 	 */
 	public void addListenerOnButton() {
-		mStatus = (Spinner) findViewById(R.id.status_spinner);
-		mCat = (Spinner) findViewById(R.id.cat_spinner);
-		mDate = (Spinner) findViewById(R.id.date_spinner);
-		filter = (Button) findViewById(R.id.filter_button);
-
-		filter.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				ArrayList<Item> results = cnt.filter(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());	
-				
-				/**trying to create new ItemList with results of filter*/
-				//Intent i = new Intent(getActivity(),R.layout.activity_item_list);
-			}
-		});
+		
 	}
 	
 	
@@ -85,6 +72,10 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.filter_ok:
+	        	ArrayList<Item> results = cnt.filter(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());	
+				/**trying to create new ItemList with results of filter*/
+				//Intent i = new Intent(getActivity(),R.layout.activity_item_list);
+	        return true;
 			//dostuff
 	        case R.id.filter_cancel:
 	        //dolessstuff	
