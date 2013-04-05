@@ -22,6 +22,18 @@
         android:textAllCaps="true" />
 
     <TextView
+        android:id="@+id/TextView02"
+        style="@style/HeaderGrey"
+        android:text="@string/search_type" />
+
+    <Spinner
+        android:id="@+id/search_type"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:entries="@array/search_type_array"
+        android:prompt="@string/search_type" />
+
+    <TextView
         android:id="@+id/TextView05"
         style="@style/HeaderGrey"
         android:text="@string/search_status" />
@@ -46,34 +58,15 @@
         android:prompt="@string/search_category" />
 
     <TextView
-        android:id="@+id/TextView02"
+        android:id="@+id/fil_date"
         style="@style/HeaderGrey"
-        android:text="@string/search_type" />
+        android:text="@string/search_date" />
 
     <Spinner
-        android:id="@+id/search_type"
+        android:id="@+id/spinner1"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:entries="@array/search_type_array"
-        android:prompt="@string/search_type" />
-
-    <EditText
-        android:id="@+id/EditText02"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/search_date"
-        android:inputType="date"
-        android:summary="@string/i_example" />
-
-    <EditText
-        android:id="@+id/EditText03"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/search_location"
-        android:inputType="date"
-        android:summary="@string/i_example" />
+        android:layout_height="33dp"
+        android:prompt="@string/search_date" />
 
     <EditText
         android:id="@+id/EditText01"
@@ -96,10 +89,9 @@
             android:id="@+id/filter_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="22dp"
-            android:layout_marginRight="19dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
             android:onClick="showResults"
             android:text="@string/search_search"
             android:textAllCaps="true"
