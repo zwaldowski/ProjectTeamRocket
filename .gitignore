@@ -31,7 +31,7 @@ tmp/**/*
 *.bak
 *.swp
 *~.nib
-
+.metadata
 
 # Local DB
 appengine-generated/
