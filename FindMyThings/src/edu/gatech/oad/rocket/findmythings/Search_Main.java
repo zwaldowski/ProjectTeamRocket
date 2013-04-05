@@ -29,6 +29,7 @@ import android.widget.TextView;
  */
 public class Search_Main extends Activity{
 	private int checked;
+	private Controller cnt = Controller.shared();
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class Search_Main extends Activity{
 		//Intent results = new Intent(getActivity(),results.class);
 		 boolean isChecked = ((RadioButton) view).isChecked();
 		 
-		 Controller cnt = Controller.shared();
+		 //cnt
 		 
 		 switch(checked) {
 		 case 0:

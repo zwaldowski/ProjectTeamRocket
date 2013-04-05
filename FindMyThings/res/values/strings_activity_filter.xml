@@ -16,7 +16,7 @@
         <item>Any</item>
     </string-array>
     <string-array name="date_array">
-        <item>Yesturday</item>
+        <item>Yesterday</item>
         <item>14 days</item>
         <item>30 days</item>
         <item>All time</item>

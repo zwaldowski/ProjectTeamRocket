@@ -1,5 +1,7 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -7,9 +9,15 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
+import edu.gatech.oad.rocket.findmythings.NonActivity.Adapter;
+import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
+import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
+import android.widget.Button;
+
 
 public class FilterActivity extends Activity implements OnItemSelectedListener, TabListener {
 	
@@ -17,6 +25,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	 * References to layout
 	 */
 	private Spinner mStatus, mCat, mDate;
+	private Button filter;
+	private Controller cnt = Controller.shared();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +42,29 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		mDate = (Spinner)findViewById(R.id.date_spinner);
 		mDate.setOnItemSelectedListener(this);
 			
+		addListenerOnButton(); //filter button
+		
 		setTitle("Filtering " + "whatevs"/*placeholder*/);
 	}
+	
+	
+	/**
+	 * listener for button FILTER --> should filter the current list of items by the selected criteria
+	 */
+	public void addListenerOnButton() {
+		mStatus = (Spinner) findViewById(R.id.status_spinner);
+		mCat = (Spinner) findViewById(R.id.cat_spinner);
+		filter = (Button) findViewById(R.id.filter_button);
 
+		filter.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				//mStatus.getSelectedItem()
+				//mCat.getSelectedItem
+			}
+		});
+	}
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

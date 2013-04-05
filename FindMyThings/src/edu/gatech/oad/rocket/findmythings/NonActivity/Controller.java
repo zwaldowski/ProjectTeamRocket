@@ -3,6 +3,9 @@ package edu.gatech.oad.rocket.findmythings.NonActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Member;
@@ -194,12 +197,98 @@ public final class Controller {
 	/**
 	 * get an arrayList of all the items that have the require characteristics
 	 * given in the parameter array
-	 * @param int criteria (0 = Category), (1 = Status), (2 = Date)
+	 * @param int Category --> 0=all, 1=heirloom, 2=keepsakes, 3=misc
+	 * @param int Status --> 0=all, 1=open, 2=closed
+	 * @param int Date --> 0=all, 1=yesterday, 2=14days, 3=30days 
 	 * @return Nothing, so far.
 	 */
-	public ArrayList<Item> doSearch(int searches) {
-		// TODO
-		return null;
+	public ArrayList<Item> doSearch(Type kind, int category, int status, int date) {
+		ArrayList<Item> all = getItem(kind);
+		ArrayList<Item> cat = new ArrayList<Item>();
+		ArrayList<Item> stat = new ArrayList<Item>();
+		ArrayList<Item> dt = new ArrayList<Item>();
+		ArrayList<Item> results = new ArrayList<Item>();
+		
+		if (category == 0 && status == 0 && date == 0)
+			return all;
+		
+		switch (category) {
+		case 0: //all items
+			cat = all;
+			break;
+		case 1: //items that are heirlooms
+			for (Item i: all) {
+				if (i.getCat() == Category.HEIR) 
+					stat.add(i);
+			}
+			break;
+		case 2: //items that are keepsakes
+			for (Item i: all) {
+				if (i.getCat() == Category.KEEPSAKE) 
+					stat.add(i);
+			}
+			break;
+		case 3: //items that are misc
+			for (Item i: all) {
+				if (i.getCat() == Category.MISC) 
+					stat.add(i);
+			}
+			break;
+		}
+		
+		switch (status) {
+		case 0: //all items
+			stat = all;
+		case 1: //get items that are open
+			for (Item i:all) {
+				if (i.isOpen())
+					stat.add(i);
+			}	
+			break;
+		case 2: //get items that are closed
+			for (Item i: all) {
+				if (!i.isOpen()) 
+					stat.add(i);
+			}
+			break;
+		}
+		
+		Calendar today = new GregorianCalendar(); //get current date
+		Calendar date2 = (Calendar)today.clone(); //will be change to yesterday, 14dayago or 30daysago
+		
+		switch (date) {
+		case 0: //all items
+			dt = all;
+			break;
+		case 1: //items from yesterday onwards
+			date2.add(Calendar.DATE, -2); 
+			for (Item i: all) {
+				if (i.getDate().after(date2.getTime())) 
+					stat.add(i);
+			}
+			break;
+		case 2: //items from 14 days ago
+			date2.add(Calendar.DATE, -15);
+			for (Item i: all) {
+				if (i.getDate().after(date2.getTime())) 
+					stat.add(i);
+			}
+			break;
+		case 3: //items from 30 days ago
+			date2.add(Calendar.DATE, -31);
+			for (Item i: all) {
+				if (i.getDate().after(date2.getTime()))
+					stat.add(i);
+			}
+			break;
+		}
+		
+		for (Item i : all) {
+			if (cat.contains(i) && dt.contains(i) && stat.contains(i))
+				results.add(i);
+		}
+	
+		return results;
 	}
 
 
