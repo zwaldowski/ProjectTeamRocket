@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import edu.gatech.oad.rocket.findmythings.server.db.model.*;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -28,13 +29,6 @@ import com.googlecode.objectify.util.cmd.LoaderWrapper;
 import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
 import com.googlecode.objectify.util.cmd.SaverWrapper;
 
-import edu.gatech.oad.rocket.findmythings.server.db.model.DBAdmin;
-import edu.gatech.oad.rocket.findmythings.server.db.model.DBAuthenticationToken;
-import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
-import edu.gatech.oad.rocket.findmythings.server.db.model.DBUser;
-import edu.gatech.oad.rocket.findmythings.server.db.model.DBUserCounter;
-import edu.gatech.oad.rocket.findmythings.server.db.model.DBRegistrationTicket;
-
 public abstract class DatabaseService {
 
 	@SuppressWarnings("unused")
@@ -53,6 +47,7 @@ public abstract class DatabaseService {
 
 		/** Register our entity types*/
 		public DatabaseFactory() {
+			register(DBItem.class);
 			register(DBMember.class);
 			register(DBUser.class);
 			register(DBAdmin.class);
