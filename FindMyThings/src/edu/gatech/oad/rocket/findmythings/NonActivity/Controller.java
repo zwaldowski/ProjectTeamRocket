@@ -221,7 +221,12 @@ public final class Controller {
 	 * @return Nothing, so far.
 	 */
 	public ArrayList<Item> filter(Type kind, int category, int status, int date) {
-		ArrayList<Item> all = getItem(kind);
+		ArrayList<Item> all = null;
+		if (kind == null){
+			all = getAllItems();}
+		else {
+			all = getItem(kind); }
+		
 		ArrayList<Item> cat = new ArrayList<Item>();
 		ArrayList<Item> stat = new ArrayList<Item>();
 		ArrayList<Item> dt = new ArrayList<Item>();
@@ -311,11 +316,74 @@ public final class Controller {
 	
 	
 	/**
-	 * get an array of items with the given 
+	 * get an array of items with the given criteria (can be more specific)
+	 * 
+	 * @param name 
+	 * @param type: All, Found, Lost, Requested, Donated (from 0 to 5)
+	 * @param category: Any, Keep, Heir, Misc
+	 * @param status: All, open, closed
+	 * @param date: all time, yesterday, 14 days, 30 days
+	 * @param reward 
+	 * 
 	 * @return
 	 */
-	public ArrayList<Item> doSearch() {
-		return null;
+	public ArrayList<Item> doSearch(String name, int type, int category, int status, int date, int reward) {
+		ArrayList<Item> results = null;
+		ArrayList<Item> temp = new ArrayList<Item>();
+		
+		if (type == 0) { //no name --> create an arrayList with all the items
+			results = getAllItems();
+		}
+		else { //if given a type, get the respective arraylist with that type
+			switch(type){
+			case 1: 
+				results = getItem(Type.FOUND);
+				break;
+			case 2: 
+				results = getItem(Type.LOST);
+				break;
+			case 3: 
+				results = getItem(Type.REQUEST);
+				break;
+			case 4:
+				results = getItem(Type.DONATION);
+			}
+		}
+		
+		//look for items with correct category, status, and date
+		ArrayList<Item> items2 = filter(null, category, status, date);
+		
+		//cross check items2 and results from first thing
+		for (Item i: items2) {
+			if (i.getType() == (results.get(0)).getType())
+				temp.add(i);
+		}
+		results = (ArrayList<Item>) temp.clone();
+		temp.clear();
+		
+		/* results now holds items by type, category, status and date*/
+		
+		//look for the ones with the correct name
+		if (name != null) {
+			for (Item i: results) {
+				if (i.getName() == name)
+					temp.add(i);
+			}		
+			results = (ArrayList<Item>) temp.clone();
+			temp.clear();
+		}
+		
+		/* results now holds items by type, category, status, date and name*/
+		if (reward != 0) {
+			for (Item i: results) {
+				if (i.getReward() == reward)
+					temp.add(i);
+			}
+			results = (ArrayList<Item>) temp.clone();
+			temp.clear();
+		}
+		
+		return results;
 	}
 
 
