@@ -6,20 +6,21 @@
 	<string name="no_selection">Any</string>
 
     <string-array name="status_array">
+        <item>All</item>
         <item>Open</item>
         <item>Closed</item>
     </string-array>
     <string-array name="category_array">
-        <item>Misc.</item>
+        <item>Any</item>
         <item>Heirloom</item>
         <item>Keepsake</item>
-        <item>Any</item>
+        <item>Miscellaneous</item>
     </string-array>
     <string-array name="date_array">
+        <item>All time</item>
         <item>Yesterday</item>
         <item>14 days</item>
         <item>30 days</item>
-        <item>All time</item>
     </string-array>
 
     

@@ -11,12 +11,15 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Adapter;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Adapter;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
 import android.widget.Button;
+import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
+import android.content.Intent;
+import android.content.Context;
 
 
 public class FilterActivity extends Activity implements OnItemSelectedListener, TabListener {
@@ -27,6 +30,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	private Spinner mStatus, mCat, mDate;
 	private Button filter;
 	private Controller cnt = Controller.shared();
+	private Type kind = Type.LOST;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +58,15 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	public void addListenerOnButton() {
 		mStatus = (Spinner) findViewById(R.id.status_spinner);
 		mCat = (Spinner) findViewById(R.id.cat_spinner);
+		mDate = (Spinner) findViewById(R.id.date_spinner);
 		filter = (Button) findViewById(R.id.filter_button);
 
 		filter.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				//mStatus.getSelectedItem()
-				//mCat.getSelectedItem
+				ArrayList<Item> results = cnt.doSearch(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());	
+				
+				/**trying to create new ItemList with results of filter*/
+				//Intent i = new Intent(getActivity(),R.layout.activity_item_list);
 			}
 		});
 	}
