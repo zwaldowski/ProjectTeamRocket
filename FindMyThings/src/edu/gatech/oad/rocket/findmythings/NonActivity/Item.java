@@ -65,7 +65,13 @@ public class Item {
 		name = iName;
 		reward = iReward;
 	}
-
+	public Item (String iName, Type kind) {
+		name = iName;
+		//FOR TESTING
+		description = "TEST ITEM";
+		reward = 0;
+		mType = kind;
+	}
 	/** ACCESSORS **/
 
 	// Setters

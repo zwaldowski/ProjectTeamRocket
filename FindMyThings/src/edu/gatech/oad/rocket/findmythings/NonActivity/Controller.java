@@ -108,7 +108,27 @@ public final class Controller {
 		addItem(dog);
 		addItem(catdog);
 		addItem(reqStuff);
+		addDummyItems(); 
     }
+	public void addDummyItems() {
+		Item[] dummy = new Item[8];
+		dummy[0] = new Item("Dummy 1", Type.LOST);
+			dummy[0].setCategory(Category.HEIR);
+		dummy[1] = new Item("Dummy 2", Type.LOST);
+			dummy[1].setCategory(Category.KEEPSAKE);
+		dummy[2] = new Item("Dummy 3", Type.FOUND);
+			dummy[2].setCategory(Category.KEEPSAKE);
+		dummy[3] = new Item("Dummy 4", Type.FOUND);
+			dummy[0].setCategory(Category.HEIR);
+		dummy[4] = new Item("Dummy 5", Type.DONATION);
+			dummy[0].setCategory(Category.KEEPSAKE);
+		dummy[5] = new Item("Dummy 6", Type.DONATION);
+		dummy[6] = new Item("Dummy 7", Type.REQUEST);
+		dummy[7] = new Item("Dummy 8", Type.REQUEST);
+		for(int i = 0; i<dummy.length;i++) {
+			addItem(dummy[i]);
+		}	
+	}
 
 	/**
 	 * A map of all Items for all {@link Type}.
