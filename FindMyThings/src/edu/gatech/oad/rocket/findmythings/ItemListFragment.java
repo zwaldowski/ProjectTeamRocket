@@ -145,9 +145,7 @@ public class ItemListFragment extends ListFragment {
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
 		Type mItemClass = ((MainActivity)getActivity()).getItemType();
-		String s = currList.get(position).getName();
-		mCallbacks.onItemSelected(s);
-		//mCallbacks.onItemSelected(control.getItem(mItemClass, position).getName());
+		mCallbacks.onItemSelected(control.getItem(mItemClass, position).getName());
 	}
 
 	@Override
