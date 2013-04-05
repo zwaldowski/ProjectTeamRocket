@@ -68,10 +68,11 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
 		
+		
 		//Create tabs and hide title
 		actionBar = getActionBar();
 	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	    actionBar.setDisplayShowTitleEnabled(false);
+	    actionBar.setDisplayShowTitleEnabled(true);
 	    createTabs();
 	   
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -108,7 +109,7 @@ public class MainActivity extends FragmentActivity implements
 			// 'activated' state when touched.
 			fragment.setActivateOnItemClick(true);
 		}
-
+		setTitle("Find My Things");
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
 	

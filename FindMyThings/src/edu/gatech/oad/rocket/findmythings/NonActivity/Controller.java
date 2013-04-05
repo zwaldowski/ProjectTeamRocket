@@ -74,13 +74,19 @@ public final class Controller {
 		Item cat = new Item("Small bag of sugar",1000);
 		Item dog = new Item("Dog",50);
 		Item catdog = new Item("Lost Phone",20);
+		Item reqStuff = new Item("Food", 0);
+		
 		cat.setDescription("Small ziplock bag of sugar, very dear to me. Will pay $1,000 upon its return.");
 		dog.setDescription("Goes by the name of Snoopy, hates white people.");
 		catdog.setDescription("Black Android phone, or maybe Iphone. Might actually be white, definitely a new phone though. $20 payed upon delivery");
-
+		reqStuff.setDescription("NEED FOOD");
+		
 		cat.setLoc("Colombia");
 		dog.setLoc("Santa Rosa, California");
 		catdog.setLoc("Detroit, Michigan");
+		reqStuff.setLoc("Georgia Institute of Technology");
+		
+		reqStuff.setType(Type.REQUEST);
 		cat.setType(Type.FOUND);
 		dog.setType(Type.DONATION);
 		catdog.setType(Type.LOST);
@@ -89,9 +95,10 @@ public final class Controller {
 			allItems.put(kind, container);
 		}
 
-		addItem(cat.getType(), cat);
-		addItem(dog.getType(), dog);
-		addItem(catdog.getType(), catdog);
+		addItem(cat);
+		addItem(dog);
+		addItem(catdog);
+		addItem(reqStuff);
     }
 
 	/**
@@ -137,7 +144,8 @@ public final class Controller {
 	 */
 	public Item getItem(Type kind, String key) {
 		ItemsList container = getContainer(kind);
-		return container.getItem(key);
+		Item temp =  container.getItem(key);
+		return temp;
 	}
 
 	/**
