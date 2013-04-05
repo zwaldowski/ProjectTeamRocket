@@ -193,6 +193,7 @@ public class MainActivity extends FragmentActivity implements
 	public boolean toSubmit() {
 		if(Login.currUser!=null) {
 			Intent goToNextActivity = new Intent(MainActivity.this, Submit.class);
+			if(mType!=null)
 			goToNextActivity.putExtra(Type.ID, mType.ordinal());
 			finish();
 			startActivity(goToNextActivity);

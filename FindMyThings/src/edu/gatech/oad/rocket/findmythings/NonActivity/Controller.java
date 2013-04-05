@@ -159,6 +159,18 @@ public final class Controller {
 	}
 
 	/**
+	 * Returns all Items 
+	 */
+	public ArrayList<Item> getAllItems() {
+	ArrayList<Item> all = new ArrayList<Item>();
+	    all.addAll(getItem(Type.LOST));
+	    all.addAll(getItem(Type.FOUND));
+	    all.addAll(getItem(Type.DONATION));
+	    all.addAll(getItem(Type.REQUEST));
+	    return all;
+	}
+	  
+	/**
 	 * Gets an item from our arraylist
 	 * @param key The key of the Item to return
 	 */
