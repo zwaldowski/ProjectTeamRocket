@@ -194,7 +194,7 @@ public class MainActivity extends FragmentActivity implements
 		if(Login.currUser!=null) {
 			Intent goToNextActivity = new Intent(MainActivity.this, Submit.class);
 			if(mType!=null)
-			goToNextActivity.putExtra(Type.ID, mType.ordinal());
+				goToNextActivity.putExtra(Type.ID, mType.ordinal());
 			finish();
 			startActivity(goToNextActivity);
 			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
@@ -206,6 +206,7 @@ public class MainActivity extends FragmentActivity implements
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
 		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+		            		goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		               	startActivityForResult(goToNextActivity, 1);
 		            }	
 				}, 
@@ -232,7 +233,7 @@ public class MainActivity extends FragmentActivity implements
 		String title = Login.currUser==null? "Login":"Logout";
 		loginMenu.setTitle(title);
 						
-		//Set Login Title
+		//Set Account Title
 		MenuItem accountMenu = menu.findItem(R.id.menu_account);
 		if(Login.currUser!=null) {
 			String account = LoginWindow.Email;
@@ -330,8 +331,7 @@ public class MainActivity extends FragmentActivity implements
 			public void onClick(DialogInterface dialog, int id) {
 				//Clear current user
 				Login.currUser=null;
-				//Redraw the activity
-				//TODO: Redraw the activity in a way that actually makes sense
+				//Making sense is for squares
 				finish(); 
 				startActivity(getIntent());
 				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
