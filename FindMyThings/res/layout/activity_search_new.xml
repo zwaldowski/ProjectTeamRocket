@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/search_name"
+        android:inputType="text"
         android:summary="@string/i_example"
         android:textAllCaps="true" />
 
@@ -58,18 +59,18 @@
         android:prompt="@string/search_category" />
 
     <TextView
-        android:id="@+id/fil_date"
+        android:id="@+id/search_date_tittle"
         style="@style/HeaderGrey"
         android:text="@string/search_date" />
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/search_date_spinner"
         android:layout_width="match_parent"
         android:layout_height="33dp"
         android:prompt="@string/search_date" />
 
     <EditText
-        android:id="@+id/EditText01"
+        android:id="@+id/search_reward"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -86,13 +87,12 @@
         android:layout_height="match_parent" >
 
         <Button
-            android:id="@+id/filter_button"
+            android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="17dp"
-            android:onClick="showResults"
             android:text="@string/search_search"
             android:textAllCaps="true"
             android:textColor="@color/LightSkyBlue"

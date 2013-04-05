@@ -1,6 +1,9 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import java.util.ArrayList;
+
 import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
+import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
@@ -30,6 +34,10 @@ import android.widget.TextView;
 public class Search_Main extends Activity{
 	private int checked;
 	private Controller cnt = Controller.shared();
+	private Spinner types, status, category, date;
+	private TextView name;
+	private TextView reward;
+	private Button search;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,10 +50,29 @@ public class Search_Main extends Activity{
 	
 	
 	//the method that decides which intent to show
-	public void showResults(View view) {
-		//Intent results = new Intent(getActivity(),results.class);
-		 boolean isChecked = ((RadioButton) view).isChecked();
-		 
+	public void addListenerOnButton(View view) {
+		name = (TextView)findViewById(R.id.search_name);
+		types = (Spinner) findViewById(R.id.search_type);
+		status = (Spinner) findViewById(R.id.search_status);
+		category = (Spinner) findViewById(R.id.search_category);
+		date = (Spinner) findViewById(R.id.search_date_spinner);
+		reward = (TextView)findViewById(R.id.search_reward);
+		search = (Button) findViewById(R.id.search_button);
+		
+		search.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int t = types.getSelectedItemPosition();
+				int s = status.getSelectedItemPosition();
+				int c = category.getSelectedItemPosition();
+				int d = date.getSelectedItemPosition();
+				
+				ArrayList<Item> results = cnt.doSearch(name.getText().toString(), types.getSelectedItemPosition(), category.getSelectedItemPosition(), status.getSelectedItemPosition(), date.getSelectedItemPosition(), Integer.parseInt(reward.getText().toString()));
+			}
+
+		});
+		
+		
 		 //cnt
 		 
 		 switch(checked) {
