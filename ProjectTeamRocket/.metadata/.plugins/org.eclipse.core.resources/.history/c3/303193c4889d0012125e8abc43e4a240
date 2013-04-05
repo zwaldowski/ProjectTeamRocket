@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_category">CATEGORY</string>
+    <string name="search_type">TYPE</string>
+    <string name="search_status">STATUS</string>
+    <string name="search_description">DESCRIPTION</string>
+    <string name="search_name">ITEM NAME</string>
+    <string name="search_location">LOCATION</string>
+    <string name="search_reward">REWARD</string>
+    <string name="search_date">DATE</string>
+    <string name="search_search">SEARCH</string>
+    
+    <string-array name="search_category_array">
+        <item>Keepsakes</item>
+        <item>Heirlooms</item>
+        <item>Miscellaneous</item>
+    </string-array>
+    <string-array name="search_type_array">
+        <item>Found</item>
+        <item>Lost</item>
+        <item>Requested</item>
+        <item>Donated</item>
+    </string-array>
+    <string-array name="search_status_array">
+        <item>Open</item>
+        <item>Closed</item>
+    </string-array>
+    
+</resources>
