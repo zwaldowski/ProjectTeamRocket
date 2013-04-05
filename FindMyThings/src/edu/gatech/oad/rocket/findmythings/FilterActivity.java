@@ -49,7 +49,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 			
 		addListenerOnButton(); //filter button
 		
-		setTitle("Filtering " + "whatevs"/*placeholder*/);
+		setTitle("Apply Filter");
 	}
 	
 	
@@ -78,12 +78,21 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	        return true;
 			//dostuff
 	        case R.id.filter_cancel:
-	        //dolessstuff	
+	         	return toParent();
 	    }
 	    return super.onOptionsItemSelected(item);
 	}
 	
-	
+	/**
+	 * Goes back to Main when user selects the cancel in the menu
+	 * @return true
+	 */
+	public boolean toParent() {
+		Intent toPar = new Intent(getApplicationContext(), MainActivity.class);
+		finish();
+		startActivity(toPar);
+		return true;
+	}
 	
 
 	@Override
