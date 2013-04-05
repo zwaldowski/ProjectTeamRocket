@@ -60,7 +60,7 @@ public final class Controller {
 		
 		public void addAll(ItemsList c) {
 			mItems.addAll(c.mItems);
-			mItemsMap.putAll(mItemsMap);
+			mItemsMap.putAll(c.mItemsMap);
 			
 		}
 
@@ -163,7 +163,7 @@ public final class Controller {
 	 * @param key The key of the Item to return
 	 */
 	public Item getItem(Type kind, String key) {
-		ItemsList container = getContainer(kind);
+		ItemsList container = kind==null? getContainer():getContainer(kind);
 		Item temp =  container.getItem(key);
 		return temp;
 	}
