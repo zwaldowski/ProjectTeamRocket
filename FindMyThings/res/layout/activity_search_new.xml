@@ -13,7 +13,7 @@
         android:textSize="24sp" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/search_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -27,7 +27,7 @@
         android:text="@string/search_status" />
 
     <Spinner
-        android:id="@+id/statusMenu"
+        android:id="@+id/search_status"
         android:layout_width="match_parent"
         android:layout_height="33dp"
         android:entries="@array/search_status_array"
@@ -39,7 +39,7 @@
         android:text="@string/search_category" />
 
     <Spinner
-        android:id="@+id/categoryMenu"
+        android:id="@+id/search_category"
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:entries="@array/search_category_array"
@@ -51,7 +51,7 @@
         android:text="@string/search_type" />
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/search_type"
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:entries="@array/search_type_array"

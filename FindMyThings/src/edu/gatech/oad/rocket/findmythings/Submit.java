@@ -49,7 +49,7 @@ public class Submit extends Activity {
 		setContentView(R.layout.activity_submit);
 
 		//References the layout in activity_submit
-		iName = (EditText) findViewById(R.id.name);
+		iName = (EditText) findViewById(R.id.search_name);
 		description = (EditText) findViewById(R.id.description);
 		location = (EditText) findViewById(R.id.locationtext);
 		reward = (EditText) findViewById(R.id.rewardtext);

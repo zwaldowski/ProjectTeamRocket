@@ -14,10 +14,9 @@
     <string name="main_title_signin">Sign in</string>
     
     <!-- New Stuff Added -->
-    <string name="main_title_searches">Search</string>
-    <string name="main_summary_searches">&#8230;search by criteria.</string>
-    
-    <string name="main_key_searches">findmythings.main.requests</string>
+    <string name="main_title_filter">Filter</string>
+    <string name="main_summary_filter">&#8230;filter items by criteria</string>
+    <string name="main_key_filter">findmythings.main.filter</string>
     <!-- End -->
     
     

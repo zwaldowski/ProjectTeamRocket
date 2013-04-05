@@ -29,7 +29,7 @@
 			    android:layout_toLeftOf="@id/rightPadder"
 			    android:layout_toRightOf="@id/leftPadder" />
 			<EditText
-	        	android:id="@+id/name"
+	        	android:id="@+id/search_name"
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:ems="10"
@@ -47,7 +47,7 @@
 	        	android:layout_height="wrap_content"
 	        	android:ems="10"
 	        	android:hint="@string/describ"
-	        	android:layout_below="@id/name"
+	        	android:layout_below="@id/search_name"
 			    android:layout_toLeftOf="@id/rightPadder"
 			    android:layout_toRightOf="@id/leftPadder">
 	        	
