@@ -65,22 +65,6 @@ public class Search_Main extends Activity{
 		
 	}
 	
-	public void onClick(View view) {
-		 switch (view.getId()) {
-		 case R.id.categoryButton:
-			 checked = 0;
-			 break;
-		 case R.id.statusButton:
-			 checked = 1;
-			 break;
-		 case R.id.dateButton:
-			 checked = 2;
-			 break; 
-		 default:
-			 break;
-		 }
-	}
-	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 	//Tells Activity what to do when back key is pressed
