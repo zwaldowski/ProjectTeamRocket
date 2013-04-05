@@ -17,9 +17,7 @@ import org.apache.shiro.util.StringUtils;
 import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.inject.Inject;
 
-import edu.gatech.oad.rocket.findmythings.server.model.AppAdmin;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
-import edu.gatech.oad.rocket.findmythings.server.model.AppUser;
 
 public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
@@ -28,15 +26,17 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
 	public static final String PROFILES_SECTION_NAME = "profiles";
 
-	private abstract class IniMemberAccount extends SimpleAccount implements AppMember {
+	private class IniAccount extends SimpleAccount implements AppMember {
 
 		private static final long serialVersionUID = -1836831286248630414L;
 		private String name = null;
 		private PhoneNumber phone = null;
 		private String address = null;
+		private boolean isAdmin = false;
 
-		IniMemberAccount(String principal, String credentials, String realmName) {
+		IniAccount(String principal, String credentials, String realmName, boolean isAdmin) {
 			super(principal, credentials, realmName);
+			setIsAdmin(isAdmin);
 		}
 
 		@Override
@@ -85,40 +85,12 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 			this.address = address;
 		}
 
-	}
-
-	private class IniAdminAccount extends IniMemberAccount implements AppAdmin {
-
-		/**
-		 *
-		 */
-		private static final long serialVersionUID = 9086707738437486637L;
-
-		public IniAdminAccount(String email, String password, String realmName) {
-			super(email, password, realmName);
-		}
-
-		@Override
 		public boolean isAdmin() {
-			return true;
+			return isAdmin;
 		}
 
-	}
-
-	private class IniUserAccount extends IniMemberAccount implements AppUser {
-
-		/**
-		 *
-		 */
-		private static final long serialVersionUID = -5037213037512773118L;
-
-		public IniUserAccount(String email, String password, String realmName) {
-			super(email, password, realmName);
-		}
-
-		@Override
-		public boolean isAdmin() {
-			return false;
+		private void setIsAdmin(boolean isAdmin) {
+			this.isAdmin = isAdmin;
 		}
 
 	}
@@ -168,13 +140,13 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
     		SimpleAccount account = getUser(email);
 
-		if (!(account instanceof IniMemberAccount) && hasProfile) {
+			if (!(account instanceof IniAccount) && hasProfile) {
     			this.users.remove(email);
     			account = null;
     		}
 
-		Set<String> roles = new HashSet<>();
-		Set<Permission> permissions = new HashSet<>();
+			Set<String> roles = new HashSet<>();
+			Set<Permission> permissions = new HashSet<>();
 
 			for (int i = 1; i < passwordAndRolesArray.length; i++) {
 				String roleName = passwordAndRolesArray[i];
@@ -187,21 +159,17 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 			}
 
     		if (account == null) {
-    			if (roles.contains("admin")) {
-    				account = new IniAdminAccount(email, password, getName());
-    			} else {
-    				account = new IniUserAccount(email, password, getName());
-    			}
+				account = new IniAccount(email, password, getName(), roles.contains("admin"));
     		}
 
     		account.setCredentials(password);
     		account.setRoles(roles);
 			account.addObjectPermissions(permissions);
 
-		if (hasProfile) {
-    			((IniMemberAccount) account).setName(name);
-    			((IniMemberAccount) account).setPhone(phone);
-    			((IniMemberAccount) account).setAddress(address);
+			if (hasProfile) {
+    			((IniAccount) account).setName(name);
+    			((IniAccount) account).setPhone(phone);
+    			((IniAccount) account).setAddress(address);
     		}
     		
     		add(account);

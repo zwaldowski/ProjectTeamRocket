@@ -12,6 +12,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.SimpleByteSource;
 
 import com.google.common.base.Preconditions;
@@ -28,6 +29,11 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 		super(new MemcacheManager(), DBMember.getCredentialsMatcher());
 		setAuthenticationTokenClass(UsernamePasswordToken.class);
 		LOG.fine("Creating a new instance of DatabaseRealm");
+	}
+
+	public void clearCachedAuthorizationInfo(String principal) {
+		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
+		clearCachedAuthorizationInfo(principals);
 	}
 
 	@Override

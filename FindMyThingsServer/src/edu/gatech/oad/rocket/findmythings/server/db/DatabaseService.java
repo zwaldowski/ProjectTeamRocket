@@ -49,8 +49,6 @@ public abstract class DatabaseService {
 		public DatabaseFactory() {
 			register(DBItem.class);
 			register(DBMember.class);
-			register(DBUser.class);
-			register(DBAdmin.class);
 			register(DBUserCounter.class);
 			register(DBRegistrationTicket.class);
 			register(DBAuthenticationToken.class);
@@ -119,7 +117,7 @@ public abstract class DatabaseService {
 		}
 		
 		public void createMember(String email, String password, String name, PhoneNumber phone, String address) {
-			DBUser newUser = new DBUser(email, password);
+			DBMember newUser = new DBMember(email, password);
 			newUser.setPhone(phone);
 			newUser.setName(name);
 			newUser.setAddress(address);

@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.googlecode.objectify.annotation.*;
+import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.RandomNumberGenerator;
@@ -21,11 +23,6 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.googlecode.objectify.annotation.Cache;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Unindex;
 
 import edu.gatech.oad.rocket.findmythings.server.model.AppMutableMember;
 
@@ -35,8 +32,8 @@ import edu.gatech.oad.rocket.findmythings.server.model.AppMutableMember;
  *
  * @author TeamRocket
  * */
-@Cache @Unindex @Entity
-public abstract class DBMember implements AppMutableMember {
+@Cache @Entity
+public class DBMember implements AppMutableMember {
 
 	private static final long serialVersionUID = -9162883247171299555L;
 
@@ -64,6 +61,8 @@ public abstract class DBMember implements AppMutableMember {
 	private String address;
 	private PhoneNumber phone;
 
+	private boolean isLocked;
+
 	/** Constructors **/
 
     /** For objectify to create instances on retrieval */
@@ -76,7 +75,7 @@ public abstract class DBMember implements AppMutableMember {
         this(email, null, new HashSet<String>(), new HashSet<String>());
     }
 
-    DBMember(String email, String password) {
+	public DBMember(String email, String password) {
         this(email, password, new HashSet<String>(), new HashSet<String>());
     }
 
@@ -89,9 +88,9 @@ public abstract class DBMember implements AppMutableMember {
     }
 
     DBMember(String email, String password, Set<String> roles, Set<String> permissions, boolean isRegistered) {
-        Preconditions.checkNotNull(email, "DBUser email can't be null");
-        Preconditions.checkNotNull(roles, "DBUser roles can't be null");
-        Preconditions.checkNotNull(permissions, "DBUser permissions can't be null");
+        Preconditions.checkNotNull(email, "DBMember email can't be null");
+        Preconditions.checkNotNull(roles, "DBMember roles can't be null");
+        Preconditions.checkNotNull(permissions, "DBMember permissions can't be null");
         this.email = email;
 
         this.salt = salt().getBytes();
@@ -254,4 +253,33 @@ public abstract class DBMember implements AppMutableMember {
 		address = s.trim();
 	}
 
+	@Override
+	public void setLocked(boolean locked) {
+		this.isLocked = locked;
+	}
+
+	@Override
+	public void setIsAdmin(boolean admin) {
+		if (admin) {
+			roles.add("admin");
+		} else {
+			roles.remove("admin");
+			roles.add("user");
+		}
+	}
+
+	@Override
+	public void save() {
+		DatabaseService.ofy().save().entity(this);
+	}
+
+	@Override
+	public boolean isAdmin() {
+		return roles.contains("admin");
+	}
+
+	@Override
+	public boolean isLocked() {
+		return isLocked;
+	}
 }

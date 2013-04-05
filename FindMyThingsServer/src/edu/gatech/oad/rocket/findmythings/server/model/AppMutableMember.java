@@ -22,4 +22,21 @@ public interface AppMutableMember extends AppMember {
 	 */
 	public abstract void setAddress(String s);
 
+	/**
+	 * Locks or unlocks the user account
+	 * @param locked true if account is locked, false otherwise
+	 */
+	public abstract void setLocked(boolean locked);
+
+	/**
+	 * Escalates the privileges of the user account
+	 * @param locked true if account should become admin, false otherwise
+	 */
+	public abstract void setIsAdmin(boolean admin);
+
+	/**
+	 * Commits the receiving user to the data store, if applicable
+	 */
+	public abstract void save();
+
 }
