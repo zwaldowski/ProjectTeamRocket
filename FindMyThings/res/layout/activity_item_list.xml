@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_list_container"
     android:layout_width="match_parent"
@@ -6,15 +6,26 @@
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame" >
     
-    <TextView
-        android:id="@+id/item_list"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/main_search_bar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:linksClickable="true"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:textIsSelectable="false"
-        android:textSize="18sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="Search..." >
+        
+    </EditText>
     
-    </FrameLayout>
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_search_bar"
+        android:layout_weight="1"
+        android:textFilterEnabled="true" >
+     </ListView>
+    
+    
+</RelativeLayout>

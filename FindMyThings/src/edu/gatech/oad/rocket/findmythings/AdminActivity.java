@@ -30,7 +30,8 @@ public class AdminActivity extends ListActivity {
 	private ArrayAdapter<Member> mUsers;
 
 	/**
-	 * Reference to the list that the ArrayAdaper will generate
+	 * Reference to the view holding the ArrayAdapter
+	 * 
 	 */
 	private ListView mList;
 

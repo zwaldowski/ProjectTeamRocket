@@ -1,5 +1,6 @@
 package edu.gatech.oad.rocket.findmythings.NonActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
@@ -16,6 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.LinearLayout;
 
 import android.widget.TextView;
 
@@ -24,7 +28,7 @@ import android.widget.TextView;
  *
  * @author TeamRocket
  * */
-public class Adapter extends ArrayAdapter<Item> {
+public class Adapter extends ArrayAdapter<Item> implements Filterable {
 
 	/**
 	 * Gets context from the activity using this adapter
@@ -71,10 +75,9 @@ public class Adapter extends ArrayAdapter<Item> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 	 
 	 View row = convertView;
-
 	 if (row == null || mList == null) {
          LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
-         row = inflater.inflate (R.layout.activity_item_list, parent, false);
+         row = inflater.inflate (R.layout.arrayadapter_view, parent, false);
 	 }
 	 if(mList == null || mList.isEmpty() || position>mList.size()) 
 		 return row;
@@ -87,7 +90,7 @@ public class Adapter extends ArrayAdapter<Item> {
 
 	 //Span changes the color of the text to light gray to mimic hint and summary
 	 span.setSpan(new ForegroundColorSpan(Color.LTGRAY),start,stop,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-	 TextView frag = (TextView) row.findViewById(R.id.item_list);
+	 TextView frag = (TextView)row.findViewById(R.id.item_list);
 
 	 //New span spans the last span so that span doesn't span the full text size.
 	 // Actually just makes the last span into a smaller text
@@ -99,6 +102,29 @@ public class Adapter extends ArrayAdapter<Item> {
 
 	 return row;
 	 
-	 
 	}
+	
+	private class TextFilter extends Filter {
+
+		@Override
+		protected FilterResults performFiltering(CharSequence constraint) {
+			FilterResults results = new FilterResults();
+			if(constraint == null || constraint.length() == 0) {
+	            ArrayList<Item> list = new ArrayList<Item>(mList);
+	            results.values = list;
+	            results.count = list.size();
+			}
+		return results;
+			
+		}
+
+		@Override
+		protected void publishResults(CharSequence constraint,
+				FilterResults results) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 }

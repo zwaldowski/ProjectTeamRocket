@@ -24,11 +24,6 @@ public class ItemDetailFragment extends Fragment {
 	 * The content this fragment is presenting. Made static for use by MapsActivity
 	 */
 	public static Item mItem;
-	
-	/**
-	 * The data source for all Item lists (for now).
-	 */
-	private Controller control = Controller.shared();
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -40,23 +35,16 @@ public class ItemDetailFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			
-		if (getArguments().containsKey(Item.ID)) {
-			// Load the dummy content specified by the fragment
-			// arguments. In a real-world scenario, use a Loader
-			// to load content from a content provider.
-			try {
-			Type mItemClass = ((ItemDetailActivity)getActivity()).getItemType();
-			mItem = control.getItem(mItemClass, getArguments().getString(Item.ID));
+		try {
+			mItem = ((ItemDetailActivity)getActivity()).getItem();
 			getActivity().setTitle(mItem.getName());
-			}
-			catch(NullPointerException e) {
-				//donothing
-			}
-			
 		}
+		catch(NullPointerException e) {
+				//donothing
+		}
+			
+		
 	}
-	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

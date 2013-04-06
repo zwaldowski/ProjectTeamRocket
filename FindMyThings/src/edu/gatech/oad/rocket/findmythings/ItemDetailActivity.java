@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -30,7 +31,7 @@ public class ItemDetailActivity extends FragmentActivity {
 	/**
 	 * The class of Item displayed.
 	 */
-	private Type mType;
+	private Item mItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,9 @@ public class ItemDetailActivity extends FragmentActivity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(Type.ID)) {
-			int value = extraInfo.getInt(Type.ID);
-			mType = EnumHelper.forInt(value, Type.class);
+		if (extraInfo != null) {
+			int value = extraInfo.getInt("id");
+			mItem = MainActivity.currList.get(value);
 		}
 
 		// savedInstanceState is non-null when there is fragment state
@@ -58,10 +59,7 @@ public class ItemDetailActivity extends FragmentActivity {
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
-			Bundle arguments = new Bundle();
-			arguments.putAll(getIntent().getExtras());
 			ItemDetailFragment fragment = new ItemDetailFragment();
-			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
 		}
 	}
@@ -83,13 +81,34 @@ public class ItemDetailActivity extends FragmentActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			return toMain();
+	    }
+
+	    return super.onKeyDown(keyCode, event);
+	}
+	
+	/**
+	 * Goes back to MainActivity
+	 * @return
+	 */
+	public boolean toMain() {
+		Intent next = new Intent(getApplicationContext(), MainActivity.class);
+		finish();
+		startActivity(next);
+		return true;
+	}
 
 	/**
 	 * A read-only getter for the kinds of Item displayed in this view.
 	 * @return An enumerated Type value.
 	 */
-	public Type getItemType() {
-		return mType;
+	public Item getItem() {
+		return mItem;
 	}
 
 	/**

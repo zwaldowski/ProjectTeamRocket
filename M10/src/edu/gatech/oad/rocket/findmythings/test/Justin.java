@@ -16,6 +16,7 @@ public class Justin extends ActivityInstrumentationTestCase2<MyAccountEdit> {
 	
 	private MyAccountEdit mActivity;
 	
+	@SuppressWarnings("deprecation")
 	public Justin() {
 		 super("andtest.threads.asynctask", MyAccountEdit.class);
 	}
@@ -40,7 +41,7 @@ public class Justin extends ActivityInstrumentationTestCase2<MyAccountEdit> {
 		
 		runTestOnUiThread(new Runnable() {
 		     public void run() {
-		    	//Get current name in textfield
+		    	//Get reference to Textfield containing name
 		    	 EditText name = (EditText)mActivity.findViewById(R.id.personnameedit);
 		 		//Set new name
 		 		name.setText("Funny");

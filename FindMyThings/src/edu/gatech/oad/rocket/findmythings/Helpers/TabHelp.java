@@ -1,6 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.Helpers;
 
-import edu.gatech.oad.rocket.findmythings.ItemListFragment;
 import edu.gatech.oad.rocket.findmythings.MainActivity;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
@@ -26,27 +25,27 @@ public class TabHelp implements TabListener{
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		if(name.equals("ALL")) {
-			if(ItemListFragment.adapter!=null) {
-				ItemListFragment.update(control.getAllItems());
+			if(MainActivity.adapter!=null) {
+				MainActivity.update(control.getAllItems(), null);
 				MainActivity.mType = null;
 			}
 		}
 		if(name.equals("LOST")) {
-			if(ItemListFragment.adapter!=null) {
-				ItemListFragment.update(control.getItem(Type.LOST));
+			if(MainActivity.adapter!=null) {
+				MainActivity.update(control.getItem(Type.LOST), Type.LOST);
 				MainActivity.mType = Type.LOST;
 			}
 		}
 		else if(name.equals("FOUND")) {
-			ItemListFragment.update(control.getItem(Type.FOUND));
+			MainActivity.update(control.getItem(Type.FOUND), Type.FOUND);
 			MainActivity.mType = Type.FOUND;			
 		}
 		else if(name.equals("DONATIONS")) {
-			ItemListFragment.update(control.getItem(Type.DONATION));
+			MainActivity.update(control.getItem(Type.DONATION), Type.DONATION);
 			MainActivity.mType = Type.DONATION;
 		}
 		else if(name.equals("REQUESTS")) {
-			ItemListFragment.update(control.getItem(Type.REQUEST));
+			MainActivity.update(control.getItem(Type.REQUEST), Type.REQUEST);
 			MainActivity.mType = Type.REQUEST;
 		}
 		

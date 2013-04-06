@@ -1,15 +1,22 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ActionBar.Tab;
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import edu.gatech.oad.rocket.findmythings.NonActivity.*;
 import edu.gatech.oad.rocket.findmythings.Helpers.*;
@@ -22,34 +29,15 @@ import edu.gatech.oad.rocket.findmythings.Helpers.*;
  * {@link ItemDetailActivity} representing item details. On tablets, the
  * activity presents the list of items and item details side-by-side using two
  * vertical panes.
- * <p>
- * The activity makes heavy use of fragments. The list of items is a
- * {@link ItemListFragment} and the item details (if present) is a
- * {@link ItemDetailFragment}.
- * <p>
- * This activity also implements the required {@link ItemListFragment.Callbacks}
- * interface to listen for item selections.
  *
  * @author TeamRocket
  */
-public class MainActivity extends FragmentActivity implements
-		ItemListFragment.Callbacks {
-
-	/**
-	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-	 * device.
-	 */
-	private boolean mTwoPane;
+public class MainActivity extends ListActivity  {
 
 	/**
 	 * The class of {@link Item} displayed in this list.
 	 */
 	public static Type mType = null;
-
-	/**
-	 * Identifies the item list fragment across instantiations.
-	 */
-	private static final String kItemListFragmentKey = "ItemListFragment";
 	
 	/**
 	 * Reference to the actionbar (the thing at the top of every activity)
@@ -61,13 +49,48 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	private boolean logOut = false;
 	
-
-
+	/**
+	 * Reference to Singleton class
+	 */
+	private Controller control = Controller.shared();
+	
+	/**
+	 * The ArrayAdapter to be displayed
+	 */
+	public static Adapter adapter;
+	
+	/**
+	 * Current list the Adapter is displaying
+	 */
+	public static ArrayList<Item> currList;
+	
+	/**
+	 * Reference to the view holding the ArrayAdapter
+	 * 
+	 */
+	private ListView mView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
 		
+		mView = (ListView)findViewById(android.R.id.list);
+		EditText mSearch = (EditText)findViewById(R.id.main_search_bar);
+		mSearch.addTextChangedListener(new TextWatcher()
+	    { //TODO: Partial string searches
+	        @Override
+	        public void onTextChanged( CharSequence s, int arg1, int arg2, int arg3) {
+			adapter.getFilter().filter(s);
+			adapter.notifyDataSetChanged();
+	        }
+	        @Override
+	        public void beforeTextChanged( CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+	        @Override
+	        public void afterTextChanged(Editable arg0) {}
+
+	    });
 		
 		//Create tabs and hide title
 		actionBar = getActionBar();
@@ -75,44 +98,30 @@ public class MainActivity extends FragmentActivity implements
 	    actionBar.setDisplayShowTitleEnabled(true);
 	    createTabs();
 	   
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(Type.ID)) {
-			mType = Type.values()[extraInfo.getInt(Type.ID)];
-		}
-		
-		
-		ItemListFragment fragment;
-		if (savedInstanceState == null) {
-			// Create the detail fragment and add it to the activity
-			// using a fragment transaction.
-			Bundle arguments = new Bundle();
-			if (getIntent().getExtras() != null) arguments.putAll(getIntent().getExtras());
-
-			fragment = new ItemListFragment();
-			fragment.setArguments(arguments);
-			getSupportFragmentManager().beginTransaction().add(R.id.item_list_container, fragment, kItemListFragmentKey).commit();
-		} else {
-			fragment = (ItemListFragment)getSupportFragmentManager().findFragmentByTag(kItemListFragmentKey);
-		}
-
-		if (findViewById(R.id.item_detail_container) != null) {
-			// The detail container view will be present only in the
-			// large-screen layouts (res/values-large and
-			// res/values-sw600dp). If this view is present, then the
-			// activity should be in two-pane mode.
-			mTwoPane = true;
-
-			// In two-pane mode, list items should be given the
-			// 'activated' state when touched.
-			fragment.setActivateOnItemClick(true);
-		}
+	    //Array to be represented by the adapter
+	  	currList = control.getItem(mType);
+	  	//Takes the array and creates individual views for each item
+	  	adapter = new Adapter(this,
+	  			android.R.layout.simple_list_item_activated_1,
+				android.R.id.text1, currList);
+	  	
+	  	mView.setAdapter(adapter);
+	  	mView.setTextFilterEnabled(true);
+	  	
 		setTitle("Find My Things");
 		getActionBar().setDisplayHomeAsUpEnabled(false);
-		// TODO: If exposing deep links into your app, handle intents here.
+		
 	}
 	
+	/**
+	 * Updates the ArrayList the adapter is displaying as well as the Type of items being displayed
+	 * @param tempList
+	 * @param kind
+	 */
+	public static void update(ArrayList<Item> tempList, Type kind) {
+		currList = tempList;
+		adapter.setList(tempList);		
+	}	
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -155,37 +164,18 @@ public class MainActivity extends FragmentActivity implements
 	    String noOverKey = getString(R.string.key_nooverride_animation);
 	    Bundle extraInfo = getIntent().getExtras();
 		if (extraInfo == null || (extraInfo != null && !extraInfo.getBoolean(noOverKey))) {
-			//overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 		}
 	}
 
-	/**
-	 * Callback method from {@link ItemListFragment.Callbacks} indicating that
-	 * the item with the given ID was selected.
-	 */
 	@Override
-	public void onItemSelected(String id) {
-		if (mTwoPane) {
-			// In two-pane mode, show the detail view in this activity by
-			// adding or replacing the detail fragment using a
-			// fragment transaction.
-			Bundle arguments = new Bundle();
-			arguments.putString(Item.ID, id);
-			arguments.putInt(Type.ID, mType.ordinal());
-			ItemDetailFragment fragment = new ItemDetailFragment();
-			fragment.setArguments(arguments);
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.item_detail_container, fragment).commit();
-
-		} else {
-			// In single-pane mode, simply start the detail activity
-			// for the selected item ID.
-			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-			detailIntent.putExtra(Item.ID, id);
-			if(mType!=null)
-			detailIntent.putExtra(Type.ID, mType.ordinal());
-			startActivity(detailIntent);
-		}
+	protected void onListItemClick (ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Intent next = new Intent(getApplicationContext(), ItemDetailActivity.class);
+		next.putExtra("id",(int)id);
+		finish();
+	    startActivity(next);
+	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 	}
 
 	/**
@@ -251,6 +241,9 @@ public class MainActivity extends FragmentActivity implements
 		return true;
 	}
 	
+	/**
+	 * Creates the tabs, duh.
+	 */
 	public void createTabs() {
 		Tab tab;
 	    String tabName = "";
