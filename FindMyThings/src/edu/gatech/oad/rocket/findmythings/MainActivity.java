@@ -76,6 +76,7 @@ public class MainActivity extends ListActivity  {
 		setContentView(R.layout.activity_item_list);
 		
 		mView = (ListView)findViewById(android.R.id.list);
+		mView.setTextFilterEnabled(true);
 		EditText mSearch = (EditText)findViewById(R.id.main_search_bar);
 		mSearch.addTextChangedListener(new TextWatcher()
 	    { //TODO: Partial string searches
@@ -106,8 +107,7 @@ public class MainActivity extends ListActivity  {
 				android.R.id.text1, currList);
 	  	
 	  	mView.setAdapter(adapter);
-	  	mView.setTextFilterEnabled(true);
-	  	
+	    	
 		setTitle("Find My Things");
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		

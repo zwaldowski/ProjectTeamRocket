@@ -3,6 +3,7 @@ package edu.gatech.oad.rocket.findmythings;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -58,6 +59,19 @@ public class MyAccount extends Activity {
 		
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		//Tells Activity what to do when back key is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Intent i = new Intent(getApplicationContext(), MainActivity.class);
+			finish();
+			startActivity(i);
+			return true;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
 	}
 	
 	public void toEdit() {
