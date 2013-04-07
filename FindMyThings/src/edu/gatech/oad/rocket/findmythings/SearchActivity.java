@@ -20,7 +20,7 @@ import android.widget.TextView;
  * @author TeamRocket
  *
  */
-public class Search_Main extends Activity{
+public class SearchActivity extends Activity{
 	private int checked;
 	private Controller cnt = Controller.shared();
 	private Spinner types, status, category, date;

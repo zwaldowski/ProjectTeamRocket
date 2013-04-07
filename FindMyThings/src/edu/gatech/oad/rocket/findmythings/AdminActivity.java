@@ -83,7 +83,7 @@ public class AdminActivity extends ListActivity {
 	protected void onListItemClick (ListView l, View v, int position, long id) {
 		
 		super.onListItemClick(l, v, position, id);
-		Intent next = new Intent(getApplicationContext(), Admin_popup.class);
+		Intent next = new Intent(getApplicationContext(), AdminPopupActivity.class);
 		next.putExtra("id",(int)id);
 		finish();
 	    startActivity(next);
@@ -132,7 +132,7 @@ public class AdminActivity extends ListActivity {
 	 * @return true
 	 */
 	public boolean createAdmin() {
-		Intent next = new Intent(AdminActivity.this, Admin_create.class);
+		Intent next = new Intent(AdminActivity.this, AdminCreateActivity.class);
 		finish();
 		startActivity(next);
 		return true;

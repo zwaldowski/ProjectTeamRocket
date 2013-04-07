@@ -20,7 +20,7 @@ import edu.gatech.oad.rocket.findmythings.model.User;
  *
  * @author TeamRocket
  * */
-public class Register extends Activity {
+public class RegisterActivity extends Activity {
 
 	/**
 	 * The Login manager backing this Registration window.
@@ -60,7 +60,7 @@ public class Register extends Activity {
 		// Hide the Up button in the action bar.
 		setupActionBar();
 
-		// Gets mEmail from LoginWindow
+		// Gets mEmail from LoginActivity
 		Intent i = getIntent();
 		String s = i.getExtras().getString("email");
 
@@ -80,7 +80,7 @@ public class Register extends Activity {
 	 * @return true, always true. Why? Because.
 	 */
 	private boolean backToLogin() {
-		Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+		Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
 	goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		finish();
 		startActivity(goToNextActivity);
@@ -106,7 +106,7 @@ public class Register extends Activity {
 		getActionBar().setDisplayShowHomeEnabled(false);
 	}
 	/**
-	 * Register new user and return to login screen
+	 * RegisterActivity new user and return to login screen
 	 * or just move on to the main screen with the newly created user
 	 * already logged in.
 	 */
@@ -122,7 +122,7 @@ public class Register extends Activity {
 		mName = mNameView.getText().toString();
 		mAddress = mAddressView.getText().toString();
 
-			//Copied and pasted from LoginWindow
+			//Copied and pasted from LoginActivity
 		// Check for a valid password.
 		if (TextUtils.isEmpty(mPassword)) {
 			mPasswordView.setError(getString(R.string.error_field_required));
@@ -165,10 +165,10 @@ public class Register extends Activity {
 					//User is registered, goes back to login screen.
 					log.register(toreg);
 
-					// Saves email so it can be passed to LoginWindow
+					// Saves email so it can be passed to LoginActivity
 					rEmail = mEmail;
 
-					Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+					Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
 				goToNextActivity.addFlags(
 			                Intent.FLAG_ACTIVITY_CLEAR_TOP |
 			                Intent.FLAG_ACTIVITY_NEW_TASK);

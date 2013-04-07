@@ -16,7 +16,7 @@ import edu.gatech.oad.rocket.findmythings.model.Item;
 import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.util.*;
 
-public class Submit extends Activity {
+public class SubmitActivity extends Activity {
 
 	//UI references
 	private EditText description;
@@ -41,7 +41,7 @@ public class Submit extends Activity {
 	private Type mType = Type.LOST;
 
 	/**
-	 * Category for this item, helper for {@link SubmitFrag}.
+	 * Category for this item, helper for {@link SubmitFragment}.
 	 */
 	private Category mCategory = Category.MISC;
 
@@ -66,9 +66,9 @@ public class Submit extends Activity {
 		// Hide the Up button in the action bar.
 		setupActionBar();
 
-		setTitle("Submit an Item");
+		setTitle("SubmitActivity an Item");
 
-		SubmitFrag frag = (SubmitFrag) getFragmentManager().findFragmentById(R.id.submit_fragment);
+		SubmitFragment frag = (SubmitFragment) getFragmentManager().findFragmentById(R.id.submit_fragment);
 		frag.syncTypePref(mType);
 		frag.syncCatPref(mCategory);
 	}

@@ -145,7 +145,7 @@ public class MainActivity extends ListActivity  {
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 				return true;
 	        case R.id.menu_search:
-				Intent im = new Intent(MainActivity.this, Search_Main.class);
+				Intent im = new Intent(MainActivity.this, SearchActivity.class);
 				finish();
 				startActivity(im);
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
@@ -181,11 +181,11 @@ public class MainActivity extends ListActivity  {
 	}
 
 	/**
-	 * Opens a new Submit activity with the current type of item.
+	 * Opens a new SubmitActivity activity with the current type of item.
 	 */
 	public boolean toSubmit() {
 		if(Login.currUser!=null) {
-			Intent goToNextActivity = new Intent(MainActivity.this, Submit.class);
+			Intent goToNextActivity = new Intent(MainActivity.this, SubmitActivity.class);
 			if(mType!=null)
 				goToNextActivity.putExtra(Type.ID, mType.ordinal());
 			finish();
@@ -198,7 +198,7 @@ public class MainActivity extends ListActivity  {
 				new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
-		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginWindow.class);
+		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
 		            		goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		               	startActivityForResult(goToNextActivity, 1);
 		            }	
@@ -229,7 +229,7 @@ public class MainActivity extends ListActivity  {
 		//Set Account Title
 		MenuItem accountMenu = menu.findItem(R.id.menu_account);
 		if(Login.currUser!=null) {
-			String account = LoginWindow.Email;
+			String account = LoginActivity.Email;
 			accountMenu.setTitle(account);
 		} else { 
 			accountMenu.setVisible(false);
@@ -283,10 +283,10 @@ public class MainActivity extends ListActivity  {
 	}
 	
 	   /**
-     * Go to LoginWindow
+     * Go to LoginActivity
      */
     public boolean logIn() {
-    	Intent toLogin = new Intent(MainActivity.this, LoginWindow.class);
+    	Intent toLogin = new Intent(MainActivity.this, LoginActivity.class);
 		finish();
 		startActivity(toLogin);
 		overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
@@ -294,10 +294,10 @@ public class MainActivity extends ListActivity  {
     }
     
     /**
-     * Go to MyAccount
+     * Go to AccountActivity
      */
     public boolean toAccount() {
-    	Intent toAccount = new Intent(MainActivity.this, MyAccount.class);
+    	Intent toAccount = new Intent(MainActivity.this, AccountActivity.class);
 		finish();
 		startActivity(toAccount);
 		overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);

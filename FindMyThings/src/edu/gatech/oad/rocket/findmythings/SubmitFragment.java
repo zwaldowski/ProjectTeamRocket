@@ -6,7 +6,6 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
-import edu.gatech.oad.rocket.findmythings.control.*;
 import edu.gatech.oad.rocket.findmythings.model.Category;
 import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.util.*;
@@ -15,7 +14,7 @@ import edu.gatech.oad.rocket.findmythings.util.*;
  *
  * @author TeamRocket
  * */
-public class SubmitFrag extends PreferenceFragment implements OnPreferenceChangeListener {
+public class SubmitFragment extends PreferenceFragment implements OnPreferenceChangeListener {
 
 	/**
 	 * UI References
@@ -27,7 +26,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 	 * @param value An Item Type enumerated value.
 	 */
 	public void syncTypePref(Type value) {
-		Submit activity = (Submit)getActivity();
+		SubmitActivity activity = (SubmitActivity)getActivity();
 		
 		String literal = EnumHelper.toIntString(value);
 		String name = getString(R.string.pref_type) + " - " + EnumHelper.localizedFromArray(activity, R.array.item_type, value);
@@ -43,7 +42,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
 	 * @param value An Item Category enumerated value.
 	 */
 	public void syncCatPref(Category value) {
-		Submit activity = (Submit)getActivity();
+		SubmitActivity activity = (SubmitActivity)getActivity();
 		
 		String literal = EnumHelper.toIntString(value);
 		String name = getString(R.string.cat_type) + " - " + EnumHelper.localizedFromArray(activity, R.array.item_category, value);
@@ -63,7 +62,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
         TypeListPref = (ListPreference) findPreference("type_pref");
         CatListPref = (ListPreference) findPreference("cat_pref");
 
-        syncTypePref(((Submit)getActivity()).getItemType());
+        syncTypePref(((SubmitActivity)getActivity()).getItemType());
 
         TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
@@ -72,7 +71,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
             	Type newType = EnumHelper.forIntString(value, Type.class);
 				syncTypePref(newType);
 				
-				((Submit)getActivity()).setItemType(newType);
+				((SubmitActivity)getActivity()).setItemType(newType);
                 return true;
             }
         });
@@ -83,7 +82,7 @@ public class SubmitFrag extends PreferenceFragment implements OnPreferenceChange
             	String value = (String)newValue;
             	Category newCategory = EnumHelper.forIntString(value, Category.class);
             	syncCatPref(newCategory);
-            	((Submit)getActivity()).setItemCategory(newCategory);
+            	((SubmitActivity)getActivity()).setItemCategory(newCategory);
             	return true;
             }
        });

@@ -44,14 +44,14 @@
                 android:value=".ItemListActivity" />
         </activity>
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.LoginWindow"
+            android:name="edu.gatech.oad.rocket.findmythings.LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.Register"
+            android:name="edu.gatech.oad.rocket.findmythings.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:parentActivityName="edu.gatech.oad.rocket.findmythings.LoginWindow" >
+            android:parentActivityName="edu.gatech.oad.rocket.findmythings.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginWindow" />
@@ -70,16 +70,16 @@
             android:parentActivityName="edu.gatech.oad.rocket.findmythings.MainActivity" >
         </activity>
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.Submit"
+            android:name="edu.gatech.oad.rocket.findmythings.SubmitActivity"
             android:label="@string/title_activity_submit"
             android:parentActivityName="edu.gatech.oad.rocket.findmythings.MainActivity" >
         </activity>
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.Admin_popup"
+            android:name="edu.gatech.oad.rocket.findmythings.AdminPopupActivity"
             android:label="@string/title_activity_admin_popup" >
         </activity>
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.Admin_create"
+            android:name="edu.gatech.oad.rocket.findmythings.AdminCreateActivity"
             android:label="@string/title_activity_admin_create" >
         </activity>
         <activity
@@ -88,7 +88,7 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.Search_Main"
+            android:name="edu.gatech.oad.rocket.findmythings.SearchActivity"
             android:label="@string/title_activity_searches" >
         </activity>
 "
@@ -99,11 +99,11 @@
             android:value="AIzaSyDsHVLhxa6R7I-Y4YSEe2HsQRO3uK542w4" />
 
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.MyAccount"
+            android:name="edu.gatech.oad.rocket.findmythings.AccountActivity"
             android:label="@string/title_activity_my_account" >
         </activity>
         <activity
-            android:name="edu.gatech.oad.rocket.findmythings.MyAccountEdit"
+            android:name="edu.gatech.oad.rocket.findmythings.AccountEditActivity"
             android:label="@string/title_activity_my_account_edit" >
         </activity>
         <activity

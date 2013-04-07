@@ -13,7 +13,7 @@ import edu.gatech.oad.rocket.findmythings.control.*;
 import edu.gatech.oad.rocket.findmythings.model.Admin;
 
 
-public class Admin_create extends Activity {
+public class AdminCreateActivity extends Activity {
 
 
 	/**
@@ -60,7 +60,7 @@ public class Admin_create extends Activity {
 	 * Goes back to the main activity
 	 */
 	public boolean goToParentActivity() {
-		Intent next = new Intent(Admin_create.this, AdminActivity.class);
+		Intent next = new Intent(AdminCreateActivity.this, AdminActivity.class);
 		finish();
 		startActivity(next);
 		return true;
@@ -109,7 +109,7 @@ public class Admin_create extends Activity {
 					focusView.requestFocus();
 				}
 				else {
-					Intent next = new Intent(Admin_create.this, AdminActivity.class);
+					Intent next = new Intent(AdminCreateActivity.this, AdminActivity.class);
 					Login.data.add(new Admin(mEmail, mPassword));
 					finish();
 					startActivity(next);

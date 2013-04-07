@@ -18,7 +18,7 @@ import edu.gatech.oad.rocket.findmythings.model.Member;
 import edu.gatech.oad.rocket.findmythings.model.User;
 
 
-public class Admin_popup extends Activity implements OnPreferenceChangeListener {
+public class AdminPopupActivity extends Activity implements OnPreferenceChangeListener {
 
 	/**
 	 * Switch reference
@@ -85,7 +85,7 @@ public class Admin_popup extends Activity implements OnPreferenceChangeListener 
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-		Intent next = new Intent(Admin_popup.this,AdminActivity.class);
+		Intent next = new Intent(AdminPopupActivity.this,AdminActivity.class);
 		finish();
 		startActivity(next);
 		return true;

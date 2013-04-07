@@ -27,7 +27,7 @@ import edu.gatech.oad.rocket.findmythings.model.User;
  *
  * @author TeamRocket
  * */
-public class LoginWindow extends Activity {
+public class LoginActivity extends Activity {
 
 
 	/**
@@ -70,9 +70,9 @@ public class LoginWindow extends Activity {
 
 		setContentView(R.layout.activity_login_window);
 
-		if(!Email.equals(Register.rEmail))
-		//Email carried over from Register.
-			Email = Register.rEmail;
+		if(!Email.equals(RegisterActivity.rEmail))
+		//Email carried over from RegisterActivity.
+			Email = RegisterActivity.rEmail;
 
 		// Set up the login form.
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
@@ -113,7 +113,7 @@ public class LoginWindow extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Intent i = new Intent(LoginWindow.this, MainActivity.class);
+			Intent i = new Intent(LoginActivity.this, MainActivity.class);
 			finish();
 			startActivity(i);
 			return true;
@@ -228,8 +228,8 @@ public class LoginWindow extends Activity {
 	 * Goes to register screen
 	 */
 	private void register() {
-		Intent goToNextActivity = new Intent(LoginWindow.this, Register.class);
-		goToNextActivity.putExtra("email",mEmail); // Passes email to Register
+		Intent goToNextActivity = new Intent(LoginActivity.this, RegisterActivity.class);
+		goToNextActivity.putExtra("email",mEmail); // Passes email to RegisterActivity
 		startActivity(goToNextActivity);
 	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 	}
