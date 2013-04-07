@@ -391,7 +391,7 @@ public final class Controller {
 			if (i.getType() == (results.get(0)).getType())
 				temp.add(i);
 		}
-		results = (ArrayList<Item>) temp.clone();
+		results = new ArrayList<Item>(temp);
 		temp.clear();
 		
 		/* results now holds items by type, category, status and date*/
@@ -402,7 +402,7 @@ public final class Controller {
 				if (i.getName() == name)
 					temp.add(i);
 			}		
-			results = (ArrayList<Item>) temp.clone();
+			results = new ArrayList<Item>(temp);
 			temp.clear();
 		}
 		
@@ -412,7 +412,7 @@ public final class Controller {
 				if (i.getReward() == reward)
 					temp.add(i);
 			}
-			results = (ArrayList<Item>) temp.clone();
+			results = new ArrayList<Item>(temp);
 			temp.clear();
 		}
 		
