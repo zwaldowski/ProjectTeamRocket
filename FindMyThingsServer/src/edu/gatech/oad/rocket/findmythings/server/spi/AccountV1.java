@@ -20,7 +20,7 @@ import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 
 import javax.inject.Named;
 
-@Api(name = "findthings")
+@Api(name = "fmthings")
 public class AccountV1 {
 	
 	@ApiMethod(name = "members.list", path = "members")
@@ -39,34 +39,13 @@ public class AccountV1 {
 		}
 	    return retMembers;
 	}
-	
-	protected AppMember memberWithEmail(String email) {
-		if (email == null || email.length() == 0) return null;
-		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
-	    for (Realm realm : manager.getRealms()) {
-			if (realm instanceof ProfileRealm) {
-				AppMember potential = ((ProfileRealm) realm).getAccount(email);
-				if (potential != null && potential.getEmail().equals(email)) return potential;
-			}
-		}
-
-	    return null;
-	}
-
-	protected AppMember getCurrentUser() {
-	    return memberWithEmail(getCurrentUserEmail());
-	}
-
-	protected String getCurrentUserEmail() {
-		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
-	    if (principals == null || principals.isEmpty()) return null;
-	    return (String)principals.getPrimaryPrincipal();
-	}
-	/* @Named ("email") String email*/
 	 
 	 @ApiMethod(name = "members.getCurrent", path = "members/current")
 	 public AppMember getCurrentMember() {
-		 return memberWithEmail(getCurrentUserEmail());		 
+		 PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+		 if (principals == null || principals.isEmpty()) return null;
+		 String email = (String)principals.getPrimaryPrincipal();
+		 return getMember(email);
 	 }
 	 
 	 @ApiMethod(name = "members.get", path = "members/get")
