@@ -3,12 +3,15 @@ package edu.gatech.oad.rocket.findmythings.server;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
-import edu.gatech.oad.rocket.findmythings.server.web.ForgotServlet;
+import com.google.api.server.spi.guice.GuiceSystemServiceServletModule;
+
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -27,27 +30,18 @@ import com.google.inject.Singleton;
 import com.google.inject.binder.ConstantBindingBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.google.inject.servlet.ServletModule;
 import com.googlecode.objectify.ObjectifyFilter;
 
-import edu.gatech.oad.rocket.findmythings.server.api.AuthTestEndpoint;
-import edu.gatech.oad.rocket.findmythings.server.api.ForgotEndpoint;
-import edu.gatech.oad.rocket.findmythings.server.api.LoginEndpoint;
-import edu.gatech.oad.rocket.findmythings.server.api.RegisterEndpoint;
+import edu.gatech.oad.rocket.findmythings.server.api.*;
+import edu.gatech.oad.rocket.findmythings.server.spi.*;
+import edu.gatech.oad.rocket.findmythings.server.security.*;
+import edu.gatech.oad.rocket.findmythings.server.web.*;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
-import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticatingRealm;
-import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenAuthenticatingFilter;
-import edu.gatech.oad.rocket.findmythings.server.security.BearerTokenRevokeFilter;
-import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
-import edu.gatech.oad.rocket.findmythings.server.security.ProfileIniRealm;
-import edu.gatech.oad.rocket.findmythings.server.security.WebAuthenticationFilter;
 import edu.gatech.oad.rocket.findmythings.server.service.MailboxServlet;
 import edu.gatech.oad.rocket.findmythings.server.service.MailmanServlet;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
-import edu.gatech.oad.rocket.findmythings.server.web.ActivateServlet;
-import edu.gatech.oad.rocket.findmythings.server.web.RegisterServlet;
 
 public class MainContextListener extends GuiceServletContextListener {
 
@@ -70,7 +64,8 @@ public class MainContextListener extends GuiceServletContextListener {
 		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule(), new MainModule());
 	}
 
-	private class MainServletModule extends ServletModule {
+	private class MainServletModule extends GuiceSystemServiceServletModule {
+		
 	    private <T> void bindNamed(String key, Class<T> clazz, T value) {
 	        bind(clazz).annotatedWith(Names.named(key)).toInstance(value);
 	    }
@@ -81,6 +76,10 @@ public class MainContextListener extends GuiceServletContextListener {
 
 		@Override protected void configureServlets() {
 			filter("/*").through(ObjectifyFilter.class);
+			
+			Set<Class<?>> serviceClasses = new HashSet<>();
+			serviceClasses.add(AccountV1.class);
+			this.serveGuiceSystemServiceServlet("/_ah/spi/*", serviceClasses);
 			
 			try {
 				bindNamed(PageGenerator.TEMPLATES, URL.class, getServletContext().getResource("/WEB-INF/templates/"));
@@ -160,6 +159,8 @@ public class MainContextListener extends GuiceServletContextListener {
 			addFilterChain("/logout", LOGOUT);
 			
 			addFilterChain("/api/login", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/api/account", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/api/updateAccount", NO_SESSION_CREATION, TOKENAUTHC);
 			addFilterChain("/api/register", NO_SESSION_CREATION, ANON);
 			addFilterChain("/api/forgot", NO_SESSION_CREATION, ANON);
 			addFilterChain("/api/logout", NO_SESSION_CREATION, TOKENLOGOUT);

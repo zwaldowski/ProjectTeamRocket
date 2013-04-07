@@ -1,5 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +17,7 @@ import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.util.StringUtils;
 
 import com.google.appengine.api.datastore.PhoneNumber;
+
 import com.google.inject.Inject;
 
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
@@ -26,6 +29,7 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
 	public static final String PROFILES_SECTION_NAME = "profiles";
 
+	@com.google.appengine.repackaged.org.codehaus.jackson.annotate.JsonIgnoreProperties({"objectPermissions", "credentialsExpired", "credentials", "principals"})
 	private class IniAccount extends SimpleAccount implements AppMember {
 
 		private static final long serialVersionUID = -1836831286248630414L;
@@ -188,6 +192,17 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
     	if (account instanceof AppMember)
     		return (AppMember)account;
     	return null;
+    }
+    
+    public Collection<? extends AppMember> getMembers() {
+    	Collection<SimpleAccount> accounts = this.users.values();
+    	Collection<AppMember> ret = new ArrayList<>(accounts.size());
+    	for (SimpleAccount e : accounts) {
+    		if (e instanceof AppMember) {
+    			ret.add((AppMember)e);
+    		}
+    	}
+    	return ret;
     }
 
 }

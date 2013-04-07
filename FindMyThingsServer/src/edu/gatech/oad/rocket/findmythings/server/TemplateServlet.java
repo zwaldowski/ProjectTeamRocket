@@ -18,7 +18,7 @@ public abstract class TemplateServlet extends PageServlet {
     static final Logger LOGGER = Logger.getLogger(TemplateServlet.class.getName());
 
 	public TemplateServlet() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
     
     protected static int indexOfExtension(String filename) {

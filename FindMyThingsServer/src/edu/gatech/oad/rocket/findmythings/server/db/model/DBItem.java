@@ -45,7 +45,8 @@ public class DBItem {
 	 */
 	private int reward;
 
-	private DBItem() {}
+	@SuppressWarnings("unused")
+	protected DBItem() {}
 
 	public DBItem(String name, String description) {
 		setName(name);

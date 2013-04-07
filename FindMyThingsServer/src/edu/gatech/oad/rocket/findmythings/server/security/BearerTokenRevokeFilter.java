@@ -13,7 +13,7 @@ import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 public class BearerTokenRevokeFilter extends LogoutFilter {
 
 	public BearerTokenRevokeFilter() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	
 	@Override

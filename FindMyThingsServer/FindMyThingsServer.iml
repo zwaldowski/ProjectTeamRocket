@@ -196,6 +196,17 @@
     </orderEntry>
     <orderEntry type="library" name="AppEngine API" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="AppEngine Dev" level="application_server_libraries" />
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/appengine-endpoints.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/appengine-endpoints.jar!/com/google/appengine/repackaged/com/google/common/base/super" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
 
