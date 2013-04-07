@@ -21,7 +21,7 @@ public class AccountEditActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_account_edit);
 		
-		setTitle("My Account");
+		setTitle("Edit Account");
 		
 		mName = (EditText) findViewById(R.id.personnameedit);
 		mEmail = (EditText) findViewById(R.id.emailedit);
@@ -64,7 +64,7 @@ public class AccountEditActivity extends Activity {
 	}
 	
 	/**
-	 * Goes to AccountActivity activity
+	 * Goes to MyAccount activity
 	 */
 	public void toMyAccount() {
 		Intent goToNextActivity = new Intent(getApplicationContext(), AccountActivity.class);
