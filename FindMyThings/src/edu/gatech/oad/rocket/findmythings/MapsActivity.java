@@ -15,7 +15,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import edu.gatech.oad.rocket.findmythings.Helpers.*;
+import edu.gatech.oad.rocket.findmythings.util.*;
 
 public class MapsActivity extends FragmentActivity   {
 	

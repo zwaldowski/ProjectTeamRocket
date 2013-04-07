@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.Helpers;
+package edu.gatech.oad.rocket.findmythings.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;

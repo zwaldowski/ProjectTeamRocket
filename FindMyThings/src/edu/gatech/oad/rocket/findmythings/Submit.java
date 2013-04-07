@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import edu.gatech.oad.rocket.findmythings.Helpers.*;
 import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+import edu.gatech.oad.rocket.findmythings.util.*;
 
 public class Submit extends Activity {
 

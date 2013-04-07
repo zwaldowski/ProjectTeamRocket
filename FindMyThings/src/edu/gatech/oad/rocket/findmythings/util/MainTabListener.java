@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.Helpers;
+package edu.gatech.oad.rocket.findmythings.util;
 
 import edu.gatech.oad.rocket.findmythings.MainActivity;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
