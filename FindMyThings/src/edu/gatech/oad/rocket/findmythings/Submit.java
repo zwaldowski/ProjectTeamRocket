@@ -10,7 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+import edu.gatech.oad.rocket.findmythings.control.*;
+import edu.gatech.oad.rocket.findmythings.model.Category;
+import edu.gatech.oad.rocket.findmythings.model.Item;
+import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.util.*;
 
 public class Submit extends Activity {

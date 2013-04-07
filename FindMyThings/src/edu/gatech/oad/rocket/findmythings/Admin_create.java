@@ -9,7 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+import edu.gatech.oad.rocket.findmythings.control.*;
+import edu.gatech.oad.rocket.findmythings.model.Admin;
 
 
 public class Admin_create extends Activity {

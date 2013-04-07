@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.NonActivity;
+package edu.gatech.oad.rocket.findmythings.control;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,10 @@ import java.util.Map;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Member;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
+import edu.gatech.oad.rocket.findmythings.model.Category;
+import edu.gatech.oad.rocket.findmythings.model.Item;
+import edu.gatech.oad.rocket.findmythings.model.Member;
+import edu.gatech.oad.rocket.findmythings.model.Type;
 
 import android.content.Context;
 

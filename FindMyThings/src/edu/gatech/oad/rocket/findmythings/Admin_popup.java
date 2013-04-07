@@ -12,7 +12,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+import edu.gatech.oad.rocket.findmythings.control.*;
+import edu.gatech.oad.rocket.findmythings.model.Admin;
+import edu.gatech.oad.rocket.findmythings.model.Member;
+import edu.gatech.oad.rocket.findmythings.model.User;
 
 
 public class Admin_popup extends Activity implements OnPreferenceChangeListener {

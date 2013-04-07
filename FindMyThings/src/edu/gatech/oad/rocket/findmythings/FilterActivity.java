@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
+import edu.gatech.oad.rocket.findmythings.control.Controller;
+import edu.gatech.oad.rocket.findmythings.model.Item;
+import edu.gatech.oad.rocket.findmythings.model.Type;
 import android.content.Intent;
 
 

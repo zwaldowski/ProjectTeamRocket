@@ -1,6 +1,6 @@
-package edu.gatech.oad.rocket.findmythings.NonActivity;
+package edu.gatech.oad.rocket.findmythings.model;
 
-import edu.gatech.oad.rocket.findmythings.NonActivity.Member;
+import edu.gatech.oad.rocket.findmythings.model.Member;
 
 /**
  * CS 2340 - FindMyStuff Android App

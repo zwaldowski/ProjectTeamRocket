@@ -1,8 +1,8 @@
 package edu.gatech.oad.rocket.findmythings.util;
 
 import edu.gatech.oad.rocket.findmythings.MainActivity;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
+import edu.gatech.oad.rocket.findmythings.control.Controller;
+import edu.gatech.oad.rocket.findmythings.model.Type;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;

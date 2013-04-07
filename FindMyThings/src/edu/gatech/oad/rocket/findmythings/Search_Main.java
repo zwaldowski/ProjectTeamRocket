@@ -2,8 +2,8 @@ package edu.gatech.oad.rocket.findmythings;
 
 import java.util.ArrayList;
 
-import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
+import edu.gatech.oad.rocket.findmythings.control.Controller;
+import edu.gatech.oad.rocket.findmythings.model.Item;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

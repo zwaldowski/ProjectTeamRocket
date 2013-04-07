@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.text.TextUtils;
 
-import edu.gatech.oad.rocket.findmythings.NonActivity.*;
+import edu.gatech.oad.rocket.findmythings.control.*;
+import edu.gatech.oad.rocket.findmythings.model.Member;
+import edu.gatech.oad.rocket.findmythings.model.User;
 
 /**
  * CS 2340 - FindMyStuff Android App
