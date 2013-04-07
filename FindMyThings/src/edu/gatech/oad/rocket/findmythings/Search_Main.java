@@ -56,6 +56,7 @@ public class Search_Main extends Activity{
 				int c = category.getSelectedItemPosition();
 				int d = date.getSelectedItemPosition();
 				
+				@SuppressWarnings("unused")
 				ArrayList<Item> results = cnt.doSearch(name.getText().toString(), t, c, s, d, Integer.parseInt(reward.getText().toString()));
 				// TODO use search results
 			}

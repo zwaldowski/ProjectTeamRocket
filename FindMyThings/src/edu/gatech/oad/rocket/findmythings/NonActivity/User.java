@@ -23,6 +23,7 @@ public class User extends Member {
 	/**
 	 * Store all items the user has submitted
 	 */
+	@SuppressWarnings("unused")
 	private ArrayList<Item> currSubmits; //TODO: this
 
 	public User(String user, String pass, String phone) {

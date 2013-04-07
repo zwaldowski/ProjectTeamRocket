@@ -103,6 +103,8 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	 
 	}
 	
+	// TODO: Use this? Where? - ZW
+	@SuppressWarnings("unused")
 	private class TextFilter extends Filter {
 
 		@Override

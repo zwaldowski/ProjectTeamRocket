@@ -67,7 +67,9 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.filter_ok:
-	        	ArrayList<Item> results = cnt.filter(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());	
+	        	@SuppressWarnings("unused")
+				ArrayList<Item> results = cnt.filter(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());
+	        	// TODO: this
 				/**trying to create new ItemList with results of filter*/
 				//Intent i = new Intent(getActivity(),R.layout.activity_item_list);
 	        return true;
