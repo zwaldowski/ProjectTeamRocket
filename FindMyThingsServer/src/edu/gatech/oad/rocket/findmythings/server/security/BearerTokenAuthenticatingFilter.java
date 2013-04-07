@@ -36,7 +36,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
     private String usernameParam;
     private String passwordParam;
 
-	@Override @Inject @SuppressWarnings("EmptyMethod")
+	@Override @Inject
     public void setLoginUrl(@Named(Config.Keys.LOGIN_API_URL) String loginUrl) {
     	super.setLoginUrl(loginUrl);
     }
@@ -142,7 +142,6 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		return super.onPreHandle(request, response, mappedValue);
 	}
 
-	@SuppressWarnings("UnusedParameters")
 	protected boolean hasAuthorizationToken(ServletRequest request, ServletResponse response) {
 		String authzHeader = getAuthorizationHeader(request);
 		return authzHeader != null && isLoginAttempt(authzHeader);
@@ -160,7 +159,6 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
         return test.startsWith(authzScheme) || test.startsWith(authzSchemeAlt);
     }
 
-	@SuppressWarnings("UnusedParameters")
 	protected String[] getPrincipalsAndCredentials(String authorizationHeader, ServletRequest request) {
         if (authorizationHeader == null) {
             return null;
@@ -172,7 +170,6 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
         return getPrincipalsAndCredentials(authTokens[0], authTokens[1]);
     }
 
-	@SuppressWarnings("UnusedParameters")
 	protected String[] getPrincipalsAndCredentials(String scheme, String encoded) {
         String decoded = Base64.decodeToString(encoded);
         return decoded.split(":", 2);

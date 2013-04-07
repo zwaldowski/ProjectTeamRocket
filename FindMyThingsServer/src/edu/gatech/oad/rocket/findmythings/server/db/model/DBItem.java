@@ -3,7 +3,6 @@ package edu.gatech.oad.rocket.findmythings.server.db.model;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.condition.IfNotNull;
 import edu.gatech.oad.rocket.findmythings.server.model.Category;
 import edu.gatech.oad.rocket.findmythings.server.model.Type;
 
@@ -45,7 +44,6 @@ public class DBItem {
 	 */
 	private int reward;
 
-	@SuppressWarnings("unused")
 	protected DBItem() {}
 
 	public DBItem(String name, String description) {

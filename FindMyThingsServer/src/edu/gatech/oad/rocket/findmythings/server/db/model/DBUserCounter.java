@@ -22,7 +22,6 @@ public class DBUserCounter {
 
     public static final long COUNTER_ID = 1L;
 
-    @SuppressWarnings("FieldCanBeLocal")
 	@Id private long id;
 
     private int count;

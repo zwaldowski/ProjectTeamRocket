@@ -5,23 +5,12 @@ import java.util.ArrayList;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -67,7 +56,8 @@ public class Search_Main extends Activity{
 				int c = category.getSelectedItemPosition();
 				int d = date.getSelectedItemPosition();
 				
-				ArrayList<Item> results = cnt.doSearch(name.getText().toString(), types.getSelectedItemPosition(), category.getSelectedItemPosition(), status.getSelectedItemPosition(), date.getSelectedItemPosition(), Integer.parseInt(reward.getText().toString()));
+				ArrayList<Item> results = cnt.doSearch(name.getText().toString(), t, c, s, d, Integer.parseInt(reward.getText().toString()));
+				// TODO use search results
 			}
 
 		});

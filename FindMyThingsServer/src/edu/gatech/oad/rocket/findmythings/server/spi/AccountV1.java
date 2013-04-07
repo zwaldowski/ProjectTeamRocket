@@ -1,10 +1,8 @@
 package edu.gatech.oad.rocket.findmythings.server.spi;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -36,7 +34,6 @@ public class AccountV1 {
 		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
 	    for (Realm realm : manager.getRealms()) {
 			if (realm instanceof ProfileIniRealm) {
-				Collection<? extends AppMember> thisIniMembers = ((ProfileIniRealm) realm).getMembers();
 				retMembers.addAll(((ProfileIniRealm) realm).getMembers());
 			}
 		}

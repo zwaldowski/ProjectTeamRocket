@@ -21,13 +21,7 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
-import com.googlecode.objectify.cmd.Deleter;
-import com.googlecode.objectify.cmd.Loader;
-import com.googlecode.objectify.cmd.Saver;
-import com.googlecode.objectify.util.cmd.DeleterWrapper;
-import com.googlecode.objectify.util.cmd.LoaderWrapper;
 import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
-import com.googlecode.objectify.util.cmd.SaverWrapper;
 
 public abstract class DatabaseService {
 

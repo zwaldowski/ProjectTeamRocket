@@ -10,18 +10,13 @@ import android.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.Adapter;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Controller;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Item;
-import edu.gatech.oad.rocket.findmythings.NonActivity.Login;
-import android.widget.Button;
 import edu.gatech.oad.rocket.findmythings.NonActivity.Type;
 import android.content.Intent;
-import android.content.Context;
 
 
 public class FilterActivity extends Activity implements OnItemSelectedListener, TabListener {

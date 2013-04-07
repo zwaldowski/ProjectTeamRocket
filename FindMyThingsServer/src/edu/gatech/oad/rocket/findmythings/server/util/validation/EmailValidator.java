@@ -34,9 +34,6 @@ import java.util.regex.Pattern;
  * For example, an address like nobody@noplace.somedog will pass validator, even though there
  * is no TLD "somedog"
  * </p>.
- *
- * @version $Revision: 1227719 $ $Date: 2012-01-05 18:45:51 +0100 (Thu, 05 Jan 2012) $
- * @since Validator 1.4
  */
 public class EmailValidator implements Serializable {
 
@@ -111,7 +108,6 @@ public class EmailValidator implements Serializable {
      *              value is considered invalid.
      * @return true if the email address is valid.
      */
-    @SuppressWarnings({"SimplifiableIfStatement", "RedundantIfStatement"})
     public boolean isValid(String email) {
         if (email == null) {
             return false;
@@ -149,7 +145,6 @@ public class EmailValidator implements Serializable {
      * @param domain being validated.
      * @return true if the email address's domain is valid.
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	protected boolean isValidDomain(String domain) {
         // see if domain is an IP address in brackets
         Matcher ipDomainMatcher = IP_DOMAIN_PATTERN.matcher(domain);
@@ -172,7 +167,6 @@ public class EmailValidator implements Serializable {
      * @param user being validated
      * @return true if the user name is valid.
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	protected boolean isValidUser(String user) {
         return USER_PATTERN.matcher(user).matches();
     }

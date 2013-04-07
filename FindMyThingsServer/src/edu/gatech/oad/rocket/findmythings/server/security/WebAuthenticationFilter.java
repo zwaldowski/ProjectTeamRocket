@@ -25,27 +25,27 @@ import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 public class WebAuthenticationFilter extends FormAuthenticationFilter {
 	static final Logger LOGGER = Logger.getLogger(WebAuthenticationFilter.class.getName());
 
-	@Override @Inject @SuppressWarnings("EmptyMethod")
+	@Override @Inject
 	public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {
 		super.setUsernameParam(usernameParam);
 	}
 
-	@Override @Inject @SuppressWarnings("EmptyMethod")
+	@Override @Inject
 	public void setPasswordParam(@Named(Config.Keys.PASSWORD) String passwordParam) {
 		super.setPasswordParam(passwordParam);
 	}
 
-	@Override @Inject @SuppressWarnings("EmptyMethod")
+	@Override @Inject
 	public void setRememberMeParam(@Named(Config.Keys.REMEMBER_ME) String rememberMeParam) {
 		super.setRememberMeParam(rememberMeParam);
 	}
 
-	@Override @Inject @SuppressWarnings("EmptyMethod")
+	@Override @Inject
 	public void setLoginUrl(@Named(Config.Keys.LOGIN_URL) String loginUrl) {
 		super.setLoginUrl(loginUrl);
 	}
 
-	@Override @Inject @SuppressWarnings("EmptyMethod")
+	@Override @Inject
 	public void setSuccessUrl(@Named(Config.Keys.LOGIN_SUCCESS_URL) String successUrl) {
 		super.setSuccessUrl(successUrl);
 	}
