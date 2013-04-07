@@ -267,7 +267,7 @@ public class MainActivity extends ListActivity  {
 	    	}
 	    	tab = actionBar.newTab()
 		            .setText(tabName)
-		    		.setTabListener(new TabHelp(tabName));
+		    		.setTabListener(new MainTabListener(tabName));
 	    	 actionBar.addTab(tab);
 	    }
 	}
