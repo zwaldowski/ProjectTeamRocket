@@ -109,7 +109,11 @@ public class Submit extends Activity {
 		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
 		return true;
 	}
-
+	
+	/**
+	 * Checks for errors
+	 * @return 
+	 */
 	public boolean checkforErrors() {
 		boolean cancel = false;
 		focusView = null;
