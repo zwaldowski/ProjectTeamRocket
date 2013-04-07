@@ -26,6 +26,12 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
         super.setUp();
         mActivity = getActivity();
     }
+	
+	/**
+	 * Sets the currently logged in User, goes to AccountEditActivy and changes the Users name
+	 * then goes to AccountActivity and validates that the user's name was successfully changed
+	 * @throws Throwable
+	 */
 	public void testMenu() throws Throwable {
 		String email = "test@test.test";
 		String pass = "test";
@@ -58,11 +64,5 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		assertEquals("Funny", Login.currUser.getName());
 		toAccountActivity.finish();
 	}
-		
-		
-		
-			
 	
-	
-
 }
