@@ -1,12 +1,12 @@
 package edu.gatech.oad.rocket.findmythings.server.db.model;
 
-import java.util.Date;
-import java.util.logging.Logger;
-
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Unindex;
+
+import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * This is a singleton, just holding a count of the number

@@ -1,19 +1,10 @@
 package edu.gatech.oad.rocket.findmythings.server.api;
 
-import java.io.IOException;
-import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.web.util.WebUtils;
-
 import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.inject.Singleton;
-
 import edu.gatech.oad.rocket.findmythings.server.TemplateServlet;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
@@ -24,6 +15,12 @@ import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.EmailValidator;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
+import org.apache.shiro.web.util.WebUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 @Singleton
 public class RegisterEndpoint extends TemplateServlet {

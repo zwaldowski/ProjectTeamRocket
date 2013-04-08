@@ -1,19 +1,16 @@
 package edu.gatech.oad.rocket.findmythings.server.api;
 
-import java.io.IOException;
+import com.google.inject.Singleton;
+import edu.gatech.oad.rocket.findmythings.server.PageServlet;
+import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-
-import com.google.inject.Singleton;
-
-import edu.gatech.oad.rocket.findmythings.server.PageServlet;
-import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
+import java.io.IOException;
 
 @Singleton
 public class AuthTestEndpoint extends PageServlet {

@@ -1,10 +1,11 @@
 package edu.gatech.oad.rocket.findmythings.server.db;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
-
+import com.google.appengine.api.datastore.PhoneNumber;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Singleton;
+import com.googlecode.objectify.*;
+import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
 import edu.gatech.oad.rocket.findmythings.server.db.model.*;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -12,16 +13,10 @@ import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.util.ByteSource;
 import org.apache.shiro.util.SimpleByteSource;
 
-import com.google.appengine.api.datastore.PhoneNumber;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Singleton;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyFactory;
-import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.VoidWork;
-import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
+import java.util.Collection;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public abstract class DatabaseService {
 

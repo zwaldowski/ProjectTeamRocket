@@ -1,15 +1,14 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP.Status;
 import edu.gatech.oad.rocket.findmythings.server.util.MimeTypes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public abstract class TemplateServlet extends PageServlet {
 

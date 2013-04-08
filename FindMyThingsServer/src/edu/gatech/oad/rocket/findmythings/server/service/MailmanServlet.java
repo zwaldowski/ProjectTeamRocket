@@ -1,20 +1,18 @@
 package edu.gatech.oad.rocket.findmythings.server.service;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.logging.Logger;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import edu.gatech.oad.rocket.findmythings.server.TemplateServlet;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
+import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
-import edu.gatech.oad.rocket.findmythings.server.TemplateServlet;
-import edu.gatech.oad.rocket.findmythings.server.util.Config;
-import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Logger;
 
 @Singleton
 public class MailmanServlet extends TemplateServlet {

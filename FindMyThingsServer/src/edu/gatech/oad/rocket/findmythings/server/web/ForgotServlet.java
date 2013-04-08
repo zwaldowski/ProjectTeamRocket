@@ -1,17 +1,15 @@
 package edu.gatech.oad.rocket.findmythings.server.web;
 
-import java.io.IOException;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.google.inject.Singleton;
-
 import edu.gatech.oad.rocket.findmythings.server.api.ForgotEndpoint;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
 
 @Singleton
 public class ForgotServlet extends ForgotEndpoint {

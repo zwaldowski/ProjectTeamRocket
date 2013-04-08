@@ -1,14 +1,16 @@
 package edu.gatech.oad.rocket.findmythings.server.db.model;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Logger;
-
-import com.googlecode.objectify.annotation.*;
+import com.google.appengine.api.datastore.PhoneNumber;
+import com.google.common.base.Objects;
+import com.google.common.base.Preconditions;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
+import edu.gatech.oad.rocket.findmythings.server.model.AppMutableMember;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.RandomNumberGenerator;
@@ -18,13 +20,8 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.apache.shiro.util.SimpleByteSource;
 
-import com.google.appengine.api.datastore.PhoneNumber;
-import com.google.common.base.Objects;
-import com.google.common.base.Preconditions;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-
-import edu.gatech.oad.rocket.findmythings.server.model.AppMutableMember;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * CS 2340 - FindMyStuff Android App

@@ -1,12 +1,11 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
-import java.io.IOException;
+import com.google.inject.Singleton;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.inject.Singleton;
+import java.io.IOException;
 
 @Singleton
 public class SimpleTemplateServlet extends TemplateServlet {

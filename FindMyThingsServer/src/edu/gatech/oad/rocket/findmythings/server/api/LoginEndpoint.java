@@ -1,16 +1,14 @@
 package edu.gatech.oad.rocket.findmythings.server.api;
 
-import java.io.IOException;
-import java.util.logging.Logger;
+import com.google.inject.Singleton;
+import edu.gatech.oad.rocket.findmythings.server.PageServlet;
+import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.inject.Singleton;
-
-import edu.gatech.oad.rocket.findmythings.server.PageServlet;
-import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 @Singleton
 public class LoginEndpoint extends PageServlet {

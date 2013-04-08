@@ -1,12 +1,12 @@
 package edu.gatech.oad.rocket.findmythings.server.util.tags;
 
-import java.io.IOException;
-import java.util.Map;
-
 import freemarker.core.Environment;
 import freemarker.log.Logger;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
+
+import java.io.IOException;
+import java.util.Map;
 
 
 /**

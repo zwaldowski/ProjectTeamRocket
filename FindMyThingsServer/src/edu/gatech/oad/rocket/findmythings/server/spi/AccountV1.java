@@ -1,28 +1,26 @@
 package edu.gatech.oad.rocket.findmythings.server.spi;
 
-import javax.annotation.Nullable;
-import javax.inject.Named;
-
+import com.google.api.server.spi.config.Api;
+import com.google.api.server.spi.config.ApiMethod;
+import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.inject.Singleton;
-import edu.gatech.oad.rocket.findmythings.server.util.Config;
-import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.PrincipalCollection;
-
-import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiMethod;
-import com.google.appengine.api.datastore.PhoneNumber;
-
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.EmailValidator;
+import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
+
+import javax.annotation.Nullable;
+import javax.inject.Named;
 
 @Api(name = "fmthings", version = "v1")
 public class AccountV1 extends BaseEndpoint {

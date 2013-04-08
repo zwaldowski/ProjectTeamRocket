@@ -1,13 +1,12 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
-import java.util.Locale;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
+import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
+import edu.gatech.oad.rocket.findmythings.server.util.Messages;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.codec.Base64;
@@ -15,13 +14,11 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
-import edu.gatech.oad.rocket.findmythings.server.util.Config;
-import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
-import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
+import java.util.logging.Logger;
 
 public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 

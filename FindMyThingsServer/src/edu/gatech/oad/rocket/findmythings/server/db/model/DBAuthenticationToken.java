@@ -1,13 +1,9 @@
 package edu.gatech.oad.rocket.findmythings.server.db.model;
 
+import com.googlecode.objectify.annotation.*;
+
 import java.util.UUID;
 import java.util.logging.Logger;
-
-import com.googlecode.objectify.annotation.Cache;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Ignore;
-import com.googlecode.objectify.annotation.Index;
 
 @Cache @Entity
 public class DBAuthenticationToken {

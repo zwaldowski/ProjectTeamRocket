@@ -1,5 +1,17 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import edu.gatech.oad.rocket.findmythings.server.util.tags.PageAuthTags;
+import freemarker.cache.URLTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -10,19 +22,6 @@ import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
-
-import edu.gatech.oad.rocket.findmythings.server.util.tags.PageAuthTags;
-import freemarker.cache.URLTemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 public class PageGenerator {
 

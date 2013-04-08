@@ -1,11 +1,10 @@
 package edu.gatech.oad.rocket.findmythings.server.spi;
 
+import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.Realm;
-
-import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
-import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 
 public abstract class BaseEndpoint {
 

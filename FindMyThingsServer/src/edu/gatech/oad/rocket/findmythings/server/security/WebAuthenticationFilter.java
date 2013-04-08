@@ -1,12 +1,11 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
+import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import edu.gatech.oad.rocket.findmythings.server.util.Config;
+import edu.gatech.oad.rocket.findmythings.server.util.Messages;
+import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -14,13 +13,11 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
-import com.google.common.collect.Maps;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
-import edu.gatech.oad.rocket.findmythings.server.util.Config;
-import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.util.Collection;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class WebAuthenticationFilter extends FormAuthenticationFilter {
 	static final Logger LOGGER = Logger.getLogger(WebAuthenticationFilter.class.getName());

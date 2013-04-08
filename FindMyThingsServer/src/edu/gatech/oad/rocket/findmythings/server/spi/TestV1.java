@@ -1,12 +1,11 @@
 package edu.gatech.oad.rocket.findmythings.server.spi;
 
+import com.google.api.server.spi.config.Api;
+import com.google.api.server.spi.config.ApiMethod;
 import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-
-import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiMethod;
 
 @Api(name = "fmthings", version = "v1")
 public class TestV1 extends BaseEndpoint {

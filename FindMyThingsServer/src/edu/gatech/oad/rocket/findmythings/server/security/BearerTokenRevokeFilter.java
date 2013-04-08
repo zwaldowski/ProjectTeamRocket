@@ -1,14 +1,13 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BearerTokenRevokeFilter extends LogoutFilter {
 	private static final Logger LOGGER = Logger.getLogger(BearerTokenRevokeFilter.class.getName());

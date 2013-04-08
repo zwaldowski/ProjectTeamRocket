@@ -1,25 +1,22 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-
 import com.google.inject.Inject;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.realm.Realm;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.mgt.RealmSecurityManager;
-
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.subject.PrincipalCollection;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public abstract class PageServlet extends HttpServlet {
 

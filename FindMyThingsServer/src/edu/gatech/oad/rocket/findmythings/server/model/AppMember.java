@@ -1,9 +1,9 @@
 package edu.gatech.oad.rocket.findmythings.server.model;
 
+import com.google.appengine.api.datastore.PhoneNumber;
+
 import java.io.Serializable;
 import java.util.Collection;
-
-import com.google.appengine.api.datastore.PhoneNumber;
 
 public interface AppMember extends Serializable {
 

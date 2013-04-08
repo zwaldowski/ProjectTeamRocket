@@ -1,13 +1,11 @@
 package edu.gatech.oad.rocket.findmythings.server.util;
 
-import java.io.IOException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.web.util.WebUtils;
-
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import java.io.IOException;
 
 public final class HTTP {
 
