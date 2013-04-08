@@ -34,7 +34,7 @@
       </configuration>
       <facet type="google-app-engine" name="Google App Engine">
         <configuration>
-          <sdk-home-path>$APPENGINE_SDK$</sdk-home-path>
+          <sdk-home-path>$APPENGINE_HOME$</sdk-home-path>
         </configuration>
       </facet>
     </facet>
