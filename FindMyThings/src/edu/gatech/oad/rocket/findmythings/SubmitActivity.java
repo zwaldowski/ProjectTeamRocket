@@ -51,6 +51,10 @@ public class SubmitActivity extends Activity {
 	 */
 	private Category mCategory = Category.MISC;
 
+	/**
+	 * creates new window with correct layout
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -88,6 +92,11 @@ public class SubmitActivity extends Activity {
 
 	}
 
+	/**
+	 * creates the options menu 
+	 * @param Menu menu
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -95,6 +104,12 @@ public class SubmitActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * deals with action to do once a key is pressed down
+	 * @param int keyCode - key pressed
+	 * @param KeyEvent event - event to do in case of pressed
+	 * @return boolean 
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -107,6 +122,7 @@ public class SubmitActivity extends Activity {
 
 	/**
 	 * Returns to Item List activity. Animation and ID helper.
+	 * @return boolean
 	 */
 	public boolean toItemList() {
 		Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
@@ -121,7 +137,7 @@ public class SubmitActivity extends Activity {
 	
 	/**
 	 * Checks for errors
-	 * @return 
+	 * @return boolean false(no errors) or true(there are errors)
 	 */
 	public boolean checkforErrors() {
 		boolean cancel = false;
@@ -146,7 +162,12 @@ public class SubmitActivity extends Activity {
 		return cancel;
 
 	}
-
+	
+	/**
+	 * deals with action when an options button is selected
+	 * @param MenuItem item
+	 * @return boolean  
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 

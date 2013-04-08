@@ -14,6 +14,7 @@ import edu.gatech.oad.rocket.findmythings.model.Admin;
 
 /**
  * CS 2340 - FindMyStuff Android App
+ * Activity that deals with creating a new administrator (Admin Member)
  *
  * @author TeamRocket
  * */
@@ -30,6 +31,10 @@ public class AdminCreateActivity extends Activity {
 	 */
 	private String mEmail, mPassword;
 
+	/**
+	 * creates the new window with correct layout
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +46,11 @@ public class AdminCreateActivity extends Activity {
 
 	}
 
+	/**
+	 * creates the menu with all the items
+	 * @param Menu menu
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -48,6 +58,11 @@ public class AdminCreateActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * deals with action when an option from the options menu is selected (ok or cancel)
+	 * @param MenuItem item
+	 * @return boolean 
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

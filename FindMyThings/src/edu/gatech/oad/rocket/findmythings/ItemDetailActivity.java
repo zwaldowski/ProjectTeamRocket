@@ -33,6 +33,10 @@ public class ItemDetailActivity extends FragmentActivity {
 	 */
 	private Item mItem;
 
+	/**
+	 * creates new window with correct layout
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,6 +68,11 @@ public class ItemDetailActivity extends FragmentActivity {
 		}
 	}
 	
+	/**
+	 * deals with action when an options button is selected
+	 * @param MenuItem item
+	 * @return boolean
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -82,6 +91,12 @@ public class ItemDetailActivity extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * deals with action to do once a key is pressed down
+	 * @param int keyCode - key pressed
+	 * @param KeyEvent event - event to do in case of pressed
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -94,7 +109,7 @@ public class ItemDetailActivity extends FragmentActivity {
 	
 	/**
 	 * Goes back to MainActivity
-	 * @return
+	 * @return boolean true when done
 	 */
 	public boolean toMain() {
 		Intent next = new Intent(getApplicationContext(), MainActivity.class);
@@ -129,7 +144,7 @@ public class ItemDetailActivity extends FragmentActivity {
 	
 	/**
 	 * Checks to see if the user has an active network connection 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean hasInternet() {
 		boolean hasWifi = false;

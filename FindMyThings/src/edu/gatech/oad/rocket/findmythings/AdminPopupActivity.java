@@ -19,6 +19,7 @@ import edu.gatech.oad.rocket.findmythings.model.User;
 
 /**
  * CS 2340 - FindMyStuff Android App
+ * activity that deals with Admin features' window (lock, create new admin, etc)
  *
  * @author TeamRocket
  * */
@@ -39,6 +40,10 @@ public class AdminPopupActivity extends Activity implements OnPreferenceChangeLi
 	 */
 	private Button delete;
 
+	/**
+	 * creates new window with correct layout
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,6 +90,12 @@ public class AdminPopupActivity extends Activity implements OnPreferenceChangeLi
 		setTitle("User Attributes");
 	}
 
+	/**
+	 * deals with action to do once a key is pressed down
+	 * @param int keyCode - key pressed
+	 * @param KeyEvent event - event to do in case of pressed
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -98,6 +109,11 @@ public class AdminPopupActivity extends Activity implements OnPreferenceChangeLi
 	    return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * creates the options menu 
+	 * @param Menu menu
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -105,6 +121,12 @@ public class AdminPopupActivity extends Activity implements OnPreferenceChangeLi
 		return true;
 	}
 
+	/**
+	 * change preference
+	 * @param Preference preference
+	 * @param Object newValue
+	 * @return boolean
+	 */
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		

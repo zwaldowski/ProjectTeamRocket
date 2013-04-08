@@ -11,7 +11,6 @@ import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.util.*;
 /**
  * CS 2340 - FindMyStuff Android App
- * 
  *
  * @author TeamRocket
  * */
@@ -54,6 +53,10 @@ public class SubmitFragment extends PreferenceFragment implements OnPreferenceCh
 		CatListPref.setSummary(desc);
 	}
 
+	/**
+	 * starts to create the actual submit window
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +69,14 @@ public class SubmitFragment extends PreferenceFragment implements OnPreferenceCh
         syncTypePref(((SubmitActivity)getActivity()).getItemType());
 
         TypeListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
+            
+        	/**
+        	 * deals with the action to take once the a preference has been changed 
+        	 * @param Preference preference
+        	 * @param Object newValue
+        	 * @return boolean true when done
+        	 */
+        	@Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
             	String value = (String)newValue;
             	Type newType = EnumHelper.forIntString(value, Type.class);
@@ -78,7 +88,13 @@ public class SubmitFragment extends PreferenceFragment implements OnPreferenceCh
         });
 
         CatListPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
+        	/**
+        	 * deals with the action to take once the a preference has been changed 
+        	 * @param Preference preference
+        	 * @param Object newValue
+        	 * @return boolean true when done
+        	 */
+        	@Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
             	String value = (String)newValue;
             	Category newCategory = EnumHelper.forIntString(value, Category.class);
@@ -89,9 +105,15 @@ public class SubmitFragment extends PreferenceFragment implements OnPreferenceCh
        });
 	}
 
+	/**
+	 * deals with the action to take once the a preference has been changed 
+	 * @param Preference preference
+	 * @param Object newValue
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		
+	
 		return true;
 	}
 
