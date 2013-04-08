@@ -25,10 +25,10 @@ import java.util.logging.Logger;
 @Singleton
 public class RegisterEndpoint extends TemplateServlet {
 	static final Logger LOGGER = Logger.getLogger(RegisterEndpoint.class.getName());
-	public static final String REAL_NAME = "name";
-	public static final String PASSWORD_CONFIRM = "password_alt";
-	public static final String PHONE = "phone";
-	public static final String ADDRESS = "address";
+	private static final String REAL_NAME = "name";
+	private static final String PASSWORD_CONFIRM = "password_alt";
+	private static final String PHONE = "phone";
+	private static final String ADDRESS = "address";
 
 	/**
 	 * 
@@ -102,11 +102,11 @@ public class RegisterEndpoint extends TemplateServlet {
 		}
 	}
 
-	protected boolean emailIsInvalid(String email) {
+	boolean emailIsInvalid(String email) {
 		return email == null || email.length() == 0 || !EmailValidator.getInstance().isValid(email);
 	}
 
-	protected void mailAuthenticationTokenSendOK(HttpServletRequest request, HttpServletResponse response, String email, boolean isForgot) {
+	void mailAuthenticationTokenSendOK(HttpServletRequest request, HttpServletResponse response, String email, boolean isForgot) {
 		String registrationToken = DatabaseService.ofy().createRegistrationTicket(email);
 
 		// send email with registrationToken

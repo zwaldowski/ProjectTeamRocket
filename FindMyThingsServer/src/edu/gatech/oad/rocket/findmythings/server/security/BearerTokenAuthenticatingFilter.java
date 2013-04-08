@@ -68,9 +68,9 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 			String[] principlesAndCredentials;
 
 			if (isHeaderLoginAttempt(authorizeHeader)) {
-				principlesAndCredentials = this.getHeaderPrincipalsAndCredentials(authorizeHeader, request);
+				principlesAndCredentials = this.getHeaderPrincipalsAndCredentials(authorizeHeader);
 			} else if (isParameterLoginAttempt(authorizeParameter)) {
-				principlesAndCredentials = this.getParameterPrincipalsAndCredentials(authorizeParameter, request);
+				principlesAndCredentials = this.getParameterPrincipalsAndCredentials(authorizeParameter);
 			} else {
 				return null;
 			}
@@ -164,7 +164,7 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 		return (authorizeParam != null) && Base64.isBase64(authorizeParam.getBytes());
 	}
 
-	String[] getHeaderPrincipalsAndCredentials(String authorizeHeader, ServletRequest request) {
+	String[] getHeaderPrincipalsAndCredentials(String authorizeHeader) {
 		if (authorizeHeader == null) {
 			return null;
 		}
@@ -172,17 +172,17 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 		if (authTokens == null || authTokens.length < 2) {
 			return null;
 		}
-		return getPrincipalsAndCredentials(authTokens[0], authTokens[1]);
+		return getPrincipalsAndCredentials(authTokens[1]);
 	}
 
-	String[] getParameterPrincipalsAndCredentials(String authorizeParam, ServletRequest request) {
+	String[] getParameterPrincipalsAndCredentials(String authorizeParam) {
 		if (authorizeParam == null) {
 			return null;
 		}
-		return getPrincipalsAndCredentials(AUTHORIZATION_SCHEME, authorizeParam);
+		return getPrincipalsAndCredentials(authorizeParam);
 	}
 
-	String[] getPrincipalsAndCredentials(String scheme, String encoded) {
+	String[] getPrincipalsAndCredentials(String encoded) {
 		String decoded = Base64.decodeToString(encoded);
 		return decoded.split(":", 2);
 	}

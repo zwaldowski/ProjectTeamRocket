@@ -6,7 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.Realm;
 
-public abstract class BaseEndpoint {
+abstract class BaseEndpoint {
 
 	AppMember getMemberWithEmail(String email) {
 		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();

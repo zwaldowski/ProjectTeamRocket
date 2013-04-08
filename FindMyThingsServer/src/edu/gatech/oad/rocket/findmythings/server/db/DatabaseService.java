@@ -202,18 +202,13 @@ public abstract class DatabaseService {
 
 		/** Creation methods **/
 
-		public DBRegistrationTicket createRegistrationTicket(String ticket, String email) {
-			DBRegistrationTicket reg = new DBRegistrationTicket(ticket, email, REGISTRATION_VALID_DAYS, TimeUnit.DAYS);
-			save().entity(reg);
-			return reg;
-		}
-
 		private static final RandomNumberGenerator magic = new SecureRandomNumberGenerator();
 
 		public String createRegistrationTicket(String email) {
 			ByteSource salt = magic.nextBytes();
 			String ticket = new Sha256Hash(email, new SimpleByteSource(salt), 63).toHex().substring(0,10);
-			createRegistrationTicket(ticket, email);
+			DBRegistrationTicket reg = new DBRegistrationTicket(ticket, email, REGISTRATION_VALID_DAYS, TimeUnit.DAYS);
+			save().entity(reg);
 			return ticket;
 		}
 

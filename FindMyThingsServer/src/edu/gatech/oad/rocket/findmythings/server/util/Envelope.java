@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 @Singleton
 public class Envelope {
-	static final Logger LOG = Logger.getLogger(Envelope.class.getName());
+	private static final Logger LOG = Logger.getLogger(Envelope.class.getName());
 
 	public static final String SENDER = "FMTEmailFrom";
 

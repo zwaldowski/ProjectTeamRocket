@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class WebAuthenticationFilter extends FormAuthenticationFilter {
-	static final Logger LOGGER = Logger.getLogger(WebAuthenticationFilter.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(WebAuthenticationFilter.class.getName());
 
 	@Override @Inject
 	public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {

@@ -47,9 +47,9 @@ public class MainContextListener extends GuiceServletContextListener {
 	private static final boolean ENABLE_TEST_MODE = false;
 	private static final boolean ENABLE_OLD_API = false;
 
-	public static final Key<WebAuthenticationFilter> FORM_AUTH = Key.get(WebAuthenticationFilter.class);
-	public static final Key<BearerTokenAuthenticatingFilter> TOKEN_AUTH = Key.get(BearerTokenAuthenticatingFilter.class);
-	public static final Key<BearerTokenRevokeFilter> TOKEN_LOGOUT = Key.get(BearerTokenRevokeFilter.class);
+	private static final Key<WebAuthenticationFilter> FORM_AUTH = Key.get(WebAuthenticationFilter.class);
+	private static final Key<BearerTokenAuthenticatingFilter> TOKEN_AUTH = Key.get(BearerTokenAuthenticatingFilter.class);
+	private static final Key<BearerTokenRevokeFilter> TOKEN_LOGOUT = Key.get(BearerTokenRevokeFilter.class);
 
 	private ServletContext servletContext = null;
 

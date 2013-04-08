@@ -26,9 +26,9 @@ public class SearchableHelper {
 	private static final Logger log = Logger.getLogger(SearchableHelper.class.getName());
 
 	// Magic numbers!
-	public static final int MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH = 10;
+	private static final int MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH = 10;
 
-	public static final int MAX_NUMBER_OF_WORDS_TO_PUT_IN_INDEX = 200;
+	private static final int MAX_NUMBER_OF_WORDS_TO_PUT_IN_INDEX = 200;
 
 	public static <T extends Searchable> Query<T> search(Objectify objectify, Class<T> clazz, String query) {
 		Set<String> queryTokens = getSearchTokens(query, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
@@ -53,7 +53,7 @@ public class SearchableHelper {
 	 * @param maximumNumberOfTokens The limit number of tokens to index
 	 * @return A set containing indexed, searchable tokens
 	 */
-	public static Set<String> getSearchTokens(String searchableContext, int maximumNumberOfTokens) {
+	private static Set<String> getSearchTokens(String searchableContext, int maximumNumberOfTokens) {
 
 		String indexCleanedOfHTMLTags = searchableContext.replaceAll("<.*?>"," ");
 		Set<String> returnSet = new HashSet<>();

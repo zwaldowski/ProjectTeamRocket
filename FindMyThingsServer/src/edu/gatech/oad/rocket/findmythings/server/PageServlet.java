@@ -28,17 +28,17 @@ public abstract class PageServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = -3019345766517575273L;
 
-	protected PageGenerator generator;
+	PageGenerator generator;
 
-	protected String usernameParam;
-	protected String passwordParam;
-	protected String rememberMeParam;
+	private String usernameParam;
+	private String passwordParam;
+	private String rememberMeParam;
 
 	public PageServlet() {
 		super();
 	}
 
-	public String getUsernameParam() {
+	protected String getUsernameParam() {
 		return usernameParam;
 	}
 
@@ -47,7 +47,7 @@ public abstract class PageServlet extends HttpServlet {
 		this.usernameParam = usernameParam;
 	}
 
-	public String getPasswordParam() {
+	protected String getPasswordParam() {
 		return passwordParam;
 	}
 
@@ -56,7 +56,7 @@ public abstract class PageServlet extends HttpServlet {
 		this.passwordParam = passwordParam;
 	}
 
-	public String getRememberMeParam() {
+	protected String getRememberMeParam() {
 		return rememberMeParam;
 	}
 
@@ -66,8 +66,12 @@ public abstract class PageServlet extends HttpServlet {
 	}
 
 	@Inject
-	protected void setGenerator(PageGenerator nGenerator) {
-		generator = nGenerator;
+	protected void setGenerator(PageGenerator generator) {
+		this.generator = generator;
+	}
+
+	protected PageGenerator getGenerator() {
+		return generator;
 	}
 
 	protected int getIntRequestParam(HttpServletRequest request, String paramName, int defaultValue) {
@@ -132,5 +136,4 @@ public abstract class PageServlet extends HttpServlet {
 		params.put("passwordParam", getPasswordParam());
 		params.put("rememberMeParam", getRememberMeParam());
 	}
-
 }

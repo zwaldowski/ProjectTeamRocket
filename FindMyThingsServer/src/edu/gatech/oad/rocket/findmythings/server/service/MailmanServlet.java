@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 @Singleton
 public class MailmanServlet extends TemplateServlet {
-	static final Logger LOG = Logger.getLogger(MailmanServlet.class.getName());
+	private static final Logger LOG = Logger.getLogger(MailmanServlet.class.getName());
 
 	/**
 	 * 
@@ -35,7 +35,7 @@ public class MailmanServlet extends TemplateServlet {
 		this.emailWrapper = emailWrapper;
 	}
 
-	public Envelope getEmailWrapper() {
+	Envelope getEmailWrapper() {
 		return emailWrapper;
 	}
 

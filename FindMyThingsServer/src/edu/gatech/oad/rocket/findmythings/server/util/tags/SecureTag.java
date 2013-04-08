@@ -12,15 +12,15 @@ import java.util.Map;
  * <p>Equivalent to {@link org.apache.shiro.web.tags.SecureTag}</p>
  */
 @SuppressWarnings("rawtypes")
-public abstract class SecureTag implements TemplateDirectiveModel {
+abstract class SecureTag implements TemplateDirectiveModel {
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body) throws TemplateException, IOException {
 		verifyParameters(params);
 		render(env, params, body);
 	}
 
-	public abstract void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException;
+	abstract void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException;
 
-	protected String getParam(Map params, String name) {
+	String getParam(Map params, String name) {
 		Object value = params.get(name);
 
 		if (value instanceof SimpleScalar) {
@@ -30,14 +30,13 @@ public abstract class SecureTag implements TemplateDirectiveModel {
 		return null;
 	}
 
-	protected Subject getSubject() {
+	Subject getSubject() {
 		return SecurityUtils.getSubject();
 	}
 
-	protected void verifyParameters(Map params) throws TemplateModelException {
-	}
+	void verifyParameters(Map params) throws TemplateModelException {}
 
-	protected void renderBody(Environment env, TemplateDirectiveBody body) throws IOException, TemplateException {
+	void renderBody(Environment env, TemplateDirectiveBody body) throws IOException, TemplateException {
 		if (body != null) {
 			body.render(env.getOut());
 		}

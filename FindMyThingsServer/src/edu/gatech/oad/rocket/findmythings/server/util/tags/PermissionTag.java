@@ -36,7 +36,7 @@ public abstract class PermissionTag extends SecureTag {
 		}
 	}
 
-	protected boolean isPermitted(String p) {
+	boolean isPermitted(String p) {
 		return getSubject() != null && getSubject().isPermitted(p);
 	}
 

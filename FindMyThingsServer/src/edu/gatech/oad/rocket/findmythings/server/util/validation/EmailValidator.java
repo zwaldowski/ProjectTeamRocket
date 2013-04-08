@@ -87,7 +87,7 @@ public class EmailValidator implements Serializable {
 	 *
 	 * @param allowLocal Should local addresses be considered valid?
 	 */
-	protected EmailValidator(boolean allowLocal) {
+	private EmailValidator(boolean allowLocal) {
 		super();
 		this.allowLocal = allowLocal;
 	}

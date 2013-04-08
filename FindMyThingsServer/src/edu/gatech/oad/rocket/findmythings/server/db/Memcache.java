@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
  * @param <K>  The raw key class
  * @param <V>  The value class
  */
-public class Memcache<K, V> implements Cache<K, V> {
+class Memcache<K, V> implements Cache<K, V> {
 
 	private static final int EXPIRES = 300; // default to 5 minutes
 

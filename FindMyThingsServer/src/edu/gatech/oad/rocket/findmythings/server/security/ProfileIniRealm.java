@@ -20,7 +20,7 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 	@SuppressWarnings("unused")
 	private static final Logger LOG = Logger.getLogger(ProfileIniRealm.class.getName());
 
-	public static final String PROFILES_SECTION_NAME = "profiles";
+	private static final String PROFILES_SECTION_NAME = "profiles";
 
 	@com.google.appengine.repackaged.org.codehaus.jackson.annotate.JsonIgnoreProperties({"objectPermissions", "credentialsExpired", "credentials", "principals"})
 	private class IniAccount extends SimpleAccount implements AppMember {
@@ -43,7 +43,7 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
 		@Override
 		public boolean isEditable() {
-			return true;
+			return false;
 		}
 
 		@Override

@@ -14,13 +14,13 @@ public abstract class TemplateServlet extends PageServlet {
 
 	private static final long serialVersionUID = 8526927539799303725L;
 
-	static final Logger LOGGER = Logger.getLogger(TemplateServlet.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(TemplateServlet.class.getName());
 
 	public TemplateServlet() {
 		super();
 	}
 
-	protected static int indexOfExtension(String filename) {
+	static int indexOfExtension(String filename) {
 		if (filename == null) {
 			return -1;
 		}
@@ -30,7 +30,7 @@ public abstract class TemplateServlet extends PageServlet {
 		return (Math.max(lastUnixPos, lastWindowsPos) > extensionPos ? -1 : extensionPos);
 	}
 
-	protected static String removeExtension(String filename) {
+	static String removeExtension(String filename) {
 		if (filename == null) {
 			return null;
 		}
@@ -42,11 +42,11 @@ public abstract class TemplateServlet extends PageServlet {
 		}
 	}
 
-	protected static String replaceExtensionWith(String filename, String extension) {
+	static String replaceExtensionWith(String filename, String extension) {
 		return removeExtension(filename) + "." + extension;
 	}
 
-	protected static String getDefaultTemplateURI(HttpServletRequest request) {
+	static String getDefaultTemplateURI(HttpServletRequest request) {
 		String URI = request.getRequestURI();
 		if (URI.endsWith("/")) URI = URI.substring(0, URI.length() - 1);
 		if (URI.length() == 0) URI = "index.html";

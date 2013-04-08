@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @SuppressWarnings("rawtypes")
 public class UserTag extends SecureTag {
-	static final Logger log = Logger.getLogger("UserTag");
+	private static final Logger log = Logger.getLogger("UserTag");
 
 	@Override
 	public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {

@@ -30,7 +30,7 @@ import java.util.Map;
  */
 @SuppressWarnings("rawtypes")
 public class PrincipalTag extends SecureTag {
-	static final Logger log = Logger.getLogger("PrincipalTag");
+	private static final Logger log = Logger.getLogger("PrincipalTag");
 
 	/**
 	 * The type of principal to be retrieved, or null if the default principal should be used.

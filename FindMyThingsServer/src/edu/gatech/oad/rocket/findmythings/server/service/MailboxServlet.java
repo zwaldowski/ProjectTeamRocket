@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 @Singleton
 public class MailboxServlet extends HttpServlet {
-	static final Logger LOG = Logger.getLogger(MailboxServlet.class.getName());
+	private static final Logger LOG = Logger.getLogger(MailboxServlet.class.getName());
 
 	/**
 	 * 
