@@ -18,7 +18,12 @@ import edu.gatech.oad.rocket.findmythings.model.Item;
 import edu.gatech.oad.rocket.findmythings.model.Type;
 import android.content.Intent;
 
-
+/**
+ * CS 2340 - FindMyStuff Android App
+ * Activity that takes care of filtering items according to certain criteria
+ *
+ * @author TeamRocket
+ * */
 public class FilterActivity extends Activity implements OnItemSelectedListener, TabListener {
 	
 	/**

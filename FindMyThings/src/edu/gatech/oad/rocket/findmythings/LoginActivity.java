@@ -64,6 +64,10 @@ public class LoginActivity extends Activity {
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
 
+	/**
+	 * creates window with correct layout
+	 * @param Bundle
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -109,6 +113,12 @@ public class LoginActivity extends Activity {
 
 	}
 	
+	/**
+	 * takes care of action when key is pressed down
+	 * @param int keyCode key that is pressed
+	 * @param KeyEvent event - event that is to happen when the key is pressed
+	 * @return boolean
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -122,6 +132,11 @@ public class LoginActivity extends Activity {
 	    return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * creates the menu with all the options
+	 * @param Menu menu
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -303,6 +318,10 @@ public class LoginActivity extends Activity {
 
 		}
 
+		/**
+		 * deals with action when user either log is sucessfully or not
+		 * @param final boolean success - true (user log in successfully), false (wrong password/username)
+		 */
 		@Override
 		protected void onPostExecute(final Boolean success) {
 			mAuthTask = null;
@@ -345,6 +364,9 @@ public class LoginActivity extends Activity {
 			}
 		}
 
+		/**
+		 * deals with action when task cancelled
+		 */
 		@Override
 		protected void onCancelled() {
 			mAuthTask = null;

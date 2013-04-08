@@ -15,10 +15,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
+ * CS 2340 - FindMyStuff Android App
  * Activity that deals with the Search options window...
  * 
  * @author TeamRocket
- *
  */
 public class SearchActivity extends Activity{
 	private int checked;
@@ -28,6 +28,9 @@ public class SearchActivity extends Activity{
 	private TextView reward;
 	private Button search;
 	
+	/**
+	 * creates window with correct layout for searching
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_new);
@@ -38,7 +41,10 @@ public class SearchActivity extends Activity{
 	}
 	
 	
-	//the method that decides which intent to show
+	/**
+	 * the method that decides which intent to show
+	 * @param view
+	 */
 	public void addListenerOnButton(View view) {
 		name = (TextView)findViewById(R.id.search_name);
 		types = (Spinner) findViewById(R.id.search_type);
@@ -65,7 +71,6 @@ public class SearchActivity extends Activity{
 		
 		
 		 //cnt
-		 
 		 switch(checked) {
 		 case 0:
 			 
@@ -83,6 +88,12 @@ public class SearchActivity extends Activity{
 		
 	}
 	
+	/**
+	 * deals with action to take when key is pressed down
+	 * @param int keyCode key that is pressed 
+	 * @param KeyEvent event - event to happened once key is pressed
+	 * @return boolean
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 	//Tells Activity what to do when back key is pressed

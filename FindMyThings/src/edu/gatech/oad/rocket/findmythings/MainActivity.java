@@ -72,6 +72,10 @@ public class MainActivity extends ListActivity  {
 	 */
 	private ListView mView;
 	
+	/**
+	 * creates window with correct layout
+	 * @param Bundle
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -125,6 +129,12 @@ public class MainActivity extends ListActivity  {
 		adapter.setList(tempList);		
 	}	
 
+	/**
+	 * takes care of action when a key is pressed down
+	 * @param  int keyCode
+	 * @param  KeyEvent event
+	 * @return boolean 
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -134,6 +144,11 @@ public class MainActivity extends ListActivity  {
 	    return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * shows the options that are available for user depending on the item selected (submit/search/login/etc)
+	 * @param MenuItem item - menu selected
+	 * @return boolean 
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
@@ -160,6 +175,9 @@ public class MainActivity extends ListActivity  {
 	    return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * takes care of following steps when resuming action
+	 */
 	@Override
 	protected void onResume() {
 	    super.onResume();
@@ -170,6 +188,13 @@ public class MainActivity extends ListActivity  {
 		}
 	}
 
+	/**
+	 * takes user to new window with the clicked item's details
+	 * @param ListView l
+	 * @param View v
+	 * @param int position
+	 * @param long id 
+	 */
 	@Override
 	protected void onListItemClick (ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
@@ -215,6 +240,10 @@ public class MainActivity extends ListActivity  {
 	    return true;
 	}
 
+	/**
+	 * creates the options menu (login, account, admin button)
+	 * @param Menu menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -282,8 +311,9 @@ public class MainActivity extends ListActivity  {
 		return mType;
 	}
 	
-	   /**
+	 /**
      * Go to LoginActivity
+     * @return boolean true when done
      */
     public boolean logIn() {
     	Intent toLogin = new Intent(MainActivity.this, LoginActivity.class);
@@ -295,6 +325,7 @@ public class MainActivity extends ListActivity  {
     
     /**
      * Go to AccountActivity
+     * @return true when done
      */
     public boolean toAccount() {
     	Intent toAccount = new Intent(MainActivity.this, AccountActivity.class);
@@ -306,7 +337,7 @@ public class MainActivity extends ListActivity  {
     
     /**
      * Go to AdminActivity
-     * @return
+     * @return true when done
      */
     public boolean toAdmin() {
     	Intent toAccount = new Intent(MainActivity.this, AdminActivity.class);
@@ -318,11 +349,18 @@ public class MainActivity extends ListActivity  {
     
     /**
      * Logout
+     * @return boolean: true if logout, false if not
      */
     public boolean logOut() {
     	ErrorDialog toLogin =  new ErrorDialog("Really log out?", "Sign out", "Cancel");
 		AlertDialog.Builder temp = toLogin.getDialog(this,
-			new DialogInterface.OnClickListener() {
+				new DialogInterface.OnClickListener() {
+
+			/**
+			 * logs current user out
+			 * @param DialogInterface dialog
+			 * @param int id
+			 */
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				//Clear current user
@@ -332,12 +370,19 @@ public class MainActivity extends ListActivity  {
 				startActivity(getIntent());
 				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 				logOut = true;
-	            }	
-			}, 
-			new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int id) {
-					logOut = false;
+			}	
+		}, 
+		
+		new DialogInterface.OnClickListener() {
+
+			/**
+			 * keeps user loged in
+			 * @param DialogInterface dialog
+			 * @param int id
+			 */
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				logOut = false;
 				}    
 		
 			});

@@ -12,7 +12,11 @@ import android.widget.EditText;
 import edu.gatech.oad.rocket.findmythings.control.*;
 import edu.gatech.oad.rocket.findmythings.model.Admin;
 
-
+/**
+ * CS 2340 - FindMyStuff Android App
+ *
+ * @author TeamRocket
+ * */
 public class AdminCreateActivity extends Activity {
 
 

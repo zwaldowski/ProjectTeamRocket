@@ -11,6 +11,7 @@ import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.util.*;
 /**
  * CS 2340 - FindMyStuff Android App
+ * 
  *
  * @author TeamRocket
  * */

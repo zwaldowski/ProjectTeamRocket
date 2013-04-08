@@ -17,7 +17,11 @@ import edu.gatech.oad.rocket.findmythings.model.Admin;
 import edu.gatech.oad.rocket.findmythings.model.Member;
 import edu.gatech.oad.rocket.findmythings.model.User;
 
-
+/**
+ * CS 2340 - FindMyStuff Android App
+ *
+ * @author TeamRocket
+ * */
 public class AdminPopupActivity extends Activity implements OnPreferenceChangeListener {
 
 	/**
