@@ -9,13 +9,10 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -88,6 +85,9 @@ public class MainActivity extends ListActivity  {
 		
 		mView = (ListView)findViewById(android.R.id.list);
 		mView.setTextFilterEnabled(true);
+		//mView.setOnScrollListener(new OnScrollListener { 
+			//public void onScroll
+		//});
 		
 		//Create tabs and hide title
 		actionBar = getActionBar();

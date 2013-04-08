@@ -38,15 +38,16 @@
             android:name="edu.gatech.oad.rocket.findmythings.ItemDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenLayout"
             android:label="@string/title_item_detail"
-            android:parentActivityName="edu.gatech.oad.rocket.findmythings.ItemListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ItemListActivity" />
+            android:parentActivityName="edu.gatech.oad.rocket.findmythings.MainActivity" >
         </activity>
         <activity
             android:name="edu.gatech.oad.rocket.findmythings.LoginActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:parentActivityName="edu.gatech.oad.rocket.findmythings.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name="edu.gatech.oad.rocket.findmythings.RegisterActivity"
@@ -54,7 +55,7 @@
             android:parentActivityName="edu.gatech.oad.rocket.findmythings.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginWindow" />
+                android:value=".LoginActivity" />
         </activity>
         <activity
             android:name="edu.gatech.oad.rocket.findmythings.MainActivity"
