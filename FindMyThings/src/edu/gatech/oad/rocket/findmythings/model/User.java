@@ -20,22 +20,38 @@ public class User extends Member {
 	 */
 	private int attempts = 0;
 	
+
+	@SuppressWarnings("unused")	
 	/**
 	 * Store all items the user has submitted
 	 */
-	@SuppressWarnings("unused")
 	private ArrayList<Item> currSubmits; //TODO: this
 
+	/**
+	 * constructor for new User
+	 * @param user
+	 * @param pass
+	 * @param phone
+	 */
 	public User(String user, String pass, String phone) {
 		super(user, pass, phone);
 		
 	}
 
+	/**
+	 * constructor2 for new User
+	 * @param user
+	 * @param pass
+	 */
 	public User(String user, String pass) {
 		super(user, pass);
 		
 	}
 
+	/**
+	 * returns whether the user is locked or not
+	 * @return boolean locked
+	 */
 	@Override
 	public boolean locked(){
 		return locked;

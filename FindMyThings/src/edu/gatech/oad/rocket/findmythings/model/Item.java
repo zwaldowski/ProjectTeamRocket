@@ -65,6 +65,12 @@ public class Item {
 		name = iName;
 		reward = iReward;
 	}
+	
+	/**
+	 * constructor2 to create a new Item
+	 * @param iName
+	 * @param kind
+	 */
 	public Item (String iName, Type kind) {
 		name = iName;
 		//FOR TESTING
@@ -216,6 +222,10 @@ public class Item {
 		return loc;
 	}
 
+	/**
+	 * returns the name of the item
+	 * @return String name
+	 */
 	@Override
 	public String toString() {
 

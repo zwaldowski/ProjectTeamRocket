@@ -112,8 +112,8 @@ public class RegisterActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-		getActionBar().setDisplayHomeAsUpEnabled(false);
-		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowHomeEnabled(true);
 	}
 	/**
 	 * RegisterActivity new user and return to login screen

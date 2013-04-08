@@ -1,9 +1,10 @@
 package edu.gatech.oad.rocket.findmythings.model;
 
 /**
- * An enumerated type representing
- * @author zwaldowski
- *
+ * CS 2340 - FindMyStuff Android App
+ * An enumerated type representing types of items
+ * 
+ * @author TeamRocket
  */
 public enum Type {
 	LOST, FOUND, DONATION, REQUEST;

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -73,7 +74,7 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login_window);
-
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		if(!Email.equals(RegisterActivity.rEmail))
 		//Email carried over from RegisterActivity.
 			Email = RegisterActivity.rEmail;
@@ -142,6 +143,22 @@ public class LoginActivity extends Activity {
 		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.activity_login_window, menu);
 		return true;
+	}
+	
+	/**
+	 * Handles menu actions
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	Intent i = new Intent(LoginActivity.this, MainActivity.class);
+				finish();
+				startActivity(i);
+				return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	/**

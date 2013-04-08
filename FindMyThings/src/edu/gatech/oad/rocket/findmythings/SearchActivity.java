@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -36,8 +37,28 @@ public class SearchActivity extends Activity{
 		setContentView(R.layout.activity_search_new);
 		//change to activity_search if it doesnt work
 		
+		//Shows the arrow at the top left
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		
 		//addListenerOnButton();
+	}
+	
+
+	/**
+	 * Handles menu actions
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				finish();
+				startActivity(i);
+				return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 	
 	

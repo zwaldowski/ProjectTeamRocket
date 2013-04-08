@@ -2,6 +2,12 @@ package edu.gatech.oad.rocket.findmythings.util;
 
 import android.content.Context;
 
+/**
+ * CS 2340 - FindMyStuff Android App
+ * class that helps with enumerated types
+ *
+ * @author TeamRocket
+ * */
 public final class EnumHelper {
 
 	private EnumHelper() {}
@@ -27,10 +33,20 @@ public final class EnumHelper {
 		return aClass.getEnumConstants()[intValue];
 	}
 	
+	/**
+	 * @param context
+	 * @param rID
+	 * @param value
+	 * @return
+	 */
 	public static <T extends Enum<?>> String localizedFromArray(Context context, int rID, T value) {
 		return context.getResources().getStringArray(rID)[value.ordinal()];
 	}
 	
+	/**
+	 * @param value
+	 * @return
+	 */
 	public static <T extends Enum<?>> String toIntString(T value) {
 		return ((Integer)value.ordinal()).toString();
 	}
