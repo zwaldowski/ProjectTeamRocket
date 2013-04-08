@@ -21,6 +21,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
+import java.util.HashSet;
+import java.util.Set;
 
 @Api(name = "fmthings", version = "v1")
 public class AccountV1 extends BaseEndpoint {
@@ -77,7 +79,16 @@ public class AccountV1 extends BaseEndpoint {
 			PhoneNumber phoneNum = new PhoneNumber(phone);
 
 			if (user == null) {
-				DatabaseService.ofy().createMember(email, password, name, phoneNum, address);
+				Set<String> roles = new HashSet<String>();
+				roles.add("user");
+				Set<String> permissions = new HashSet<String>();
+				permissions.add("browse");
+				permissions.add("submit");
+				DBMember newUser = new DBMember(email, password, roles, permissions, true);
+				newUser.setPhone(phoneNum);
+				newUser.setName(name);
+				newUser.setAddress(address);
+				DatabaseService.ofy().save().entity(newUser);
 			} else {
 				DatabaseService.ofy().updateMember((DBMember)user, password, name, phoneNum, address);
 			}

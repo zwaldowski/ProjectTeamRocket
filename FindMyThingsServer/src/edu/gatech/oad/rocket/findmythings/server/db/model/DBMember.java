@@ -84,7 +84,7 @@ public class DBMember implements AppMutableMember {
 		this(email, password, roles, permissions, false);
 	}
 
-	DBMember(String email, String password, Set<String> roles, Set<String> permissions, boolean isRegistered) {
+	public DBMember(String email, String password, Set<String> roles, Set<String> permissions, boolean isRegistered) {
 		Preconditions.checkNotNull(email, "DBMember email can't be null");
 		Preconditions.checkNotNull(roles, "DBMember roles can't be null");
 		Preconditions.checkNotNull(permissions, "DBMember permissions can't be null");
@@ -92,8 +92,8 @@ public class DBMember implements AppMutableMember {
 
 		this.salt = salt().getBytes();
 		this.hashedPassword = hash(password, salt);
-		this.roles = Collections.unmodifiableSet(roles);
-		this.permissions = Collections.unmodifiableSet(permissions);
+		this.roles = new HashSet<>(roles);
+		this.permissions = new HashSet<>(permissions);
 		this.dateRegistered = isRegistered ? new Date() : null;
 	}
 
