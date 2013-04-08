@@ -30,6 +30,10 @@ public class DummyContent {
 		addItem(new DummyItem("3", "Item 3"));
 	}
 
+	/**
+	 * add item to the dummy array
+	 * @param item
+	 */
 	private static void addItem(DummyItem item) {
 		ITEMS.add(item);
 		ITEM_MAP.put(item.id, item);
@@ -47,6 +51,9 @@ public class DummyContent {
 			this.content = content;
 		}
 
+		/**
+		 * returns the content of the dummy array
+		 */
 		@Override
 		public String toString() {
 			return content;

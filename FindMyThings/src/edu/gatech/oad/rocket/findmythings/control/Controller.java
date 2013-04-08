@@ -110,6 +110,10 @@ public final class Controller {
 		addItem(reqStuff);
 		addDummyItems(); 
     }
+	
+	/**
+	 * adding 
+	 */
 	public void addDummyItems() {
 		Item[] dummy = new Item[8];
 		dummy[0] = new Item("Shoes", Type.LOST);
@@ -148,6 +152,10 @@ public final class Controller {
 		return allItems.get(kind);
 	}
 	
+	/**
+	 * gets all the existing items
+	 * @return ItemList with all items
+	 */
 	private ItemsList getContainer() {
 		ItemsList all = new ItemsList();
 		all.addAll(allItems.get(Type.LOST));
@@ -166,6 +174,10 @@ public final class Controller {
 		container.addItem(i);
 	}
 
+	/**
+	 * adds an item to list of items
+	 * @param Item i to be added
+	 */
 	public void addItem(Item i) {
 		Type kind = i.getType();
 		addItem(kind, i);

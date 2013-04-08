@@ -25,10 +25,15 @@ public class Login {
 	 */
 	public static Member currUser;
 
-
+	/**
+	 * constructor (do-nothing)
+	 */
 	public Login() {
 	}
 
+	/**
+	 * creates some members and an admin
+	 */
 	static {
 		Member[] template = new Member[6]; //For testing login without the need for registration
 		template[0] = new User("cchu43@gatech.edu","admin","555-555-5555");
