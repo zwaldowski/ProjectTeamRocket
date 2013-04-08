@@ -44,6 +44,9 @@ import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
 
 public class MainContextListener extends GuiceServletContextListener {
+	
+	private static final boolean ENABLE_TEST_MODE = false;
+	private static final boolean ENABLE_OLD_API = false;
 
 	public static final Key<WebAuthenticationFilter> FORMAUTHC = Key.get(WebAuthenticationFilter.class);
 	public static final Key<BearerTokenAuthenticatingFilter> TOKENAUTHC = Key.get(BearerTokenAuthenticatingFilter.class);
@@ -93,24 +96,27 @@ public class MainContextListener extends GuiceServletContextListener {
 			}
 	        
 			serve("/sendMail").with(MailboxServlet.class);
-
-			serve("/api/login").with(LoginEndpoint.class);
-			serve("/api/register").with(RegisterEndpoint.class);
-			serve("/api/forgot").with(ForgotEndpoint.class);
-
+			serve("/_ah/mail/*").with(MailmanServlet.class);
+			
 			serve("/login").with(SimpleTemplateServlet.class);
 			serve("/register").with(RegisterServlet.class);
 			serve("/forgot").with(ForgotServlet.class);
 			serve("/activate").with(ActivateServlet.class);
 
-			serve("/api/authtest").with(AuthTestEndpoint.class);
-			serve("/authtest").with(SimpleTemplateServlet.class);
-
 			serve("/").with(SimpleTemplateServlet.class);
 			serve("/about").with(SimpleTemplateServlet.class);
 			serve("/contact").with(SimpleTemplateServlet.class);
 
-			serve("/_ah/mail/*").with(MailmanServlet.class);
+			if (ENABLE_OLD_API) {
+				serve("/api/login").with(LoginEndpoint.class);
+				serve("/api/register").with(RegisterEndpoint.class);
+				serve("/api/forgot").with(ForgotEndpoint.class);
+			}
+
+			if (ENABLE_TEST_MODE) {
+				serve("/api/authtest").with(AuthTestEndpoint.class);
+				serve("/authtest").with(SimpleTemplateServlet.class);
+			}
 
 			// set the login redirect URLs
 			bindConstant(Envelope.SENDER).to(Config.APP_EMAIL);
@@ -158,7 +164,6 @@ public class MainContextListener extends GuiceServletContextListener {
 			
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
 			addFilterChain("/login", FORMAUTHC);
-			addFilterChain("/account", FORMAUTHC);
 			addFilterChain("/logout", LOGOUT);
 
 			addFilterChain("/_ah/api/fmthings/v1/members/get", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
@@ -170,17 +175,25 @@ public class MainContextListener extends GuiceServletContextListener {
 			addFilterChain("/_ah/api/fmthings/v1/test/auth", NO_SESSION_CREATION, TOKENAUTHC);
 			addFilterChain("/_ah/api/fmthings/v1/test", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
 			
-			addFilterChain("/api/login", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/api/account", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/api/updateAccount", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/api/register", NO_SESSION_CREATION, ANON);
-			addFilterChain("/api/forgot", NO_SESSION_CREATION, ANON);
-			addFilterChain("/api/logout", NO_SESSION_CREATION, TOKENLOGOUT);
+
+			if (ENABLE_TEST_MODE) {
+				addFilterChain("/account", FORMAUTHC);
+			}
 			
-			addFilterChain("/admin/**", FORMAUTHC, config(ROLES, "admin"));
-			addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
-			addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
+			if (ENABLE_OLD_API) {
+				addFilterChain("/api/login", NO_SESSION_CREATION, TOKENAUTHC);
+				addFilterChain("/api/account", NO_SESSION_CREATION, TOKENAUTHC);
+				addFilterChain("/api/updateAccount", NO_SESSION_CREATION, TOKENAUTHC);
+				addFilterChain("/api/register", NO_SESSION_CREATION, ANON);
+				addFilterChain("/api/forgot", NO_SESSION_CREATION, ANON);
+				addFilterChain("/api/logout", NO_SESSION_CREATION, TOKENLOGOUT);
+				
+				addFilterChain("/admin/**", FORMAUTHC, config(ROLES, "admin"));
+				addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
+				addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
+				addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
+			}
+			
 			addFilterChain("/**", ANON);
 
 			// bind all password matching to the secure password hash

@@ -23,7 +23,7 @@
               <b class="caret"></b>
               </a>
             <ul class="dropdown-menu">
-              <li><a href="/account"><i class="icon-book"></i> My Account</a></li>
+              <!-- li><a href="/account"><i class="icon-book"></i> My Account</a></li -->
               <li><a href="/logout"><i class="icon-signout"></i> Log Out</a></li>
             </ul>
           </li>
