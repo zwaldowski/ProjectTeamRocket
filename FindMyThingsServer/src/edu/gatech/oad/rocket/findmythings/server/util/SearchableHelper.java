@@ -62,7 +62,7 @@ public class SearchableHelper {
 			TokenStream tokenStream = analyzer.tokenStream("content", new StringReader(indexCleanedOfHTMLTags));
 			CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
 
-			while (tokenStream.incrementToken()) {
+			while (tokenStream.incrementToken() && returnSet.size() < maximumNumberOfTokens) {
 				String term = charTermAttribute.toString();
 				returnSet.add(term);
 			}
