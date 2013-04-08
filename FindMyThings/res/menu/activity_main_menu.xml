@@ -10,12 +10,15 @@
      
      <item android:id="@+id/menu_account"
           android:title="My Account"
+          android:showAsAction="never"
           />
     <item android:id="@+id/menu_login"
           android:icon="@drawable/ic_action_user"
+          android:showAsAction="never"
           android:title="Login" >
     </item> 		
     <item android:id="@+id/menu_admin"
+          android:showAsAction="never"
     	  android:title="@string/main_title_admin">
     </item>
 
