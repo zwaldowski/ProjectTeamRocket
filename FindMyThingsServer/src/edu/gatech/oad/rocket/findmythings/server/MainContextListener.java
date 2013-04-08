@@ -7,24 +7,15 @@ import com.google.inject.binder.ConstantBindingBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.googlecode.objectify.ObjectifyFilter;
-import edu.gatech.oad.rocket.findmythings.server.api.AuthTestEndpoint;
-import edu.gatech.oad.rocket.findmythings.server.api.ForgotEndpoint;
-import edu.gatech.oad.rocket.findmythings.server.api.LoginEndpoint;
-import edu.gatech.oad.rocket.findmythings.server.api.RegisterEndpoint;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 import edu.gatech.oad.rocket.findmythings.server.security.*;
 import edu.gatech.oad.rocket.findmythings.server.service.MailboxServlet;
 import edu.gatech.oad.rocket.findmythings.server.service.MailmanServlet;
-import edu.gatech.oad.rocket.findmythings.server.spi.AccountV1;
-import edu.gatech.oad.rocket.findmythings.server.spi.ItemV1;
-import edu.gatech.oad.rocket.findmythings.server.spi.MemberV1;
-import edu.gatech.oad.rocket.findmythings.server.spi.TestV1;
+import edu.gatech.oad.rocket.findmythings.server.spi.*;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
-import edu.gatech.oad.rocket.findmythings.server.web.ActivateServlet;
-import edu.gatech.oad.rocket.findmythings.server.web.ForgotServlet;
-import edu.gatech.oad.rocket.findmythings.server.web.RegisterServlet;
+import edu.gatech.oad.rocket.findmythings.server.web.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -106,14 +97,7 @@ public class MainContextListener extends GuiceServletContextListener {
 			serve("/about").with(SimpleTemplateServlet.class);
 			serve("/contact").with(SimpleTemplateServlet.class);
 
-			if (ENABLE_OLD_API) {
-				serve("/api/login").with(LoginEndpoint.class);
-				serve("/api/register").with(RegisterEndpoint.class);
-				serve("/api/forgot").with(ForgotEndpoint.class);
-			}
-
 			if (ENABLE_TEST_MODE) {
-				serve("/api/authtest").with(AuthTestEndpoint.class);
 				serve("/authtest").with(SimpleTemplateServlet.class);
 			}
 
@@ -162,9 +146,6 @@ public class MainContextListener extends GuiceServletContextListener {
 			}
 
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
-			addFilterChain("/login", FORM_AUTH);
-			addFilterChain("/logout", LOGOUT);
-
 			addFilterChain("/_ah/api/fmthings/v1/members/get", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
 			addFilterChain("/_ah/api/fmthings/v1/members", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
 			addFilterChain("/_ah/api/fmthings/v1/account/login", NO_SESSION_CREATION, TOKEN_AUTH);
@@ -174,25 +155,8 @@ public class MainContextListener extends GuiceServletContextListener {
 			addFilterChain("/_ah/api/fmthings/v1/test/auth", NO_SESSION_CREATION, TOKEN_AUTH);
 			addFilterChain("/_ah/api/fmthings/v1/test", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
 
-
-			if (ENABLE_TEST_MODE) {
-				addFilterChain("/account", FORM_AUTH);
-			}
-
-			if (ENABLE_OLD_API) {
-				addFilterChain("/api/login", NO_SESSION_CREATION, TOKEN_AUTH);
-				addFilterChain("/api/account", NO_SESSION_CREATION, TOKEN_AUTH);
-				addFilterChain("/api/updateAccount", NO_SESSION_CREATION, TOKEN_AUTH);
-				addFilterChain("/api/register", NO_SESSION_CREATION, ANON);
-				addFilterChain("/api/forgot", NO_SESSION_CREATION, ANON);
-				addFilterChain("/api/logout", NO_SESSION_CREATION, TOKEN_LOGOUT);
-
-				addFilterChain("/admin/**", FORM_AUTH, config(ROLES, "admin"));
-				addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKEN_AUTH);
-				addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
-				addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
-			}
-
+			addFilterChain("/login", FORM_AUTH);
+			addFilterChain("/logout", LOGOUT);
 			addFilterChain("/**", ANON);
 
 			// bind all password matching to the secure password hash
