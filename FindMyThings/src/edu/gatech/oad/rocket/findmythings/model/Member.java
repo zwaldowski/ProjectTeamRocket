@@ -15,6 +15,12 @@ public abstract class Member {
 
 	// TODO hash password(s)
 
+	/**
+	 * constructor1 to make a new Member
+	 * @param user
+	 * @param pass
+	 * @param phone
+	 */
 	public Member(String user, String pass, String phone) {
 		this(user,pass);
 		if(phone!=null)
@@ -22,6 +28,11 @@ public abstract class Member {
 
 	}
 
+	/**
+	 * constructor2 to make new Member
+	 * @param user
+	 * @param pass
+	 */
 	public Member(String user, String pass) {
 		this.user = user.trim();
 		password = pass.trim();
@@ -29,7 +40,10 @@ public abstract class Member {
 
 	// Design scaffolding
 
-
+	/**
+	 * returns whether member is admin or not
+	 * @return boolean
+	 */
 	public abstract boolean isAdmin();
 
 	/**
@@ -45,7 +59,7 @@ public abstract class Member {
 	//Getters
 
 	/**
-	 *
+	 * returns username
 	 * @return user
 	 */
 	public String getUser() {
@@ -53,7 +67,7 @@ public abstract class Member {
 	}
 
 	/**
-	 *
+	 * returns password
 	 * @return password
 	 */
 	public String getPassword() {
@@ -61,7 +75,7 @@ public abstract class Member {
 	}
 
 	/**
-	 *
+	 * retuner name
 	 * @return name
 	 */
 	public String getName() {
@@ -69,7 +83,7 @@ public abstract class Member {
 	}
 
 	/**
-	 *
+	 * returns phone number
 	 * @return phone number
 	 */
 	public String getPhone() {
@@ -77,7 +91,7 @@ public abstract class Member {
 	}
 
 	/**
-	 *
+	 * return address
 	 * @return address
 	 */
 	public String getAddress(){
@@ -113,6 +127,11 @@ public abstract class Member {
 
 	/* Object methods */
 
+	/**
+	 * compares two member Objects
+	 * @param Object m
+	 * @return true if equal, false otherwise
+	 */
 	@Override
 	public boolean equals(Object m) {
 		if(m instanceof Member)
@@ -121,10 +140,13 @@ public abstract class Member {
 		return false;
 	}
 
+	/**
+	 * returns username
+	 * @return user
+	 */
 	@Override
 	public String toString() {
 		return user;
 	}
-
 
 }

@@ -1,5 +1,11 @@
 package edu.gatech.oad.rocket.findmythings.model;
 
+/**
+ * CS 2340 - FindMyStuff Android App
+ * An enumerated type representing categories of items
+ *
+ * @author TeamRocket
+ * */
 public enum Category {
 	HEIR, KEEPSAKE, MISC;
 
