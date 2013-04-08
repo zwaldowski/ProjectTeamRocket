@@ -50,18 +50,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		
 		mDate = (Spinner)findViewById(R.id.date_spinner);
 		mDate.setOnItemSelectedListener(this);
-			
-		addListenerOnButton(); //filter button
-		
+					
 		setTitle("Apply Filter");
-	}
-	
-	
-	/**
-	 * listener for button FILTER --> should filter the current list of items by the selected criteria
-	 */
-	public void addListenerOnButton() {
-		
 	}
 	
 	/**
@@ -118,9 +108,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-		parent.getItemAtPosition(pos);
-		// TODO Auto-generated method stub
-		
+		int i  = pos; // Any = 0 , Heirloom = 1, Keepsake = 2, Misc = 3
+		System.out.close();
 	}
 
 	/**

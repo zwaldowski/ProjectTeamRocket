@@ -80,7 +80,6 @@ public class AccountActivity extends Activity {
 		case R.id.toEdit:
 			toEdit();
 			return true;
-		
 		}
 		return super.onOptionsItemSelected(item);
 	}
