@@ -69,9 +69,13 @@ public class MainActivity extends ListActivity  {
 	
 	/**
 	 * Reference to the view holding the ArrayAdapter
-	 * 
 	 */
 	private ListView mView;
+	
+	/**
+	 * Reference to the search bar in the ActionBar
+	 */
+	private MenuItem search;
 	
 	/**
 	 * creates window with correct layout
@@ -126,6 +130,11 @@ public class MainActivity extends ListActivity  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			return false;
+	    }
+	    if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+	    	//Shows the search bar
+	    	search.expandActionView();
+	    	return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
@@ -233,11 +242,12 @@ public class MainActivity extends ListActivity  {
 	    SearchView mSearch = (SearchView) menu.findItem(R.id.main_search_bar).getActionView();
 	    mSearch.bringToFront();
 		
+	    search = menu.findItem(R.id.main_search_bar);
 		//Set Login Title
 		MenuItem loginMenu = menu.findItem(R.id.menu_login);
 		String title = Login.currUser==null? "Login":"Logout";
 		loginMenu.setTitle(title);
-						
+					
 		//Set Account Title
 		MenuItem accountMenu = menu.findItem(R.id.menu_account);
 		if(Login.currUser!=null) {
