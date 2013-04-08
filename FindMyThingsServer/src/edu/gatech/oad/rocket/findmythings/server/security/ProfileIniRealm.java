@@ -31,9 +31,8 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 		private String address = null;
 		private boolean isAdmin = false;
 
-		IniAccount(String principal, String credentials, String realmName, boolean isAdmin) {
+		IniAccount(String principal, String credentials, String realmName) {
 			super(principal, credentials, realmName);
-			setIsAdmin(isAdmin);
 		}
 
 		@Override
@@ -120,7 +119,10 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 		Ini.Section profilesSection = getIni().getSection(PROFILES_SECTION_NAME);
 
 		for (String email : users.keySet()) {
-			String[] passwordAndRolesArray = StringUtils.split(users.get(email));
+			String value = users.get(email);
+
+			String[] passwordAndRolesArray = StringUtils.split(value);
+
 			String password = passwordAndRolesArray[0];
 
 			String profileValue = profilesSection.get(email);
@@ -142,39 +144,40 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 
 			SimpleAccount account = getUser(email);
 
-			if (!(account instanceof IniAccount) && hasProfile) {
+			if (hasProfile && !(account instanceof IniAccount)) {
 				this.users.remove(email);
 				account = null;
 			}
 
-			Set<String> roles = new HashSet<>();
-			Set<Permission> permissions = new HashSet<>();
-
-			for (int i = 1; i < passwordAndRolesArray.length; i++) {
-				String roleName = passwordAndRolesArray[i];
-				roles.add(roleName);
-
-				SimpleRole role = getRole(roleName);
-				if (role != null) {
-					permissions.addAll(role.getPermissions());
-				}
-			}
-
 			if (account == null) {
-				account = new IniAccount(email, password, getName(), roles.contains("admin"));
+				account = new IniAccount(email, password, getName());
+				add(account);
 			}
 
 			account.setCredentials(password);
-			account.setRoles(roles);
-			account.addObjectPermissions(permissions);
-
 			if (hasProfile) {
 				((IniAccount) account).setName(name);
 				((IniAccount) account).setPhone(phone);
 				((IniAccount) account).setAddress(address);
 			}
 
-			add(account);
+			if (passwordAndRolesArray.length > 1) {
+				for (int i = 1; i < passwordAndRolesArray.length; i++) {
+					String rolename = passwordAndRolesArray[i];
+					account.addRole(rolename);
+
+					SimpleRole role = getRole(rolename);
+					if (role != null) {
+						account.addObjectPermissions(role.getPermissions());
+					}
+				}
+			} else {
+				account.setRoles(null);
+			}
+
+			if (hasProfile) {
+				((IniAccount) account).setIsAdmin(account.getRoles().contains("admin"));
+			}
 		}
 	}
 
