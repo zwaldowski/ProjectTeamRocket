@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import edu.gatech.oad.rocket.findmythings.control.*;
 import edu.gatech.oad.rocket.findmythings.model.Item;
@@ -83,21 +84,6 @@ public class MainActivity extends ListActivity  {
 		
 		mView = (ListView)findViewById(android.R.id.list);
 		mView.setTextFilterEnabled(true);
-		EditText mSearch = (EditText)findViewById(R.id.main_search_bar);
-		mSearch.addTextChangedListener(new TextWatcher()
-	    { //TODO: Partial string searches
-	        @Override
-	        public void onTextChanged( CharSequence s, int arg1, int arg2, int arg3) {
-			adapter.getFilter().filter(s);
-			adapter.notifyDataSetChanged();
-	        }
-	        @Override
-	        public void beforeTextChanged( CharSequence arg0, int arg1, int arg2, int arg3) {}
-
-	        @Override
-	        public void afterTextChanged(Editable arg0) {}
-
-	    });
 		
 		//Create tabs and hide title
 		actionBar = getActionBar();
@@ -159,13 +145,7 @@ public class MainActivity extends ListActivity  {
 				startActivityForResult(i, 1);
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 				return true;
-	        case R.id.menu_search:
-				Intent im = new Intent(MainActivity.this, SearchActivity.class);
-				finish();
-				startActivity(im);
-			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
-				return true;
-			case R.id.menu_login: 
+	       	case R.id.menu_login: 
 				return Login.currUser==null? logIn():logOut(); 
 			case R.id.menu_account: 
 				return toAccount();
@@ -249,6 +229,9 @@ public class MainActivity extends ListActivity  {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_item_list, menu);
 		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+		
+	    SearchView mSearch = (SearchView) menu.findItem(R.id.main_search_bar).getActionView();
+	    mSearch.bringToFront();
 		
 		//Set Login Title
 		MenuItem loginMenu = menu.findItem(R.id.menu_login);

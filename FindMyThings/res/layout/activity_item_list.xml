@@ -5,18 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame" >
-    
-    <EditText
-        android:id="@+id/main_search_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:ems="10"
-        android:hint="Search..." >
-        
-    </EditText>
+
     
     <ListView
         android:id="@android:id/list"

@@ -61,6 +61,7 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		Activity toAccountActivity = getInstrumentation().waitForMonitorWithTimeout(monitor, 1000);
 		//Check if AccountActivity Activity was started
 		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
+		//Check if name was successfully changes
 		assertEquals("Funny", Login.currUser.getName());
 		toAccountActivity.finish();
 	}
