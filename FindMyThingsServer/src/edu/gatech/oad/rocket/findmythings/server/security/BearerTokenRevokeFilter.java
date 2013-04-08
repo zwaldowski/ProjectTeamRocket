@@ -16,16 +16,16 @@ public class BearerTokenRevokeFilter extends LogoutFilter {
 	public BearerTokenRevokeFilter() {
 		super();
 	}
-	
+
 	@Override
-    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        Subject subject = getSubject(request, response);
-        try {
-            subject.logout();
-        } catch (SessionException ise) {
-        	LOGGER.log(Level.FINER, "Encountered session exception during logout.  This can generally safely be ignored.", ise);
-        }
-        return true;
-    }
+	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+		Subject subject = getSubject(request, response);
+		try {
+			subject.logout();
+		} catch (SessionException ise) {
+			LOGGER.log(Level.FINER, "Encountered session exception during logout.  This can generally safely be ignored.", ise);
+		}
+		return true;
+	}
 
 }

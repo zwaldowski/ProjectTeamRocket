@@ -9,18 +9,17 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 
-@Cache
-@Entity
+@Cache @Entity
 public class DBAuthenticationToken {
 
 	static final Logger LOGGER = Logger.getLogger(DBAuthenticationToken.class.getName());
 
-    @Id private String identifierString;
-    @Index private String email; // not a Ref<DBMember> to support super-admins
-    @Ignore transient UUID identifier;
+	@Id private String identifierString;
+	@Index private String email; // not a Ref<DBMember> to support super-admins
+	@Ignore transient UUID identifier;
 
-    // for Objectify
-    protected DBAuthenticationToken() {}
+	// for Objectify
+	protected DBAuthenticationToken() {}
 
 	public DBAuthenticationToken(String email) {
 		this.email = email;

@@ -57,7 +57,7 @@ public class SearchableHelper {
 
 		String indexCleanedOfHTMLTags = searchableContext.replaceAll("<.*?>"," ");
 		Set<String> returnSet = new HashSet<String>();
-		
+
 		Analyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42);
 
 		try {

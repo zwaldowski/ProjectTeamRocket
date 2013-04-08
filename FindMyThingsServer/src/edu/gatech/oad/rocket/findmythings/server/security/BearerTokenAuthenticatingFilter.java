@@ -24,7 +24,7 @@ import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 
 public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
-		
+
 	protected static final String AUTHORIZATION_HEADER = "Authorization";
 	protected static final String AUTHORIZATION_PARAM = "fmthings_auth";
 	protected static final String AUTHORIZATION_SCHEME = "FMTTOKEN";
@@ -33,43 +33,43 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(BearerTokenAuthenticatingFilter.class.getName());
 
-    private String usernameParam;
-    private String passwordParam;
+	private String usernameParam;
+	private String passwordParam;
 
 	@Override @Inject
-    public void setLoginUrl(@Named(Config.Keys.LOGIN_API_URL) String loginUrl) {
-    	super.setLoginUrl(loginUrl);
-    }
+	public void setLoginUrl(@Named(Config.Keys.LOGIN_API_URL) String loginUrl) {
+		super.setLoginUrl(loginUrl);
+	}
 
-    @Inject
-    public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {
-    	this.usernameParam = usernameParam;
-    }
-    
-    @Inject
-    public void setPasswordParam(@Named(Config.Keys.PASSWORD) String passwordParam) {
-    	this.passwordParam = passwordParam;
-    }
-    
-    public String getUsernameParam() {
-    	return usernameParam;
-    }
-    
-    public String getPasswordParam() {
-    	return passwordParam;
-    }
+	@Inject
+	public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {
+		this.usernameParam = usernameParam;
+	}
+
+	@Inject
+	public void setPasswordParam(@Named(Config.Keys.PASSWORD) String passwordParam) {
+		this.passwordParam = passwordParam;
+	}
+
+	public String getUsernameParam() {
+		return usernameParam;
+	}
+
+	public String getPasswordParam() {
+		return passwordParam;
+	}
 
 	@Override
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
 		if (isLoginRequest(request, response)) {
 			String username = getUsername(request);
-	        String password = getPassword(request);
-	        return createToken(username, password, request, response);
+			String password = getPassword(request);
+			return createToken(username, password, request, response);
 		} else {
 			String authzHeader = getAuthorizationHeader(request);
 			String authzParam = getAuthorizationParameter(request);
 			String[] prinCred;
-			
+
 			if (isHeaderLoginAttempt(authzHeader)) {
 				prinCred = this.getHeaderPrincipalsAndCredentials(authzHeader, request);
 			} else if (isParameterLoginAttempt(authzParam)) {
@@ -77,18 +77,18 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 			} else {
 				return null;
 			}
-			
-	        if (prinCred == null || prinCred.length != 2) {
-	            return null;
-	        }
 
-	        String username = prinCred[0];
-	        String token = prinCred[1];
+			if (prinCred == null || prinCred.length != 2) {
+				return null;
+			}
 
-	        return new BearerToken(username, token);
+			String username = prinCred[0];
+			String token = prinCred[1];
+
+			return new BearerToken(username, token);
 		}
 	}
-	
+
 	private void sendError(ServletResponse response, boolean unauthorizedOrForbidden, String failureReason) {
 		HTTP.writeAsJSON(response,
 				Responses.STATUS, (unauthorizedOrForbidden ? HTTP.Status.UNAUTHORIZED : HTTP.Status.FORBIDDEN).toInt(),
@@ -107,7 +107,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 			return false;
 		}
 	}
-	
+
 	@Override
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
 		if (isLoginRequest(request, response)) {
@@ -123,7 +123,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 			return true;
 		}
 	}
-	
+
 	@Override
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
 		if (isLoginRequest(request, response)) {
@@ -133,7 +133,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
 		return isLoginRequest(request, response) && hasAuthorizationToken(request, response) || super.onPreHandle(request, response, mappedValue);
@@ -144,62 +144,62 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		String authzParam = getAuthorizationParameter(request);
 		return isHeaderLoginAttempt(authzHeader) || isParameterLoginAttempt(authzParam);
 	}
-	
+
 	protected String getAuthorizationHeader(ServletRequest request) {
-        HttpServletRequest httpRequest = WebUtils.toHttp(request);
-        return httpRequest.getHeader(AUTHORIZATION_HEADER);
-    }
-	
-	protected String getAuthorizationParameter(ServletRequest request) {
-        HttpServletRequest httpRequest = WebUtils.toHttp(request);
-        return WebUtils.getCleanParam(httpRequest, AUTHORIZATION_PARAM);
+		HttpServletRequest httpRequest = WebUtils.toHttp(request);
+		return httpRequest.getHeader(AUTHORIZATION_HEADER);
 	}
-	
+
+	protected String getAuthorizationParameter(ServletRequest request) {
+		HttpServletRequest httpRequest = WebUtils.toHttp(request);
+		return WebUtils.getCleanParam(httpRequest, AUTHORIZATION_PARAM);
+	}
+
 	protected boolean isHeaderLoginAttempt(String authzHeader) {
 		if (authzHeader == null) return false;
-        String authzScheme = AUTHORIZATION_SCHEME.toLowerCase(Locale.ENGLISH);
-        String authzSchemeAlt = AUTHORIZATION_SCHEME_ALT.toLowerCase(Locale.ENGLISH);
-        String test = authzHeader.toLowerCase(Locale.ENGLISH);
-        return test.startsWith(authzScheme) || test.startsWith(authzSchemeAlt);
-    }
-	
+		String authzScheme = AUTHORIZATION_SCHEME.toLowerCase(Locale.ENGLISH);
+		String authzSchemeAlt = AUTHORIZATION_SCHEME_ALT.toLowerCase(Locale.ENGLISH);
+		String test = authzHeader.toLowerCase(Locale.ENGLISH);
+		return test.startsWith(authzScheme) || test.startsWith(authzSchemeAlt);
+	}
+
 	protected boolean isParameterLoginAttempt(String authzParam) {
 		return (authzParam != null) && Base64.isBase64(authzParam.getBytes());
 	}
-	
+
 	protected String[] getHeaderPrincipalsAndCredentials(String authzHeader, ServletRequest request) {
-        if (authzHeader == null) {
-            return null;
-        }
-        String[] authTokens = authzHeader.split(" ");
-        if (authTokens == null || authTokens.length < 2) {
-            return null;
-        }
-        return getPrincipalsAndCredentials(authTokens[0], authTokens[1]);
-    }
+		if (authzHeader == null) {
+			return null;
+		}
+		String[] authTokens = authzHeader.split(" ");
+		if (authTokens == null || authTokens.length < 2) {
+			return null;
+		}
+		return getPrincipalsAndCredentials(authTokens[0], authTokens[1]);
+	}
 
 	protected String[] getParameterPrincipalsAndCredentials(String authzParam, ServletRequest request) {
-        if (authzParam == null) {
-            return null;
-        }
-        return getPrincipalsAndCredentials(AUTHORIZATION_SCHEME, authzParam);
-    }
+		if (authzParam == null) {
+			return null;
+		}
+		return getPrincipalsAndCredentials(AUTHORIZATION_SCHEME, authzParam);
+	}
 
 	protected String[] getPrincipalsAndCredentials(String scheme, String encoded) {
-        String decoded = Base64.decodeToString(encoded);
-        return decoded.split(":", 2);
-    }
+		String decoded = Base64.decodeToString(encoded);
+		return decoded.split(":", 2);
+	}
 
-    protected String getUsername(ServletRequest request) {
-        return WebUtils.getCleanParam(request, getUsernameParam());
-    }
+	protected String getUsername(ServletRequest request) {
+		return WebUtils.getCleanParam(request, getUsernameParam());
+	}
 
-    protected String getPassword(ServletRequest request) {
-        return WebUtils.getCleanParam(request, getPasswordParam());
-    }
-    
-    @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+	protected String getPassword(ServletRequest request) {
+		return WebUtils.getCleanParam(request, getPasswordParam());
+	}
+
+	@Override
+	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 		return !(!isLoginRequest(request, response) && isPermissive(mappedValue) && hasAuthorizationToken(request, response)) && (super.isAccessAllowed(request, response, mappedValue) || (!isLoginRequest(request, response) && isPermissive(mappedValue) && !hasAuthorizationToken(request, response)));
 	}
 

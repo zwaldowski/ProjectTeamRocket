@@ -23,21 +23,21 @@ public class ForgotEndpoint extends RegisterEndpoint {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
 			String email = WebUtils.getCleanParam(request, getUsernameParam());
-			 
+
 			if (!emailIsValid(email)) {
 				sendError(request, response, Messages.Register.BADEMAILADDR);
 				return;
 			}
-			
+
 			if (!memberExistsWithEmail(email)) {
 				sendError(request, response, Messages.Register.NOSUCHMEMBER);
 				return;
 			}
-			
+
 			mailAuthenticationTokenSendOK(request, response, email, true);
 		} catch (Exception e) {
 			sendError(request, response, Messages.Register.INVALID_DATA);
 		}
 	}
-	
+
 }

@@ -100,7 +100,7 @@ public abstract class DatabaseService {
 		public void register(final String code, final String email) {
 			register(memberWithEmail(email), code);
 		}
-		
+
 		public void register(final DBMember user, final String code) {
 			if (user != null) {
 				boolean wasRegistered = user.isRegistered();
@@ -109,7 +109,7 @@ public abstract class DatabaseService {
 			}
 			deleteRegistrationTicket(code);
 		}
-		
+
 		public void createMember(String email, String password, String name, PhoneNumber phone, String address) {
 			DBMember newUser = new DBMember(email, password);
 			newUser.setPhone(phone);

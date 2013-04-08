@@ -39,25 +39,25 @@ public class DBMember implements AppMutableMember {
 
 	protected static final Logger LOGGER = Logger.getLogger(DBMember.class.getName());
 
-    private static final int HASH_ITERATIONS = 1;
-    private static final String HASH_ALGORITHM = Sha256Hash.ALGORITHM_NAME;
+	private static final int HASH_ITERATIONS = 1;
+	private static final String HASH_ALGORITHM = Sha256Hash.ALGORITHM_NAME;
 
-    @Id private String email;
+	@Id private String email;
 
-    private String hashedPassword;
+	private String hashedPassword;
 
-    /** The salt, used to make sure that a dictionary attack is harder given a list of all the
-     *  hashed passwords, as each salt will be different.
-     */
-    private byte[] salt;
+	/** The salt, used to make sure that a dictionary attack is harder given a list of all the
+	 *  hashed passwords, as each salt will be different.
+	 */
+	private byte[] salt;
 
-    private Set<String> roles;
+	private Set<String> roles;
 
-    private Set<String> permissions;
+	private Set<String> permissions;
 
-    @Index private Date dateRegistered;
+	@Index private Date dateRegistered;
 
-    private String name;
+	private String name;
 	private String address;
 	private PhoneNumber phone;
 
@@ -65,77 +65,77 @@ public class DBMember implements AppMutableMember {
 
 	/** Constructors **/
 
-    /** For objectify to create instances on retrieval */
+	/** For objectify to create instances on retrieval */
 	protected DBMember() {
-        this.roles = new HashSet<>();
-        this.permissions = new HashSet<>();
-    }
+		this.roles = new HashSet<>();
+		this.permissions = new HashSet<>();
+	}
 
-    DBMember(String email) {
-        this(email, null, new HashSet<String>(), new HashSet<String>());
-    }
+	DBMember(String email) {
+		this(email, null, new HashSet<String>(), new HashSet<String>());
+	}
 
 	public DBMember(String email, String password) {
-        this(email, password, new HashSet<String>(), new HashSet<String>());
-    }
+		this(email, password, new HashSet<String>(), new HashSet<String>());
+	}
 
-    public DBMember(String email, Set<String> roles, Set<String> permissions) {
-        this(email, null, roles, permissions);
-    }
+	public DBMember(String email, Set<String> roles, Set<String> permissions) {
+		this(email, null, roles, permissions);
+	}
 
-    public DBMember(String email, String password, Set<String> roles, Set<String> permissions) {
-        this(email, password, roles, permissions, false);
-    }
+	public DBMember(String email, String password, Set<String> roles, Set<String> permissions) {
+		this(email, password, roles, permissions, false);
+	}
 
-    DBMember(String email, String password, Set<String> roles, Set<String> permissions, boolean isRegistered) {
-        Preconditions.checkNotNull(email, "DBMember email can't be null");
-        Preconditions.checkNotNull(roles, "DBMember roles can't be null");
-        Preconditions.checkNotNull(permissions, "DBMember permissions can't be null");
-        this.email = email;
+	DBMember(String email, String password, Set<String> roles, Set<String> permissions, boolean isRegistered) {
+		Preconditions.checkNotNull(email, "DBMember email can't be null");
+		Preconditions.checkNotNull(roles, "DBMember roles can't be null");
+		Preconditions.checkNotNull(permissions, "DBMember permissions can't be null");
+		this.email = email;
 
-        this.salt = salt().getBytes();
-        this.hashedPassword = hash(password, salt);
-        this.roles = Collections.unmodifiableSet(roles);
-        this.permissions = Collections.unmodifiableSet(permissions);
-        this.dateRegistered = isRegistered ? new Date() : null;
-    }
+		this.salt = salt().getBytes();
+		this.hashedPassword = hash(password, salt);
+		this.roles = Collections.unmodifiableSet(roles);
+		this.permissions = Collections.unmodifiableSet(permissions);
+		this.dateRegistered = isRegistered ? new Date() : null;
+	}
 
-    /** Global utilities **/
+	/** Global utilities **/
 
-    @Provides @Singleton
-    public static CredentialsMatcher getCredentialsMatcher() {
-        HashedCredentialsMatcher credentials = new HashedCredentialsMatcher(HASH_ALGORITHM);
-        credentials.setHashIterations(HASH_ITERATIONS);
-        credentials.setStoredCredentialsHexEncoded(true);
-        return credentials;
-    }
+	@Provides @Singleton
+	public static CredentialsMatcher getCredentialsMatcher() {
+		HashedCredentialsMatcher credentials = new HashedCredentialsMatcher(HASH_ALGORITHM);
+		credentials.setHashIterations(HASH_ITERATIONS);
+		credentials.setStoredCredentialsHexEncoded(true);
+		return credentials;
+	}
 
-    private static RandomNumberGenerator salter = new SecureRandomNumberGenerator();
+	private static RandomNumberGenerator salter = new SecureRandomNumberGenerator();
 
-    private static ByteSource salt() {
-        return salter.nextBytes();
-    }
+	private static ByteSource salt() {
+		return salter.nextBytes();
+	}
 
-    private static String hash(String password, byte[] salt) {
-        return (password == null) ? null : new SimpleHash(HASH_ALGORITHM, password, new SimpleByteSource(salt), HASH_ITERATIONS).toHex();
-    }
+	private static String hash(String password, byte[] salt) {
+		return (password == null) ? null : new SimpleHash(HASH_ALGORITHM, password, new SimpleByteSource(salt), HASH_ITERATIONS).toHex();
+	}
 
-    /** Object overrides **/
+	/** Object overrides **/
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name, hashedPassword);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(name, hashedPassword);
+	}
 
-    @Override
+	@Override
 	public boolean equals(Object o) {
-	if (o instanceof DBMember) {
-		DBMember u = (DBMember)o;
-            return Objects.equal(getName().trim(), u.getName().trim()) &&
-                   Objects.equal(getHashedPassword(), u.getHashedPassword());
-        } else {
-            return false;
-        }
+		if (o instanceof DBMember) {
+			DBMember u = (DBMember)o;
+			return Objects.equal(getName().trim(), u.getName().trim()) &&
+					Objects.equal(getHashedPassword(), u.getHashedPassword());
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -180,8 +180,8 @@ public class DBMember implements AppMutableMember {
 	 */
 	@Override
 	public boolean isRegistered() {
-        return getDateRegistered() != null;
-    }
+		return getDateRegistered() != null;
+	}
 
 	@Override
 	public boolean isEditable() {
@@ -199,10 +199,10 @@ public class DBMember implements AppMutableMember {
 	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
-        Preconditions.checkNotNull(password);
-        this.salt = salt().getBytes();
-        this.hashedPassword = hash(password, salt);
-    }
+		Preconditions.checkNotNull(password);
+		this.salt = salt().getBytes();
+		this.hashedPassword = hash(password, salt);
+	}
 
 	/* (non-Javadoc)
 	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getName()
@@ -222,12 +222,12 @@ public class DBMember implements AppMutableMember {
 	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getDateRegistered()
 	 */
 	public Date getDateRegistered() {
-        return dateRegistered == null ? null : new Date(dateRegistered.getTime());
-    }
+		return dateRegistered == null ? null : new Date(dateRegistered.getTime());
+	}
 
 	public void register() {
-        dateRegistered = new Date();
-    }
+		dateRegistered = new Date();
+	}
 
 	/* (non-Javadoc)
 	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#getPhoneNumber()

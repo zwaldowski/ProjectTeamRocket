@@ -57,36 +57,36 @@ public class WebAuthenticationFilter extends FormAuthenticationFilter {
 
 	@Override
 	protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        AuthenticationToken token = createToken(request, response);
-        Subject subject = SecurityUtils.getSubject();
+		AuthenticationToken token = createToken(request, response);
+		Subject subject = SecurityUtils.getSubject();
 		Session originalSession = subject.getSession();
 
-        Map<Object, Object> attributes = Maps.newLinkedHashMap();
-        Collection<Object> keys = originalSession.getAttributeKeys();
-        for(Object key : keys) {
-            Object value = originalSession.getAttribute(key);
-            if (value != null) {
-                attributes.put(key, value);
-            }
-        }
-        originalSession.stop();
+		Map<Object, Object> attributes = Maps.newLinkedHashMap();
+		Collection<Object> keys = originalSession.getAttributeKeys();
+		for(Object key : keys) {
+			Object value = originalSession.getAttribute(key);
+			if (value != null) {
+				attributes.put(key, value);
+			}
+		}
+		originalSession.stop();
 
-        try {
-		subject.login(token);
+		try {
+			subject.login(token);
 
-		Session newSession = subject.getSession();
-            for(Object key : attributes.keySet() ) {
-                newSession.setAttribute(key, attributes.get(key));
-            }
+			Session newSession = subject.getSession();
+			for(Object key : attributes.keySet() ) {
+				newSession.setAttribute(key, attributes.get(key));
+			}
 
-            LOGGER.fine("Creating a new instance of DatastoreRealm");
+			LOGGER.fine("Creating a new instance of DatastoreRealm");
 
-            return onLoginSuccess(token, subject, request, response);
-        } catch (AuthenticationException e) {
-            LOGGER.fine("Failed log in.");
-            setFailureAttribute(request, e);
-		return onLoginFailure(token, e, request, response);
-        }
+			return onLoginSuccess(token, subject, request, response);
+		} catch (AuthenticationException e) {
+			LOGGER.fine("Failed log in.");
+			setFailureAttribute(request, e);
+			return onLoginFailure(token, e, request, response);
+		}
 	}
 
 }

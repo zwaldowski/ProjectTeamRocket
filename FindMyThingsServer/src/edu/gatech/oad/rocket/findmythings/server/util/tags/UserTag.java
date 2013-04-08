@@ -24,15 +24,15 @@ import freemarker.template.TemplateException;
  */
 @SuppressWarnings("rawtypes")
 public class UserTag extends SecureTag {
-    static final Logger log = Logger.getLogger("UserTag");
+	static final Logger log = Logger.getLogger("UserTag");
 
-    @Override
-    public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
-        if (getSubject() != null && getSubject().getPrincipal() != null) {
-            log.debug("Subject has known identity (aka 'principal'). Tag body will be evaluated.");
-            renderBody(env, body);
-        } else {
-            log.debug("Subject does not exist or have a known identity (aka 'principal'). Tag body will not be evaluated.");
-        }
-    }
+	@Override
+	public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
+		if (getSubject() != null && getSubject().getPrincipal() != null) {
+			log.debug("Subject has known identity (aka 'principal'). Tag body will be evaluated.");
+			renderBody(env, body);
+		} else {
+			log.debug("Subject does not exist or have a known identity (aka 'principal'). Tag body will not be evaluated.");
+		}
+	}
 }

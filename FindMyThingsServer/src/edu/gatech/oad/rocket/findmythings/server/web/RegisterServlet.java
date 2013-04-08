@@ -16,8 +16,8 @@ import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 @Singleton
 public class RegisterServlet extends RegisterEndpoint {
 	static final Logger LOGGER = Logger.getLogger(RegisterServlet.class.getName());
-	
-    /**
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7032016092040490069L;
@@ -31,7 +31,7 @@ public class RegisterServlet extends RegisterEndpoint {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
 	protected void sendOK(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -40,7 +40,7 @@ public class RegisterServlet extends RegisterEndpoint {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		writeDocument(response, getDefaultTemplateURI(request), getParameterMap(request));

@@ -30,7 +30,7 @@ public class ForgotServlet extends ForgotEndpoint {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
 	protected void sendOK(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -39,7 +39,7 @@ public class ForgotServlet extends ForgotEndpoint {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		writeDocument(response, "register.ftl", getParameterMap(request));

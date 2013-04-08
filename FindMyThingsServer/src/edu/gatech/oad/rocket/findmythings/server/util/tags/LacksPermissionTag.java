@@ -4,7 +4,7 @@ package edu.gatech.oad.rocket.findmythings.server.util.tags;
  * <p>Equivalent to {@link org.apache.shiro.web.tags.LacksPermissionTag}</p>
  */
 public class LacksPermissionTag extends PermissionTag {
-    protected boolean showTagBody(String p) {
-        return !isPermitted(p);
-    }
+	protected boolean showTagBody(String p) {
+		return !isPermitted(p);
+	}
 }

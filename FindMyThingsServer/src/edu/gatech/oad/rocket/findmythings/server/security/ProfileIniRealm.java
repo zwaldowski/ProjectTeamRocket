@@ -118,41 +118,41 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 		setIni(ini);
 	}
 
-    @Override
-    protected void processUserDefinitions(Map<String, String> users) {
-	if (users == null || users.isEmpty()) {
-    		return;
-    	}
+	@Override
+	protected void processUserDefinitions(Map<String, String> users) {
+		if (users == null || users.isEmpty()) {
+			return;
+		}
 
-    	Ini.Section profilesSection = getIni().getSection(PROFILES_SECTION_NAME);
+		Ini.Section profilesSection = getIni().getSection(PROFILES_SECTION_NAME);
 
-	for (String email : users.keySet()) {
-		String[] passwordAndRolesArray = StringUtils.split(users.get(email));
-    		String password = passwordAndRolesArray[0];
+		for (String email : users.keySet()) {
+			String[] passwordAndRolesArray = StringUtils.split(users.get(email));
+			String password = passwordAndRolesArray[0];
 
-    		String profileValue = profilesSection.get(email);
-    		String[] profileValuesArray;
-    		String name = null;
-    		PhoneNumber phone = null;
-    		String address = null;
+			String profileValue = profilesSection.get(email);
+			String[] profileValuesArray;
+			String name = null;
+			PhoneNumber phone = null;
+			String address = null;
 			boolean hasProfile = false;
 
-    		if (profileValue != null) {
-    			profileValuesArray = StringUtils.split(profileValue, ',', '"', '"', false, true);
-    			if (profileValuesArray.length == 3) {
-    				name = profileValuesArray[0];
-    				phone = profileValuesArray[1] == null ? null : new PhoneNumber(profileValuesArray[1]);
-    				address = profileValuesArray[2];
-    			}
+			if (profileValue != null) {
+				profileValuesArray = StringUtils.split(profileValue, ',', '"', '"', false, true);
+				if (profileValuesArray.length == 3) {
+					name = profileValuesArray[0];
+					phone = profileValuesArray[1] == null ? null : new PhoneNumber(profileValuesArray[1]);
+					address = profileValuesArray[2];
+				}
 				hasProfile = (name != null || phone != null || address != null);
-    		}
+			}
 
-    		SimpleAccount account = getUser(email);
+			SimpleAccount account = getUser(email);
 
 			if (!(account instanceof IniAccount) && hasProfile) {
-    			this.users.remove(email);
-    			account = null;
-    		}
+				this.users.remove(email);
+				account = null;
+			}
 
 			Set<String> roles = new HashSet<>();
 			Set<Permission> permissions = new HashSet<>();
@@ -167,47 +167,47 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 				}
 			}
 
-    		if (account == null) {
+			if (account == null) {
 				account = new IniAccount(email, password, getName(), roles.contains("admin"));
-    		}
+			}
 
-    		account.setCredentials(password);
-    		account.setRoles(roles);
+			account.setCredentials(password);
+			account.setRoles(roles);
 			account.addObjectPermissions(permissions);
 
 			if (hasProfile) {
-    			((IniAccount) account).setName(name);
-    			((IniAccount) account).setPhone(phone);
-    			((IniAccount) account).setAddress(address);
-    		}
-    		
-    		add(account);
-    	}
-    }
+				((IniAccount) account).setName(name);
+				((IniAccount) account).setPhone(phone);
+				((IniAccount) account).setAddress(address);
+			}
 
-    @Override
-    public boolean accountExists(String email) {
+			add(account);
+		}
+	}
+
+	@Override
+	public boolean accountExists(String email) {
 		return email != null && getUser(email) != null;
 	}
 
-    @Override
-    public AppMember getAccount(String email) {
-    	if (email == null) return null;
-    	SimpleAccount account = getUser(email);
-    	if (account instanceof AppMember)
-    		return (AppMember)account;
-    	return null;
-    }
-    
-    public Collection<? extends AppMember> getMembers() {
-    	Collection<SimpleAccount> accounts = this.users.values();
-    	Collection<AppMember> ret = new ArrayList<>(accounts.size());
-    	for (SimpleAccount e : accounts) {
-    		if (e instanceof AppMember) {
-    			ret.add((AppMember)e);
-    		}
-    	}
-    	return ret;
-    }
+	@Override
+	public AppMember getAccount(String email) {
+		if (email == null) return null;
+		SimpleAccount account = getUser(email);
+		if (account instanceof AppMember)
+			return (AppMember)account;
+		return null;
+	}
+
+	public Collection<? extends AppMember> getMembers() {
+		Collection<SimpleAccount> accounts = this.users.values();
+		Collection<AppMember> ret = new ArrayList<>(accounts.size());
+		for (SimpleAccount e : accounts) {
+			if (e instanceof AppMember) {
+				ret.add((AppMember)e);
+			}
+		}
+		return ret;
+	}
 
 }

@@ -22,10 +22,10 @@ public class AuthTestEndpoint extends PageServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 6058248835620387583L;
-	
+
 	@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		Subject subject = SecurityUtils.getSubject();
 		if (subject != null && subject.isAuthenticated()) {
 			String message = "Howdy, " + subject.getPrincipal() + "!";

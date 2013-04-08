@@ -8,43 +8,43 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 
 public final class Messages {
-	
+
 	private Messages() {}
-	
+
 	public enum Status {
 		OK("ok"),
 		FAILED("nope"),
 		UNAUTHORIZED("nopeNopeNope");
-		
-	    private final String text;
 
-	    private Status(final String text) {
-	        this.text = text;
-	    }
+		private final String text;
 
-	    @Override
-	    public String toString() {
-	        return text;
-	    }
+		private Status(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
 
 	}
-		
+
 	public enum Permissions {
 		REQUIRES_LOGIN("requiresLogin");
-		
-	    private final String text;
 
-	    private Permissions(final String text) {
-	        this.text = text;
-	    }
+		private final String text;
 
-	    @Override
-	    public String toString() {
-	        return text;
-	    }
+		private Permissions(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
 
 	}
-	
+
 	public enum Login {
 		NO_SUCH_USER("noSuchUser"),
 		BAD_PASSWORD("badPassword"),
@@ -52,18 +52,18 @@ public final class Messages {
 		ACCT_DISABLE("accountDisabled"),
 		MANY_ATTEMPT("tooManyAttempts"),
 		INVALID_DATA("invalidData");
-		
-	    private final String text;
 
-	    private Login(final String text) {
-	        this.text = text;
-	    }
+		private final String text;
 
-	    @Override
-	    public String toString() {
-	        return text;
-	    }
-		
+		private Login(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
+
 		public static Messages.Login get(AuthenticationException ae) {
 			if (ae instanceof UnknownAccountException) {
 				return Messages.Login.NO_SUCH_USER;
@@ -78,12 +78,12 @@ public final class Messages {
 			}
 			return Messages.Login.INVALID_DATA;
 		}
-		
+
 		public static String getMessage(AuthenticationException ae) {
 			return get(ae).toString();
 		}
 	}
-	
+
 	public enum Register {
 		ALREADYAUSER("alreadyUser"),
 		BADEMAILADDR("badEmailAdd"),
@@ -92,36 +92,36 @@ public final class Messages {
 		INVALIDPHONE("badPhoneNum"),
 		INVALID_DATA("invalidData"),
 		NOSUCHMEMBER("superForgot");
-		
-	    private final String text;
 
-	    private Register(final String text) {
-	        this.text = text;
-	    }
+		private final String text;
 
-	    @Override
-	    public String toString() {
-	        return text;
-	    }
+		private Register(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
 	}
-	
+
 	public enum Activate {
 		CODE_EXPIRED("expiredCode"),
 		NO_SUCH_USER("noSuchUser"),
 		BAD_PASSWORD("badPassword"),
 		PASSNOTMATCH("passwdMatch"),
 		INVALID_DATA("invalidData");
-		
-	    private final String text;
 
-	    private Activate(final String text) {
-	        this.text = text;
-	    }
+		private final String text;
 
-	    @Override
-	    public String toString() {
-	        return text;
-	    }
+		private Activate(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
 	}
-	
+
 }

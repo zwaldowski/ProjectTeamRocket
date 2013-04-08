@@ -85,7 +85,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 	public void onLogout(PrincipalCollection principals) {
 		super.onLogout(principals);
 		deleteTokens(principals);
-    }
+	}
 
 	@SuppressWarnings("unchecked")
 	public final void deleteTokens(PrincipalCollection principals) {

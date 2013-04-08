@@ -13,32 +13,32 @@ import freemarker.template.TemplateModelException;
  */
 @SuppressWarnings("rawtypes")
 public abstract class PermissionTag extends SecureTag {
-    String getName(Map params) {
-        return getParam(params, "name");
-    }
-    
-    @Override
-    protected void verifyParameters(Map params) throws TemplateModelException {
-        String permission = getName(params);
+	String getName(Map params) {
+		return getParam(params, "name");
+	}
 
-        if (permission == null || permission.length() == 0) {
-            throw new TemplateModelException("The 'name' tag attribute must be set.");
-        }
-    }
+	@Override
+	protected void verifyParameters(Map params) throws TemplateModelException {
+		String permission = getName(params);
 
-    @Override
-    public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
-        String p = getName(params);
+		if (permission == null || permission.length() == 0) {
+			throw new TemplateModelException("The 'name' tag attribute must be set.");
+		}
+	}
 
-        boolean show = showTagBody(p);
-        if (show) {
-            renderBody(env, body);
-        }
-    }
+	@Override
+	public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
+		String p = getName(params);
 
-    protected boolean isPermitted(String p) {
-        return getSubject() != null && getSubject().isPermitted(p);
-    }
+		boolean show = showTagBody(p);
+		if (show) {
+			renderBody(env, body);
+		}
+	}
 
-    protected abstract boolean showTagBody(String p);
+	protected boolean isPermitted(String p) {
+		return getSubject() != null && getSubject().isPermitted(p);
+	}
+
+	protected abstract boolean showTagBody(String p);
 }

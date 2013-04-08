@@ -18,31 +18,31 @@ import com.googlecode.objectify.annotation.Unindex;
  */
 @Cache @Unindex @Entity
 public class DBUserCounter {
-    static final Logger LOG = Logger.getLogger(DBUserCounter.class.getName());
+	static final Logger LOG = Logger.getLogger(DBUserCounter.class.getName());
 
-    public static final long COUNTER_ID = 1L;
+	public static final long COUNTER_ID = 1L;
 
 	@Id private long id;
 
-    private int count;
+	private int count;
 
-    private Date lastModified;
+	private Date lastModified;
 
-    public DBUserCounter() {
-        id = COUNTER_ID;
-        lastModified = new Date(0L);
-    }
+	public DBUserCounter() {
+		id = COUNTER_ID;
+		lastModified = new Date(0L);
+	}
 
-    public int getCount() {
-        return count;
-    }
+	public int getCount() {
+		return count;
+	}
 
-    public void delta(long delta) {
-        this.count += delta;
-        this.lastModified = new Date();
-    }
+	public void delta(long delta) {
+		this.count += delta;
+		this.lastModified = new Date();
+	}
 
-    public Date getLastModified() {
-        return lastModified;
-    }
+	public Date getLastModified() {
+		return lastModified;
+	}
 }

@@ -25,52 +25,52 @@ public class MailmanServlet extends TemplateServlet {
 	 */
 	private static final long serialVersionUID = 7698678204988659041L;
 
-    private Envelope emailWrapper = null;
+	private Envelope emailWrapper = null;
 
 	MailmanServlet() {
 		super();
 	}
 
-    @Inject
-    MailmanServlet(Envelope emailWrapper) {
-        super();
-        this.emailWrapper = emailWrapper;
-    }
-    
-    public Envelope getEmailWrapper() {
-    	return emailWrapper;
-    }
+	@Inject
+	MailmanServlet(Envelope emailWrapper) {
+		super();
+		this.emailWrapper = emailWrapper;
+	}
 
-    private String urlFor(HttpServletRequest request, String code, String userName, boolean forgot) {
-        try {
-            URI url = new URI(request.getScheme(), null, request.getServerName(), request.getServerPort(), "/activate",
-            		Config.TICKET_PARAM+"="+code+"&"+getUsernameParam()+"="+userName+"&"+Config.FORGOTPASSWORD_PARAM+"="+Boolean.toString(forgot), null);
-            return url.toString();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	public Envelope getEmailWrapper() {
+		return emailWrapper;
+	}
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter(getUsernameParam());
-        try {
-            String registrationString = request.getParameter(Config.TICKET_PARAM);
-            boolean forgot = getBoolRequestParam(request, Config.FORGOTPASSWORD_PARAM, false);
-            String url = urlFor(request, registrationString, username, forgot);
-            LOG.info("Link URL is " + url);
-            
-            String subject = (forgot ? "Password Information" : "Complete Registration") + " for Find My Things";
-            String htmlMessage = createDocument("inc/email.ftl",
-                        "email", username,
-                        "href", url,
-                        Config.FORGOTPASSWORD_PARAM, Boolean.toString(forgot));
-            getEmailWrapper().send(username, subject, htmlMessage);
-            
-            LOG.info("Registration email sent to " + username + " with return url " + url);
-        } catch (Exception e) {
-            LOG.severe("Error sending mail to " + username + ": " + e.getMessage());
-        }
-    }
+	private String urlFor(HttpServletRequest request, String code, String userName, boolean forgot) {
+		try {
+			URI url = new URI(request.getScheme(), null, request.getServerName(), request.getServerPort(), "/activate",
+					Config.TICKET_PARAM+"="+code+"&"+getUsernameParam()+"="+userName+"&"+Config.FORGOTPASSWORD_PARAM+"="+Boolean.toString(forgot), null);
+			return url.toString();
+		} catch (URISyntaxException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = request.getParameter(getUsernameParam());
+		try {
+			String registrationString = request.getParameter(Config.TICKET_PARAM);
+			boolean forgot = getBoolRequestParam(request, Config.FORGOTPASSWORD_PARAM, false);
+			String url = urlFor(request, registrationString, username, forgot);
+			LOG.info("Link URL is " + url);
+
+			String subject = (forgot ? "Password Information" : "Complete Registration") + " for Find My Things";
+			String htmlMessage = createDocument("inc/email.ftl",
+					"email", username,
+					"href", url,
+					Config.FORGOTPASSWORD_PARAM, Boolean.toString(forgot));
+			getEmailWrapper().send(username, subject, htmlMessage);
+
+			LOG.info("Registration email sent to " + username + " with return url " + url);
+		} catch (Exception e) {
+			LOG.severe("Error sending mail to " + username + ": " + e.getMessage());
+		}
+	}
 
 }
