@@ -1,20 +1,16 @@
 package edu.gatech.oad.rocket.findmythings.server.util;
 
-import com.google.api.server.spi.response.CollectionResponse;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.cmd.Query;
-import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.util.Version;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -39,40 +35,6 @@ public class SearchableHelper {
 		return objectify.load().type(clazz).filter("searchTokens in", queryTokens);
 	}
 
-	/*public static List<GuestBookEntry> searchGuestBookEntries(String queryString) {
-
-		Objectify ofy = ObjectifyService.begin();
-
-		Query<GuestBookEntry> query = ofy.query(GuestBookEntry.class);
-
-		Set<String> queryTokens = SearchJanitorUtils.getTokensForIndexingOrQuery(queryString, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
-
-		List<String> parametersForSearch = new ArrayList<String>(queryTokens);
-
-		for (String token : parametersForSearch) {
-			query.filter("fts", token);
-		}
-
-		List<GuestBookEntry> result = null;
-
-		try {
-			result = new ArrayList<GuestBookEntry>();
-			for (GuestBookEntry guestBookEntry : query) {
-				result.add(guestBookEntry);
-			}
-
-		} catch (DatastoreTimeoutException e) {
-			log.severe(e.getMessage());
-			log.severe("datastore timeout at: " + queryString);
-		} catch (DatastoreNeedIndexException e) {
-			log.severe(e.getMessage());
-			log.severe("datastore need index exception at: " + queryString);
-		}
-
-		return result;
-
-	}*/
-
 	public static void updateSearchTokens(Searchable item) {
 		String sb = item.getSearchableContent();
 		Set<String> new_ftsTokens = getSearchTokens(sb, MAX_NUMBER_OF_WORDS_TO_PUT_IN_INDEX);
@@ -95,21 +57,21 @@ public class SearchableHelper {
 
 		String indexCleanedOfHTMLTags = searchableContext.replaceAll("\\<.*?>"," ");
 		Set<String> returnSet = new HashSet<String>();
+		
+		Analyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42);
 
 		try {
-			Analyzer analyzer =  new EnglishAnalyzer(Version.LUCENE_42);
 			TokenStream tokenStream = analyzer.tokenStream("content", new StringReader(indexCleanedOfHTMLTags));
-			OffsetAttribute offsetAttribute = tokenStream.addAttribute(OffsetAttribute.class);
 			CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
 
 			while (tokenStream.incrementToken()) {
-				int startOffset = offsetAttribute.startOffset();
-				int endOffset = offsetAttribute.endOffset();
 				String term = charTermAttribute.toString();
 				returnSet.add(term);
 			}
 		} catch (IOException e) {
 			log.severe(e.getMessage());
+		} finally {
+			analyzer.close();
 		}
 
 		return returnSet;
