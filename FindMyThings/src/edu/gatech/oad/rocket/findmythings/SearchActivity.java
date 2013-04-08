@@ -15,10 +15,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
+ * CS 2340 - FindMyStuff Android App
  * Activity that deals with the Search options window...
  * 
  * @author TeamRocket
- *
  */
 public class SearchActivity extends Activity{
 	private int checked;

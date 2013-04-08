@@ -17,6 +17,12 @@ import android.support.v4.app.FragmentActivity;
 
 import edu.gatech.oad.rocket.findmythings.util.*;
 
+/**
+ * CS 2340 - FindMyStuff Android App
+ * Activity that deals with the maps feature for location of items
+ * 
+ * @author TeamRocket
+ * */
 public class MapsActivity extends FragmentActivity   {
 	
 	/**
@@ -39,6 +45,11 @@ public class MapsActivity extends FragmentActivity   {
 	 */
 	private List<Address> loc;
 
+	/**
+	 * create the window with correct layout
+	 * 
+	 * @param Bundle 
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);

@@ -16,6 +16,12 @@ import edu.gatech.oad.rocket.findmythings.model.Item;
 import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.util.*;
 
+/**
+ * CS 2340 - FindMyStuff Android App
+ * activity that deals with submitting a new item
+ *
+ * @author TeamRocket
+ * */
 public class SubmitActivity extends Activity {
 
 	//UI references

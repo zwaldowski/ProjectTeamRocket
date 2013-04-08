@@ -32,6 +32,10 @@ public class ItemDetailFragment extends Fragment {
 	public ItemDetailFragment() {
 	}
 
+	/**
+	 * creates new instance of ItemDetailActivity
+	 * @param Bundle
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,11 +45,16 @@ public class ItemDetailFragment extends Fragment {
 		}
 		catch(NullPointerException e) {
 				//donothing
-		}
-			
-		
+		}		
 	}
 	
+	/**
+	 * creates all UI features of the window
+	 * @param LayoutInflater inflater
+	 * @param ViewGroup container
+	 * @param Bundle savedInstanceState
+	 * @return View 
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
