@@ -79,7 +79,7 @@
         <strong>Whoops!</strong> Your password was too short. Try again.
       </div>
       <#break>
-      <#case "passwdMatch">
+      <#case "passwordMatch">
       <div class="alert">
         <strong>Whoops!</strong> The two passwords didn't match. Try again.
       </div>

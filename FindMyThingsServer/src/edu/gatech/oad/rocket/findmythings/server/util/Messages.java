@@ -43,7 +43,7 @@ public final class Messages {
 	public enum Login {
 		NO_SUCH_USER("noSuchUser"),
 		BAD_PASSWORD("badPassword"),
-		ACCNT_LOCKED("accountLocked"),
+		ACCOUNT_LOCKED("accountLocked"),
 		ACCT_DISABLE("accountDisabled"),
 		MANY_ATTEMPT("tooManyAttempts"),
 		INVALID_DATA("invalidData");
@@ -65,7 +65,7 @@ public final class Messages {
 			} else if (ae instanceof IncorrectCredentialsException) {
 				return Messages.Login.BAD_PASSWORD;
 			} else if (ae instanceof LockedAccountException) {
-				return Messages.Login.ACCNT_LOCKED;
+				return Messages.Login.ACCOUNT_LOCKED;
 			} else if (ae instanceof DisabledAccountException) {
 				return Messages.Login.ACCT_DISABLE;
 			} else if (ae instanceof ExcessiveAttemptsException) {
@@ -80,13 +80,13 @@ public final class Messages {
 	}
 
 	public enum Register {
-		ALREADYAUSER("alreadyUser"),
-		BADEMAILADDR("badEmailAdd"),
+		ALREADY_USER("alreadyUser"),
+		BAD_EMAIL_ADDRESS("badEmailAdd"),
 		BAD_PASSWORD("badPassword"),
-		PASSNOTMATCH("passwdMatch"),
-		INVALIDPHONE("badPhoneNum"),
+		PASSWORDS_MATCH("passwordMatch"),
+		INVALID_PHONE("badPhoneNum"),
 		INVALID_DATA("invalidData"),
-		NOSUCHMEMBER("superForgot");
+		NO_SUCH_MEMBER("superForgot");
 
 		private final String text;
 
@@ -104,7 +104,7 @@ public final class Messages {
 		CODE_EXPIRED("expiredCode"),
 		NO_SUCH_USER("noSuchUser"),
 		BAD_PASSWORD("badPassword"),
-		PASSNOTMATCH("passwdMatch"),
+		PASSWORDS_MATCH("passworddMatch"),
 		INVALID_DATA("invalidData");
 
 		private final String text;

@@ -31,7 +31,7 @@ import java.util.List;
  * <p>Domain names are evaluated according
  * to the standards <a href="http://www.ietf.org/rfc/rfc1034.txt">RFC1034</a>,
  * section 3, and <a href="http://www.ietf.org/rfc/rfc1123.txt">RFC1123</a>,
- * section 2.1. No accomodation is provided for the specialized needs of
+ * section 2.1. No accommodation is provided for the specialized needs of
  * other applications; if the domain name has been URL-encoded, for example,
  * validation will fail even though the equivalent plaintext version of the
  * same name would have passed.
@@ -39,16 +39,13 @@ import java.util.List;
  *
  * <p>
  * Validation is also provided for top-level domains (TLDs) as defined and
- * maintained by the Internet Assigned Numbers Authority (IANA):
+ * maintained by the Internet Assigned Numbers Authority:
  * </p>
  *
  *   <ul>
- *     <li>{@link #isValidInfrastructureTld} - validates infrastructure TLDs
- *         (<code>.arpa</code>, etc.)</li>
- *     <li>{@link #isValidGenericTld} - validates generic TLDs
- *         (<code>.com, .org</code>, etc.)</li>
- *     <li>{@link #isValidCountryCodeTld} - validates country code TLDs
- *         (<code>.us, .uk, .cn</code>, etc.)</li>
+ *     <li>{@link #isValidInfrastructureTld} - validates infrastructure TLDs</li>
+ *     <li>{@link #isValidGenericTld} - validates generic TLDs</li>
+ *     <li>{@link #isValidCountryCodeTld} - validates country code TLDs</li>
  *   </ul>
  *
  * <p>
@@ -64,7 +61,7 @@ public class DomainValidator implements Serializable {
 
 	private static final long serialVersionUID = -4407125112880174009L;
 
-	// Regular expression strings for hostnames (derived from RFC2396 and RFC 1123)
+	// Regular expression strings for host names (derived from RFC2396 and RFC 1123)
 	private static final String DOMAIN_LABEL_REGEX = "\\p{Alnum}(?>[\\p{Alnum}-]*\\p{Alnum})*";
 	private static final String TOP_LABEL_REGEX = "\\p{Alpha}{2,}";
 	private static final String DOMAIN_NAME_REGEX =
@@ -101,7 +98,7 @@ public class DomainValidator implements Serializable {
 	 * @return the singleton instance of this validator
 	 */
 	public static DomainValidator getInstance() {
-		return DOMAIN_VALIDATOR;
+		return getInstance(false);
 	}
 
 	/**
@@ -187,7 +184,7 @@ public class DomainValidator implements Serializable {
 
 	/**
 	 * Returns true if the specified <code>String</code> matches any
-	 * widely used "local" domains (localhost or localdomain). Leading dots are
+	 * widely used "local" domains. Leading dots are
 	 *  ignored if present. The search is case-sensitive.
 	 * @param iTld the parameter to check for local TLD status
 	 * @return true if the parameter is an local TLD
@@ -209,12 +206,12 @@ public class DomainValidator implements Serializable {
 	// ----- Authoritative and comprehensive list at:
 	// ----- http://data.iana.org/TLD/tlds-alpha-by-domain.txt
 
-	private static final String[] INFRASTRUCTURE_TLDS = new String[] {
+	private static final String[] INFRASTRUCTURE_DOMAINS = new String[] {
 		"arpa",               // internet infrastructure
 		"root"                // diagnostic marker for non-truncated root zone
 	};
 
-	private static final String[] GENERIC_TLDS = new String[] {
+	private static final String[] GENERIC_DOMAINS = new String[] {
 		"aero",               // air transport industry
 		"asia",               // Pan-Asia/Asia Pacific
 		"biz",                // businesses
@@ -232,12 +229,12 @@ public class DomainValidator implements Serializable {
 		"tel",                // contact data for businesses and individuals
 		"travel",             // entities in the travel industry
 		"gov",                // United States Government
-		"edu",                // accredited postsecondary US education entities
+		"edu",                // accredited post-secondary US education entities
 		"mil",                // United States Military
 		"int"                 // organizations established by international treaty
 	};
 
-	private static final String[] COUNTRY_CODE_TLDS = new String[] {
+	private static final String[] COUNTRY_CODE_DOMAINS = new String[] {
 		"ac",                 // Ascension Island
 		"ad",                 // Andorra
 		"ae",                 // United Arab Emirates
@@ -252,7 +249,7 @@ public class DomainValidator implements Serializable {
 		"ar",                 // Argentina
 		"as",                 // American Samoa
 		"at",                 // Austria
-		"au",                 // Australia (includes Ashmore and Cartier Islands and Coral Sea Islands)
+		"au",                 // Australia
 		"aw",                 // Aruba
 		"ax",                 // ��land
 		"az",                 // Azerbaijan
@@ -260,13 +257,13 @@ public class DomainValidator implements Serializable {
 		"bb",                 // Barbados
 		"bd",                 // Bangladesh
 		"be",                 // Belgium
-		"bf",                 // Burkina Faso
+		"bf",                 // Burkina-Faso
 		"bg",                 // Bulgaria
 		"bh",                 // Bahrain
 		"bi",                 // Burundi
 		"bj",                 // Benin
 		"bm",                 // Bermuda
-		"bn",                 // Brunei Darussalam
+		"bn",                 // Brunei
 		"bo",                 // Bolivia
 		"br",                 // Brazil
 		"bs",                 // Bahamas
@@ -334,11 +331,11 @@ public class DomainValidator implements Serializable {
 		"hk",                 // Hong Kong
 		"hm",                 // Heard Island and McDonald Islands
 		"hn",                 // Honduras
-		"hr",                 // Croatia (Hrvatska)
+		"hr",                 // Croatia
 		"ht",                 // Haiti
 		"hu",                 // Hungary
 		"id",                 // Indonesia
-		"ie",                 // Ireland (��ire)
+		"ie",                 // Ireland
 		"il",                 // Israel
 		"im",                 // Isle of Man
 		"in",                 // India
@@ -362,7 +359,7 @@ public class DomainValidator implements Serializable {
 		"kw",                 // Kuwait
 		"ky",                 // Cayman Islands
 		"kz",                 // Kazakhstan
-		"la",                 // Laos (currently being marketed as the official domain for Los Angeles)
+		"la",                 // Laos
 		"lb",                 // Lebanon
 		"lc",                 // Saint Lucia
 		"li",                 // Liechtenstein
@@ -410,12 +407,12 @@ public class DomainValidator implements Serializable {
 		"om",                 // Oman
 		"pa",                 // Panama
 		"pe",                 // Peru
-		"pf",                 // French Polynesia With Clipperton Island
-		"pg",                 // Papua New Guinea
+		"pf",                 // French Polynesia
+		"pg",                 // Papa New Guinea
 		"ph",                 // Philippines
 		"pk",                 // Pakistan
 		"pl",                 // Poland
-		"pm",                 // Saint-Pierre and Miquelon
+		"pm",                 // Saint-Pierre
 		"pn",                 // Pitcairn Islands
 		"pr",                 // Puerto Rico
 		"ps",                 // Palestinian territories (PA-controlled West Bank and Gaza Strip)
@@ -436,26 +433,26 @@ public class DomainValidator implements Serializable {
 		"sg",                 // Singapore
 		"sh",                 // Saint Helena
 		"si",                 // Slovenia
-		"sj",                 // Svalbard and Jan Mayen Islands Not in use (Norwegian dependencies; see .no)
+		"sj",                 // Norwegian islands
 		"sk",                 // Slovakia
 		"sl",                 // Sierra Leone
 		"sm",                 // San Marino
 		"sn",                 // Senegal
 		"so",                 // Somalia
 		"sr",                 // Suriname
-		"st",                 // S��o Tom�� and Pr��ncipe
+		"st",                 // S��o Tom�� and Principe
 		"su",                 // Soviet Union (deprecated)
 		"sv",                 // El Salvador
 		"sy",                 // Syria
 		"sz",                 // Swaziland
-		"tc",                 // Turks and Caicos Islands
+		"tc",                 // Turkish Islands
 		"td",                 // Chad
 		"tf",                 // French Southern and Antarctic Lands
 		"tg",                 // Togo
 		"th",                 // Thailand
 		"tj",                 // Tajikistan
 		"tk",                 // Tokelau
-		"tl",                 // East Timor (deprecated old code)
+		"tl",                 // Timor
 		"tm",                 // Turkmenistan
 		"tn",                 // Tunisia
 		"to",                 // Tonga
@@ -489,13 +486,13 @@ public class DomainValidator implements Serializable {
 		"zw",                 // Zimbabwe
 	};
 
-	private static final String[] LOCAL_TLDS = new String[] {
+	private static final String[] LOCAL_DOMAINS = new String[] {
 		"localhost",           // RFC2606 defined
 		"localdomain"          // Also widely used as localhost.localdomain
 	};
 
-	private static final List<String> INFRASTRUCTURE_TLD_LIST = Arrays.asList(INFRASTRUCTURE_TLDS);
-	private static final List<String> GENERIC_TLD_LIST = Arrays.asList(GENERIC_TLDS);
-	private static final List<String> COUNTRY_CODE_TLD_LIST = Arrays.asList(COUNTRY_CODE_TLDS);
-	private static final List<String> LOCAL_TLD_LIST = Arrays.asList(LOCAL_TLDS);
+	private static final List<String> INFRASTRUCTURE_TLD_LIST = Arrays.asList(INFRASTRUCTURE_DOMAINS);
+	private static final List<String> GENERIC_TLD_LIST = Arrays.asList(GENERIC_DOMAINS);
+	private static final List<String> COUNTRY_CODE_TLD_LIST = Arrays.asList(COUNTRY_CODE_DOMAINS);
+	private static final List<String> LOCAL_TLD_LIST = Arrays.asList(LOCAL_DOMAINS);
 }

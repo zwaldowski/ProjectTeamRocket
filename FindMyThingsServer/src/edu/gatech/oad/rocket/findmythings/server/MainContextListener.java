@@ -47,9 +47,9 @@ public class MainContextListener extends GuiceServletContextListener {
 	private static final boolean ENABLE_TEST_MODE = false;
 	private static final boolean ENABLE_OLD_API = false;
 
-	public static final Key<WebAuthenticationFilter> FORMAUTHC = Key.get(WebAuthenticationFilter.class);
-	public static final Key<BearerTokenAuthenticatingFilter> TOKENAUTHC = Key.get(BearerTokenAuthenticatingFilter.class);
-	public static final Key<BearerTokenRevokeFilter> TOKENLOGOUT = Key.get(BearerTokenRevokeFilter.class);
+	public static final Key<WebAuthenticationFilter> FORM_AUTH = Key.get(WebAuthenticationFilter.class);
+	public static final Key<BearerTokenAuthenticatingFilter> TOKEN_AUTH = Key.get(BearerTokenAuthenticatingFilter.class);
+	public static final Key<BearerTokenRevokeFilter> TOKEN_LOGOUT = Key.get(BearerTokenRevokeFilter.class);
 
 	private ServletContext servletContext = null;
 
@@ -162,35 +162,35 @@ public class MainContextListener extends GuiceServletContextListener {
 			}
 
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
-			addFilterChain("/login", FORMAUTHC);
+			addFilterChain("/login", FORM_AUTH);
 			addFilterChain("/logout", LOGOUT);
 
-			addFilterChain("/_ah/api/fmthings/v1/members/get", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
-			addFilterChain("/_ah/api/fmthings/v1/members", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
-			addFilterChain("/_ah/api/fmthings/v1/account/login", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/_ah/api/fmthings/v1/account/logout", NO_SESSION_CREATION, TOKENLOGOUT);
-			addFilterChain("/_ah/api/fmthings/v1/account/update", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/_ah/api/fmthings/v1/account", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/_ah/api/fmthings/v1/test/auth", NO_SESSION_CREATION, TOKENAUTHC);
-			addFilterChain("/_ah/api/fmthings/v1/test", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
+			addFilterChain("/_ah/api/fmthings/v1/members/get", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
+			addFilterChain("/_ah/api/fmthings/v1/members", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+			addFilterChain("/_ah/api/fmthings/v1/account/login", NO_SESSION_CREATION, TOKEN_AUTH);
+			addFilterChain("/_ah/api/fmthings/v1/account/logout", NO_SESSION_CREATION, TOKEN_LOGOUT);
+			addFilterChain("/_ah/api/fmthings/v1/account/update", NO_SESSION_CREATION, TOKEN_AUTH);
+			addFilterChain("/_ah/api/fmthings/v1/account", NO_SESSION_CREATION, TOKEN_AUTH);
+			addFilterChain("/_ah/api/fmthings/v1/test/auth", NO_SESSION_CREATION, TOKEN_AUTH);
+			addFilterChain("/_ah/api/fmthings/v1/test", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
 
 
 			if (ENABLE_TEST_MODE) {
-				addFilterChain("/account", FORMAUTHC);
+				addFilterChain("/account", FORM_AUTH);
 			}
 
 			if (ENABLE_OLD_API) {
-				addFilterChain("/api/login", NO_SESSION_CREATION, TOKENAUTHC);
-				addFilterChain("/api/account", NO_SESSION_CREATION, TOKENAUTHC);
-				addFilterChain("/api/updateAccount", NO_SESSION_CREATION, TOKENAUTHC);
+				addFilterChain("/api/login", NO_SESSION_CREATION, TOKEN_AUTH);
+				addFilterChain("/api/account", NO_SESSION_CREATION, TOKEN_AUTH);
+				addFilterChain("/api/updateAccount", NO_SESSION_CREATION, TOKEN_AUTH);
 				addFilterChain("/api/register", NO_SESSION_CREATION, ANON);
 				addFilterChain("/api/forgot", NO_SESSION_CREATION, ANON);
-				addFilterChain("/api/logout", NO_SESSION_CREATION, TOKENLOGOUT);
+				addFilterChain("/api/logout", NO_SESSION_CREATION, TOKEN_LOGOUT);
 
-				addFilterChain("/admin/**", FORMAUTHC, config(ROLES, "admin"));
-				addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
-				addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
-				addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
+				addFilterChain("/admin/**", FORM_AUTH, config(ROLES, "admin"));
+				addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKEN_AUTH);
+				addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+				addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
 			}
 
 			addFilterChain("/**", ANON);

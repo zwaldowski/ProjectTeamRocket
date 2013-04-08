@@ -29,8 +29,8 @@ import java.util.regex.Pattern;
  * a validator which does <i>case in-sensitive</i> validation for a set of regular
  * expressions:
  * <pre>
- *         String[] regexs = new String[] {...};
- *         RegexValidator validator = new RegexValidator(regexs, false);
+ *         String[] regexes = new String[] {...};
+ *         RegexValidator validator = new RegexValidator(regexes, false);
  * </pre>
  * <p>
  * <ul>
@@ -88,33 +88,33 @@ public class RegexValidator implements Serializable {
 	 * Construct a <i>case sensitive</i> validator that matches any one
 	 * of the set of regular expressions.
 	 *
-	 * @param regexs The set of regular expressions this validator will
+	 * @param regexes The set of regular expressions this validator will
 	 * validate against
 	 */
-	public RegexValidator(String[] regexs) {
-		this(regexs, true);
+	public RegexValidator(String[] regexes) {
+		this(regexes, true);
 	}
 
 	/**
 	 * Construct a validator that matches any one of the set of regular
 	 * expressions with the specified case sensitivity.
 	 *
-	 * @param regexs The set of regular expressions this validator will
+	 * @param regexes The set of regular expressions this validator will
 	 * validate against
 	 * @param caseSensitive when <code>true</code> matching is <i>case
 	 * sensitive</i>, otherwise matching is <i>case in-sensitive</i>
 	 */
-	public RegexValidator(String[] regexs, boolean caseSensitive) {
-		if (regexs == null || regexs.length == 0) {
+	public RegexValidator(String[] regexes, boolean caseSensitive) {
+		if (regexes == null || regexes.length == 0) {
 			throw new IllegalArgumentException("Regular expressions are missing");
 		}
-		patterns = new Pattern[regexs.length];
+		patterns = new Pattern[regexes.length];
 		int flags =  (caseSensitive ? 0: Pattern.CASE_INSENSITIVE);
-		for (int i = 0; i < regexs.length; i++) {
-			if (regexs[i] == null || regexs[i].length() == 0) {
+		for (int i = 0; i < regexes.length; i++) {
+			if (regexes[i] == null || regexes[i].length() == 0) {
 				throw new IllegalArgumentException("Regular expression[" + i + "] is missing");
 			}
-			patterns[i] =  Pattern.compile(regexs[i], flags);
+			patterns[i] =  Pattern.compile(regexes[i], flags);
 		}
 	}
 

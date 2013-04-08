@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
  * this by wrapping keys in a class to avoid string clashes.  We lose efficiency of course
  * as it will get serialized.
  * <p> I'm using the asynchronous service as it will be a little faster on the puts.
- * <p> Memcache on GAE is pretty slow, so I don't think this will speed stuff up, but it
+ * <p> Memcached on GAE is pretty slow, so I don't think this will speed stuff up, but it
  * will save on Datastore accesses, which are expensive.
  * @param <K>  The raw key class
  * @param <V>  The value class
@@ -45,17 +45,6 @@ public class Memcache<K, V> implements Cache<K, V> {
 
 	public V put(K k, V v) throws CacheException {
 		memcacheService.put(k, v, Expiration.byDeltaSeconds(EXPIRES));
-		return null;
-	}
-
-	public V putSync(K k, V v) throws CacheException {
-		try {
-			memcacheService.put(k, v, Expiration.byDeltaSeconds(EXPIRES)).get();
-		}  catch (InterruptedException e) {
-			return null;
-		} catch (ExecutionException e) {
-			return null;
-		}
 		return null;
 	}
 

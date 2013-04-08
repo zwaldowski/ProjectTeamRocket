@@ -42,7 +42,7 @@ public class MailmanServlet extends TemplateServlet {
 	private String urlFor(HttpServletRequest request, String code, String userName, boolean forgot) {
 		try {
 			URI url = new URI(request.getScheme(), null, request.getServerName(), request.getServerPort(), "/activate",
-					Config.TICKET_PARAM+"="+code+"&"+getUsernameParam()+"="+userName+"&"+Config.FORGOTPASSWORD_PARAM+"="+Boolean.toString(forgot), null);
+					Config.TICKET_PARAM+"="+code+"&"+getUsernameParam()+"="+userName+"&"+Config.FORGOT_PASSWORD_PARAM +"="+Boolean.toString(forgot), null);
 			return url.toString();
 		} catch (URISyntaxException e) {
 			throw new RuntimeException(e);
@@ -54,7 +54,7 @@ public class MailmanServlet extends TemplateServlet {
 		String username = request.getParameter(getUsernameParam());
 		try {
 			String registrationString = request.getParameter(Config.TICKET_PARAM);
-			boolean forgot = getBoolRequestParam(request, Config.FORGOTPASSWORD_PARAM, false);
+			boolean forgot = getBoolRequestParam(request, Config.FORGOT_PASSWORD_PARAM, false);
 			String url = urlFor(request, registrationString, username, forgot);
 			LOG.info("Link URL is " + url);
 
@@ -62,7 +62,7 @@ public class MailmanServlet extends TemplateServlet {
 			String htmlMessage = createDocument("inc/email.ftl",
 					"email", username,
 					"href", url,
-					Config.FORGOTPASSWORD_PARAM, Boolean.toString(forgot));
+					Config.FORGOT_PASSWORD_PARAM, Boolean.toString(forgot));
 			getEmailWrapper().send(username, subject, htmlMessage);
 
 			LOG.info("Registration email sent to " + username + " with return url " + url);

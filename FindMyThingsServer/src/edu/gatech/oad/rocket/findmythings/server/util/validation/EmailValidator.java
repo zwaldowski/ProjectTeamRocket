@@ -21,25 +21,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <p>Perform email validations.</p>
- * <p>
- * This class is a Singleton; you can retrieve the instance via the getInstance() method.
- * </p>
- * <p>
- * Based on a script by <a href="mailto:stamhankar@hotmail.com">Sandeep V. Tamhankar</a>
- * http://javascript.internet.com
- * </p>
- * <p>
+ * Perform email validations against a string.
+ *
+ * This class is a Singleton that can be retrieved via the getInstance() method.
+ *
  * This implementation is not guaranteed to catch all possible errors in an email address.
- * For example, an address like nobody@noplace.somedog will pass validator, even though there
- * is no TLD "somedog"
- * </p>.
  */
 public class EmailValidator implements Serializable {
 
 	private static final long serialVersionUID = 1705927040799295880L;
 
-	private static final String SPECIAL_CHARS = "\\p{Cntrl}\\(\\)<>@,;:'\\\\\"\\.\\[\\]";
+	private static final String SPECIAL_CHARS = "\\p[\\x00-\\x1F\\x7F]\\(\\)<>@,;:'\\\\\"\\.\\[\\]";
 	private static final String VALID_CHARS = "[^\\s" + SPECIAL_CHARS + "]";
 	private static final String QUOTED_USER = "(\"[^\"]*\")";
 	private static final String WORD = "((" + VALID_CHARS + "|')+|" + QUOTED_USER + ")";

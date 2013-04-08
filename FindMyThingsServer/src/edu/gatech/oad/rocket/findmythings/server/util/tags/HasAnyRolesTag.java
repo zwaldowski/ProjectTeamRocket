@@ -11,8 +11,8 @@ import org.apache.shiro.subject.Subject;
  * @since 0.2
  */
 public class HasAnyRolesTag extends RoleTag {
-	// Delimeter that separates role names in tag attribute
-	private static final String ROLE_NAMES_DELIMETER = ",";
+	// Delimiter that separates role names in tag attribute
+	private static final String ROLE_NAMES_DELIMITER = ",";
 
 	protected boolean showTagBody(String roleNames) {
 		boolean hasAnyRole = false;
@@ -20,7 +20,7 @@ public class HasAnyRolesTag extends RoleTag {
 
 		if (subject != null) {
 			// Iterate through roles and check to see if the user has one of the roles
-			for (String role : roleNames.split(ROLE_NAMES_DELIMETER)) {
+			for (String role : roleNames.split(ROLE_NAMES_DELIMITER)) {
 				if (subject.hasRole(role.trim())) {
 					hasAnyRole = true;
 					break;

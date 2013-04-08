@@ -46,7 +46,7 @@ public class ForgotServlet extends ForgotEndpoint {
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
 		super.addParametersToMap(request, params);
-		params.put(Config.FORGOTPASSWORD_PARAM, true);
+		params.put(Config.FORGOT_PASSWORD_PARAM, true);
 	}
 
 }

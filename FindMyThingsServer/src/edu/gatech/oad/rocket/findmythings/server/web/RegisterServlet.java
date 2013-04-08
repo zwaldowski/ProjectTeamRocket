@@ -48,6 +48,6 @@ public class RegisterServlet extends RegisterEndpoint {
 	@Override
 	protected void addParametersToMap(HttpServletRequest request, Map<String, Object> params) {
 		super.addParametersToMap(request, params);
-		params.put(Config.FORGOTPASSWORD_PARAM, false);
+		params.put(Config.FORGOT_PASSWORD_PARAM, false);
 	}
 }

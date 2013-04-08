@@ -22,12 +22,12 @@ public class ForgotEndpoint extends RegisterEndpoint {
 			String email = WebUtils.getCleanParam(request, getUsernameParam());
 
 			if (!emailIsValid(email)) {
-				sendError(request, response, Messages.Register.BADEMAILADDR);
+				sendError(request, response, Messages.Register.BAD_EMAIL_ADDRESS);
 				return;
 			}
 
 			if (!memberExistsWithEmail(email)) {
-				sendError(request, response, Messages.Register.NOSUCHMEMBER);
+				sendError(request, response, Messages.Register.NO_SUCH_MEMBER);
 				return;
 			}
 

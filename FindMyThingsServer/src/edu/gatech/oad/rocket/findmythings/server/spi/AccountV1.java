@@ -43,7 +43,7 @@ public class AccountV1 extends BaseEndpoint {
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.add(TaskOptions.Builder.withUrl("/sendMail")
 				.param(Config.USERNAME_PARAM, email)
-				.param(Config.FORGOTPASSWORD_PARAM, Boolean.toString(isForgot))
+				.param(Config.FORGOT_PASSWORD_PARAM, Boolean.toString(isForgot))
 				.param(Config.TICKET_PARAM, registrationToken));
 
 		return new MessageBean(HTTP.Status.OK, Messages.Status.OK.toString());
@@ -55,13 +55,13 @@ public class AccountV1 extends BaseEndpoint {
 			@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
 		try {
 			if (!emailIsValid(email)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BADEMAILADDR.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
 			}
 
 			AppMember user = getMemberWithEmail(email);
 
 			if (user != null && user.isRegistered()) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.ALREADYAUSER.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.ALREADY_USER.toString());
 			}
 
 			if (password == null || password.length() < 3 || passwordAlt == null || passwordAlt.length() < 3) {
@@ -69,11 +69,11 @@ public class AccountV1 extends BaseEndpoint {
 			}
 
 			if (!password.equals(passwordAlt)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.PASSNOTMATCH.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.PASSWORDS_MATCH.toString());
 			}
 
 			if (!getPhoneNumberValidator().isValid(phone)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.INVALIDPHONE.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.INVALID_PHONE.toString());
 			}
 
 			PhoneNumber phoneNum = new PhoneNumber(phone);
@@ -84,6 +84,7 @@ public class AccountV1 extends BaseEndpoint {
 				Set<String> permissions = new HashSet<String>();
 				permissions.add("browse");
 				permissions.add("submit");
+
 				DBMember newUser = new DBMember(email, password, roles, permissions, true);
 				newUser.setPhone(phoneNum);
 				newUser.setName(name);
@@ -103,11 +104,11 @@ public class AccountV1 extends BaseEndpoint {
 	public MessageBean memberForgotPassword(@Named("username") String email) {
 		try {
 			if (!emailIsValid(email)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BADEMAILADDR.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
 			}
 
 			if (!memberExistsWithEmail(email)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.NOSUCHMEMBER.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.NO_SUCH_MEMBER.toString());
 			}
 
 			return mailAuthenticationTokenSendOK(email, true);

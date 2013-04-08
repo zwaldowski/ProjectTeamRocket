@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 @Singleton
 public class RegisterEndpoint extends TemplateServlet {
 	static final Logger LOGGER = Logger.getLogger(RegisterEndpoint.class.getName());
-	public static final String REALNAME = "name";
+	public static final String REAL_NAME = "name";
 	public static final String PASSWORD_CONFIRM = "password_alt";
 	public static final String PHONE = "phone";
 	public static final String ADDRESS = "address";
@@ -55,14 +55,14 @@ public class RegisterEndpoint extends TemplateServlet {
 			String email = WebUtils.getCleanParam(request, getUsernameParam());
 
 			if (!emailIsValid(email)) {
-				sendError(request, response, Messages.Register.BADEMAILADDR);
+				sendError(request, response, Messages.Register.BAD_EMAIL_ADDRESS);
 				return;
 			}
 
 			AppMember user = memberWithEmail(email);
 
 			if (user != null && user.isRegistered()) {
-				sendError(request, response, Messages.Register.ALREADYAUSER);
+				sendError(request, response, Messages.Register.ALREADY_USER);
 				return;
 			}
 
@@ -75,18 +75,18 @@ public class RegisterEndpoint extends TemplateServlet {
 			}
 
 			if (!password.equals(passwordAlt)) {
-				sendError(request, response, Messages.Register.PASSNOTMATCH);
+				sendError(request, response, Messages.Register.PASSWORDS_MATCH);
 				return;
 			}
 
 			String phoneString = WebUtils.getCleanParam(request, PHONE);
 
 			if (!getPhoneNumberValidator().isValid(phoneString)) {
-				sendError(request, response, Messages.Register.INVALIDPHONE);
+				sendError(request, response, Messages.Register.INVALID_PHONE);
 				return;
 			}
 
-			String name = WebUtils.getCleanParam(request, REALNAME);
+			String name = WebUtils.getCleanParam(request, REAL_NAME);
 			PhoneNumber phone = new PhoneNumber(phoneString);
 			String address = WebUtils.getCleanParam(request, ADDRESS);
 
@@ -113,7 +113,7 @@ public class RegisterEndpoint extends TemplateServlet {
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.add(TaskOptions.Builder.withUrl("/sendMail")
 				.param(getUsernameParam(), email)
-				.param(Config.FORGOTPASSWORD_PARAM, Boolean.toString(isForgot))
+				.param(Config.FORGOT_PASSWORD_PARAM, Boolean.toString(isForgot))
 				.param(Config.TICKET_PARAM, registrationToken));
 
 		sendOK(request, response);

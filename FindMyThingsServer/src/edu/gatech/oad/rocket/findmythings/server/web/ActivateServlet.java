@@ -33,11 +33,11 @@ public class ActivateServlet extends TemplateServlet {
 		if (code == null || code.length() == 0 || username == null || username.length() == 0) {
 			WebUtils.issueRedirect(request, response, "/");
 		}
-		boolean forgot = getBoolRequestParam(request, Config.FORGOTPASSWORD_PARAM, false);
+		boolean forgot = getBoolRequestParam(request, Config.FORGOT_PASSWORD_PARAM, false);
 
 		request.setAttribute(Config.TICKET_PARAM, code);
 		request.setAttribute(getUsernameParam(), username);
-		request.setAttribute(Config.FORGOTPASSWORD_PARAM, forgot);
+		request.setAttribute(Config.FORGOT_PASSWORD_PARAM, forgot);
 
 		if (forgot) {
 			// display password reset form
@@ -75,7 +75,7 @@ public class ActivateServlet extends TemplateServlet {
 			}
 
 			if (!password.equals(passwordAlt)) {
-				sendError(request, response, Messages.Activate.PASSNOTMATCH);
+				sendError(request, response, Messages.Activate.PASSWORDS_MATCH);
 				return;
 			}
 
@@ -88,7 +88,7 @@ public class ActivateServlet extends TemplateServlet {
 			DatabaseService.ofy().updateMember((DBMember)user, password);
 			DatabaseService.ofy().register((DBMember)user, code);
 
-			request.setAttribute(Config.FORGOTPASSWORD_PARAM, false);
+			request.setAttribute(Config.FORGOT_PASSWORD_PARAM, false);
 			writeDocument(response, getDefaultTemplateURI(request), getParameterMap(request));
 		} catch (Exception e) {
 			sendError(request, response, Messages.Activate.INVALID_DATA);
@@ -111,8 +111,8 @@ public class ActivateServlet extends TemplateServlet {
 		Object code = request.getAttribute(Config.TICKET_PARAM);
 		if (code != null) params.put(Config.TICKET_PARAM, code);
 
-		Object forgot = request.getAttribute(Config.FORGOTPASSWORD_PARAM);
-		if (forgot != null) params.put(Config.FORGOTPASSWORD_PARAM, code);
+		Object forgot = request.getAttribute(Config.FORGOT_PASSWORD_PARAM);
+		if (forgot != null) params.put(Config.FORGOT_PASSWORD_PARAM, code);
 
 		Object user = request.getAttribute(getUsernameParam());
 		if (user != null) params.put(getUsernameParam(), code);

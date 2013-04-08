@@ -65,7 +65,7 @@ public class InetAddressValidator implements Serializable {
 
 	/**
 	 * Validates an IPv4 address. Returns true if valid.
-	 * @param inet4Address the IPv4 address to validate
+	 * @param ipv4Address the IPv4 address to validate
 	 * @return true if the argument contains a valid IPv4 address
 	 */
 	public boolean isValidInet4Address(String inet4Address) {

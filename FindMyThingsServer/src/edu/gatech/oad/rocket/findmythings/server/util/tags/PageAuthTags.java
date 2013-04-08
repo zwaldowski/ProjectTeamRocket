@@ -8,7 +8,7 @@ import freemarker.template.SimpleHash;
 /**
  * Injecting Shiro auth tags into FreeMarker
  *
- * <p>Usage: cfg.setSharedVeriable("shiro", new PageAuthTags());</p>
+ * <p>Usage: cfg.setSharedVariable("shiro", new PageAuthTags());</p>
  */
 public class PageAuthTags extends SimpleHash {
 
