@@ -39,6 +39,12 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	 */
 	private List<Item> mList;
 
+	/**
+	 * constructor1
+	 * @param context
+	 * @param textViewResourceId
+	 * @param objects
+	 */
 	public Adapter(Context context, int textViewResourceId, List<Item> objects) {
 		super(context, textViewResourceId, objects);
 		
@@ -46,6 +52,13 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		mList = objects;
 	}
 
+	/**
+	 * constructor2
+	 * @param context
+	 * @param resource
+	 * @param textViewResourceId
+	 * @param objects
+	 */
 	public Adapter(Context context, int resource, int textViewResourceId,
 			List<Item> objects) {
 		super(context,resource,textViewResourceId, objects);
@@ -54,6 +67,10 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		
 	}
 	
+	/**
+	 * sets the main list of the Adapter
+	 * @param List<Item> l
+	 */
 	public void setList(List<Item> l) {
 		if (!l.isEmpty()) {
 			mList = l;
@@ -63,13 +80,24 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		notifyDataSetChanged();
 	}
 	
+	/**
+	 * returns the number of items on main list
+	 * @return int count
+	 */
 	@Override
 	public int getCount() {
 		if(mList==null)
 			return 0;
 	    return mList.size();
 	}
-
+	
+	/**
+	 * returns the current View being used
+	 * @param int position
+	 * @param View convertView
+	 * @param ViewGroup parent
+	 * @return View
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 	 
@@ -100,13 +128,21 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	 frag.setText(span2);
 
 	 return row;
-	 
 	}
+	
 	
 	// TODO: Use this? Where? - ZW
 	@SuppressWarnings("unused")
+	/**
+	 * filtering text 
+	 */
 	private class TextFilter extends Filter {
 
+		/**
+		 * filtering by sequence of characters
+		 * @param CharSequence constraint
+		 * @return FilterResults 
+		 */
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
@@ -119,6 +155,10 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 			
 		}
 
+		/**
+		 * @param CharSequence constraint
+		 * @param FilterResults results
+		 */
 		@Override
 		protected void publishResults(CharSequence constraint,
 				FilterResults results) {
