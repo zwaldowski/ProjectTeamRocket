@@ -18,7 +18,7 @@ import java.util.Map;
  * <p>Equivalent to {@link org.apache.shiro.web.tags.NotAuthenticatedTag}</p>
  */
 @SuppressWarnings("rawtypes")
-private class NotAuthenticatedTag extends SecureTag {
+class NotAuthenticatedTag extends SecureTag {
 	static final Logger log = Logger.getLogger("NotAuthenticatedTag");
 
 	@Override

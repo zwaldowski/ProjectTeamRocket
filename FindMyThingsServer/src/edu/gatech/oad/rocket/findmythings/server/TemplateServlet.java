@@ -14,6 +14,7 @@ public abstract class TemplateServlet extends PageServlet {
 
 	private static final long serialVersionUID = 8526927539799303725L;
 
+	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(TemplateServlet.class.getName());
 
 	public TemplateServlet() {
@@ -46,7 +47,7 @@ public abstract class TemplateServlet extends PageServlet {
 		return removeExtension(filename) + "." + extension;
 	}
 
-	static String getDefaultTemplateURI(HttpServletRequest request) {
+	protected static String getDefaultTemplateURI(HttpServletRequest request) {
 		String URI = request.getRequestURI();
 		if (URI.endsWith("/")) URI = URI.substring(0, URI.length() - 1);
 		if (URI.length() == 0) URI = "index.html";
