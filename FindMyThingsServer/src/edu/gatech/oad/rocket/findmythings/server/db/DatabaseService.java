@@ -184,7 +184,7 @@ public abstract class DatabaseService {
 			return load().type(DBMember.class).id(email).get();
 		}
 
-		protected DBUserCounter userCounter() {
+		DBUserCounter userCounter() {
 			return load().type(DBUserCounter.class).id(DBUserCounter.COUNTER_ID).get();
 		}
 

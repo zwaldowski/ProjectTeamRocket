@@ -23,7 +23,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 
 	private class BearerAuthenticationInfo implements AuthenticationInfo {
 		private static final long serialVersionUID = 3470761774414912759L;
-		private DBAuthenticationToken token;
+		private final DBAuthenticationToken token;
 
 		BearerAuthenticationInfo(DBAuthenticationToken token) {
 			this.token = token;
@@ -86,7 +86,7 @@ public class BearerTokenAuthenticatingRealm extends AuthenticatingRealm {
 	}
 
 	@SuppressWarnings("unchecked")
-	public final void deleteTokens(PrincipalCollection principals) {
+	private void deleteTokens(PrincipalCollection principals) {
 		Collection<String> tokens = principals.fromRealm(getName());
 		if (tokens != null) { //  && tokens.size() > 1
 			DatabaseService.ofy().deleteAuthenticationTokens(tokens);

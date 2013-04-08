@@ -27,7 +27,7 @@ import java.util.Set;
 @Api(name = "fmthings", version = "v1")
 public class AccountV1 extends BaseEndpoint {
 
-	protected boolean emailIsInvalid(String email) {
+	boolean emailIsInvalid(String email) {
 		return email == null || email.length() == 0 || !EmailValidator.getInstance().isValid(email);
 	}
 
@@ -36,7 +36,7 @@ public class AccountV1 extends BaseEndpoint {
 		return new RegexValidator("[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}", false);
 	}
 
-	protected MessageBean mailAuthenticationTokenSendOK(String email, boolean isForgot) {
+	MessageBean mailAuthenticationTokenSendOK(String email, boolean isForgot) {
 		String registrationToken = DatabaseService.ofy().createRegistrationTicket(email);
 
 		// send email with registrationToken

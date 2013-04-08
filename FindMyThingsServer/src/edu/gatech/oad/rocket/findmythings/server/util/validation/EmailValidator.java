@@ -115,7 +115,7 @@ public class EmailValidator implements Serializable {
 	 * @param domain being validated.
 	 * @return true if the email address's domain is valid.
 	 */
-	protected boolean isValidDomain(String domain) {
+	boolean isValidDomain(String domain) {
 		// see if domain is an IP address in brackets
 		Matcher ipDomainMatcher = IP_DOMAIN_PATTERN.matcher(domain);
 
@@ -137,7 +137,7 @@ public class EmailValidator implements Serializable {
 	 * @param user being validated
 	 * @return true if the user name is valid.
 	 */
-	protected boolean isValidUser(String user) {
+	boolean isValidUser(String user) {
 		return USER_PATTERN.matcher(user).matches();
 	}
 

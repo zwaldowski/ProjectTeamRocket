@@ -8,7 +8,7 @@ import org.apache.shiro.realm.Realm;
 
 public abstract class BaseEndpoint {
 
-	protected AppMember getMemberWithEmail(String email) {
+	AppMember getMemberWithEmail(String email) {
 		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
 		for (Realm realm : manager.getRealms()) {
 			if (realm instanceof ProfileRealm) {
@@ -19,7 +19,7 @@ public abstract class BaseEndpoint {
 		return null;
 	}
 
-	protected boolean memberExistsWithEmail(String email) {
+	boolean memberExistsWithEmail(String email) {
 		if (email == null || email.length() == 0) return false;
 		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
 		for (Realm realm : manager.getRealms()) {

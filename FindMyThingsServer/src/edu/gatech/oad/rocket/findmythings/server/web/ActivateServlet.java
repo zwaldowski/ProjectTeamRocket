@@ -24,7 +24,7 @@ public class ActivateServlet extends TemplateServlet {
 	 */
 	private static final long serialVersionUID = 7164782734338940628L;
 
-	public static final String PASSWORD_CONFIRM = "password_alt";
+	private static final String PASSWORD_CONFIRM = "password_alt";
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -95,7 +95,7 @@ public class ActivateServlet extends TemplateServlet {
 		}
 	}
 
-	protected void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Activate message) {
+	void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Activate message) {
 		request.setAttribute(Responses.FAILURE_REASON, message.toString());
 		try {
 			writeDocument(response, getDefaultTemplateURI(request), getParameterMap(request));

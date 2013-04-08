@@ -29,9 +29,9 @@ import java.util.Set;
 	@Unindex private String location = "";
 	private String description = "";
 
-	private Set<String> searchTokens = new HashSet<>();
+	private final Set<String> searchTokens = new HashSet<>();
 
-	private Date submittedDate = new Date();
+	private final Date submittedDate = new Date();
 
 	/**
 	 * The type of an Item. Defines which list it goes on.
@@ -85,7 +85,7 @@ import java.util.Set;
 	 * @param description A non-null string
 	 */
 	public void setDescription(String description) {
-		this.description = (description != null) ? description.trim() : "";
+		this.description = description;
 		SearchableHelper.updateSearchTokens(this);
 	}
 
@@ -95,7 +95,7 @@ import java.util.Set;
 	 * @param location A non-null string
 	 */
 	public void setLocation(String location) {
-		this.location = (location != null) ? location.trim() : null;
+		this.location = location;
 	}
 
 	/**

@@ -145,7 +145,7 @@ public class DomainValidator implements Serializable {
 	 * @param tld the parameter to check for TLD status
 	 * @return true if the parameter is a TLD
 	 */
-	public boolean isValidTld(String tld) {
+	boolean isValidTld(String tld) {
 		return allowLocal && isValidLocalTld(tld) || isValidInfrastructureTld(tld) || isValidGenericTld(tld) || isValidCountryCodeTld(tld);
 	}
 
@@ -156,7 +156,7 @@ public class DomainValidator implements Serializable {
 	 * @param iTld the parameter to check for infrastructure TLD status
 	 * @return true if the parameter is an infrastructure TLD
 	 */
-	public boolean isValidInfrastructureTld(String iTld) {
+	boolean isValidInfrastructureTld(String iTld) {
 		return INFRASTRUCTURE_TLD_LIST.contains(chompLeadingDot(iTld.toLowerCase()));
 	}
 
@@ -167,7 +167,7 @@ public class DomainValidator implements Serializable {
 	 * @param gTld the parameter to check for generic TLD status
 	 * @return true if the parameter is a generic TLD
 	 */
-	public boolean isValidGenericTld(String gTld) {
+	boolean isValidGenericTld(String gTld) {
 		return GENERIC_TLD_LIST.contains(chompLeadingDot(gTld.toLowerCase()));
 	}
 
@@ -178,7 +178,7 @@ public class DomainValidator implements Serializable {
 	 * @param ccTld the parameter to check for country code TLD status
 	 * @return true if the parameter is a country code TLD
 	 */
-	public boolean isValidCountryCodeTld(String ccTld) {
+	boolean isValidCountryCodeTld(String ccTld) {
 		return COUNTRY_CODE_TLD_LIST.contains(chompLeadingDot(ccTld.toLowerCase()));
 	}
 
@@ -189,7 +189,7 @@ public class DomainValidator implements Serializable {
 	 * @param iTld the parameter to check for local TLD status
 	 * @return true if the parameter is an local TLD
 	 */
-	public boolean isValidLocalTld(String iTld) {
+	boolean isValidLocalTld(String iTld) {
 		return LOCAL_TLD_LIST.contains(chompLeadingDot(iTld.toLowerCase()));
 	}
 

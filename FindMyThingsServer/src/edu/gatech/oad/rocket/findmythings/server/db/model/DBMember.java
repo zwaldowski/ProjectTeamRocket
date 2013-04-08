@@ -48,9 +48,9 @@ public class DBMember implements AppMutableMember {
 	 */
 	private byte[] salt;
 
-	private Set<String> roles;
+	private final Set<String> roles;
 
-	private Set<String> permissions;
+	private final Set<String> permissions;
 
 	@Index private Date dateRegistered;
 
@@ -107,7 +107,7 @@ public class DBMember implements AppMutableMember {
 		return credentials;
 	}
 
-	private static RandomNumberGenerator salter = new SecureRandomNumberGenerator();
+	private static final RandomNumberGenerator salter = new SecureRandomNumberGenerator();
 
 	private static ByteSource salt() {
 		return salter.nextBytes();

@@ -20,12 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.logging.Logger;
 
-public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
+public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 
-	protected static final String AUTHORIZATION_HEADER = "Authorization";
-	protected static final String AUTHORIZATION_PARAM = "fmthings_auth";
-	protected static final String AUTHORIZATION_SCHEME = "FMTTOKEN";
-	protected static final String AUTHORIZATION_SCHEME_ALT = "Basic";
+	private static final String AUTHORIZATION_HEADER = "Authorization";
+	private static final String AUTHORIZATION_PARAM = "fmthings_auth";
+	private static final String AUTHORIZATION_SCHEME = "FMTTOKEN";
+	private static final String AUTHORIZATION_SCHEME_ALT = "Basic";
 
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(BearerTokenAuthenticatingFilter.class.getName());
@@ -48,11 +48,11 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		this.passwordParam = passwordParam;
 	}
 
-	public String getUsernameParam() {
+	String getUsernameParam() {
 		return usernameParam;
 	}
 
-	public String getPasswordParam() {
+	String getPasswordParam() {
 		return passwordParam;
 	}
 
@@ -136,23 +136,23 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		return isLoginRequest(request, response) && hasAuthorizationToken(request) || super.onPreHandle(request, response, mappedValue);
 	}
 
-	protected boolean hasAuthorizationToken(ServletRequest request) {
+	boolean hasAuthorizationToken(ServletRequest request) {
 		String authorizeHeader = getAuthorizationHeader(request);
 		String authorizeParam = getAuthorizationParameter(request);
 		return isHeaderLoginAttempt(authorizeHeader) || isParameterLoginAttempt(authorizeParam);
 	}
 
-	protected String getAuthorizationHeader(ServletRequest request) {
+	String getAuthorizationHeader(ServletRequest request) {
 		HttpServletRequest httpRequest = WebUtils.toHttp(request);
 		return httpRequest.getHeader(AUTHORIZATION_HEADER);
 	}
 
-	protected String getAuthorizationParameter(ServletRequest request) {
+	String getAuthorizationParameter(ServletRequest request) {
 		HttpServletRequest httpRequest = WebUtils.toHttp(request);
 		return WebUtils.getCleanParam(httpRequest, AUTHORIZATION_PARAM);
 	}
 
-	protected boolean isHeaderLoginAttempt(String authorizeHeader) {
+	boolean isHeaderLoginAttempt(String authorizeHeader) {
 		if (authorizeHeader == null) return false;
 		String authorizeScheme = AUTHORIZATION_SCHEME.toLowerCase(Locale.ENGLISH);
 		String authorizeSchemeAlt = AUTHORIZATION_SCHEME_ALT.toLowerCase(Locale.ENGLISH);
@@ -160,11 +160,11 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		return test.startsWith(authorizeScheme) || test.startsWith(authorizeSchemeAlt);
 	}
 
-	protected boolean isParameterLoginAttempt(String authorizeParam) {
+	boolean isParameterLoginAttempt(String authorizeParam) {
 		return (authorizeParam != null) && Base64.isBase64(authorizeParam.getBytes());
 	}
 
-	protected String[] getHeaderPrincipalsAndCredentials(String authorizeHeader, ServletRequest request) {
+	String[] getHeaderPrincipalsAndCredentials(String authorizeHeader, ServletRequest request) {
 		if (authorizeHeader == null) {
 			return null;
 		}
@@ -175,23 +175,23 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		return getPrincipalsAndCredentials(authTokens[0], authTokens[1]);
 	}
 
-	protected String[] getParameterPrincipalsAndCredentials(String authorizeParam, ServletRequest request) {
+	String[] getParameterPrincipalsAndCredentials(String authorizeParam, ServletRequest request) {
 		if (authorizeParam == null) {
 			return null;
 		}
 		return getPrincipalsAndCredentials(AUTHORIZATION_SCHEME, authorizeParam);
 	}
 
-	protected String[] getPrincipalsAndCredentials(String scheme, String encoded) {
+	String[] getPrincipalsAndCredentials(String scheme, String encoded) {
 		String decoded = Base64.decodeToString(encoded);
 		return decoded.split(":", 2);
 	}
 
-	protected String getUsername(ServletRequest request) {
+	String getUsername(ServletRequest request) {
 		return WebUtils.getCleanParam(request, getUsernameParam());
 	}
 
-	protected String getPassword(ServletRequest request) {
+	String getPassword(ServletRequest request) {
 		return WebUtils.getCleanParam(request, getPasswordParam());
 	}
 

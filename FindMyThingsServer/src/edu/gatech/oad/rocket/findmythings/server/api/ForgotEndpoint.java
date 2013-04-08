@@ -21,7 +21,7 @@ public class ForgotEndpoint extends RegisterEndpoint {
 		try {
 			String email = WebUtils.getCleanParam(request, getUsernameParam());
 
-			if (!emailIsValid(email)) {
+			if (emailIsInvalid(email)) {
 				sendError(request, response, Messages.Register.BAD_EMAIL_ADDRESS);
 				return;
 			}

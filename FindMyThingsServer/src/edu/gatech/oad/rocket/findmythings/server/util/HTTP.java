@@ -19,7 +19,7 @@ public final class HTTP {
 		FORBIDDEN(403),
 		INTERNAL_ERROR(500);
 
-		private int code;
+		private final int code;
 
 		private Status(int code) {
 			this.code = code;

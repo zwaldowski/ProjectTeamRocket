@@ -12,7 +12,7 @@ public class DBAuthenticationToken {
 
 	@Id private String identifierString;
 	@Index private String email; // not a Ref<DBMember> to support super-admins
-	@Ignore transient UUID identifier;
+	@Ignore private transient UUID identifier;
 
 	// for Objectify
 	protected DBAuthenticationToken() {}

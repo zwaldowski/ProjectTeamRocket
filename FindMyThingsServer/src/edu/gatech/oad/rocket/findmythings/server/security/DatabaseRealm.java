@@ -61,7 +61,7 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 		throw new UnsupportedOperationException("Implement another method of getting user email.");
 	}
 
-	protected AuthenticationInfo doGetAuthenticationInfo(String email) throws AuthenticationException {
+	AuthenticationInfo doGetAuthenticationInfo(String email) throws AuthenticationException {
 		Preconditions.checkNotNull(email, "Email can't be null");
 		LOG.info("Finding authentication info for " + email + " in DB");
 
