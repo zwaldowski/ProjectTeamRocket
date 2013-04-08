@@ -74,7 +74,7 @@ public class EmailValidator implements Serializable {
 	 * @return singleton instance of this validator.
 	 */
 	public static EmailValidator getInstance() {
-		return EMAIL_VALIDATOR;
+		return getInstance(false);
 	}
 
 	/**
@@ -109,34 +109,13 @@ public class EmailValidator implements Serializable {
 	 * @return true if the email address is valid.
 	 */
 	public boolean isValid(String email) {
-		if (email == null) {
-			return false;
-		}
-
-		Matcher asciiMatcher = MATCH_ASCII_PATTERN.matcher(email);
-		if (!asciiMatcher.matches()) {
-			return false;
-		}
-
-		// Check the whole email address structure
 		Matcher emailMatcher = EMAIL_PATTERN.matcher(email);
-		if (!emailMatcher.matches()) {
-			return false;
-		}
-
-		if (email.endsWith(".")) {
-			return false;
-		}
-
-		if (!isValidUser(emailMatcher.group(1))) {
-			return false;
-		}
-
-		if (!isValidDomain(emailMatcher.group(2))) {
-			return false;
-		}
-
-		return true;
+		return email != null &&
+				MATCH_ASCII_PATTERN.matcher(email).matches() &&
+				emailMatcher.matches() &&
+				!email.endsWith(".") &&
+				isValidUser(emailMatcher.group(1)) &&
+				isValidDomain(emailMatcher.group(2));
 	}
 
 	/**

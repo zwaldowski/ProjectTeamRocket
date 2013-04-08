@@ -30,7 +30,7 @@ public interface AppMutableMember extends AppMember {
 
 	/**
 	 * Escalates the privileges of the user account
-	 * @param locked true if account should become admin, false otherwise
+	 * @param admin true if account should become admin, false otherwise
 	 */
 	public abstract void setIsAdmin(boolean admin);
 

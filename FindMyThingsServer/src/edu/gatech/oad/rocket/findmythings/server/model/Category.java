@@ -4,7 +4,7 @@ public enum Category {
 	HEIR, KEEPSAKE, MISC;
 
 	/**
-	 * A key suitable for putting a Category into a {@link android.os.Bundle}, {@link android.content.Intent}, etc.
+	 * A key suitable for putting a Category into a map.
 	 */
 	public static final String ID = "item_category";
 

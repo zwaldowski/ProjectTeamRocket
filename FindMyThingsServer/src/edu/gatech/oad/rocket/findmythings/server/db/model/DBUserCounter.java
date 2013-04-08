@@ -13,16 +13,15 @@ import java.util.logging.Logger;
  * of DBMember objects we have.
  * <p> The reason for using this is that counting the number of items
  * dynamically is very inefficient, and costly.
- * <p> This counter should be changed relatively rarely (less than once a second)
- * so doesn't need to be sharded.
+ * <p> This counter should be changed relatively rarely (less than once a second).
  */
 @Cache @Unindex @Entity
 public class DBUserCounter {
 	static final Logger LOG = Logger.getLogger(DBUserCounter.class.getName());
 
-	public static final long COUNTER_ID = 1L;
+	public static final Long COUNTER_ID = 1L;
 
-	@Id private long id;
+	@Id Long id;
 
 	private int count;
 
@@ -44,5 +43,9 @@ public class DBUserCounter {
 
 	public Date getLastModified() {
 		return lastModified;
+	}
+
+	protected Long getId() {
+		return id;
 	}
 }

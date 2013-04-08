@@ -56,11 +56,9 @@ public class SearchableHelper {
 	public static Set<String> getSearchTokens(String searchableContext, int maximumNumberOfTokens) {
 
 		String indexCleanedOfHTMLTags = searchableContext.replaceAll("<.*?>"," ");
-		Set<String> returnSet = new HashSet<String>();
+		Set<String> returnSet = new HashSet<>();
 
-		Analyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42);
-
-		try {
+		try (Analyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42)) {
 			TokenStream tokenStream = analyzer.tokenStream("content", new StringReader(indexCleanedOfHTMLTags));
 			CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
 
@@ -70,8 +68,6 @@ public class SearchableHelper {
 			}
 		} catch (IOException e) {
 			log.severe(e.getMessage());
-		} finally {
-			analyzer.close();
 		}
 
 		return returnSet;

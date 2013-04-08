@@ -9,7 +9,7 @@ public enum Type {
 	LOST, FOUND, DONATION, REQUEST;
 
 	/**
-	 * A key suitable for putting a Type into a {@link android.os.Bundle}, {@link android.content.Intent}, etc.
+	 * A key suitable for putting a Type into a map.
 	 */
 	public static final String ID = "item_type";
 
