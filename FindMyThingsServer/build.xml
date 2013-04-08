@@ -1,4 +1,5 @@
-<project>
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FindMyThings" default="compile">
 	<!-- The local.properties file contains the path to the App Engine SDK.
 		 It should *NOT* be checked into git. -->
 	<property file="local.properties" />
@@ -7,6 +8,9 @@
 	<condition property="sdk.dir" value="${env.APPENGINE_HOME}">
 		<isset property="env.APPENGINE_HOME" />
 	</condition>
+
+    <!-- quick check on sdk.dir -->
+    <fail message="sdk.dir is missing. Make sure create generate local.properties or inject it through the APPENGINE_HOME environment variable." unless="sdk.dir" />
 
 	<import file="${sdk.dir}/config/user/ant-macros.xml" />
 
@@ -20,13 +24,13 @@
 		</fileset>
 	</path>
 
-	<target name="copyjars" description="Copies App Engine JARs to WAR.">
+	<target name="copy_jars" description="Copies App Engine JARs to WAR.">
 		<copy todir="war/WEB-INF/lib" flatten="true">
 			<fileset dir="${sdk.dir}/lib/user" includes="**/*.jar" excludes="orm/**" />
 		</copy>
 	</target>
 
-	<target name="compile" depends="copyjars" description="Compiles Java source and copies other libraries to the WAR.">
+	<target name="compile" depends="copy_jars" description="Compiles Java source and copies other libraries to the WAR.">
 		<mkdir dir="war/WEB-INF/classes" />
 		<copy todir="war/WEB-INF/classes">
 			<fileset dir="src">
@@ -35,5 +39,21 @@
 		</copy>
 		<javac srcdir="src" destdir="war/WEB-INF/classes" classpathref="project.classpath" includeantruntime="false" target="1.7" debug="on" />
 	</target>
+
+	<target name="runserver" depends="compile" description="Starts local development server.">
+		<dev_appserver war="war" />
+	</target>
+
+	<target name="upload" depends="compile" description="Uploads the application to App Engine.">
+		<appcfg action="update" war="war" />
+	</target>
+
+	<target name="upload_indexes" depends="compile" description="Uploads ONLY datastore index configuration to App Engine.">
+		<appcfg action="update_indexes" war="war" />
+	</target>
+
+	<target name="upload_rollback" depends="compile" description="Rolls back an interrupted application upload.">
+		<appcfg action="rollback" war="war" />
+ 	</target>
 
 </project>
