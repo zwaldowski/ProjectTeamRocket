@@ -29,7 +29,7 @@ import java.util.Map;
  * @since 0.2
  */
 @SuppressWarnings("rawtypes")
-public class PrincipalTag extends SecureTag {
+class PrincipalTag extends SecureTag {
 	private static final Logger log = Logger.getLogger("PrincipalTag");
 
 	/**

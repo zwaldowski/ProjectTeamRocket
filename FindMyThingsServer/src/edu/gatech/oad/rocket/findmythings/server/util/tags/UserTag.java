@@ -23,7 +23,7 @@ import java.util.Map;
  * <p>Equivalent to {@link org.apache.shiro.web.tags.UserTag}</p>
  */
 @SuppressWarnings("rawtypes")
-public class UserTag extends SecureTag {
+class UserTag extends SecureTag {
 	private static final Logger log = Logger.getLogger("UserTag");
 
 	@Override

@@ -21,7 +21,7 @@ public abstract class TemplateServlet extends PageServlet {
 		super();
 	}
 
-	static int indexOfExtension(String filename) {
+	private static int indexOfExtension(String filename) {
 		if (filename == null) {
 			return -1;
 		}
@@ -31,7 +31,7 @@ public abstract class TemplateServlet extends PageServlet {
 		return (Math.max(lastUnixPos, lastWindowsPos) > extensionPos ? -1 : extensionPos);
 	}
 
-	static String removeExtension(String filename) {
+	private static String removeExtension(String filename) {
 		if (filename == null) {
 			return null;
 		}
@@ -43,7 +43,7 @@ public abstract class TemplateServlet extends PageServlet {
 		}
 	}
 
-	static String replaceExtensionWith(String filename, String extension) {
+	private static String replaceExtensionWith(String filename, String extension) {
 		return removeExtension(filename) + "." + extension;
 	}
 

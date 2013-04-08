@@ -126,7 +126,7 @@ public class PageGenerator {
 	}
 
 	@Singleton
-	public synchronized Configuration getConfig() {
+	synchronized Configuration getConfig() {
 		if (config == null) {
 			config = new Configuration();
 			config.setObjectWrapper(new DefaultObjectWrapper());

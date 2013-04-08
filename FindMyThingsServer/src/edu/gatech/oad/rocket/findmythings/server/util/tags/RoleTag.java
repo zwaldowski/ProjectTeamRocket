@@ -11,7 +11,7 @@ import java.util.Map;
  * <p>Equivalent to {@link org.apache.shiro.web.tags.RoleTag}</p>
  */
 @SuppressWarnings("rawtypes")
-public abstract class RoleTag extends SecureTag {
+abstract class RoleTag extends SecureTag {
 	String getName(Map params) {
 		return getParam(params, "name");
 	}

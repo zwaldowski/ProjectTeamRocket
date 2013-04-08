@@ -6,7 +6,6 @@ import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.PasswordMatcher;
-import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.SimpleRole;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.realm.text.IniRealm;

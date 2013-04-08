@@ -18,7 +18,8 @@ import java.util.Set;
  *
  * User: zw
  */
-@Entity @Index public class DBItem implements Searchable {
+@Entity @Index
+public class DBItem implements Searchable {
 
 	@Id Long iID;
 

@@ -112,7 +112,7 @@ public abstract class PageServlet extends HttpServlet {
 		return memberWithEmail(getCurrentUserEmail());
 	}
 
-	protected String getCurrentUserEmail() {
+	String getCurrentUserEmail() {
 		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
 		if (principals == null || principals.isEmpty()) return null;
 		return (String)principals.getPrimaryPrincipal();

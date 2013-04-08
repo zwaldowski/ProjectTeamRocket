@@ -21,7 +21,7 @@ import java.util.Map;
  * @since 0.9
  */
 @SuppressWarnings("rawtypes")
-public class GuestTag extends SecureTag {
+class GuestTag extends SecureTag {
 	private static final Logger log = Logger.getLogger("AuthenticatedTag");
 
 	@Override
