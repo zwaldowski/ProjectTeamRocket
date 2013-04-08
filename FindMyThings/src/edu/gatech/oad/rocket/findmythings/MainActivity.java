@@ -70,9 +70,14 @@ public class MainActivity extends ListActivity  {
 	private ListView mView;
 	
 	/**
-	 * Reference to the search bar in the ActionBar
+	 * Indirect reference to the search bar in the ActionBar
 	 */
 	private MenuItem search;
+	
+	/**
+	 * Direct reference to the search bar in the ActionBar
+	 */
+	private SearchView mSearch;
 	
 	/**
 	 * creates window with correct layout
@@ -83,8 +88,10 @@ public class MainActivity extends ListActivity  {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
 		
+
+		
 		mView = (ListView)findViewById(android.R.id.list);
-		mView.setTextFilterEnabled(true);
+		mView.setTextFilterEnabled(true); //TODO: gestures
 		//mView.setOnScrollListener(new OnScrollListener { 
 			//public void onScroll
 		//});
@@ -239,8 +246,28 @@ public class MainActivity extends ListActivity  {
 		getMenuInflater().inflate(R.menu.activity_item_list, menu);
 		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
 		
-	    SearchView mSearch = (SearchView) menu.findItem(R.id.main_search_bar).getActionView();
+	    mSearch = (SearchView) menu.findItem(R.id.main_search_bar).getActionView();
 	    mSearch.bringToFront();
+	    //Used for filtering results
+		final SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() { 
+		    @Override 
+		    public boolean onQueryTextChange(String newText) { 
+		    	if(!newText.isEmpty()) {
+			    	adapter.getFilter().filter(newText);
+					adapter.notifyDataSetChanged();
+			    	}
+		    	else adapter.setList(currList);
+		        return true; 
+		    } 
+
+		    @Override 
+		    public boolean onQueryTextSubmit(String query) { 
+		    	
+		        return true; 
+		    } 
+		}; 
+		
+		mSearch.setOnQueryTextListener(queryTextListener);
 		
 	    search = menu.findItem(R.id.main_search_bar);
 		//Set Login Title

@@ -38,6 +38,11 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	 * Reference to the list passed into the adapter
 	 */
 	private List<Item> mList;
+	
+	/**
+	 * Instance of the text filter used to filter search results
+	 */
+	private TextFilter filter;
 
 	/**
 	 * constructor1
@@ -78,6 +83,17 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		else mList = null;
 		
 		notifyDataSetChanged();
+	}
+	
+	/**
+	 * Sets the filter for this ArrayAdapter
+	 */
+	@Override
+	public Filter getFilter() {
+	    if (filter == null)
+	        filter = new TextFilter();
+
+	    return filter;
 	}
 	
 	/**
@@ -130,13 +146,16 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	 return row;
 	}
 	
-	
-	// TODO: Use this? Where? - ZW
-	@SuppressWarnings("unused")
 	/**
-	 * filtering text 
+	 * Class used for filtering items in the ArrayAdapter
+	 * @author Justin
+	 *
 	 */
 	private class TextFilter extends Filter {
+		
+		public TextFilter() {
+			
+		}
 
 		/**
 		 * filtering by sequence of characters
@@ -146,8 +165,11 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
-			if(constraint == null || constraint.length() == 0) {
-	            ArrayList<Item> list = new ArrayList<Item>(mList);
+			if(constraint != null && constraint.length()>0) {
+	            ArrayList<Item> list = new ArrayList<Item>();
+	            for(Item a : mList)
+	            	if(a.getAll().toLowerCase().contains(constraint.toString().toLowerCase()))
+	            		list.add(a);
 	            results.values = list;
 	            results.count = list.size();
 			}
@@ -159,10 +181,13 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		 * @param CharSequence constraint
 		 * @param FilterResults results
 		 */
+		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint,
 				FilterResults results) {
-			// TODO Auto-generated method stub
+			if(results.count>0)
+				mList = (ArrayList<Item>)results.values;
+            notifyDataSetChanged();
 			
 		}
 		

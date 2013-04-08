@@ -151,6 +151,16 @@ public class Item {
 	public String getDescription() {
 		return description;
 	}
+	
+	/**
+	 * Gets all strings and returns them as a single string, useful for search
+	 * @return All string instance data
+	 */
+	public String getAll() {
+		String sum = name + loc +  description;
+		return sum;
+		
+	}
 
 	/**
 	 * Very short description to be displayed on the ItemList
