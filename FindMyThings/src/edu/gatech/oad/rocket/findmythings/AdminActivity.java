@@ -19,7 +19,7 @@ import edu.gatech.oad.rocket.findmythings.model.Member;
 
 /**
  * CS 2340 - FindMyStuff Android App
- * Activity that deals with Admin
+ * Activity that deals with Admin window
  *
  * @author TeamRocket
  * */
@@ -41,6 +41,10 @@ public class AdminActivity extends ListActivity {
 	 */
 	private EditText mSearch;
 
+	/**
+	 * creates new window with correct layout
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,6 +83,13 @@ public class AdminActivity extends ListActivity {
 	    });
 	}
 
+	/**
+	 * deals with action to take once an item is selected form the list
+	 * @param ListView l
+	 * @param View v
+	 * @param int position
+	 * @param long id
+	 */
 	@Override
 	protected void onListItemClick (ListView l, View v, int position, long id) {
 		
@@ -89,6 +100,12 @@ public class AdminActivity extends ListActivity {
 	    startActivity(next);
 	}
 	
+	/**
+	 * deals with action to do once a key is pressed down
+	 * @param int keyCode - key pressed
+	 * @param KeyEvent event - event to do in case of pressed
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -99,6 +116,12 @@ public class AdminActivity extends ListActivity {
 
 	    return super.onKeyDown(keyCode, event);
 	}
+	
+	/**
+	 * deals with action when an options button is selected
+	 * @param MenuItem item
+	 * @return boolean  
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
@@ -111,6 +134,11 @@ public class AdminActivity extends ListActivity {
 	    return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * creates the options menu 
+	 * @param Menu menu
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	// Inflate the menu; this adds items to the action bar if it is present.

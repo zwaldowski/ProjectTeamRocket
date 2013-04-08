@@ -21,6 +21,10 @@ public class AccountEditActivity extends Activity {
 	 */
 	private EditText mName, mEmail, mPhone, mAddy;
 	
+	/**
+	 * creates new window with correct layout
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +49,11 @@ public class AccountEditActivity extends Activity {
 		}	
 	}
 
+	/**
+	 * creates the options menu 
+	 * @param Menu menu
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -52,6 +61,11 @@ public class AccountEditActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * deals with action when an options button is selected
+	 * @param MenuItem item
+	 * @return boolean  
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

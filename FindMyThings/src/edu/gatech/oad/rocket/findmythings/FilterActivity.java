@@ -33,6 +33,10 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	private Controller cnt = Controller.shared();
 	private Type kind = Type.LOST;
 	
+	/**
+	 * creates new window with correct layout
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,7 +64,11 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		
 	}
 	
-	
+	/**
+	 * creates the options menu 
+	 * @param Menu menu
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -68,6 +76,11 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		return true;
 	}
 	
+	/**
+	 * deals with action when an options button is selected
+	 * @param MenuItem item
+	 * @return boolean  
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
@@ -96,7 +109,13 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		return true;
 	}
 	
-
+	/**
+	 * deals with action when an item is selected
+	 * @param AdapterView<?> parent
+	 * @param View view
+	 * @param int pos
+	 * @param long id 
+	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		parent.getItemAtPosition(pos);
@@ -104,24 +123,43 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		
 	}
 
+	/**
+	 * deals with what to do when nothing is selected
+	 * @param AdapterView<?> arg0
+	 */
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * deals with action when a tab is reselected
+	 * @param Tab tab
+	 * @param FragmentTransaction ft
+	 */
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * deals with action to take when a tab is selected
+	 * @param Tab tab
+	 * @param FragmentTransaction ft
+	 */
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * deals with action to take when a tab is not selected
+	 * @param Tab tab
+	 * @param FragmentTransaction ft
+	 */
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub

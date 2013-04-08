@@ -52,6 +52,10 @@ public class RegisterActivity extends Activity {
 	private EditText mNameView;
 	private EditText mConfirmView;
 
+	/**
+	 * creates new window with correct layout
+	 * @param Bundle savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,6 +92,12 @@ public class RegisterActivity extends Activity {
 	    return true;
 	}
 
+	/**
+	 * deals with action to do once a key is pressed down
+	 * @param int keyCode - key pressed
+	 * @param KeyEvent event - event to do in case of pressed
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
@@ -187,6 +197,11 @@ public class RegisterActivity extends Activity {
 
 	}
 
+	/**
+	 * creates the options menu 
+	 * @param Menu menu
+	 * @return boolean true when done
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -194,6 +209,11 @@ public class RegisterActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * deals with action when an options button is selected
+	 * @param MenuItem item
+	 * @return boolean  
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
