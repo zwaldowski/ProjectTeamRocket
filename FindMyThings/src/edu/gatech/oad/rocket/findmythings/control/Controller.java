@@ -286,19 +286,24 @@ public final class Controller {
 	 */
 	public ArrayList<Item> filter(Type kind, int category, int status, int date) {
 		ArrayList<Item> all = null;
-		if (kind == null){
+		
+		//filtering by the type
+		if (kind == null){ //if no type given, get all the items
 			all = getAllItems();}
-		else {
+		else { //get items of the specific Type kind
 			all = getItem(kind); }
 		
+		//if all the criteria is equal to "ALL ITEMS" return all
+		if (category == 0 && status == 0 && date == 0)
+			return all;
+		
+		//new ArrayLists for category, status, date and results
 		ArrayList<Item> cat = new ArrayList<Item>();
 		ArrayList<Item> stat = new ArrayList<Item>();
 		ArrayList<Item> dt = new ArrayList<Item>();
 		ArrayList<Item> results = new ArrayList<Item>();
 		
-		if (category == 0 && status == 0 && date == 0)
-			return all;
-		
+		//getting items by category
 		switch (category) {
 		case 0: //all items
 			cat = all;
@@ -323,6 +328,7 @@ public final class Controller {
 			break;
 		}
 		
+		//getting items by status
 		switch (status) {
 		case 0: //all items
 			stat = all;
@@ -340,6 +346,7 @@ public final class Controller {
 			break;
 		}
 		
+		//getting items by date
 		Calendar today = new GregorianCalendar(); //get current date
 		Calendar date2 = (Calendar)today.clone(); //will be change to yesterday, 14dayago or 30daysago
 		
@@ -370,6 +377,7 @@ public final class Controller {
 			break;
 		}
 		
+		// filter the results by getting items that appear in all the arrayLists
 		for (Item i : all) {
 			if (cat.contains(i) && dt.contains(i) && stat.contains(i))
 				results.add(i);

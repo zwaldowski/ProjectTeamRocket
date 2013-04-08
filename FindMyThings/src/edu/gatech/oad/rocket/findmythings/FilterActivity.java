@@ -78,10 +78,10 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	        	@SuppressWarnings("unused")
 				ArrayList<Item> results = cnt.filter(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());
 	        	// TODO: this
-				/**trying to create new ItemList with results of filter*/
-				//Intent i = new Intent(getActivity(),R.layout.activity_item_list);
-	        return true;
-			//dostuff
+	        	
+	        	//update the mainActivity adapter
+				MainActivity.update(results, kind);
+				return true;
 	        case R.id.filter_cancel:
 	         	return toParent();
 	    }
