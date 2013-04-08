@@ -27,8 +27,8 @@ import java.util.Set;
 @Api(name = "fmthings", version = "v1")
 public class AccountV1 extends BaseEndpoint {
 
-	protected boolean emailIsValid(String email) {
-		return email != null && email.length() > 0 && EmailValidator.getInstance().isValid(email);
+	protected boolean emailIsInvalid(String email) {
+		return email == null || email.length() == 0 || !EmailValidator.getInstance().isValid(email);
 	}
 
 	@Singleton
@@ -54,7 +54,7 @@ public class AccountV1 extends BaseEndpoint {
 			@Named("password_alt") String passwordAlt, @Named("phone") @Nullable String phone,
 			@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
 		try {
-			if (!emailIsValid(email)) {
+			if (emailIsInvalid(email)) {
 				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
 			}
 
@@ -79,9 +79,9 @@ public class AccountV1 extends BaseEndpoint {
 			PhoneNumber phoneNum = new PhoneNumber(phone);
 
 			if (user == null) {
-				Set<String> roles = new HashSet<String>();
+				Set<String> roles = new HashSet<>();
 				roles.add("user");
-				Set<String> permissions = new HashSet<String>();
+				Set<String> permissions = new HashSet<>();
 				permissions.add("browse");
 				permissions.add("submit");
 
@@ -103,15 +103,15 @@ public class AccountV1 extends BaseEndpoint {
 	@ApiMethod(name = "account.forgot", path = "forgot")
 	public MessageBean memberForgotPassword(@Named("username") String email) {
 		try {
-			if (!emailIsValid(email)) {
+			if (emailIsInvalid(email)) {
 				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
 			}
 
-			if (!memberExistsWithEmail(email)) {
+			if (memberExistsWithEmail(email)) {
+				return mailAuthenticationTokenSendOK(email, true);
+			} else {
 				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.NO_SUCH_MEMBER.toString());
 			}
-
-			return mailAuthenticationTokenSendOK(email, true);
 		} catch (Exception e) {
 			return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.INVALID_DATA.toString());
 		}

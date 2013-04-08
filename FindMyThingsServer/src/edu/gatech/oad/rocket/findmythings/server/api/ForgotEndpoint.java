@@ -26,12 +26,11 @@ public class ForgotEndpoint extends RegisterEndpoint {
 				return;
 			}
 
-			if (!memberExistsWithEmail(email)) {
+			if (memberExistsWithEmail(email)) {
+				mailAuthenticationTokenSendOK(request, response, email, true);
+			} else {
 				sendError(request, response, Messages.Register.NO_SUCH_MEMBER);
-				return;
 			}
-
-			mailAuthenticationTokenSendOK(request, response, email, true);
 		} catch (Exception e) {
 			sendError(request, response, Messages.Register.INVALID_DATA);
 		}

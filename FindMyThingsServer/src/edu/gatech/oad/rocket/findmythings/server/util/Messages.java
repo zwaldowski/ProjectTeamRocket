@@ -104,7 +104,7 @@ public final class Messages {
 		CODE_EXPIRED("expiredCode"),
 		NO_SUCH_USER("noSuchUser"),
 		BAD_PASSWORD("badPassword"),
-		PASSWORDS_MATCH("passworddMatch"),
+		PASSWORDS_MATCH("passwordMatch"),
 		INVALID_DATA("invalidData");
 
 		private final String text;

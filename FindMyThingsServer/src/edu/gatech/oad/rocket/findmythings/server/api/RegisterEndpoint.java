@@ -54,7 +54,7 @@ public class RegisterEndpoint extends TemplateServlet {
 		try {
 			String email = WebUtils.getCleanParam(request, getUsernameParam());
 
-			if (!emailIsValid(email)) {
+			if (emailIsInvalid(email)) {
 				sendError(request, response, Messages.Register.BAD_EMAIL_ADDRESS);
 				return;
 			}
@@ -102,8 +102,8 @@ public class RegisterEndpoint extends TemplateServlet {
 		}
 	}
 
-	protected boolean emailIsValid(String email) {
-		return email != null && email.length() > 0 && EmailValidator.getInstance().isValid(email);
+	protected boolean emailIsInvalid(String email) {
+		return email == null || email.length() == 0 || !EmailValidator.getInstance().isValid(email);
 	}
 
 	protected void mailAuthenticationTokenSendOK(HttpServletRequest request, HttpServletResponse response, String email, boolean isForgot) {
