@@ -104,7 +104,6 @@ public class RegisterActivity extends Activity {
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			return backToLogin();
 	    }
-
 	    return super.onKeyDown(keyCode, event);
 	}
 
