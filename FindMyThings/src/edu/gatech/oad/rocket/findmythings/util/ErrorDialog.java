@@ -33,6 +33,7 @@ public class ErrorDialog {
 		buttonpos = pos;
 		buttonneg = neg;
 	}
+	
 	/**
 	 * Returns an AlertDialog with the message given in the constructor
 	 * @param context
@@ -50,6 +51,7 @@ public class ErrorDialog {
 		
 		return noConnection;
 	}
+	
 	/**
 	 * Returns dialog with custom onclicklistener for OK button
 	 * @param context
@@ -64,6 +66,7 @@ public class ErrorDialog {
 		
 		return noConnection;
 	}
+	
 	/**
 	 * returns dialog with custom onclicklistener for ok and cancel buttons
 	 * @param context
@@ -88,7 +91,5 @@ public class ErrorDialog {
 	public String getMessage() {
 		return message;
 	}
-	
-	
 
 }

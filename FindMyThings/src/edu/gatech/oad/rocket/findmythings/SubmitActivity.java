@@ -87,9 +87,7 @@ public class SubmitActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(false);
-
 	}
 
 	/**
@@ -116,7 +114,6 @@ public class SubmitActivity extends Activity {
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 		return false;
 	    }
-
 	    return super.onKeyDown(keyCode, event);
 	}
 

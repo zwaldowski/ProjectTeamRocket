@@ -153,9 +153,7 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	 */
 	private class TextFilter extends Filter {
 		
-		public TextFilter() {
-			
-		}
+		public TextFilter() {}
 
 		/**
 		 * filtering by sequence of characters
@@ -173,8 +171,7 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	            results.values = list;
 	            results.count = list.size();
 			}
-		return results;
-			
+		return results;	
 		}
 
 		/**

@@ -73,7 +73,7 @@ public class AccountActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-        	Intent i = new Intent(getApplicationContext(), AccountActivity.class);
+        	Intent i = new Intent(getApplicationContext(), MainActivity.class);
 			finish();
 			startActivity(i);
 			return true;

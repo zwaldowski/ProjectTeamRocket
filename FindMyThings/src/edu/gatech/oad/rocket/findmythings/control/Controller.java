@@ -52,22 +52,40 @@ public final class Controller {
 		private ArrayList<Item> mItems = new ArrayList<Item>();
 
 		private Map<String, Item> mItemsMap = new HashMap<String, Item>();
-
+		
+		/**
+		 * Adds an item to the List/HashMap
+		 * @param i
+		 */
 		public void addItem(Item i) {
 			mItems.add(i);
 			mItemsMap.put(i.getName(),i);
 		}
 		
+		/**
+		 * Merges two itemlists
+		 * @param c
+		 */
 		public void addAll(ItemsList c) {
 			mItems.addAll(c.mItems);
 			mItemsMap.putAll(c.mItemsMap);
 			
 		}
-
+		
+		/**
+		 * Returns an item with the matching key
+		 * @param key
+		 * @return
+		 */
 		public Item getItem(Integer key) {
 			return mItems.get(key);
 		}
-
+		
+		/**
+		 * Returns an item with the matching key
+		 * @param key
+		 * @return
+		 */
 		private Item getItem(String key) {
 			return mItemsMap.get(key);
 		}
