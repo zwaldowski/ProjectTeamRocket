@@ -1,16 +1,17 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
 
-import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
-import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
-
 public class BearerTokenRevokeFilter extends LogoutFilter {
+	private static final Logger LOGGER = Logger.getLogger(BearerTokenRevokeFilter.class.getName());
 
 	public BearerTokenRevokeFilter() {
 		super();
@@ -19,11 +20,12 @@ public class BearerTokenRevokeFilter extends LogoutFilter {
 	@Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         Subject subject = getSubject(request, response);
-        subject.logout();
-        HTTP.writeAsJSON(response,
-        		Responses.STATUS, HTTP.Status.OK.toInt(),
-        		Responses.MESSAGE, Messages.Status.OK.toString());
-        return false;
+        try {
+            subject.logout();
+        } catch (SessionException ise) {
+        	LOGGER.log(Level.FINER, "Encountered session exception during logout.  This can generally safely be ignored.", ise);
+        }
+        return true;
     }
 
 }

@@ -3,17 +3,23 @@ package edu.gatech.oad.rocket.findmythings.server.db.model;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 import edu.gatech.oad.rocket.findmythings.server.model.Category;
 import edu.gatech.oad.rocket.findmythings.server.model.Type;
+import edu.gatech.oad.rocket.findmythings.server.util.Searchable;
+import edu.gatech.oad.rocket.findmythings.server.util.SearchableHelper;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
+ * Database entity representing a Lost/Found Item.
+ *
  * User: zw
  */
-@Entity
-public class DBItem {
+@Entity @Index @SuppressWarnings("unused")
+public class DBItem implements Searchable {
 
 	@Id Long iID;
 
@@ -21,34 +27,45 @@ public class DBItem {
 	 * Basic string descriptors.
 	 */
 	private String name = "";
-	private String location = "";
+	@Unindex private String location = "";
 	private String description = "";
+
+	private Set<String> searchTokens = new HashSet<>();
+
+	private Date submittedDate = new Date();
 
 	/**
 	 * The type of an Item. Defines which list it goes on.
 	 */
-	@Index private Type type = Type.FOUND;
+	private Type type = Type.FOUND;
 
 	/**
 	 * The category of an Item. Used for filtering.
 	 */
-	private Category category = Category.MISC;
+	@Unindex private Category category = Category.MISC;
 
 	/**
-	 * The used-defined date.
+	 * The user-defined date.
 	 */
-	private Date date = new Date();
+	@Unindex private Date date = new Date();
 
 	/**
 	 * The user-defined reward (used only for Lost Type).
 	 */
-	private int reward;
+	@Unindex private int reward;
+
 
 	protected DBItem() {}
 
 	public DBItem(String name, String description) {
+		this();
 		setName(name);
 		setDescription(description);
+	}
+
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 	// Setters
@@ -60,6 +77,7 @@ public class DBItem {
 	 */
 	public void setName(String name) {
 		this.name = (name != null) ? name.trim() : "";
+		SearchableHelper.updateSearchTokens(this);
 	}
 
 	/**
@@ -69,6 +87,7 @@ public class DBItem {
 	 */
 	public void setDescription(String description) {
 		this.description = (description != null) ? description.trim() : "";
+		SearchableHelper.updateSearchTokens(this);
 	}
 
 	/**
@@ -172,9 +191,16 @@ public class DBItem {
 		return location;
 	}
 
-	@Override
-	public String toString() {
-		return getName();
+	public Date getSubmittedDate() {
+		return submittedDate;
+	}
+
+	public String getSearchableContent() {
+		return getName() + " " + getDescription();
+	}
+
+	public Set<String> getSearchTokens() {
+		return searchTokens;
 	}
 
 }

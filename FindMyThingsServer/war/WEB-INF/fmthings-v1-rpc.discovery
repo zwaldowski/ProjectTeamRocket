@@ -1,0 +1,648 @@
+{
+ "kind": "discovery#rpcDescription",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/st0M1zseeyYebRp9ljdSxNpCKf8\"",
+ "discoveryVersion": "v1",
+ "id": "fmthings:v1",
+ "name": "fmthings",
+ "version": "v1",
+ "description": "This is an API",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rpc",
+ "rootUrl": "https://1.rocket-findmythings.appspot.com/_ah/api/",
+ "rpcUrl": "https://1.rocket-findmythings.appspot.com/_ah/api/rpc",
+ "rpcPath": "/_ah/api/rpc",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "schemas": {
+  "AppMember": {
+   "id": "AppMember",
+   "type": "object",
+   "properties": {
+    "address": {
+     "type": "string"
+    },
+    "admin": {
+     "type": "boolean"
+    },
+    "editable": {
+     "type": "boolean"
+    },
+    "email": {
+     "type": "string"
+    },
+    "locked": {
+     "type": "boolean"
+    },
+    "name": {
+     "type": "string"
+    },
+    "phone": {
+     "$ref": "PhoneNumber"
+    },
+    "registered": {
+     "type": "boolean"
+    },
+    "roles": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "stringPermissions": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "Category": {
+   "id": "Category",
+   "type": "string",
+   "enum": [
+    "HEIR",
+    "KEEPSAKE",
+    "MISC"
+   ],
+   "enumDescriptions": [
+    "",
+    "",
+    ""
+   ]
+  },
+  "CollectionResponse_AppMember": {
+   "id": "CollectionResponse_AppMember",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "AppMember"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "CollectionResponse_DBItem": {
+   "id": "CollectionResponse_DBItem",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "DBItem"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "DBItem": {
+   "id": "DBItem",
+   "type": "object",
+   "properties": {
+    "category": {
+     "$ref": "Category"
+    },
+    "date": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "location": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "reward": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "searchTokens": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "searchableContent": {
+     "type": "string"
+    },
+    "submittedDate": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "type": {
+     "$ref": "Type"
+    }
+   }
+  },
+  "MessageBean": {
+   "id": "MessageBean",
+   "type": "object",
+   "properties": {
+    "failureReason": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "status": {
+     "$ref": "Status"
+    }
+   }
+  },
+  "PhoneNumber": {
+   "id": "PhoneNumber",
+   "type": "object",
+   "properties": {
+    "number": {
+     "type": "string"
+    }
+   }
+  },
+  "Status": {
+   "id": "Status",
+   "type": "string",
+   "enum": [
+    "BAD_REQUEST",
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "NOT_FOUND",
+    "OK",
+    "OK",
+    "UNAUTHORIZED",
+    "UNAUTHORIZED"
+   ],
+   "enumDescriptions": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ]
+  },
+  "Type": {
+   "id": "Type",
+   "type": "string",
+   "enum": [
+    "DONATION",
+    "FOUND",
+    "LOST",
+    "REQUEST"
+   ],
+   "enumDescriptions": [
+    "",
+    "",
+    "",
+    ""
+   ]
+  }
+ },
+ "methods": {
+  "fmthings.account.forgot": {
+   "id": "fmthings.account.forgot",
+   "parameters": {
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username"
+   ],
+   "returns": {
+    "$ref": "MessageBean"
+   }
+  },
+  "fmthings.account.get": {
+   "id": "fmthings.account.get",
+   "allowGet": true,
+   "returns": {
+    "$ref": "AppMember"
+   }
+  },
+  "fmthings.account.login": {
+   "id": "fmthings.account.login",
+   "allowGet": true,
+   "returns": {
+    "$ref": "MessageBean"
+   }
+  },
+  "fmthings.account.logout": {
+   "id": "fmthings.account.logout",
+   "returns": {
+    "$ref": "MessageBean"
+   }
+  },
+  "fmthings.account.patch": {
+   "id": "fmthings.account.patch",
+   "supportsPatch": true,
+   "parameters": {
+    "address": {
+     "type": "string"
+    },
+    "admin": {
+     "type": "boolean"
+    },
+    "editable": {
+     "type": "boolean"
+    },
+    "email": {
+     "type": "string"
+    },
+    "locked": {
+     "type": "boolean"
+    },
+    "name": {
+     "type": "string"
+    },
+    "phone": {
+     "$ref": "PhoneNumber"
+    },
+    "registered": {
+     "type": "boolean"
+    },
+    "roles": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "stringPermissions": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "fmthings.account.update": {
+   "id": "fmthings.account.update",
+   "parameters": {
+    "resource": {
+     "$ref": "AppMember"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ]
+  },
+  "fmthings.fa": {
+   "id": "fmthings.fa",
+   "parameters": {
+    "address": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "password": {
+     "type": "string",
+     "required": true
+    },
+    "password_alt": {
+     "type": "string",
+     "required": true
+    },
+    "phone": {
+     "type": "string"
+    },
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "password",
+    "password_alt",
+    "username"
+   ],
+   "returns": {
+    "$ref": "MessageBean"
+   }
+  },
+  "fmthings.items.delete": {
+   "id": "fmthings.items.delete",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "DBItem"
+   }
+  },
+  "fmthings.items.get": {
+   "id": "fmthings.items.get",
+   "allowGet": true,
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "DBItem"
+   }
+  },
+  "fmthings.items.insert": {
+   "id": "fmthings.items.insert",
+   "parameters": {
+    "resource": {
+     "$ref": "DBItem"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "DBItem"
+   }
+  },
+  "fmthings.items.list": {
+   "id": "fmthings.items.list",
+   "allowGet": true,
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "type": {
+     "type": "string"
+    }
+   },
+   "returns": {
+    "$ref": "CollectionResponse_DBItem"
+   }
+  },
+  "fmthings.items.patch": {
+   "id": "fmthings.items.patch",
+   "supportsPatch": true,
+   "parameters": {
+    "category": {
+     "$ref": "Category"
+    },
+    "date": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    },
+    "location": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "reward": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "searchTokens": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "searchableContent": {
+     "type": "string"
+    },
+    "submittedDate": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "type": {
+     "$ref": "Type"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "DBItem"
+   }
+  },
+  "fmthings.items.search": {
+   "id": "fmthings.items.search",
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "query": {
+     "type": "string",
+     "required": true
+    },
+    "type": {
+     "type": "string"
+    }
+   },
+   "parameterOrder": [
+    "query"
+   ],
+   "returns": {
+    "$ref": "CollectionResponse_DBItem"
+   }
+  },
+  "fmthings.items.update": {
+   "id": "fmthings.items.update",
+   "parameters": {
+    "resource": {
+     "$ref": "DBItem"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "DBItem"
+   }
+  },
+  "fmthings.members.get": {
+   "id": "fmthings.members.get",
+   "allowGet": true,
+   "parameters": {
+    "email": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "email"
+   ],
+   "returns": {
+    "$ref": "AppMember"
+   }
+  },
+  "fmthings.members.list": {
+   "id": "fmthings.members.list",
+   "allowGet": true,
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    }
+   },
+   "returns": {
+    "$ref": "CollectionResponse_AppMember"
+   }
+  },
+  "fmthings.members.patch": {
+   "id": "fmthings.members.patch",
+   "supportsPatch": true,
+   "parameters": {
+    "address": {
+     "type": "string"
+    },
+    "admin": {
+     "type": "boolean"
+    },
+    "editable": {
+     "type": "boolean"
+    },
+    "email": {
+     "type": "string"
+    },
+    "locked": {
+     "type": "boolean"
+    },
+    "name": {
+     "type": "string"
+    },
+    "phone": {
+     "$ref": "PhoneNumber"
+    },
+    "registered": {
+     "type": "boolean"
+    },
+    "roles": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "stringPermissions": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   },
+   "parameterOrder": [
+    "email"
+   ]
+  },
+  "fmthings.members.update": {
+   "id": "fmthings.members.update",
+   "parameters": {
+    "resource": {
+     "$ref": "AppMember"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ]
+  },
+  "fmthings.test.authenticated": {
+   "id": "fmthings.test.authenticated",
+   "allowGet": true,
+   "returns": {
+    "$ref": "MessageBean"
+   }
+  },
+  "fmthings.test.unauthenticated": {
+   "id": "fmthings.test.unauthenticated",
+   "allowGet": true,
+   "returns": {
+    "$ref": "MessageBean"
+   }
+  }
+ }
+}

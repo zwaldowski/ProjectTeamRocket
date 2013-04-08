@@ -178,11 +178,15 @@ public class DBMember implements AppMutableMember {
 	/* (non-Javadoc)
 	 * @see edu.gatech.oad.rocket.findmythings.server.db.model.AppMember#isRegistered()
 	 */
+	@Override
 	public boolean isRegistered() {
         return getDateRegistered() != null;
     }
 
-	/** Mutable accessors **/
+	@Override
+	public boolean isEditable() {
+		return true;
+	}
 
 	/**
 	 * @return the hashedPassword

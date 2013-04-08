@@ -79,6 +79,9 @@ public class MainContextListener extends GuiceServletContextListener {
 			
 			Set<Class<?>> serviceClasses = new HashSet<>();
 			serviceClasses.add(AccountV1.class);
+			serviceClasses.add(ItemV1.class);
+			serviceClasses.add(MemberV1.class);
+			serviceClasses.add(TestV1.class);
 			this.serveGuiceSystemServiceServlet("/_ah/spi/*", serviceClasses);
 			
 			try {
@@ -152,11 +155,20 @@ public class MainContextListener extends GuiceServletContextListener {
             } catch (NoSuchMethodException e) {
                 addError(e);
             }
-
+			
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
 			addFilterChain("/login", FORMAUTHC);
 			addFilterChain("/account", FORMAUTHC);
 			addFilterChain("/logout", LOGOUT);
+
+			addFilterChain("/_ah/api/fmthings/v1/members/get", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
+			addFilterChain("/_ah/api/fmthings/v1/members", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
+			addFilterChain("/_ah/api/fmthings/v1/account/login", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/_ah/api/fmthings/v1/account/logout", NO_SESSION_CREATION, TOKENLOGOUT);
+			addFilterChain("/_ah/api/fmthings/v1/account/update", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/_ah/api/fmthings/v1/account", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/_ah/api/fmthings/v1/test/auth", NO_SESSION_CREATION, TOKENAUTHC);
+			addFilterChain("/_ah/api/fmthings/v1/test", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
 			
 			addFilterChain("/api/login", NO_SESSION_CREATION, TOKENAUTHC);
 			addFilterChain("/api/account", NO_SESSION_CREATION, TOKENAUTHC);

@@ -49,6 +49,11 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 		}
 
 		@Override
+		public boolean isEditable() {
+			return true;
+		}
+
+		@Override
 		public String getEmail() {
 			return (String)this.getPrincipals().getPrimaryPrincipal();
 		}

@@ -14,6 +14,12 @@ public interface AppMember extends Serializable {
 	public abstract boolean isAdmin();
 
 	/**
+	 *
+	 * @return editable
+	 */
+	public abstract boolean isEditable();
+
+	/**
 	 * returns true if account is locked, false otherwise
 	 * @return locked
 	 */
