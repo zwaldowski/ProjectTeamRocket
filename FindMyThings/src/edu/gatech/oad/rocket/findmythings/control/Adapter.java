@@ -185,8 +185,8 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		@Override
 		protected void publishResults(CharSequence constraint,
 				FilterResults results) {
-			if(results.count>0)
-				mList = (ArrayList<Item>)results.values;
+			
+			mList = (ArrayList<Item>)results.values;
             notifyDataSetChanged();
 			
 		}
