@@ -394,23 +394,14 @@
           "registered" : {
             "type" : "boolean"
           },
-          "locked" : {
-            "type" : "boolean"
-          },
-          "editable" : {
-            "type" : "boolean"
-          },
           "email" : {
             "type" : "string"
           },
           "admin" : {
             "type" : "boolean"
           },
-          "stringPermissions" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
+          "phone" : {
+            "$ref" : "PhoneNumber"
           },
           "roles" : {
             "type" : "array",
@@ -418,8 +409,17 @@
               "type" : "string"
             }
           },
-          "phone" : {
-            "$ref" : "PhoneNumber"
+          "stringPermissions" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "locked" : {
+            "type" : "boolean"
+          },
+          "editable" : {
+            "type" : "boolean"
           }
         }
       },
