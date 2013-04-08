@@ -47,6 +47,7 @@ public class AccountEditActivity extends Activity {
 			if(Login.currUser.getPhone()!=null)
 				mPhone.setText(Login.currUser.getPhone());
 		}	
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**
@@ -69,6 +70,11 @@ public class AccountEditActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+        	Intent i = new Intent(getApplicationContext(), MainActivity.class);
+			finish();
+			startActivity(i);
+			return true;
 		case R.id.edit_ok:
 			Login.currUser.setName(mName.getText().toString());
 			Login.currUser.setAddress(mAddy.getText().toString());

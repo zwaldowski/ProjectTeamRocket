@@ -145,6 +145,9 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Handles menu actions
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
