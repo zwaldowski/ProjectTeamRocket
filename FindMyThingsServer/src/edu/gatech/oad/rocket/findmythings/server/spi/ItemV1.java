@@ -43,8 +43,8 @@ public class ItemV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "items.list", path = "items")
 	public CollectionResponse<DBItem> listItems(@Nullable @Named("type") String type,
-												@Nullable @Named("cursor") String cursorString,
-												@Nullable @Named("limit") Integer limit) {
+			@Nullable @Named("cursor") String cursorString,
+			@Nullable @Named("limit") Integer limit) {
 		Query<DBItem> baseQuery = DatabaseService.ofy().load().type(DBItem.class).order("-dateSubmitted");
 		return getItemList(baseQuery, type, cursorString, limit);
 	}
@@ -75,9 +75,9 @@ public class ItemV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "items.search", path = "search")
 	public CollectionResponse<DBItem> searchItems(@Named("query") String query,
-												  @Nullable @Named("type") String type,
-												  @Nullable @Named("cursor") String cursorString,
-												  @Nullable @Named("limit") Integer limit) {
+			@Nullable @Named("type") String type,
+			@Nullable @Named("cursor") String cursorString,
+			@Nullable @Named("limit") Integer limit) {
 		Query<DBItem> baseQuery = SearchableHelper.search(DatabaseService.ofy(), DBItem.class, query);
 		return getItemList(baseQuery, type, cursorString, limit);
 	}

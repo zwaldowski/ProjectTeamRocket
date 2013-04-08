@@ -68,7 +68,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 		} else {
 			String authzHeader = getAuthorizationHeader(request);
 			String authzParam = getAuthorizationParameter(request);
-			String[] prinCred = null;
+			String[] prinCred;
 			
 			if (isHeaderLoginAttempt(authzHeader)) {
 				prinCred = this.getHeaderPrincipalsAndCredentials(authzHeader, request);
@@ -136,10 +136,7 @@ public class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 	
 	@Override
 	public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
-		if (isLoginRequest(request, response) && hasAuthorizationToken(request, response)) {
-			return true;
-		}
-		return super.onPreHandle(request, response, mappedValue);
+		return isLoginRequest(request, response) && hasAuthorizationToken(request, response) || super.onPreHandle(request, response, mappedValue);
 	}
 
 	protected boolean hasAuthorizationToken(ServletRequest request, ServletResponse response) {

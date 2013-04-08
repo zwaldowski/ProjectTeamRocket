@@ -51,8 +51,8 @@ public class AccountV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "fa", path = "register")
 	public MessageBean createMember(@Named("username") String email, @Named("password") String password,
-									@Named("password_alt") String passwordAlt, @Named("phone") @Nullable String phone,
-									@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
+			@Named("password_alt") String passwordAlt, @Named("phone") @Nullable String phone,
+			@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
 		try {
 			if (!emailIsValid(email)) {
 				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BADEMAILADDR.toString());

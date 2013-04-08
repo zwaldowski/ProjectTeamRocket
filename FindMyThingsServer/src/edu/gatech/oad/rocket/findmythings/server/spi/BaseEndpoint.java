@@ -8,17 +8,17 @@ import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 
 public abstract class BaseEndpoint {
-	
+
 	protected AppMember getMemberWithEmail(String email) {
 		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
-	    for (Realm realm : manager.getRealms()) {
+		for (Realm realm : manager.getRealms()) {
 			if (realm instanceof ProfileRealm) {
 				AppMember potential = ((ProfileRealm) realm).getAccount(email);
 				if (potential != null && potential.getEmail().equals(email)) return potential;
 			}
 		}
-	    return null;
-	 }
+		return null;
+	}
 
 	protected boolean memberExistsWithEmail(String email) {
 		if (email == null || email.length() == 0) return false;

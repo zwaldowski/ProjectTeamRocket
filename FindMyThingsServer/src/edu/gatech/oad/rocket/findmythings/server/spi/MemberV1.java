@@ -27,7 +27,7 @@ public class MemberV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "members.list", path = "members")
 	public CollectionResponse<AppMember> listMembers(@Nullable @Named("cursor") String cursorString,
-													 @Nullable @Named("limit") Integer limit) {
+			@Nullable @Named("limit") Integer limit) {
 		List<AppMember> list = new ArrayList<>();
 		Cursor cursor; int bakedInOffset;
 		if (cursorString != null && cursorString.startsWith("FMTBAKEDIN")) {

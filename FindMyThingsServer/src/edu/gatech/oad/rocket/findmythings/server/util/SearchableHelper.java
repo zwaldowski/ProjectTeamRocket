@@ -55,7 +55,7 @@ public class SearchableHelper {
 	 */
 	public static Set<String> getSearchTokens(String searchableContext, int maximumNumberOfTokens) {
 
-		String indexCleanedOfHTMLTags = searchableContext.replaceAll("\\<.*?>"," ");
+		String indexCleanedOfHTMLTags = searchableContext.replaceAll("<.*?>"," ");
 		Set<String> returnSet = new HashSet<String>();
 		
 		Analyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42);

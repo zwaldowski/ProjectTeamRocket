@@ -44,7 +44,7 @@ import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
 
 public class MainContextListener extends GuiceServletContextListener {
-	
+
 	private static final boolean ENABLE_TEST_MODE = false;
 	private static final boolean ENABLE_OLD_API = false;
 
@@ -52,7 +52,7 @@ public class MainContextListener extends GuiceServletContextListener {
 	public static final Key<BearerTokenAuthenticatingFilter> TOKENAUTHC = Key.get(BearerTokenAuthenticatingFilter.class);
 	public static final Key<BearerTokenRevokeFilter> TOKENLOGOUT = Key.get(BearerTokenRevokeFilter.class);
 
-    private ServletContext servletContext = null;
+	private ServletContext servletContext = null;
 
 	public MainContextListener() {}
 
@@ -68,25 +68,25 @@ public class MainContextListener extends GuiceServletContextListener {
 	}
 
 	private class MainServletModule extends GuiceSystemServiceServletModule {
-		
-	    private <T> void bindNamed(String key, Class<T> clazz, T value) {
-	        bind(clazz).annotatedWith(Names.named(key)).toInstance(value);
-	    }
-		
+
+		private <T> void bindNamed(String key, Class<T> clazz, T value) {
+			bind(clazz).annotatedWith(Names.named(key)).toInstance(value);
+		}
+
 		private ConstantBindingBuilder bindConstant(String key) {
 			return bindConstant().annotatedWith(Names.named(key));
 		}
 
 		@Override protected void configureServlets() {
 			filter("/*").through(ObjectifyFilter.class);
-			
+
 			Set<Class<?>> serviceClasses = new HashSet<>();
 			serviceClasses.add(AccountV1.class);
 			serviceClasses.add(ItemV1.class);
 			serviceClasses.add(MemberV1.class);
 			serviceClasses.add(TestV1.class);
 			this.serveGuiceSystemServiceServlet("/_ah/spi/*", serviceClasses);
-			
+
 			try {
 				bindNamed(PageGenerator.TEMPLATES, URL.class, getServletContext().getResource("/WEB-INF/templates/"));
 				bindNamed(PageGenerator.LOCALE, Locale.class, Locale.getDefault());
@@ -94,10 +94,10 @@ public class MainContextListener extends GuiceServletContextListener {
 			} catch (MalformedURLException e) {
 				throw new RuntimeException(e);
 			}
-	        
+
 			serve("/sendMail").with(MailboxServlet.class);
 			serve("/_ah/mail/*").with(MailmanServlet.class);
-			
+
 			serve("/login").with(SimpleTemplateServlet.class);
 			serve("/register").with(RegisterServlet.class);
 			serve("/forgot").with(ForgotServlet.class);
@@ -120,11 +120,11 @@ public class MainContextListener extends GuiceServletContextListener {
 
 			// set the login redirect URLs
 			bindConstant(Envelope.SENDER).to(Config.APP_EMAIL);
-									
+
 			bindConstant(Config.Keys.LOGIN_URL).to(Config.LOGIN_URL);
 			bindConstant(Config.Keys.LOGIN_SUCCESS_URL).to(Config.SUCCESS_URL);
 			bindConstant(Config.Keys.LOGIN_API_URL).to(Config.LOGIN_API_URL);
-			
+
 			bindConstant(Config.Keys.USERNAME).to(Config.USERNAME_PARAM);
 			bindConstant(Config.Keys.PASSWORD).to(Config.PASSWORD_PARAM);
 			bindConstant(Config.Keys.REMEMBER_ME).to(Config.REMEMBER_ME_PARAM);
@@ -151,17 +151,17 @@ public class MainContextListener extends GuiceServletContextListener {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void configureShiroWeb() {
-            bind(SessionDAO.class).to(EnterpriseCacheSessionDAO.class);
-            bind(CacheManager.class).to(MemcacheManager.class);
+			bind(SessionDAO.class).to(EnterpriseCacheSessionDAO.class);
+			bind(CacheManager.class).to(MemcacheManager.class);
 
 			try {
 				bindRealm().to(BearerTokenAuthenticatingRealm.class);
 				bindRealm().to(DatabaseRealm.class);
 				bindRealm().toConstructor(ProfileIniRealm.class.getConstructor(Ini.class));
-            } catch (NoSuchMethodException e) {
-                addError(e);
-            }
-			
+			} catch (NoSuchMethodException e) {
+				addError(e);
+			}
+
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
 			addFilterChain("/login", FORMAUTHC);
 			addFilterChain("/logout", LOGOUT);
@@ -174,12 +174,12 @@ public class MainContextListener extends GuiceServletContextListener {
 			addFilterChain("/_ah/api/fmthings/v1/account", NO_SESSION_CREATION, TOKENAUTHC);
 			addFilterChain("/_ah/api/fmthings/v1/test/auth", NO_SESSION_CREATION, TOKENAUTHC);
 			addFilterChain("/_ah/api/fmthings/v1/test", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
-			
+
 
 			if (ENABLE_TEST_MODE) {
 				addFilterChain("/account", FORMAUTHC);
 			}
-			
+
 			if (ENABLE_OLD_API) {
 				addFilterChain("/api/login", NO_SESSION_CREATION, TOKENAUTHC);
 				addFilterChain("/api/account", NO_SESSION_CREATION, TOKENAUTHC);
@@ -187,17 +187,17 @@ public class MainContextListener extends GuiceServletContextListener {
 				addFilterChain("/api/register", NO_SESSION_CREATION, ANON);
 				addFilterChain("/api/forgot", NO_SESSION_CREATION, ANON);
 				addFilterChain("/api/logout", NO_SESSION_CREATION, TOKENLOGOUT);
-				
+
 				addFilterChain("/admin/**", FORMAUTHC, config(ROLES, "admin"));
 				addFilterChain("/api/user/**", NO_SESSION_CREATION, TOKENAUTHC);
 				addFilterChain("/api/admin/**", NO_SESSION_CREATION, TOKENAUTHC, config(ROLES, "admin"));
 				addFilterChain("/api/**", NO_SESSION_CREATION, config(TOKENAUTHC, "permissive"));
 			}
-			
+
 			addFilterChain("/**", ANON);
 
 			// bind all password matching to the secure password hash
-		    bind(CredentialsMatcher.class).to(PasswordMatcher.class);
+			bind(CredentialsMatcher.class).to(PasswordMatcher.class);
 		}
 
 		@Provides @Singleton
