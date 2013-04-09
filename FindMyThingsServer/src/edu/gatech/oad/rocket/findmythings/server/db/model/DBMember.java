@@ -7,12 +7,16 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMutableMember;
+import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
 import edu.gatech.oad.rocket.findmythings.server.util.HashHelper;
 
 import java.util.*;
 import java.util.logging.Logger;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
+import org.apache.shiro.realm.Realm;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -79,8 +83,19 @@ public class DBMember implements AppMutableMember {
 		this.email = email;
 		
 		setPassword(password);
-		this.roles = new HashSet<>(roles);
-		this.permissions = new HashSet<>(permissions);
+		
+		if (roles == null) {
+			this.roles = new HashSet<>();
+		} else {
+			this.roles = new HashSet<>(roles);
+		}
+		
+		if (permissions == null) {
+			this.permissions = new HashSet<>();
+		} else {
+			this.permissions = new HashSet<>(permissions);
+		}
+		
 		this.dateRegistered = isRegistered ? new Date() : null;
 	}
 
@@ -230,17 +245,24 @@ public class DBMember implements AppMutableMember {
 
 	@Override
 	public void setIsAdmin(boolean admin) {
+		permissions.clear();
+		roles.clear();
 		if (admin) {
 			roles.add("admin");
+			permissions.add("*");
 		} else {
-			roles.remove("admin");
 			roles.add("user");
+			permissions.add("submit");
+			permissions.add("browse");
 		}
-	}
-
-	@Override
-	public void save() {
-		DatabaseService.ofy().save().entity(this);
+		
+		RealmSecurityManager manager = (RealmSecurityManager)SecurityUtils.getSecurityManager();
+		for (Realm realm : manager.getRealms()) {
+			// really really bad design
+			if (realm instanceof DatabaseRealm) {
+				((DatabaseRealm) realm).clearCachedAuthorizationInfo(getEmail());
+			}
+		}
 	}
 
 	@Override

@@ -33,14 +33,20 @@ public class ItemV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "items.insert", path = "items/insert")
 	public DBItem insertItem(DBItem item) {
-		Key<DBItem> result = DatabaseService.ofy().save().entity(item).now();
-		return DatabaseService.ofy().load().key(result).get();
+		if (currentUserCanSubmit()) {
+			Key<DBItem> result = DatabaseService.ofy().save().entity(item).now();
+			return DatabaseService.ofy().load().key(result).get();
+		}
+		return null;
 	}
 
 	@ApiMethod(name = "items.update", path = "items/update")
 	public DBItem updateItem(DBItem item) {
-		Key<DBItem> result = DatabaseService.ofy().save().entity(item).now();
-		return DatabaseService.ofy().load().key(result).get();
+		if (currentUserIsAdmin() || item.getSubmittingUser().equals(getCurrentMemberEmail())) {
+			Key<DBItem> result = DatabaseService.ofy().save().entity(item).now();
+			return DatabaseService.ofy().load().key(result).get();
+		}
+		return item;
 	}
 
 	@ApiMethod(name = "items.delete", path = "items/delete")

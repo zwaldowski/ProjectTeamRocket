@@ -24,6 +24,86 @@
     "maxAge" : 0
   },
   "methods" : {
+    "fmthings.account.register" : {
+      "path" : "register",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.createUser",
+      "request" : {
+        "parameters" : {
+          "username" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password_alt" : {
+            "type" : "string",
+            "required" : true
+          },
+          "phone" : {
+            "type" : "string",
+            "required" : false
+          },
+          "name" : {
+            "type" : "string",
+            "required" : false
+          },
+          "address" : {
+            "type" : "string",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "fmthings.account.createAdmin" : {
+      "path" : "register/admin",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.createAdmin",
+      "request" : {
+        "parameters" : {
+          "username" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password_alt" : {
+            "type" : "string",
+            "required" : true
+          },
+          "phone" : {
+            "type" : "string",
+            "required" : false
+          },
+          "name" : {
+            "type" : "string",
+            "required" : false
+          },
+          "address" : {
+            "type" : "string",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "fmthings.account.login" : {
       "path" : "account/login",
       "httpMethod" : "GET",
@@ -78,46 +158,6 @@
           "username" : {
             "type" : "string",
             "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "fmthings.fa" : {
-      "path" : "register",
-      "httpMethod" : "POST",
-      "scopes" : [ ],
-      "audiences" : [ ],
-      "clientIds" : [ ],
-      "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.createMember",
-      "request" : {
-        "parameters" : {
-          "username" : {
-            "type" : "string",
-            "required" : true
-          },
-          "password" : {
-            "type" : "string",
-            "required" : true
-          },
-          "password_alt" : {
-            "type" : "string",
-            "required" : true
-          },
-          "phone" : {
-            "type" : "string",
-            "required" : false
-          },
-          "name" : {
-            "type" : "string",
-            "required" : false
-          },
-          "address" : {
-            "type" : "string",
-            "required" : false
           }
         },
         "body" : "empty"
@@ -473,9 +513,6 @@
         "id" : "AppMember",
         "type" : "object",
         "properties" : {
-          "locked" : {
-            "type" : "boolean"
-          },
           "address" : {
             "type" : "string"
           },
@@ -485,23 +522,26 @@
           "registered" : {
             "type" : "boolean"
           },
+          "locked" : {
+            "type" : "boolean"
+          },
           "email" : {
             "type" : "string"
-          },
-          "editable" : {
-            "type" : "boolean"
           },
           "admin" : {
             "type" : "boolean"
           },
-          "phone" : {
-            "$ref" : "PhoneNumber"
+          "editable" : {
+            "type" : "boolean"
           },
           "roles" : {
             "type" : "array",
             "items" : {
               "type" : "string"
             }
+          },
+          "phone" : {
+            "$ref" : "PhoneNumber"
           },
           "stringPermissions" : {
             "type" : "array",
@@ -637,16 +677,19 @@
           "phone" : {
             "$ref" : "PhoneNumber"
           },
-          "locked" : {
-            "type" : "boolean"
-          },
           "registered" : {
             "type" : "boolean"
           },
-          "editable" : {
+          "locked" : {
+            "type" : "boolean"
+          },
+          "isAdmin" : {
             "type" : "boolean"
           },
           "admin" : {
+            "type" : "boolean"
+          },
+          "editable" : {
             "type" : "boolean"
           },
           "stringPermissions" : {
@@ -657,9 +700,6 @@
           },
           "password" : {
             "type" : "string"
-          },
-          "isAdmin" : {
-            "type" : "boolean"
           }
         }
       },
@@ -680,6 +720,16 @@
       }
     },
     "methods" : {
+      "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.createUser" : {
+        "response" : {
+          "$ref" : "MessageBean"
+        }
+      },
+      "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.createAdmin" : {
+        "response" : {
+          "$ref" : "MessageBean"
+        }
+      },
       "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.getLoginToken" : {
         "response" : {
           "$ref" : "MessageBean"
@@ -696,11 +746,6 @@
         }
       },
       "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.memberForgotPassword" : {
-        "response" : {
-          "$ref" : "MessageBean"
-        }
-      },
-      "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.createMember" : {
         "response" : {
           "$ref" : "MessageBean"
         }

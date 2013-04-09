@@ -34,9 +34,4 @@ public interface AppMutableMember extends AppMember {
 	 */
 	public abstract void setIsAdmin(boolean admin);
 
-	/**
-	 * Commits the receiving user to the data store, if applicable
-	 */
-	public abstract void save();
-
 }

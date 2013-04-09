@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server.service;
+package edu.gatech.oad.rocket.findmythings.server.web;
 
 import com.google.inject.Singleton;
 

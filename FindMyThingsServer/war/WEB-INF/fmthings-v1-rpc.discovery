@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/LqReH_dsYImxddjT6cdmJ5ywNUI\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/uBerfHofw6wW7Ao-mYbixv4csXo\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -339,6 +339,40 @@
   }
  },
  "methods": {
+  "fmthings.account.createAdmin": {
+   "id": "fmthings.account.createAdmin",
+   "parameters": {
+    "address": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "password": {
+     "type": "string",
+     "required": true
+    },
+    "password_alt": {
+     "type": "string",
+     "required": true
+    },
+    "phone": {
+     "type": "string"
+    },
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "password",
+    "password_alt",
+    "username"
+   ],
+   "returns": {
+    "$ref": "MessageBean"
+   }
+  },
   "fmthings.account.forgot": {
    "id": "fmthings.account.forgot",
    "parameters": {
@@ -416,19 +450,8 @@
     }
    }
   },
-  "fmthings.account.update": {
-   "id": "fmthings.account.update",
-   "parameters": {
-    "resource": {
-     "$ref": "AppMember"
-    }
-   },
-   "parameterOrder": [
-    "resource"
-   ]
-  },
-  "fmthings.fa": {
-   "id": "fmthings.fa",
+  "fmthings.account.register": {
+   "id": "fmthings.account.register",
    "parameters": {
     "address": {
      "type": "string"
@@ -460,6 +483,17 @@
    "returns": {
     "$ref": "MessageBean"
    }
+  },
+  "fmthings.account.update": {
+   "id": "fmthings.account.update",
+   "parameters": {
+    "resource": {
+     "$ref": "AppMember"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ]
   },
   "fmthings.items.delete": {
    "id": "fmthings.items.delete",

@@ -10,12 +10,11 @@ import com.googlecode.objectify.ObjectifyFilter;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService.DatabaseFactory;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 import edu.gatech.oad.rocket.findmythings.server.security.*;
-import edu.gatech.oad.rocket.findmythings.server.service.MailboxServlet;
-import edu.gatech.oad.rocket.findmythings.server.service.MailmanServlet;
 import edu.gatech.oad.rocket.findmythings.server.spi.*;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Envelope;
 import edu.gatech.oad.rocket.findmythings.server.web.*;
+
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -85,7 +84,8 @@ public class MainContextListener extends GuiceServletContextListener {
 			}
 
 			serve("/sendMail").with(MailboxServlet.class);
-			serve("/_ah/mail/*").with(MailmanServlet.class);
+			serve("/sendWelcomeMail").with(MailboxServlet.class);
+			serve("/_ah/mail/*").with(RegisterMailmanServlet.class);
 
 			serve("/login").with(SimpleTemplateServlet.class);
 			serve("/register").with(RegisterServlet.class);
@@ -145,14 +145,36 @@ public class MainContextListener extends GuiceServletContextListener {
 			}
 
 			// Always remember to define your filter chains based on a FIRST MATCH WINS policy!
+			addFilterChain("/_ah/api/fmthings/v1/items/get", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
+			addFilterChain("/_ah/api/fmthings/v1/items/insert", NO_SESSION_CREATION, TOKEN_AUTH, config(PERMS, "submit"));
+			addFilterChain("/_ah/api/fmthings/v1/items/update", NO_SESSION_CREATION, TOKEN_AUTH);
+			addFilterChain("/_ah/api/fmthings/v1/items/delete", NO_SESSION_CREATION, TOKEN_AUTH);
+			addFilterChain("/_ah/api/fmthings/v1/items/search", NO_SESSION_CREATION, TOKEN_AUTH, config(TOKEN_AUTH, "permissive"));
+			addFilterChain("/_ah/api/fmthings/v1/items/mine", NO_SESSION_CREATION, TOKEN_AUTH);
+			addFilterChain("/_ah/api/fmthings/v1/items/forMember", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+			addFilterChain("/_ah/api/fmthings/v1/items", NO_SESSION_CREATION, TOKEN_AUTH, config(TOKEN_AUTH, "permissive"));
+			
 			addFilterChain("/_ah/api/fmthings/v1/members/get", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
+			addFilterChain("/_ah/api/fmthings/v1/members/update", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+			addFilterChain("/_ah/api/fmthings/v1/members/search", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
 			addFilterChain("/_ah/api/fmthings/v1/members", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+			
+			addFilterChain("/_ah/api/fmthings/v1/register/admin", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+			addFilterChain("/_ah/api/fmthings/v1/register", NO_SESSION_CREATION, ANON);
+			addFilterChain("/_ah/api/fmthings/v1/forgot", NO_SESSION_CREATION, ANON);
+
+			addFilterChain("/_ah/api/fmthings/v1/test/auth", NO_SESSION_CREATION, TOKEN_AUTH);
+			addFilterChain("/_ah/api/fmthings/v1/test", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
+			
+			addFilterChain("/_ah/api/fmthings/v1/members", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+			addFilterChain("/_ah/api/fmthings/v1/members", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+			addFilterChain("/_ah/api/fmthings/v1/members", NO_SESSION_CREATION, TOKEN_AUTH, config(ROLES, "admin"));
+
+			
 			addFilterChain("/_ah/api/fmthings/v1/account/login", NO_SESSION_CREATION, TOKEN_AUTH);
 			addFilterChain("/_ah/api/fmthings/v1/account/logout", NO_SESSION_CREATION, TOKEN_LOGOUT);
 			addFilterChain("/_ah/api/fmthings/v1/account/update", NO_SESSION_CREATION, TOKEN_AUTH);
 			addFilterChain("/_ah/api/fmthings/v1/account", NO_SESSION_CREATION, TOKEN_AUTH);
-			addFilterChain("/_ah/api/fmthings/v1/test/auth", NO_SESSION_CREATION, TOKEN_AUTH);
-			addFilterChain("/_ah/api/fmthings/v1/test", NO_SESSION_CREATION, config(TOKEN_AUTH, "permissive"));
 
 			addFilterChain("/login", FORM_AUTH);
 			addFilterChain("/logout", LOGOUT);

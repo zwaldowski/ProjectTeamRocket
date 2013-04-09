@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/LqReH_dsYImxddjT6cdmJ5ywNUI\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/uBerfHofw6wW7Ao-mYbixv4csXo\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -340,53 +340,51 @@
    ]
   }
  },
- "methods": {
-  "fa": {
-   "id": "fmthings.fa",
-   "path": "register",
-   "httpMethod": "POST",
-   "parameters": {
-    "address": {
-     "type": "string",
-     "location": "query"
-    },
-    "name": {
-     "type": "string",
-     "location": "query"
-    },
-    "password": {
-     "type": "string",
-     "required": true,
-     "location": "query"
-    },
-    "password_alt": {
-     "type": "string",
-     "required": true,
-     "location": "query"
-    },
-    "phone": {
-     "type": "string",
-     "location": "query"
-    },
-    "username": {
-     "type": "string",
-     "required": true,
-     "location": "query"
-    }
-   },
-   "parameterOrder": [
-    "password",
-    "password_alt",
-    "username"
-   ],
-   "response": {
-    "$ref": "MessageBean"
-   }
-  }
- },
  "resources": {
   "account": {
    "methods": {
+    "createAdmin": {
+     "id": "fmthings.account.createAdmin",
+     "path": "register/admin",
+     "httpMethod": "POST",
+     "parameters": {
+      "address": {
+       "type": "string",
+       "location": "query"
+      },
+      "name": {
+       "type": "string",
+       "location": "query"
+      },
+      "password": {
+       "type": "string",
+       "required": true,
+       "location": "query"
+      },
+      "password_alt": {
+       "type": "string",
+       "required": true,
+       "location": "query"
+      },
+      "phone": {
+       "type": "string",
+       "location": "query"
+      },
+      "username": {
+       "type": "string",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "password",
+      "password_alt",
+      "username"
+     ],
+     "response": {
+      "$ref": "MessageBean"
+     }
+    },
     "forgot": {
      "id": "fmthings.account.forgot",
      "path": "forgot",
@@ -435,6 +433,48 @@
      "httpMethod": "PATCH",
      "request": {
       "$ref": "AppMember"
+     }
+    },
+    "register": {
+     "id": "fmthings.account.register",
+     "path": "register",
+     "httpMethod": "POST",
+     "parameters": {
+      "address": {
+       "type": "string",
+       "location": "query"
+      },
+      "name": {
+       "type": "string",
+       "location": "query"
+      },
+      "password": {
+       "type": "string",
+       "required": true,
+       "location": "query"
+      },
+      "password_alt": {
+       "type": "string",
+       "required": true,
+       "location": "query"
+      },
+      "phone": {
+       "type": "string",
+       "location": "query"
+      },
+      "username": {
+       "type": "string",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "password",
+      "password_alt",
+      "username"
+     ],
+     "response": {
+      "$ref": "MessageBean"
      }
     },
     "update": {

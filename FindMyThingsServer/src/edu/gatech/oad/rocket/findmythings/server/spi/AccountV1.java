@@ -19,7 +19,6 @@ import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
-import java.util.HashSet;
 
 @Api(name = "fmthings", version = "v1")
 public class AccountV1 extends BaseEndpoint {
@@ -31,6 +30,12 @@ public class AccountV1 extends BaseEndpoint {
 	@Singleton
 	private static RegexValidator getPhoneNumberValidator() {
 		return new RegexValidator("[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}", false);
+	}
+
+	MessageBean mailWelcomeReturnOK(String email) {
+		Queue queue = QueueFactory.getDefaultQueue();
+		queue.add(TaskOptions.Builder.withUrl("/sendWelcomeMail"));
+		return new MessageBean(HTTP.Status.OK, Messages.Status.OK.toString());
 	}
 
 	MessageBean mailAuthenticationTokenSendOK(String email, boolean isForgot) {
@@ -45,11 +50,9 @@ public class AccountV1 extends BaseEndpoint {
 
 		return new MessageBean(HTTP.Status.OK, Messages.Status.OK.toString());
 	}
-
-	@ApiMethod(name = "fa", path = "register")
-	public MessageBean createMember(@Named("username") String email, @Named("password") String password,
-			@Named("password_alt") String passwordAlt, @Named("phone") @Nullable String phone,
-			@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
+	
+	private MessageBean createMember(String email, String password, String passwordAlt, 
+			String phone, String name, String address, boolean isAdmin) {
 		try {
 			if (emailIsInvalid(email)) {
 				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
@@ -74,27 +77,42 @@ public class AccountV1 extends BaseEndpoint {
 			}
 
 			PhoneNumber phoneNum = new PhoneNumber(phone);
+			
+			DBMember newUser = (DBMember)user;
 
-			if (user == null) {
-				HashSet<String> roles = new HashSet<>();
-				roles.add("user");
-				HashSet<String> permissions = new HashSet<>();
-				permissions.add("browse");
-				permissions.add("submit");
-
-				DBMember newUser = new DBMember(email, password, roles, permissions, true);
+			if (newUser == null) {
+				newUser = new DBMember(email, password, null, null, true);
 				newUser.setPhone(phoneNum);
 				newUser.setName(name);
 				newUser.setAddress(address);
-				DatabaseService.ofy().save().entity(newUser);
 			} else {
-				DatabaseService.ofy().updateMember((DBMember)user, password, name, phoneNum, address);
+				if (phoneNum != null) newUser.setPhone(phoneNum);
+				if (name != null) newUser.setName(name);
+				if (address != null) newUser.setAddress(address);
 			}
+			
+			newUser.setIsAdmin(isAdmin);
+			
+			DatabaseService.ofy().save().entity(newUser);
 
-			return mailAuthenticationTokenSendOK(email, false);
+			return mailWelcomeReturnOK(email);
 		} catch (Exception e) {
 			return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.INVALID_DATA.toString());
 		}
+	}
+	
+	@ApiMethod(name = "account.createAdmin", path = "register/admin")
+	public MessageBean createAdmin(@Named("username") String email, @Named("password") String password,
+			@Named("password_alt") String passwordAlt, @Named("phone") @Nullable String phone,
+			@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
+		return createMember(email, password, passwordAlt, phone, name, address, true);
+	}
+
+	@ApiMethod(name = "account.register", path = "register")
+	public MessageBean createUser(@Named("username") String email, @Named("password") String password,
+			@Named("password_alt") String passwordAlt, @Named("phone") @Nullable String phone,
+			@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
+		return createMember(email, password, passwordAlt, phone, name, address, false);
 	}
 
 	@ApiMethod(name = "account.forgot", path = "forgot")

@@ -1,6 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.server.db;
 
-import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -103,31 +102,6 @@ public abstract class DatabaseService {
 				updateMember(user, !wasRegistered);
 			}
 			deleteRegistrationTicket(code);
-		}
-
-		public void createMember(String email, String password, String name, PhoneNumber phone, String address) {
-			DBMember newUser = new DBMember(email, password);
-			newUser.setPhone(phone);
-			newUser.setName(name);
-			newUser.setAddress(address);
-			newUser.save();
-		}
-
-		/**
-		 * Save member with authorization and profile information
-		 * @param user  Member instance (required)
-		 * @param password  New password for the member (optional, null not allowed)
-		 * @param name  New name for the member (optional)
-		 * @param phone  New phone number for the member (optional)
-		 * @param address  New location for the member (optional)
-		 */
-		public void updateMember(DBMember user, String password, String name, PhoneNumber phone, String address) {
-			if (user == null) return;
-			if (password != null) user.setPassword(password);
-			if (phone != null) user.setPhone(phone);
-			if (name != null) user.setName(name);
-			if (address != null) user.setAddress(address);
-			ofy().save().entity(user);
 		}
 
 		/**

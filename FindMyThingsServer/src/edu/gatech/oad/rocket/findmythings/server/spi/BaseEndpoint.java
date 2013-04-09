@@ -89,5 +89,13 @@ abstract class BaseEndpoint {
 		if (principals == null || principals.isEmpty()) return null;
 		return (String)principals.getPrimaryPrincipal();
 	}
+	
+	boolean currentUserIsAdmin() {
+		return SecurityUtils.getSubject().hasRole("admin");
+	}
+	
+	boolean currentUserCanSubmit() {
+		return SecurityUtils.getSubject().isPermitted("submit") || SecurityUtils.getSubject().hasRole("admin");
+	}
 
 }

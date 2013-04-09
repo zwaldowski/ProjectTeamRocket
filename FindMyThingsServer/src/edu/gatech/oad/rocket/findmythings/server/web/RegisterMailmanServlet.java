@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.server.service;
+package edu.gatech.oad.rocket.findmythings.server.web;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -15,8 +15,8 @@ import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 @Singleton
-public class MailmanServlet extends TemplateServlet {
-	private static final Logger LOG = Logger.getLogger(MailmanServlet.class.getName());
+public class RegisterMailmanServlet extends TemplateServlet {
+	private static final Logger LOG = Logger.getLogger(RegisterMailmanServlet.class.getName());
 
 	/**
 	 * 
@@ -25,12 +25,12 @@ public class MailmanServlet extends TemplateServlet {
 
 	private Envelope emailWrapper = null;
 
-	MailmanServlet() {
+	RegisterMailmanServlet() {
 		super();
 	}
 
 	@Inject
-	MailmanServlet(Envelope emailWrapper) {
+	RegisterMailmanServlet(Envelope emailWrapper) {
 		super();
 		this.emailWrapper = emailWrapper;
 	}

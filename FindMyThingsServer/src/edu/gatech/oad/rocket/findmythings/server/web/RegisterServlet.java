@@ -88,12 +88,23 @@ public class RegisterServlet extends TemplateServlet {
 			String name = WebUtils.getCleanParam(request, REAL_NAME);
 			PhoneNumber phone = new PhoneNumber(phoneString);
 			String address = WebUtils.getCleanParam(request, ADDRESS);
+			
+			DBMember newUser = (DBMember)user;
 
-			if (user == null) {
-				DatabaseService.ofy().createMember(email, password, name, phone, address);
+			if (newUser == null) {
+				newUser = new DBMember(email, password, null, null, true);
+				newUser.setPhone(phone);
+				newUser.setName(name);
+				newUser.setAddress(address);
 			} else {
-				DatabaseService.ofy().updateMember((DBMember)user, password, name, phone, address);
+				if (phone != null) newUser.setPhone(phone);
+				if (name != null) newUser.setName(name);
+				if (address != null) newUser.setAddress(address);
 			}
+			
+			newUser.setIsAdmin(false);
+			
+			DatabaseService.ofy().save().entity(newUser);
 
 			mailAuthenticationTokenSendOK(request, response, email, false);
 		} catch (Exception e) {
