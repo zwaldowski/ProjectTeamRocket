@@ -57,7 +57,7 @@ public class MapsActivity extends FragmentActivity {
 
 	private void setupMap() {
 		//Geocoder object to convert a text address into an Address object
-		findLoc = new Geocoder(getApplicationContext());
+		findLoc = new Geocoder(this);
 
 		LatLng currlocation = null;
 

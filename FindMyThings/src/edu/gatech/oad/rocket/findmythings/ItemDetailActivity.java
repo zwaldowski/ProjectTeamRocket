@@ -1,5 +1,6 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -11,6 +12,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import edu.gatech.oad.rocket.findmythings.model.Item;
 import edu.gatech.oad.rocket.findmythings.util.*;
 
@@ -133,9 +136,23 @@ public class ItemDetailActivity extends FragmentActivity {
 	 */
 	public void toMap (View LocationButton) {
 		if(hasInternet() && ItemDetailFragment.mItem.getLoc()!=null && ItemDetailFragment.mItem.getLoc().length()>0) {
-			Intent next = new Intent(getApplicationContext(), MapsActivity.class);
-			finish();
-			startActivity(next);
+			int googlePlayAccess = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+			if(googlePlayAccess != ConnectionResult.SUCCESS)
+			{
+				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(googlePlayAccess, this, 2340);
+				if(dialog != null)
+				{
+					dialog.show();
+				}
+				else
+				{
+					new ErrorDialog("Something went wrong. Please make sure that you have the Play Store installed and that you are connected to the internet.").getDialog(this).show();
+				}
+			} else {
+				Intent next = new Intent(getApplicationContext(), MapsActivity.class);
+				finish();
+				startActivity(next);
+			}
 		} else {
 			if(ItemDetailFragment.mItem.getLoc()!=null && ItemDetailFragment.mItem.getLoc().length()>0)
 				new ErrorDialog("Error: no active internet connection.").getDialog(this).show();
