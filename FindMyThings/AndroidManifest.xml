@@ -32,6 +32,7 @@
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
+        android:logo="@drawable/ic_logo"
         android:label="@string/app_icon_label"
         android:theme="@style/AppTheme" >
         <activity
