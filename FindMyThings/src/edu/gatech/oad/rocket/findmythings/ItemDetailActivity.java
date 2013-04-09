@@ -87,13 +87,12 @@ public class ItemDetailActivity extends FragmentActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpTo(this,
-					new Intent(this, MainActivity.class));
+			NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	/**
 	 * deals with action to do once a key is pressed down
 	 * @param int keyCode - key pressed
@@ -109,7 +108,7 @@ public class ItemDetailActivity extends FragmentActivity {
 
 	    return super.onKeyDown(keyCode, event);
 	}
-	
+
 	/**
 	 * Goes back to MainActivity
 	 * @return boolean true when done
@@ -132,9 +131,9 @@ public class ItemDetailActivity extends FragmentActivity {
 	/**
 	 * Method called when the location button is clicked
 	 * Goes to MapsActivity
-	 * @param LocationButton
+	 * @param locationButton
 	 */
-	public void toMap (View LocationButton) {
+	public void toMap (View locationButton) {
 		if(hasInternet() && ItemDetailFragment.mItem.getLoc()!=null && ItemDetailFragment.mItem.getLoc().length()>0) {
 			int googlePlayAccess = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 			if(googlePlayAccess != ConnectionResult.SUCCESS)
@@ -149,9 +148,7 @@ public class ItemDetailActivity extends FragmentActivity {
 					new ErrorDialog("Something went wrong. Please make sure that you have the Play Store installed and that you are connected to the internet.").getDialog(this).show();
 				}
 			} else {
-				Intent next = new Intent(getApplicationContext(), MapsActivity.class);
-				finish();
-				startActivity(next);
+				startActivity(new Intent(getApplicationContext(), MapsActivity.class));
 			}
 		} else {
 			if(ItemDetailFragment.mItem.getLoc()!=null && ItemDetailFragment.mItem.getLoc().length()>0)

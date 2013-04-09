@@ -2,6 +2,8 @@ package edu.gatech.oad.rocket.findmythings;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import android.app.Activity;
 import com.google.android.gms.common.ConnectionResult;
@@ -64,23 +66,31 @@ public class MapsActivity extends FragmentActivity {
 		//Used to add a marker to the map
 		MarkerOptions options = new MarkerOptions();
 
-
 		try { //Converts the location string into a list of possible long/lag addresses
-			loc = findLoc.getFromLocationName(ItemDetailFragment.mItem.getLoc(), 1);
-			currlocation = new LatLng(loc.get(0).getLatitude(),loc.get(0).getLongitude());
+			for (int i = 0; i < 10 && (loc == null || loc.size() == 0); i++) {
+				loc = findLoc.getFromLocationName(ItemDetailFragment.mItem.getLoc(), 1);
+			}
+
+			if (loc.size() >= 1) {
+				//Object to store lat/long
+				currlocation = new LatLng(loc.get(0).getLatitude(),loc.get(0).getLongitude());
+			} else {
+				new ErrorDialog("Unable to find the location using Google Maps at this time, please try again later.").getDialog(this).show();
+			}
 		} catch (IOException e) {
 			new ErrorDialog("Unable to reach Google Maps at this time, please check your connection strength.").getDialog(this).show();
 		}
-		//Object to store lat/long
 
-		//Sets the markers position
-		options.position(currlocation);
-		//Tells the camera where to go
-		CameraUpdate updatePosition = CameraUpdateFactory.newLatLng(currlocation);
-		//Adds the marker
-		map.addMarker(options);
-		//Moves the camera to the CameraUpdate location
-		map.moveCamera(updatePosition);
+		if (currlocation != null) {
+			//Sets the markers position
+			options.position(currlocation);
+			//Tells the camera where to go
+			CameraUpdate updatePosition = CameraUpdateFactory.newLatLng(currlocation);
+			//Adds the marker
+			map.addMarker(options);
+			//Moves the camera to the CameraUpdate location
+			map.moveCamera(updatePosition);
+		}
 	}
 
 	@Override
@@ -98,6 +108,8 @@ public class MapsActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+		setTitle(ItemDetailFragment.mItem.getLoc());
 	}
        
 }
