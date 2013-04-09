@@ -59,7 +59,7 @@
         </activity>
         <activity
             android:name="edu.gatech.oad.rocket.findmythings.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
            		<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -85,14 +85,10 @@
         </activity>
         <activity
             android:name="edu.gatech.oad.rocket.findmythings.MapsActivity"
-            android:label="@string/title_activity_maps"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:label="@string/title_activity_maps">
         </activity>
-        <activity
-            android:name="edu.gatech.oad.rocket.findmythings.SearchActivity"
-            android:label="@string/title_activity_searches" >
-        </activity>
-"
+"
+
         <uses-library android:name="com.google.android.maps" />
 
         <meta-data
