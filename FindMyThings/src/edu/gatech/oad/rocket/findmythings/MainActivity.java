@@ -156,7 +156,7 @@ public class MainActivity extends ListActivity  {
 	    switch (item.getItemId()) {
 	        case R.id.item_list_submit:
 			return toSubmit();
-	        case R.id.menu_list_search:
+	        case R.id.menu_list_filter:
 	        	Intent i = new Intent(MainActivity.this, FilterActivity.class);
 				startActivityForResult(i, 1);
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);

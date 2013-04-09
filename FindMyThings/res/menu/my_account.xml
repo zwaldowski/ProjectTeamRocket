@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     
-    <item android:id="@+id/toEdit" android:title="Edit" android:icon="@android:drawable/ic_menu_edit" android:showAsAction="ifRoom"></item>
+    <item android:id="@+id/toEdit" android:title="Edit" android:icon="@drawable/action_edit" android:showAsAction="ifRoom"></item>
     
 
 </menu>

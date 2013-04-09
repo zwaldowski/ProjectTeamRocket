@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 	
       <item
-        android:id="@+id/menu_list_search"
+        android:id="@+id/menu_list_filter"
         android:title="Filter"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@drawable/action_filter"
         android:showAsAction="ifRoom|withText" />	
     <item
         android:id="@+id/item_list_submit"
