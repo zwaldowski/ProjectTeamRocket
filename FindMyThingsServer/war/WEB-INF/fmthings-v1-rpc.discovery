@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/st0M1zseeyYebRp9ljdSxNpCKf8\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/LqReH_dsYImxddjT6cdmJ5ywNUI\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -11,8 +11,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://1.rocket-findmythings.appspot.com/_ah/api/",
- "rpcUrl": "https://1.rocket-findmythings.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://rocket-findmythings.appspot.com/_ah/api/",
+ "rpcUrl": "https://rocket-findmythings.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
@@ -146,6 +146,21 @@
     }
    }
   },
+  "CollectionResponse_DBMember": {
+   "id": "CollectionResponse_DBMember",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "DBMember"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
   "DBItem": {
    "id": "DBItem",
    "type": "object",
@@ -183,8 +198,70 @@
      "type": "string",
      "format": "date-time"
     },
+    "submittingUser": {
+     "type": "string"
+    },
     "type": {
      "$ref": "Type"
+    }
+   }
+  },
+  "DBMember": {
+   "id": "DBMember",
+   "type": "object",
+   "properties": {
+    "address": {
+     "type": "string"
+    },
+    "admin": {
+     "type": "boolean"
+    },
+    "dateRegistered": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "editable": {
+     "type": "boolean"
+    },
+    "email": {
+     "type": "string"
+    },
+    "hashedPassword": {
+     "type": "string"
+    },
+    "isAdmin": {
+     "type": "boolean"
+    },
+    "locked": {
+     "type": "boolean"
+    },
+    "name": {
+     "type": "string"
+    },
+    "password": {
+     "type": "string"
+    },
+    "phone": {
+     "$ref": "PhoneNumber"
+    },
+    "registered": {
+     "type": "boolean"
+    },
+    "roles": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "salt": {
+     "type": "string",
+     "format": "byte"
+    },
+    "stringPermissions": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -417,6 +494,51 @@
     "$ref": "DBItem"
    }
   },
+  "fmthings.items.getByUser": {
+   "id": "fmthings.items.getByUser",
+   "allowGet": true,
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "email": {
+     "type": "string",
+     "required": true
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "type": {
+     "type": "string"
+    }
+   },
+   "parameterOrder": [
+    "email"
+   ],
+   "returns": {
+    "$ref": "CollectionResponse_DBItem"
+   }
+  },
+  "fmthings.items.getMine": {
+   "id": "fmthings.items.getMine",
+   "allowGet": true,
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "type": {
+     "type": "string"
+    }
+   },
+   "returns": {
+    "$ref": "CollectionResponse_DBItem"
+   }
+  },
   "fmthings.items.insert": {
    "id": "fmthings.items.insert",
    "parameters": {
@@ -491,6 +613,9 @@
     "submittedDate": {
      "type": "string",
      "format": "date-time"
+    },
+    "submittingUser": {
+     "type": "string"
     },
     "type": {
      "$ref": "Type"
@@ -618,6 +743,28 @@
    "parameterOrder": [
     "email"
    ]
+  },
+  "fmthings.members.search": {
+   "id": "fmthings.members.search",
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "email": {
+     "type": "string",
+     "required": true
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    }
+   },
+   "parameterOrder": [
+    "email"
+   ],
+   "returns": {
+    "$ref": "CollectionResponse_DBMember"
+   }
   },
   "fmthings.members.update": {
    "id": "fmthings.members.update",

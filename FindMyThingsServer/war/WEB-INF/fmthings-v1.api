@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://1.rocket-findmythings.appspot.com/_ah/api",
+  "root" : "https://rocket-findmythings.appspot.com/_ah/api",
   "name" : "fmthings",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://1.rocket-findmythings.appspot.com/_ah/spi",
+    "bns" : "https://rocket-findmythings.appspot.com/_ah/spi",
     "deadline" : 10.0,
     "type" : "lily"
   },
@@ -241,6 +241,66 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "fmthings.items.getByUser" : {
+      "path" : "items/forMember",
+      "httpMethod" : "GET",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.listItemsForMember",
+      "request" : {
+        "parameters" : {
+          "email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "type" : {
+            "type" : "string",
+            "required" : false
+          },
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "fmthings.items.getMine" : {
+      "path" : "items/mine",
+      "httpMethod" : "GET",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.listMyItems",
+      "request" : {
+        "parameters" : {
+          "type" : {
+            "type" : "string",
+            "required" : false
+          },
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "fmthings.items.insert" : {
       "path" : "items/insert",
       "httpMethod" : "POST",
@@ -266,6 +326,34 @@
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "fmthings.members.search" : {
+      "path" : "members/search",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ ],
+      "clientIds" : [ ],
+      "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.searchMembers",
+      "request" : {
+        "parameters" : {
+          "email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -385,6 +473,9 @@
         "id" : "AppMember",
         "type" : "object",
         "properties" : {
+          "locked" : {
+            "type" : "boolean"
+          },
           "address" : {
             "type" : "string"
           },
@@ -396,6 +487,9 @@
           },
           "email" : {
             "type" : "string"
+          },
+          "editable" : {
+            "type" : "boolean"
           },
           "admin" : {
             "type" : "boolean"
@@ -414,12 +508,6 @@
             "items" : {
               "type" : "string"
             }
-          },
-          "locked" : {
-            "type" : "boolean"
-          },
-          "editable" : {
-            "type" : "boolean"
           }
         }
       },
@@ -460,6 +548,9 @@
           "description" : {
             "type" : "string"
           },
+          "submittingUser" : {
+            "type" : "string"
+          },
           "searchTokens" : {
             "type" : "array",
             "items" : {
@@ -497,6 +588,80 @@
         "id" : "Category",
         "type" : "string",
         "enum" : [ "HEIR", "KEEPSAKE", "MISC" ]
+      },
+      "CollectionResponse_DBMember" : {
+        "id" : "CollectionResponse_DBMember",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "DBMember"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      },
+      "DBMember" : {
+        "id" : "DBMember",
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "hashedPassword" : {
+            "type" : "string"
+          },
+          "salt" : {
+            "type" : "string",
+            "format" : "byte"
+          },
+          "roles" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "dateRegistered" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "$ref" : "PhoneNumber"
+          },
+          "locked" : {
+            "type" : "boolean"
+          },
+          "registered" : {
+            "type" : "boolean"
+          },
+          "editable" : {
+            "type" : "boolean"
+          },
+          "admin" : {
+            "type" : "boolean"
+          },
+          "stringPermissions" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "isAdmin" : {
+            "type" : "boolean"
+          }
+        }
       },
       "CollectionResponse_AppMember" : {
         "id" : "CollectionResponse_AppMember",
@@ -565,6 +730,16 @@
           "$ref" : "CollectionResponse_DBItem"
         }
       },
+      "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.listItemsForMember" : {
+        "response" : {
+          "$ref" : "CollectionResponse_DBItem"
+        }
+      },
+      "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.listMyItems" : {
+        "response" : {
+          "$ref" : "CollectionResponse_DBItem"
+        }
+      },
       "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.insertItem" : {
         "request" : {
           "$ref" : "DBItem"
@@ -579,6 +754,11 @@
         },
         "response" : {
           "$ref" : "DBItem"
+        }
+      },
+      "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.searchMembers" : {
+        "response" : {
+          "$ref" : "CollectionResponse_DBMember"
         }
       },
       "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.getMember" : {
