@@ -196,10 +196,27 @@
     </orderEntry>
     <orderEntry type="library" name="AppEngine API" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="AppEngine Dev" level="application_server_libraries" />
-    <orderEntry type="library" name="lucene-core-4.2.1" level="project" />
-    <orderEntry type="library" name="lucene-analyzers-common-4.2.1" level="project" />
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library>
+    <orderEntry type="module-library">
+      <library name="lucene-core-4.2.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/lucene-core-4.2.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/lucene-analyzers-common-4.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="lucene-analyzers-common-4.2.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/lucene-analyzers-common-4.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="appengine-endpoints">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/appengine-endpoints.jar!/" />
         </CLASSES>

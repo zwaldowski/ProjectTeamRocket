@@ -25,9 +25,9 @@
           <element id="library" level="module" name="slf4j-api-1.7.5.jar" module-name="FindMyThingsServer" />
           <element id="library" level="module" name="slf4j-jdk14-1.7.5.jar" module-name="FindMyThingsServer" />
           <element id="library" level="project" name="AppEngine API" />
-          <element id="library" level="project" name="lucene-analyzers-common-4.2.1" />
-          <element id="library" level="project" name="lucene-core-4.2.1" />
           <element id="file-copy" path="$PROJECT_DIR$/FindMyThingsServer/war/WEB-INF/lib/appengine-endpoints.jar" />
+          <element id="library" level="module" name="lucene-core-4.2.1" module-name="FindMyThingsServer" />
+          <element id="library" level="module" name="lucene-analyzers-common-4.2.1" module-name="FindMyThingsServer" />
         </element>
       </element>
     </root>

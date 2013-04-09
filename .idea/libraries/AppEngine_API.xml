@@ -3,8 +3,15 @@
     <CLASSES>
       <root url="file://$APPENGINE_HOME$/lib/user" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="file://$APPENGINE_HOME$/docs/spi/javadoc" />
+      <root url="file://$APPENGINE_HOME$/docs/tools/javadoc" />
+      <root url="file://$APPENGINE_HOME$/docs/javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$APPENGINE_HOME$/lib/user" />
+    </SOURCES>
     <jarDirectory url="file://$APPENGINE_HOME$/lib/user" recursive="false" />
+    <jarDirectory url="file://$APPENGINE_HOME$/lib/user" recursive="false" type="SOURCES" />
   </library>
 </component>

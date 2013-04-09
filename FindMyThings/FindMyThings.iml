@@ -26,7 +26,7 @@
     <orderEntry type="jdk" jdkName="Android 4.2.2 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
-      <library name="android-support-v13.jar">
+      <library name="Android Support Platform 13">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/android-support-v13.jar!/" />
         </CLASSES>
@@ -34,11 +34,18 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="google-play-services_lib" />
-    <orderEntry type="module-library">
-      <library>
+    <orderEntry type="module" module-name="google-play-services_lib" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library name="Google API Client">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../libs/google-play-services_lib/libs/google-play-services.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/google-api-client-1.14.1-beta.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/google-api-client-android-1.14.1-beta.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/google-http-client-1.14.1-beta.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/google-http-client-android-1.14.1-beta.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/google-http-client-jackson-1.14.1-beta.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/google-oauth-client-1.14.1-beta.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/jackson-core-asl-1.9.11.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/jsr305-1.3.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
