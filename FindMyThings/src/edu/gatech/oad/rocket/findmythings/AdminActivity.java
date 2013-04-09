@@ -110,7 +110,7 @@ public class AdminActivity extends ListActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-	    	goToParentActivity();
+	    	super.onBackPressed();
 			return true;
 	    }
 
@@ -126,10 +126,10 @@ public class AdminActivity extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
-			goToParentActivity();
+	        	finish();
 	            return true;
 	        case R.id.admin_create:
-			return createAdmin();
+	        	return createAdmin();
 	    }
 	    return super.onOptionsItemSelected(item);
 	}
@@ -147,24 +147,24 @@ public class AdminActivity extends ListActivity {
 	}
 
 	/**
-	 * Goes back to the main activity
-	 */
-	public void goToParentActivity() {
-		Intent next = new Intent(AdminActivity.this, MainActivity.class);
-		finish();
-		startActivity(next);
-	}
-
-	/**
 	 * Goes to the activity to create a new admin account
 	 * @return true
 	 */
 	public boolean createAdmin() {
 		Intent next = new Intent(AdminActivity.this, AdminCreateActivity.class);
-		finish();
 		startActivity(next);
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 		return true;
 	}
+	
+	/**
+	 * Called to pop the login window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+    }
 
 
 }

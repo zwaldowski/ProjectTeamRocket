@@ -100,10 +100,8 @@ public class AdminPopupActivity extends Activity implements OnPreferenceChangeLi
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-		Intent next = new Intent(AdminPopupActivity.this,AdminActivity.class);
-		finish();
-		startActivity(next);
-		return true;
+	    	super.onBackPressed();
+	    	return true;
 	    }
 
 	    return super.onKeyDown(keyCode, event);
@@ -132,5 +130,14 @@ public class AdminPopupActivity extends Activity implements OnPreferenceChangeLi
 		
 		return false;
 	}
+	
+	/**
+	 * Called to pop the admin window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+    }
 
 }
