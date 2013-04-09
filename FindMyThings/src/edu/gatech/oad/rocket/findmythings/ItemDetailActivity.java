@@ -7,9 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -70,29 +68,7 @@ public class ItemDetailActivity extends FragmentActivity {
 			getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
 		}
 	}
-	
-	/**
-	 * deals with action when an options button is selected
-	 * @param MenuItem item
-	 * @return boolean
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
+	 
 	/**
 	 * deals with action to do once a key is pressed down
 	 * @param int keyCode - key pressed
@@ -102,22 +78,12 @@ public class ItemDetailActivity extends FragmentActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
-	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			return toMain();
-	    }
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			super.onBackPressed();
+			return true;
+		}
 
-	    return super.onKeyDown(keyCode, event);
-	}
-
-	/**
-	 * Goes back to MainActivity
-	 * @return boolean true when done
-	 */
-	public boolean toMain() {
-		Intent next = new Intent(getApplicationContext(), MainActivity.class);
-		finish();
-		startActivity(next);
-		return true;
+		return super.onKeyDown(keyCode, event);
 	}
 
 	/**
@@ -178,4 +144,13 @@ public class ItemDetailActivity extends FragmentActivity {
 		return false;
 		
 	}
+	
+	/**
+	 * Called to pop the detail window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
 }

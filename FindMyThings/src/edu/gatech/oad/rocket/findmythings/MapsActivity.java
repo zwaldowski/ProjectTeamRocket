@@ -2,13 +2,6 @@ package edu.gatech.oad.rocket.findmythings;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import android.app.Activity;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -111,5 +104,14 @@ public class MapsActivity extends FragmentActivity {
 
 		setTitle(ItemDetailFragment.mItem.getLoc());
 	}
+	
+	/**
+	 * Called to pop the map window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
        
 }

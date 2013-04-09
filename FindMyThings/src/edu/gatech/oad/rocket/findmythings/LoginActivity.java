@@ -383,6 +383,8 @@ public class LoginActivity extends Activity {
 	 */
 	private void toMainReload() {
 		Intent main = new Intent(getApplicationContext(), MainActivity.class);
+		main.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+		main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		finish();
 	    startActivity(main);
 	}

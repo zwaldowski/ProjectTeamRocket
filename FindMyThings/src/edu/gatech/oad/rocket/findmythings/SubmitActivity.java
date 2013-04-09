@@ -112,24 +112,10 @@ public class SubmitActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-		return false;
+	    	super.onBackPressed();
+			return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
-	}
-
-	/**
-	 * Returns to Item List activity. Animation and ID helper.
-	 * @return boolean
-	 */
-	public boolean toItemList() {
-		Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
-		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		goToNextActivity.putExtra(getString(R.string.key_nooverride_animation), true);
-		goToNextActivity.putExtra(Type.ID, mType.ordinal());
-		finish();
-		startActivity(goToNextActivity);
-		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
-		return true;
 	}
 	
 	/**
@@ -191,7 +177,8 @@ public class SubmitActivity extends Activity {
 				return toItemList();
 				}
 			case R.id.submit_cancel:
-				return toItemList();
+				finish();
+				return true;
 			case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
@@ -241,5 +228,29 @@ public class SubmitActivity extends Activity {
 	public Category getItemCategory() {
 		return mCategory;
 	}
+
+	/**
+	 * Returns to Item List activity. Animation and ID helper.
+	 * @return boolean
+	 */
+	public boolean toItemList() {
+		Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
+		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		goToNextActivity.putExtra(Type.ID, mType.ordinal());
+		finish();
+		startActivity(goToNextActivity);
+		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+		return true;
+	}
+	
+	/**
+	 * Called to pop the login window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+    }
 
 }

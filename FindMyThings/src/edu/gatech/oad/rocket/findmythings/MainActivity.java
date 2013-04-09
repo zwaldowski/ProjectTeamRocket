@@ -81,7 +81,7 @@ public class MainActivity extends ListActivity  {
 	
 	/**
 	 * creates window with correct layout
-	 * @param Bundle
+	 * @param savedInstanceState
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +128,8 @@ public class MainActivity extends ListActivity  {
 
 	/**
 	 * takes care of action when a key is pressed down
-	 * @param  int keyCode
-	 * @param  KeyEvent event
+	 * @param  keyCode
+	 * @param  event
 	 * @return boolean 
 	 */
 	@Override
@@ -148,7 +148,7 @@ public class MainActivity extends ListActivity  {
 
 	/**
 	 * shows the options that are available for user depending on the item selected (submit/search/login/etc)
-	 * @param MenuItem item - menu selected
+	 * @param item - menu selected
 	 * @return boolean 
 	 */
 	@Override
@@ -162,7 +162,7 @@ public class MainActivity extends ListActivity  {
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 				return true;
 	       	case R.id.menu_login: 
-				return Login.currUser==null? logIn():logOut(); 
+				return Login.currUser==null? toLogIn():logOut(); 
 			case R.id.menu_account: 
 				return toAccount();
 			case R.id.menu_admin:
@@ -172,44 +172,28 @@ public class MainActivity extends ListActivity  {
 	}
 
 	/**
-	 * takes care of following steps when resuming action
-	 */
-	@Override
-	protected void onResume() {
-	    super.onResume();
-	    String noOverKey = getString(R.string.key_nooverride_animation);
-	    Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo == null || (extraInfo != null && !extraInfo.getBoolean(noOverKey))) {
-			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-		}
-	}
-
-	/**
 	 * takes user to new window with the clicked item's details
-	 * @param ListView l
-	 * @param View v
-	 * @param int position
-	 * @param long id 
+	 * @param l
+	 * @param v
+	 * @param position
+	 * @param id
 	 */
 	@Override
 	protected void onListItemClick (ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		Intent next = new Intent(getApplicationContext(), ItemDetailActivity.class);
-		next.putExtra("id",(int)id);
-		finish();
+		Intent next = new Intent(this, ItemDetailActivity.class);
+		next.putExtra("id", id);
 	    startActivity(next);
-	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
+	    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 	}
 
 	/**
 	 * Opens a new SubmitActivity activity with the current type of item.
 	 */
 	public boolean toSubmit() {
-		if(Login.currUser!=null) {
-			Intent goToNextActivity = new Intent(MainActivity.this, SubmitActivity.class);
-			if(mType!=null)
-				goToNextActivity.putExtra(Type.ID, mType.ordinal());
-			finish();
+		if (Login.currUser != null) {
+			Intent goToNextActivity = new Intent(this, SubmitActivity.class);
+			if (mType != null) goToNextActivity.putExtra(Type.ID, mType.ordinal());
 			startActivity(goToNextActivity);
 			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		}
@@ -217,19 +201,16 @@ public class MainActivity extends ListActivity  {
 			ErrorDialog toLogin =  new ErrorDialog("Must Sign-in to submit an item.", "Sign-in", "Cancel");
 			AlertDialog.Builder temp = toLogin.getDialog(this,
 				new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int id) {
-		            	Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
-		            		goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		               	startActivityForResult(goToNextActivity, 1);
-		            }	
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						MainActivity.this.toLogIn();
+					}	
 				}, 
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 			            	//cancel
-					}    
-			
+					}
 				});
 			temp.show();
 		}
@@ -238,7 +219,7 @@ public class MainActivity extends ListActivity  {
 
 	/**
 	 * creates the options menu (login, account, admin button)
-	 * @param Menu menu
+	 * @param menu
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -335,11 +316,10 @@ public class MainActivity extends ListActivity  {
      * Go to LoginActivity
      * @return boolean true when done
      */
-    public boolean logIn() {
-    	Intent toLogin = new Intent(MainActivity.this, LoginActivity.class);
-		finish();
-		startActivity(toLogin);
-		overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+    public boolean toLogIn() {
+    	Intent toLogin = new Intent(this, LoginActivity.class);
+    	startActivity(toLogin);
+		overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		return true;
     }
     
@@ -348,10 +328,9 @@ public class MainActivity extends ListActivity  {
      * @return true when done
      */
     public boolean toAccount() {
-    	Intent toAccount = new Intent(MainActivity.this, AccountActivity.class);
-		finish();
+    	Intent toAccount = new Intent(this, AccountActivity.class);
 		startActivity(toAccount);
-		overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+		overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		return true;
     }
     
@@ -360,10 +339,9 @@ public class MainActivity extends ListActivity  {
      * @return true when done
      */
     public boolean toAdmin() {
-    	Intent toAccount = new Intent(MainActivity.this, AdminActivity.class);
-		finish();
+    	Intent toAccount = new Intent(this, AdminActivity.class);
 		startActivity(toAccount);
-		overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+		overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		return true;
     }
     
@@ -378,16 +356,19 @@ public class MainActivity extends ListActivity  {
 
 			/**
 			 * logs current user out
-			 * @param DialogInterface dialog
-			 * @param int id
+			 * @param dialog
+			 * @param id
 			 */
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				//Clear current user
 				Login.currUser=null;
 				//Making sense is for squares
+				Intent newMain = getIntent();
+				newMain.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+				newMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				finish(); 
-				startActivity(getIntent());
+				startActivity(newMain);
 				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 				logOut = true;
 			}	
