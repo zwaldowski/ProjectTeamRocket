@@ -3,22 +3,13 @@ package edu.gatech.oad.rocket.findmythings.server.db.model;
 import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMutableMember;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.crypto.RandomNumberGenerator;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.Sha256Hash;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
-import org.apache.shiro.util.SimpleByteSource;
+import edu.gatech.oad.rocket.findmythings.server.util.HashHelper;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -35,9 +26,6 @@ public class DBMember implements AppMutableMember {
 	private static final long serialVersionUID = -9162883247171299555L;
 
 	protected static final Logger LOGGER = Logger.getLogger(DBMember.class.getName());
-
-	private static final int HASH_ITERATIONS = 1;
-	private static final String HASH_ALGORITHM = Sha256Hash.ALGORITHM_NAME;
 
 	@Id private String email;
 
@@ -89,33 +77,14 @@ public class DBMember implements AppMutableMember {
 		Preconditions.checkNotNull(roles, "DBMember roles can't be null");
 		Preconditions.checkNotNull(permissions, "DBMember permissions can't be null");
 		this.email = email;
-
-		this.salt = salt().getBytes();
-		this.hashedPassword = hash(password, salt);
+		
+		setPassword(password);
 		this.roles = new HashSet<>(roles);
 		this.permissions = new HashSet<>(permissions);
 		this.dateRegistered = isRegistered ? new Date() : null;
 	}
 
 	/** Global utilities **/
-
-	@Provides @Singleton
-	public static CredentialsMatcher getCredentialsMatcher() {
-		HashedCredentialsMatcher credentials = new HashedCredentialsMatcher(HASH_ALGORITHM);
-		credentials.setHashIterations(HASH_ITERATIONS);
-		credentials.setStoredCredentialsHexEncoded(true);
-		return credentials;
-	}
-
-	private static final RandomNumberGenerator salter = new SecureRandomNumberGenerator();
-
-	private static ByteSource salt() {
-		return salter.nextBytes();
-	}
-
-	private static String hash(String password, byte[] salt) {
-		return (password == null) ? null : new SimpleHash(HASH_ALGORITHM, password, new SimpleByteSource(salt), HASH_ITERATIONS).toHex();
-	}
 
 	/** Object overrides **/
 
@@ -197,8 +166,8 @@ public class DBMember implements AppMutableMember {
 	 */
 	public void setPassword(String password) {
 		Preconditions.checkNotNull(password);
-		this.salt = salt().getBytes();
-		this.hashedPassword = hash(password, salt);
+		this.salt = HashHelper.getSaltedBytes();
+		this.hashedPassword = HashHelper.getHashString(password, getSalt());
 	}
 
 	/* (non-Javadoc)

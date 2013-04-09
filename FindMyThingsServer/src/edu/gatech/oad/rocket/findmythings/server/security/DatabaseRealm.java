@@ -5,6 +5,8 @@ import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.MemcacheManager;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.util.HashHelper;
+
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -20,7 +22,7 @@ public class DatabaseRealm extends AuthorizingRealm implements ProfileRealm {
 	private static final Logger LOG = Logger.getLogger(DatabaseRealm.class.getName());
 
 	public DatabaseRealm() {
-		super(new MemcacheManager(), DBMember.getCredentialsMatcher());
+		super(new MemcacheManager(), HashHelper.getCredentialsMatcher());
 		setAuthenticationTokenClass(UsernamePasswordToken.class);
 		LOG.fine("Creating a new instance of DatabaseRealm");
 	}
