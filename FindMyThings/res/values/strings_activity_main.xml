@@ -1,4 +1,7 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
 
     <string name="main_title_lost">Lost</string>
     <string name="main_summary_lost">&#8230;the owner of something I\'ve found.</string>
