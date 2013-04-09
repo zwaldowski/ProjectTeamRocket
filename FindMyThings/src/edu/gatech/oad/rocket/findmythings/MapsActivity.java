@@ -3,10 +3,11 @@ package edu.gatech.oad.rocket.findmythings;
 import java.io.IOException;
 import java.util.List;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import android.app.Activity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -23,7 +24,7 @@ import edu.gatech.oad.rocket.findmythings.util.*;
  * 
  * @author TeamRocket
  * */
-public class MapsActivity extends FragmentActivity   {
+public class MapsActivity extends FragmentActivity {
 	
 	/**
 	 * Used to convert address into longitude and latitude
@@ -36,56 +37,67 @@ public class MapsActivity extends FragmentActivity   {
 	private GoogleMap map;
 	
 	/**
-	 * Reference to the fragment holding the map
-	 */
-	private SupportMapFragment mFrag;
-	
-	/**
 	 * Stores a list of possible addresses
 	 */
 	private List<Address> loc;
 
+	private void setupMapIfNeeded() {
+
+		// Do a null check to confirm that we have not already instantiated the map.
+		if (map == null) {
+			// Try to obtain the map from the SupportMapFragment.
+			map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+					.getMap();
+			// Check if we were successful in obtaining the map.
+			if (map != null) {
+				setupMap();
+			}
+		}
+	}
+
+	private void setupMap() {
+		//Geocoder object to convert a text address into an Address object
+		findLoc = new Geocoder(getApplicationContext());
+
+		LatLng currlocation = null;
+
+		//Used to add a marker to the map
+		MarkerOptions options = new MarkerOptions();
+
+
+		try { //Converts the location string into a list of possible long/lag addresses
+			loc = findLoc.getFromLocationName(ItemDetailFragment.mItem.getLoc(), 1);
+			currlocation = new LatLng(loc.get(0).getLatitude(),loc.get(0).getLongitude());
+		} catch (IOException e) {
+			new ErrorDialog("Unable to reach Google Maps at this time, please check your connection strength.").getDialog(this).show();
+		}
+		//Object to store lat/long
+
+		//Sets the markers position
+		options.position(currlocation);
+		//Tells the camera where to go
+		CameraUpdate updatePosition = CameraUpdateFactory.newLatLng(currlocation);
+		//Adds the marker
+		map.addMarker(options);
+		//Moves the camera to the CameraUpdate location
+		map.moveCamera(updatePosition);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setupMapIfNeeded();
+	}
+
 	/**
 	 * create the window with correct layout
 	 * 
-	 * @param Bundle 
+	 * @param savedInstanceState
 	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        //Reference to the map fragment
-        mFrag = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map));
-        //Gets the actual map
-        map = mFrag.getMap();
-        //Geocoder object to convert a text address into an Address object
-        findLoc = new Geocoder(getApplicationContext());
-        
-        LatLng currlocation = null;
-        
-        //Used to add a marker to the map
-        MarkerOptions options = new MarkerOptions();
-        
-        
-        try { //Converts the location string into a list of possible long/lag addresses
-        	loc = findLoc.getFromLocationName(ItemDetailFragment.mItem.getLoc(), 1);
-        	currlocation = new LatLng(loc.get(0).getLatitude(),loc.get(0).getLongitude());
-		} catch (IOException e) {
-			new ErrorDialog("Unable to reach Google Maps at this time, please check your connection strength.").getDialog(this).show();
-		}
-        //Object to store lat/long
-       
-        //Sets the markers position
-        options.position(currlocation);
-        //Tells the camera where to go
-        CameraUpdate updatePosition = CameraUpdateFactory.newLatLng(currlocation);
-        //Adds the marker
-        map.addMarker(options);
-        //Moves the camera to the CameraUpdate location
-        map.moveCamera(updatePosition);
-        
-    }
-
-
+	}
        
 }
