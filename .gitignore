@@ -42,4 +42,4 @@ appengine-generated/
 .idea/dictionaries
 out
 
-ProjectTeamRocket/.metadata/.plugins/org.eclipse.core.resources/.projects/FindMyThings/.indexes/a0/17/properties.index
+proguard/
