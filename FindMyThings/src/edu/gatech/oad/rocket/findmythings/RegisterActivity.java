@@ -80,19 +80,6 @@ public class RegisterActivity extends Activity {
 	}
 
 	/**
-	 * Animation helper. Jumps back to the login screen.
-	 * @return true, always true. Why? Because.
-	 */
-	private boolean backToLogin() {
-		Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
-	goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		finish();
-		startActivity(goToNextActivity);
-	    overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
-	    return true;
-	}
-
-	/**
 	 * deals with action to do once a key is pressed down
 	 * @param int keyCode - key pressed
 	 * @param KeyEvent event - event to do in case of pressed
@@ -102,7 +89,8 @@ public class RegisterActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			return backToLogin();
+			super.onBackPressed();
+			return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
@@ -178,7 +166,7 @@ public class RegisterActivity extends Activity {
 					rEmail = mEmail;
 
 					Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
-				goToNextActivity.addFlags(
+					goToNextActivity.addFlags(
 			                Intent.FLAG_ACTIVITY_CLEAR_TOP |
 			                Intent.FLAG_ACTIVITY_NEW_TASK);
 					finish();
@@ -221,9 +209,30 @@ public class RegisterActivity extends Activity {
 			return true;
 		case R.id.register_cancel:
 		case android.R.id.home:
-			return backToLogin();
+			return toLogin(false);
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	
+	/**
+	 * Called to pop the login window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
+	
+	/**
+	 * Returns to the login window either as a result of registering or hitting back
+	 * @param registered true to push log in, false to pop
+	 * @return true, always true. Why? Because.
+	 */
+	private boolean toLogin(boolean registered) {
+		finish();
+	    if (registered) overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+	    return true;
 	}
 
 }

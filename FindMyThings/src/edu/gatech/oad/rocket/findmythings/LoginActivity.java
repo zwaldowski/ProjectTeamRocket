@@ -124,9 +124,7 @@ public class LoginActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Intent i = new Intent(LoginActivity.this, MainActivity.class);
-			finish();
-			startActivity(i);
+	    	super.onBackPressed();
 			return true;
 	    }
 
@@ -194,7 +192,7 @@ public class LoginActivity extends Activity {
 		 *go to register activity
 		 */
 		if ( (mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !Login.data.contains(new User(mEmail,"")))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
-			register();
+			toRegister();
 		else {
 			//Check for a valid password.
 			if (TextUtils.isEmpty(mPassword)) {
@@ -250,20 +248,9 @@ public class LoginActivity extends Activity {
 			else {
 				//To register activity
 				Email = mEmail;
-				register();
+				toRegister();
 			}
 		}
-	}
-
-
-	/**
-	 * Goes to register screen
-	 */
-	private void register() {
-		Intent goToNextActivity = new Intent(LoginActivity.this, RegisterActivity.class);
-		goToNextActivity.putExtra("email",mEmail); // Passes email to RegisterActivity
-		startActivity(goToNextActivity);
-	    overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 	}
 
 	/**
@@ -351,17 +338,7 @@ public class LoginActivity extends Activity {
 				Login.updateUser(temp); // Store current user
 				Email = mEmail; //Remembers User's email.
 				
-				if(getCallingActivity()==null) { 
-					Intent main = new Intent(getApplicationContext(), MainActivity.class);
-					finish();
-				    startActivity(main);
-				} else { //Goes back to ItemListActivity
-				    finish();
-				    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-				}
-				
-
-
+				toMainReload();
 			} else {
 				if(temp instanceof User && !(temp).locked()) {
 					//Wrong password
@@ -390,4 +367,33 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 		}
 	}
+
+	/**
+	 * Goes to register screen
+	 */
+	private void toRegister() {
+		Intent goToNextActivity = new Intent(this, RegisterActivity.class);
+		goToNextActivity.putExtra("email",mEmail); // Passes email to RegisterActivity
+		startActivity(goToNextActivity);
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+	}
+	
+	/**
+	 * Reloads the main window with authenticated information
+	 */
+	private void toMainReload() {
+		Intent main = new Intent(getApplicationContext(), MainActivity.class);
+		finish();
+	    startActivity(main);
+	}
+	
+	/**
+	 * Called to pop the login window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+    }
+
 }
