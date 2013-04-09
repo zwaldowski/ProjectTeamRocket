@@ -153,15 +153,13 @@ public class SubmitActivity extends Activity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-			switch (item.getItemId()) {
-			case R.id.submit_ok:
-				if (checkforErrors()) { //There was an error
-					focusView.requestFocus(); //Show error
-					return false;
-				}
-
-				else {
+		switch (item.getItemId()) {
+		case R.id.submit_ok:
+			if (checkforErrors()) { //There was an error
+				focusView.requestFocus(); //Show error
+				return false;
+			}
+			else {
 				loc = location.getText().toString();
 				rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 
@@ -175,25 +173,15 @@ public class SubmitActivity extends Activity {
 				//ItemListFragment.update(control.getItem(temp.getType()));
 
 				return toItemList();
-				}
-			case R.id.submit_cancel:
-				finish();
-				return true;
-			case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-
-			return true;
 			}
+		case android.R.id.home:
+		case R.id.submit_cancel:
+			finish();
+			return true;
+		}
 
 
-			return super.onOptionsItemSelected(item);
-
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**

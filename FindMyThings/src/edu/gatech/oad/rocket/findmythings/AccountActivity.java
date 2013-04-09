@@ -73,13 +73,10 @@ public class AccountActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-        	Intent i = new Intent(getApplicationContext(), MainActivity.class);
 			finish();
-			startActivity(i);
 			return true;
 		case R.id.toEdit:
-			toEdit();
-			return true;
+			return toEdit();
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -94,9 +91,7 @@ public class AccountActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Intent i = new Intent(getApplicationContext(), MainActivity.class);
-			finish();
-			startActivity(i);
+			super.onBackPressed();
 			return true;
 	    }
 
@@ -106,10 +101,20 @@ public class AccountActivity extends Activity {
 	/**
 	 * creates new intent of AccountEditActivity - window to change account seetings
 	 */
-	public void toEdit() {
-		Intent goToNextActivity = new Intent(getApplicationContext(), AccountEditActivity.class);
-		finish();
+	public boolean toEdit() {
+		Intent goToNextActivity = new Intent(this, AccountEditActivity.class);
 		startActivity(goToNextActivity);
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+		return true;
 	}
+	
+	/**
+	 * Called to pop the login window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+    }
 
 }

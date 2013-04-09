@@ -79,23 +79,32 @@ public class AccountEditActivity extends Activity {
 			Login.currUser.setName(mName.getText().toString());
 			Login.currUser.setAddress(mAddy.getText().toString());
 			Login.currUser.setPhone(mPhone.getText().toString());
-			toMyAccount();
-			return true;
+			return toAccount(true);
 		case R.id.edit_cancel:
-			toMyAccount();
-			return true;
+			return toAccount(false);
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 	
 	/**
-	 * Goes to MyAccount activity
+	 * Called to pop the login window from the navigation stack
 	 */
-	public void toMyAccount() {
-		Intent goToNextActivity = new Intent(getApplicationContext(), AccountActivity.class);
-		goToNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			finish();
-			startActivity(goToNextActivity);
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
+	
+	/**
+	 * Returns to the account window either as a result of saving or hitting back
+	 * @param saved true to push account, false to pop
+	 * @return true, always true. Why? Because.
+	 */
+	private boolean toAccount(boolean saved) {
+		finish();
+	    if (saved) overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+	    return true;
 	}
 
 }

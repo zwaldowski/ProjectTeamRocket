@@ -75,28 +75,15 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.filter_ok:
-	        	@SuppressWarnings("unused")
 				ArrayList<Item> results = cnt.filter(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());
-	        	// TODO: this
-	        	
-	        	//update the mainActivity adapter
 				MainActivity.update(results, kind);
+				
 				return true;
 	        case R.id.filter_cancel:
-	         	return toParent();
+	         	finish();
+	         	return true;
 	    }
 	    return super.onOptionsItemSelected(item);
-	}
-	
-	/**
-	 * Goes back to Main when user selects the cancel in the menu
-	 * @return true
-	 */
-	public boolean toParent() {
-		Intent toPar = new Intent(getApplicationContext(), MainActivity.class);
-		finish();
-		startActivity(toPar);
-		return true;
 	}
 	
 	/**
@@ -108,8 +95,9 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		@SuppressWarnings("unused")
 		int i  = pos; // Any = 0 , Heirloom = 1, Keepsake = 2, Misc = 3
-		System.out.close();
+		// TODO
 	}
 
 	/**
@@ -154,5 +142,29 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 		// TODO Auto-generated method stub
 		
 	}
+
+	/**
+	 * Returns to Item List activity. Animation and ID helper.
+	 * @return boolean
+	 */
+	public boolean toItemList() {
+		Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
+		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		finish();
+		startActivity(goToNextActivity);
+		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+		return true;
+	}
+
+	/**
+	 * Called to pop the login window from the navigation stack
+	 */
+	@Override 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+    }
+	
 
 }
