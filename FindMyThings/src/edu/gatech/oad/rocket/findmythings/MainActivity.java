@@ -233,6 +233,7 @@ public class MainActivity extends ListActivity  {
 		final SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() { 
 		    @Override 
 		    public boolean onQueryTextChange(String newText) { 
+		    	// TODO actually search
 		    	if(!newText.isEmpty()) {
 			    	adapter.getFilter().filter(newText);
 					adapter.notifyDataSetChanged();
@@ -350,7 +351,7 @@ public class MainActivity extends ListActivity  {
      * @return boolean: true if logout, false if not
      */
     public boolean logOut() {
-    	ErrorDialog toLogin =  new ErrorDialog("Really log out?", "Sign out", "Cancel");
+    	ErrorDialog toLogin =  new ErrorDialog(getString(R.string.main_message_signout), "Sign out", "Cancel");
 		AlertDialog.Builder temp = toLogin.getDialog(this,
 				new DialogInterface.OnClickListener() {
 

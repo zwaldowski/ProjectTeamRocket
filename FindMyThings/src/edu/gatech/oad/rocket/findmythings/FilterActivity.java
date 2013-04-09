@@ -77,7 +77,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	        case R.id.filter_ok:
 				ArrayList<Item> results = cnt.filter(kind, mCat.getSelectedItemPosition(), mStatus.getSelectedItemPosition(), mDate.getSelectedItemPosition());
 				MainActivity.update(results, kind);
-				
+				finish();
 				return true;
 	        case R.id.filter_cancel:
 	         	finish();

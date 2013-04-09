@@ -76,7 +76,7 @@ public class SubmitActivity extends Activity {
 		// Hide the Up button in the action bar.
 		setupActionBar();
 
-		setTitle("SubmitActivity an Item");
+		setTitle("Submit an Item");
 
 		SubmitFragment frag = (SubmitFragment) getFragmentManager().findFragmentById(R.id.submit_fragment);
 		frag.syncTypePref(mType);
