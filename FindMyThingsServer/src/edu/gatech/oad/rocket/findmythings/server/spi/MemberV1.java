@@ -3,8 +3,6 @@ package edu.gatech.oad.rocket.findmythings.server.spi;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.CollectionResponse;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
@@ -17,7 +15,9 @@ import org.apache.shiro.realm.Realm;
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(name = "fmthings", version = "v1")
 public class MemberV1 extends BaseEndpoint {
@@ -26,16 +26,14 @@ public class MemberV1 extends BaseEndpoint {
 	public CollectionResponse<AppMember> listMembers(@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
 		List<AppMember> list = new ArrayList<>();
-		Cursor cursor; int bakedInOffset;
+		
+		int bakedInOffset;
 		if (cursorString != null && cursorString.startsWith("FMTBAKEDIN")) {
-			cursor = null;
 			String[] split = cursorString.split("-");
 			bakedInOffset = split.length == 1 ? -1 : Integer.parseInt(split[1]);
 		} else if (cursorString == null) {
-			cursor = null;
 			bakedInOffset = 0;
 		} else {
-			cursor = Cursor.fromWebSafeString(cursorString);
 			bakedInOffset = -1;
 		}
 
@@ -56,21 +54,12 @@ public class MemberV1 extends BaseEndpoint {
 		if (limit != null && bakedInIncludeCount <= limit) {
 			cursorString = bakedInIncludeCount == limit ? "FMTBAKEDIN" : "FMTBAKEDIN-" + bakedInIncludeCount;
 		} else {
-			Query<DBMember> baseQuery = DatabaseService.ofy().load().type(DBMember.class).order("dateRegistered");
-			if (cursor != null) baseQuery = baseQuery.startAt(cursor);
-			if (limit != null) baseQuery = baseQuery.limit(limit);
-
-			QueryResultIterator<DBMember> iterator = baseQuery.chunk(Integer.MAX_VALUE).iterator();
-			while (iterator.hasNext()) {
-				list.add(iterator.next());
-			}
-
-			cursor = iterator.getCursor();
-			if (cursor != null) {
-				cursorString = cursor.toWebSafeString();
-			} else {
-				cursorString = "";
-			}
+			Query<DBMember> query = DatabaseService.ofy().load().type(DBMember.class).order("dateRegistered-");
+			List<DBMember> queriedMembers = new ArrayList<>();
+			StringBuilder outCursorString = new StringBuilder();
+			pagedQueryArray(query, cursorString, limit, null, queriedMembers, outCursorString);
+			list.addAll(queriedMembers);
+			cursorString = outCursorString.toString();
 		}
 
 		return CollectionResponse.<AppMember>builder().setItems(list).setNextPageToken(cursorString).build();
@@ -87,4 +76,15 @@ public class MemberV1 extends BaseEndpoint {
 			DatabaseService.ofy().save().entity((DBMember)member);
 		}
 	}
+
+	@ApiMethod(name = "members.search", path = "members/search")
+	public CollectionResponse<DBMember> searchMembers(@Named("email") String email,
+			@Nullable @Named("cursor") String cursorString,
+			@Nullable @Named("limit") Integer limit) {
+		Map<String, Object> filter = new HashMap<>();
+		filter.put("submittingUser >=", email);
+		filter.put("submittingUser <=", email+"\ufffd");
+		return MemberV1.pagedQuery(DBMember.class, cursorString, limit, filter);
+	}
+	
 }

@@ -29,6 +29,7 @@ public class DBItem implements Searchable {
 	private String name = "";
 	@Unindex private String location = "";
 	private String description = "";
+	private String submittingUser = "";
 
 	private final Set<String> searchTokens = new HashSet<>();
 
@@ -131,6 +132,13 @@ public class DBItem implements Searchable {
 		this.reward = reward;
 	}
 
+	/**
+	 * @param submittingUser the submittingUser to set
+	 */
+	public void setSubmittingUser(String submittingUser) {
+		this.submittingUser = submittingUser;
+	}
+
 	// Getters
 
 	/**
@@ -191,12 +199,19 @@ public class DBItem implements Searchable {
 		return location;
 	}
 
+	/**
+	 * @return the submittingUser
+	 */
+	public String getSubmittingUser() {
+		return submittingUser;
+	}
+
 	public Date getSubmittedDate() {
 		return submittedDate;
 	}
 
 	public String getSearchableContent() {
-		return getName() + " " + getDescription();
+		return getName() + " " + getCategory().searchableValue() + " " + Integer.toString(getReward()) + " " + getDescription();
 	}
 
 	public Set<String> getSearchTokens() {

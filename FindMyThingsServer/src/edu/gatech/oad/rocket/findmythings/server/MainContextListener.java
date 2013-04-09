@@ -36,7 +36,6 @@ import java.util.Set;
 public class MainContextListener extends GuiceServletContextListener {
 
 	private static final boolean ENABLE_TEST_MODE = false;
-	private static final boolean ENABLE_OLD_API = false;
 
 	private static final Key<WebAuthenticationFilter> FORM_AUTH = Key.get(WebAuthenticationFilter.class);
 	private static final Key<BearerTokenAuthenticatingFilter> TOKEN_AUTH = Key.get(BearerTokenAuthenticatingFilter.class);

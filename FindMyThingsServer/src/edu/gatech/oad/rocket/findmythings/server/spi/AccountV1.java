@@ -16,13 +16,10 @@ import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.EmailValidator;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.PrincipalCollection;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import java.util.HashSet;
-import java.util.Set;
 
 @Api(name = "fmthings", version = "v1")
 public class AccountV1 extends BaseEndpoint {
@@ -79,9 +76,9 @@ public class AccountV1 extends BaseEndpoint {
 			PhoneNumber phoneNum = new PhoneNumber(phone);
 
 			if (user == null) {
-				Set<String> roles = new HashSet<>();
+				HashSet<String> roles = new HashSet<>();
 				roles.add("user");
-				Set<String> permissions = new HashSet<>();
+				HashSet<String> permissions = new HashSet<>();
 				permissions.add("browse");
 				permissions.add("submit");
 
@@ -119,10 +116,7 @@ public class AccountV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "account.get", path = "account")
 	public AppMember getCurrentMember() {
-		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
-		if (principals == null || principals.isEmpty()) return null;
-		String email = (String)principals.getPrimaryPrincipal();
-		return getMemberWithEmail(email);
+		return getMemberWithEmail(getCurrentMemberEmail());
 	}
 
 	@ApiMethod(name = "account.update", path = "account/update")

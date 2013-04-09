@@ -3,8 +3,6 @@ package edu.gatech.oad.rocket.findmythings.server.spi;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.CollectionResponse;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
@@ -13,40 +11,19 @@ import edu.gatech.oad.rocket.findmythings.server.util.SearchableHelper;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 @Api(name = "fmthings", version = "v1")
 public class ItemV1 extends BaseEndpoint {
-
-	private CollectionResponse<DBItem> getItemList(Query<DBItem> query, String type, String cursorString, Integer limit) {
-		Cursor cursor = cursorString == null ? null : Cursor.fromWebSafeString(cursorString);
-		if (type != null) query = query.filter("type", type);
-		if (cursor != null) query = query.startAt(cursor);
-		if (limit != null) query = query.limit(limit);
-
-		QueryResultIterator<DBItem> iterator = query.chunk(Integer.MAX_VALUE).iterator();
-		List<DBItem> list = new ArrayList<>();
-		while (iterator.hasNext()) {
-			list.add(iterator.next());
-		}
-
-		cursor = iterator.getCursor();
-		if (cursor != null) {
-			cursorString = cursor.toWebSafeString();
-		} else {
-			cursorString = "";
-		}
-
-		return CollectionResponse.<DBItem>builder().setItems(list).setNextPageToken(cursorString).build();
-	}
 
 	@ApiMethod(name = "items.list", path = "items")
 	public CollectionResponse<DBItem> listItems(@Nullable @Named("type") String type,
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
+		HashMap<String, Object> filter = new HashMap<>();
+		filter.put("type", type);
 		Query<DBItem> baseQuery = DatabaseService.ofy().load().type(DBItem.class).order("-dateSubmitted");
-		return getItemList(baseQuery, type, cursorString, limit);
+		return ItemV1.pagedQuery(baseQuery, cursorString, limit, filter);
 	}
 
 	@ApiMethod(name = "items.get", path = "items/get")
@@ -78,8 +55,30 @@ public class ItemV1 extends BaseEndpoint {
 			@Nullable @Named("type") String type,
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
-		Query<DBItem> baseQuery = SearchableHelper.search(DatabaseService.ofy(), DBItem.class, query);
-		return getItemList(baseQuery, type, cursorString, limit);
+		HashMap<String, Object> filter = new HashMap<>();
+		filter.put("type", type);
+		SearchableHelper.addSearchFilter(filter, query);
+		return ItemV1.pagedQuery(DBItem.class, cursorString, limit, filter);
+	}
+
+	@ApiMethod(name = "items.getMine", path = "items/mine")
+	public CollectionResponse<DBItem> listMyItems(@Nullable @Named("type") String type,
+			@Nullable @Named("cursor") String cursorString,
+			@Nullable @Named("limit") Integer limit) {
+		String email = getCurrentMemberEmail();
+		if (email == null) return null;
+		return listItemsForMember(email, type, cursorString, limit);
+	}
+
+	@ApiMethod(name = "items.getByUser", path = "items/forMember")
+	public CollectionResponse<DBItem> listItemsForMember(@Named("email") String email,
+			@Nullable @Named("type") String type,
+			@Nullable @Named("cursor") String cursorString,
+			@Nullable @Named("limit") Integer limit) {
+		HashMap<String, Object> filter = new HashMap<>();
+		filter.put("type", type);
+		filter.put("submittingUser", email);
+		return ItemV1.pagedQuery(DBItem.class, cursorString, limit, filter);
 	}
 
 }
