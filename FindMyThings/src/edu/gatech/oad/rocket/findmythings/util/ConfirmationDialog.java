@@ -14,7 +14,7 @@ import android.util.AttributeSet;
  * This preference will persist a boolean into the SharedPreferences key
  * dictated by android:key in the XML preference.
  *
- * Dervied from:
+ * Derived from:
  * - http://stackoverflow.com/questions/5365310/creating-a-dialogpreference-from-xml/8818446#8818446
  * - YesNoPreference.java in Android Private SDK
  * 
