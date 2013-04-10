@@ -640,77 +640,6 @@
         "type" : "string",
         "enum" : [ "HEIR", "KEEPSAKE", "MISC" ]
       },
-      "CollectionResponse_DBMember" : {
-        "id" : "CollectionResponse_DBMember",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "DBMember"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
-      },
-      "DBMember" : {
-        "id" : "DBMember",
-        "type" : "object",
-        "properties" : {
-          "email" : {
-            "type" : "string"
-          },
-          "hashedPassword" : {
-            "type" : "string"
-          },
-          "salt" : {
-            "type" : "string",
-            "format" : "byte"
-          },
-          "roles" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
-          },
-          "dateRegistered" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "address" : {
-            "type" : "string"
-          },
-          "phone" : {
-            "$ref" : "PhoneNumber"
-          },
-          "registered" : {
-            "type" : "boolean"
-          },
-          "locked" : {
-            "type" : "boolean"
-          },
-          "admin" : {
-            "type" : "boolean"
-          },
-          "editable" : {
-            "type" : "boolean"
-          },
-          "stringPermissions" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
-          },
-          "password" : {
-            "type" : "string"
-          }
-        }
-      },
       "CollectionResponse_AppMember" : {
         "id" : "CollectionResponse_AppMember",
         "type" : "object",
@@ -814,7 +743,7 @@
       },
       "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.searchMembers" : {
         "response" : {
-          "$ref" : "CollectionResponse_DBMember"
+          "$ref" : "CollectionResponse_AppMember"
         }
       },
       "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.getMember" : {

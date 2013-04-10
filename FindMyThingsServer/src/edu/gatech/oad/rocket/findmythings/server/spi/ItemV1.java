@@ -56,6 +56,7 @@ public class ItemV1 extends BaseEndpoint {
 		return ret;
 	}
 
+	@SuppressWarnings("unchecked")
 	@ApiMethod(name = "items.search", path = "search")
 	public CollectionResponse<DBItem> searchItems(@Named("query") String query,
 			@Nullable @Named("type") String type,
@@ -64,7 +65,7 @@ public class ItemV1 extends BaseEndpoint {
 		HashMap<String, Object> filter = new HashMap<>();
 		filter.put("type", type);
 		SearchableHelper.addSearchFilter(filter, query);
-		return ItemV1.pagedQuery(DBItem.class, cursorString, limit, filter);
+		return (CollectionResponse<DBItem>)pagedQuery(DBItem.class, cursorString, limit, filter);
 	}
 
 	@ApiMethod(name = "items.getMine", path = "items/mine")
@@ -76,6 +77,7 @@ public class ItemV1 extends BaseEndpoint {
 		return listItemsForMember(email, type, cursorString, limit);
 	}
 
+	@SuppressWarnings("unchecked")
 	@ApiMethod(name = "items.getByUser", path = "items/forMember")
 	public CollectionResponse<DBItem> listItemsForMember(@Named("email") String email,
 			@Nullable @Named("type") String type,
@@ -84,7 +86,7 @@ public class ItemV1 extends BaseEndpoint {
 		HashMap<String, Object> filter = new HashMap<>();
 		filter.put("type", type);
 		filter.put("submittingUser", email);
-		return ItemV1.pagedQuery(DBItem.class, cursorString, limit, filter);
+		return (CollectionResponse<DBItem>)pagedQuery(DBItem.class, cursorString, limit, filter);
 	}
 
 }

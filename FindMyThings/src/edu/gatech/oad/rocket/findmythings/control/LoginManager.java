@@ -1,5 +1,10 @@
 package edu.gatech.oad.rocket.findmythings.control;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
+import com.google.api.client.json.JsonGenerator;
+import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.client.util.Base64;
 import com.google.api.services.fmthings.model.AppMember;
 
@@ -14,6 +19,15 @@ public class LoginManager {
 		prefs = SharedApplication.getInstance().getSharedPreferences(LOGIN_PREFS_DOMAIN, 0);
 		email = prefs.getString("email", null);
 		token = prefs.getString("token", null);
+		String appmemberString = prefs.getString("currentUser", null);
+		if (appmemberString != null) {
+			try {
+				currentUser = new JacksonFactory().createJsonParser(appmemberString).parseAndClose(AppMember.class, null);
+			} catch (IOException e) {
+				currentUser = null;
+			}
+		}
+		this.currentUserCouldBeOutOfDate = true;
 	}
 	
 	private static final class LoginManagerSingleton {
@@ -27,10 +41,12 @@ public class LoginManager {
 	private String email;
 	private String token;
 	private AppMember currentUser;
+	private boolean currentUserCouldBeOutOfDate;
 	
 	public void setCurrentEmailAndToken(String email, String token) {
 		this.email = email;
 		this.token = token;
+		this.currentUserCouldBeOutOfDate = true;
 		SharedPreferences.Editor edit = prefs.edit();
 		edit.putString("email", this.email);
 		edit.putString("token", this.token);
@@ -47,10 +63,30 @@ public class LoginManager {
 	
 	public void setCurrentUser(AppMember currentUser) {
 		this.currentUser = currentUser;
+		this.currentUserCouldBeOutOfDate = false;
+		String stringValue = null;
+		
+		if (this.currentUser != null) {
+			try {
+				StringWriter writer = new StringWriter();
+				JsonGenerator gen = new JacksonFactory().createJsonGenerator(writer);
+				gen.serialize(currentUser);
+				gen.close();
+				stringValue = writer.toString();
+			} catch (IOException e) {}
+		}
+		
+		SharedPreferences.Editor edit = prefs.edit();
+		edit.putString("currentUser", stringValue);
+		edit.commit();
 	}
 	
 	public AppMember getCurrentUser() {
 		return currentUser;
+	}
+	
+	public boolean currentUserCouldBeOutOfDate() {
+		return currentUserCouldBeOutOfDate;
 	}
 	
 	public boolean isLoggedIn() {
@@ -66,6 +102,7 @@ public class LoginManager {
 	public void logout() {
 		setCurrentEmailAndToken(null, null);
 		setCurrentUser(null);
+		this.currentUserCouldBeOutOfDate = false;
 	}
 
 }

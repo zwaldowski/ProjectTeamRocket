@@ -80,14 +80,15 @@ public class MemberV1 extends BaseEndpoint {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@ApiMethod(name = "members.search", path = "members/search")
-	public CollectionResponse<DBMember> searchMembers(@Named("email") String email,
+	public CollectionResponse<AppMember> searchMembers(@Named("email") String email,
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
 		Map<String, Object> filter = new HashMap<>();
 		filter.put("submittingUser >=", email);
 		filter.put("submittingUser <=", email+"\ufffd");
-		return MemberV1.pagedQuery(DBMember.class, cursorString, limit, filter);
+		return (CollectionResponse<AppMember>)pagedQuery(DBMember.class, cursorString, limit, filter);
 	}
 	
 }

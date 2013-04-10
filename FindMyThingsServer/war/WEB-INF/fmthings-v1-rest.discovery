@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/EteilNfjOmjVyzLnXpMIcG5DLis\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/an9Ob4v0a5G79KLX7GeREJ9ix-w\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -148,21 +148,6 @@
     }
    }
   },
-  "CollectionResponse_DBMember": {
-   "id": "CollectionResponse_DBMember",
-   "type": "object",
-   "properties": {
-    "items": {
-     "type": "array",
-     "items": {
-      "$ref": "DBMember"
-     }
-    },
-    "nextPageToken": {
-     "type": "string"
-    }
-   }
-  },
   "DBItem": {
    "id": "DBItem",
    "type": "object",
@@ -205,62 +190,6 @@
     },
     "type": {
      "$ref": "Type"
-    }
-   }
-  },
-  "DBMember": {
-   "id": "DBMember",
-   "type": "object",
-   "properties": {
-    "address": {
-     "type": "string"
-    },
-    "admin": {
-     "type": "boolean"
-    },
-    "dateRegistered": {
-     "type": "string",
-     "format": "date-time"
-    },
-    "editable": {
-     "type": "boolean"
-    },
-    "email": {
-     "type": "string"
-    },
-    "hashedPassword": {
-     "type": "string"
-    },
-    "locked": {
-     "type": "boolean"
-    },
-    "name": {
-     "type": "string"
-    },
-    "password": {
-     "type": "string"
-    },
-    "phone": {
-     "$ref": "PhoneNumber"
-    },
-    "registered": {
-     "type": "boolean"
-    },
-    "roles": {
-     "type": "array",
-     "items": {
-      "type": "string"
-     }
-    },
-    "salt": {
-     "type": "string",
-     "format": "byte"
-    },
-    "stringPermissions": {
-     "type": "array",
-     "items": {
-      "type": "string"
-     }
     }
    }
   },
@@ -759,7 +688,7 @@
       "email"
      ],
      "response": {
-      "$ref": "CollectionResponse_DBMember"
+      "$ref": "CollectionResponse_AppMember"
      }
     },
     "update": {

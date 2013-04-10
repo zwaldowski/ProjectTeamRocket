@@ -21,6 +21,7 @@ import com.googlecode.objectify.cmd.Query;
 
 abstract class BaseEndpoint {
 	
+	// <T extends Comparable<? super T>>
 	static <T> void pagedQueryArray(Query<T> query, String cursorString, Integer limit, Map<String, Object> filters, List<T> outList, StringBuilder outCursorString) {
 		Cursor cursor = cursorString == null ? null : Cursor.fromWebSafeString(cursorString);
 		if (filters != null) {
@@ -56,8 +57,8 @@ abstract class BaseEndpoint {
 		return build.build();
 	}
 
-	static <T> CollectionResponse<T> pagedQuery(Class<T> clazz, String cursorString, Integer limit, Map<String, Object> filters) {
-		Query<T> query = DatabaseService.ofy().load().type(clazz);
+	static CollectionResponse<?> pagedQuery(Class<?> clazz, String cursorString, Integer limit, Map<String, Object> filters) {
+		Query<?> query = DatabaseService.ofy().load().type(clazz);
 		return pagedQuery(query, cursorString, limit, filters);
 	}
 

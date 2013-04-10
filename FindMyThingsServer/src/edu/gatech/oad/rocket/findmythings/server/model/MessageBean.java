@@ -1,7 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.server.model;
 
-import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
-
 /**
  * This simple wrapper class allows us to return status messages from the Google App Engine Cloud Endpoints.
  *
