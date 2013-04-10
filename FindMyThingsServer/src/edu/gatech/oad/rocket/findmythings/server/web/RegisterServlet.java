@@ -102,7 +102,7 @@ public class RegisterServlet extends TemplateServlet {
 				if (address != null) newUser.setAddress(address);
 			}
 			
-			newUser.setIsAdmin(false);
+			newUser.setAdmin(false);
 			
 			DatabaseService.ofy().save().entity(newUser);
 

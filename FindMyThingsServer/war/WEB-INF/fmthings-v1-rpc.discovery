@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/XbNTBmAigXVoOM1t_WHLHx2iBgc\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/9WUB9EPZpLZ9PIzwbBEkVfRkKyg\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -228,9 +228,6 @@
     },
     "hashedPassword": {
      "type": "string"
-    },
-    "isAdmin": {
-     "type": "boolean"
     },
     "locked": {
      "type": "boolean"

@@ -93,7 +93,7 @@ public class AccountV1 extends BaseEndpoint {
 				if (address != null) newUser.setAddress(address);
 			}
 			
-			newUser.setIsAdmin(isAdmin);
+			newUser.setAdmin(isAdmin);
 			
 			DatabaseService.ofy().save().entity(newUser);
 

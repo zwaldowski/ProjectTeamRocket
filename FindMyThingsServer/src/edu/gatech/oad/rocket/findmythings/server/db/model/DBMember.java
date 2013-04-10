@@ -244,7 +244,7 @@ public class DBMember implements AppMutableMember {
 	}
 
 	@Override
-	public void setIsAdmin(boolean admin) {
+	public void setAdmin(boolean admin) {
 		permissions.clear();
 		roles.clear();
 		if (admin) {
