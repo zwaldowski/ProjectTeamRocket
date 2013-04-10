@@ -268,16 +268,11 @@ public class LoginActivity extends Activity {
 	public class UserLoginTask extends AsyncTask<String, Void, MessageBean> {
 		@Override
 		protected MessageBean doInBackground(String... params) {
-			String email = params[0];
-			String password = params[1];
-			
-			MessageBean result = null;
 			try {
-				result = EndpointUtils.getEndpoint().account().login(email, password).execute();
+				return EndpointUtils.getEndpoint().account().login(params[0], params[1]).execute();
 			} catch (IOException e) {
 				return null;
 			}
-			return result;
 		}
 
 		/**

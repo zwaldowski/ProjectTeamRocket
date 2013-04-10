@@ -1,6 +1,16 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import java.io.IOException;
+
+import com.google.api.services.fmthings.EndpointUtils;
+import com.google.api.services.fmthings.model.DBItem;
+
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -9,10 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import edu.gatech.oad.rocket.findmythings.control.*;
 import edu.gatech.oad.rocket.findmythings.model.Category;
-import edu.gatech.oad.rocket.findmythings.model.Item;
 import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.util.*;
 
@@ -52,6 +62,15 @@ public class SubmitActivity extends Activity {
 	private Category mCategory = Category.MISC;
 
 	/**
+	 * Keep track of the task to ensure we can cancel it if requested.
+	 */
+	private SubmitItemTask mSubmitTask = null;
+	
+	private View mStatusForm;
+	private View mStatusView;
+	private TextView mStatusMessageView;
+
+	/**
 	 * creates new window with correct layout
 	 * @param Bundle savedInstanceState
 	 */
@@ -76,11 +95,13 @@ public class SubmitActivity extends Activity {
 		// Hide the Up button in the action bar.
 		setupActionBar();
 
-		setTitle("Submit an Item");
-
 		SubmitFragment frag = (SubmitFragment) getFragmentManager().findFragmentById(R.id.submit_fragment);
 		frag.syncTypePref(mType);
 		frag.syncCatPref(mCategory);
+		
+		mStatusForm = findViewById(R.id.submit_form);
+		mStatusView = findViewById(R.id.submit_status);
+		mStatusMessageView = (TextView) findViewById(R.id.submit_status_message);
 	}
 
 	/**
@@ -146,6 +167,35 @@ public class SubmitActivity extends Activity {
 
 	}
 	
+	private boolean attemptToSubmit() {
+		if (mSubmitTask != null) {
+			return false;
+		}
+		
+		if (!checkforErrors()) {
+			mStatusMessageView.setText(R.string.submit_progress_message);
+			showProgress(true);
+			
+			// setDate?
+			// setSubmittedDate?
+			// setSubmittingUser?
+			loc = location.getText().toString();
+			rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
+
+			DBItem newItem = new DBItem().setName(name).setReward(rward)
+					.setCategory(mCategory.name()).setType(mType.name())
+					.setDescription(desc).setLocation(loc);
+			
+			// Checks for valid user name
+			mSubmitTask = new SubmitItemTask();
+			mSubmitTask.execute(newItem);
+			return true;
+		} else {
+			focusView.requestFocus();
+			return false;
+		}
+	}
+	
 	/**
 	 * deals with action when an options button is selected
 	 * @param MenuItem item
@@ -155,25 +205,7 @@ public class SubmitActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.submit_ok:
-			if (checkforErrors()) { //There was an error
-				focusView.requestFocus(); //Show error
-				return false;
-			}
-			else {
-				loc = location.getText().toString();
-				rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
-
-				Item temp = new Item(name,rward);
-				temp.setCategory(mCategory);
-				temp.setType(mType);
-				temp.setDescription(desc);
-				temp.setLoc(loc);
-
-				control.addItem(temp);
-				//ItemListFragment.update(control.getItem(temp.getType()));
-
-				return toItemList();
-			}
+			return attemptToSubmit();
 		case android.R.id.home:
 		case R.id.submit_cancel:
 			finish();
@@ -230,6 +262,143 @@ public class SubmitActivity extends Activity {
 		startActivity(goToNextActivity);
 		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
 		return true;
+	}
+	
+
+
+	/**
+	 * Shows the progress UI and hides the form.
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+	private void showProgress(final boolean show) {
+		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+		// for very easy animations. If available, use these APIs to fade-in
+		// the progress spinner.
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+			int shortAnimTime = getResources().getInteger(
+					android.R.integer.config_shortAnimTime);
+
+			mStatusView.setVisibility(View.VISIBLE);
+			mStatusView.animate().setDuration(shortAnimTime)
+					.alpha(show ? 1 : 0)
+					.setListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							mStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+						}
+					});
+
+			mStatusForm.setVisibility(View.VISIBLE);
+			mStatusForm.animate().setDuration(shortAnimTime)
+					.alpha(show ? 0 : 1)
+					.setListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							mStatusForm.setVisibility(show ? View.GONE : View.VISIBLE);
+						}
+					});
+		} else {
+			// The ViewPropertyAnimator APIs are not available, so simply show
+			// and hide the relevant UI components.
+			mStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+			mStatusForm.setVisibility(show ? View.GONE : View.VISIBLE);
+		}
+	}
+
+	/**
+	 * Represents an asynchronous submission task used to upload an item.
+	 */
+	public class SubmitItemTask extends AsyncTask<DBItem, Void, DBItem> {
+
+		@Override
+		protected DBItem doInBackground(DBItem... param) {
+			try {
+				return EndpointUtils.getEndpoint().items().insert(param[0]).execute();
+			} catch (IOException e) {
+				return null;
+			}
+		}
+
+		/**
+		 * deals with action when submitted either sucessfully or not
+		 * @param output - response from the API method
+		 */
+		@Override
+		protected void onPostExecute(final DBItem output) {
+			toItemList();
+			//control.addItem(temp);
+			
+			/*mAuthTask = null;
+
+			String token = null, email = null, failureMessage = null;
+			if (output != null) {
+				token = output.getToken();
+				email = output.getEmail();
+				failureMessage = output.getFailureReason();
+			}
+			Messages.Login failureType = EnumHelper.<Messages.Login>forTextString(Messages.Login.class, failureMessage);
+			
+			if (token != null && email != null) {
+				LoginManager.getLoginManager().setCurrentEmailAndToken(email, token);
+				new AsyncTask<Void, Void, AppMember>(){
+
+					@Override
+					protected AppMember doInBackground(Void... arg0) {
+						try {
+							return EndpointUtils.getEndpoint().account().get().execute();
+						} catch (IOException e) {
+							return null;
+						}
+						
+					}
+					
+					@Override
+					protected void onPostExecute(final AppMember output) {
+						showProgress(false);
+						LoginManager.getLoginManager().setCurrentUser(output);
+						toMainReload();
+					}
+					
+				}.execute();
+				return;
+			} else if (failureType != null) {
+				switch (failureType) {
+				case NO_SUCH_USER:
+					mEmailView.setError(getString(R.string.error_no_such_user));
+					mEmailView.requestFocus();
+					break;
+				case BAD_PASSWORD:
+					mPasswordView.setError(getString(R.string.error_incorrect_password));
+					mPasswordView.requestFocus();
+					break;
+				case ACCOUNT_LOCKED:
+				case ACCT_DISABLE:
+					mEmailView.setError(getString(R.string.error_account_locked));
+					mEmailView.requestFocus();
+					break;
+				case MANY_ATTEMPT:
+					mEmailView.setError(getString(R.string.error_many_attempts));
+					mEmailView.requestFocus();
+					break;
+				case INVALID_DATA:
+					ToastHelper.showError(LoginActivity.this, getString(R.string.error_invalid_data));
+					break;
+				}
+			} else {
+				ToastHelper.showError(LoginActivity.this, getString(R.string.error_no_response));
+			}
+			
+			showProgress(false);*/
+		}
+
+		/**
+		 * deals with action when task cancelled
+		 */
+		@Override
+		protected void onCancelled() {
+			//mAuthTask = null;
+			//showProgress(false);
+		}
 	}
 	
 	/**

@@ -1,95 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
-	    
-		<RelativeLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-		    
-			<View
-			    android:id="@+id/leftPadder"
-				android:layout_width="@dimen/form_activity_standard_padding"
-				android:layout_height="fill_parent"
-				android:layout_alignParentLeft="true" />
-			<View
-			    android:id="@+id/rightPadder"
-				android:layout_width="@dimen/form_activity_standard_padding"
-				android:layout_height="fill_parent"
-				android:layout_alignParentRight="true" />
-			    
-			<TextView
-	        	android:id="@+id/required"
-	        	android:text="@string/required"
-	        	style="@style/Header"
-	        	android:layout_alignParentTop="true"
-			    android:layout_toLeftOf="@id/rightPadder"
-			    android:layout_toRightOf="@id/leftPadder" />
-			<EditText
-	        	android:id="@+id/search_name"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:ems="10"
-	        	android:hint="@string/item_name"
-	        	android:summary="@string/i_example"
-	        	android:layout_below="@id/required"
-			    android:layout_toLeftOf="@id/rightPadder"
-			    android:layout_toRightOf="@id/leftPadder">
-	        	<requestFocus />
-			</EditText>
-	
-			<EditText
-	        	android:id="@+id/description"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:ems="10"
-	        	android:hint="@string/describ"
-	        	android:layout_below="@id/search_name"
-			    android:layout_toLeftOf="@id/rightPadder"
-			    android:layout_toRightOf="@id/leftPadder">
-	        	
-			</EditText>
-			
-			<fragment
-	        	android:id="@+id/submit_fragment"
-			android:name="edu.gatech.oad.rocket.findmythings.SubmitFragment"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="130dp"
-	        	tools:layout="@android:layout/list_content"
-	        	android:layout_below="@id/description" />
-			    
-			<TextView
-	        	android:id="@+id/optional"
-	        	android:text="@string/optional"
-	        	style="@style/Header"
-	        	android:layout_below="@id/submit_fragment"
-			    android:layout_toLeftOf="@id/rightPadder"
-			    android:layout_toRightOf="@id/leftPadder" />
-	
-			<EditText
-	        	android:id="@+id/locationtext"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:ems="10"
-	        	android:hint="@string/location"
-	        	android:inputType="textPostalAddress"
-	        	android:layout_below="@id/optional"
-			    android:layout_toLeftOf="@id/rightPadder"
-			    android:layout_toRightOf="@id/leftPadder" />
-	
-			<EditText
-	        	android:id="@+id/rewardtext"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:ems="10"
-	        	android:hint="@string/reward"
-	        	android:inputType="number"
-	        	android:layout_below="@id/locationtext"
-			    android:layout_toLeftOf="@id/rightPadder"
-			    android:layout_toRightOf="@id/leftPadder" />
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SubmitActivity" >
+
+    <!-- Submit progress -->
+
+    <LinearLayout
+        android:id="@+id/submit_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        
+
+        <TextView
+            android:id="@+id/submit_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/submit_progress_message"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
     
-        </RelativeLayout>
-</ScrollView>
+	<ScrollView
+        android:id="@+id/submit_form"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical" >
+	
+	    <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <View
+	            android:id="@+id/leftPadder"
+	            android:layout_width="@dimen/form_activity_standard_padding"
+	            android:layout_height="fill_parent"
+	            android:layout_alignParentLeft="true" />
+	
+	        <View
+	            android:id="@+id/rightPadder"
+	            android:layout_width="@dimen/form_activity_standard_padding"
+	            android:layout_height="fill_parent"
+	            android:layout_alignParentRight="true" />
+	
+	        <TextView
+	            android:id="@+id/required"
+	            style="@style/Header"
+	            android:layout_alignParentTop="true"
+	            android:layout_toLeftOf="@id/rightPadder"
+	            android:layout_toRightOf="@id/leftPadder"
+	            android:text="@string/required" />
+	
+	        <EditText
+	            android:id="@+id/search_name"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/required"
+	            android:layout_toLeftOf="@id/rightPadder"
+	            android:layout_toRightOf="@id/leftPadder"
+	            android:ems="10"
+	            android:hint="@string/item_name"
+	            android:summary="@string/i_example" >
+	
+	            <requestFocus />
+	        </EditText>
+	
+	        <EditText
+	            android:id="@+id/description"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/search_name"
+	            android:layout_toLeftOf="@id/rightPadder"
+	            android:layout_toRightOf="@id/leftPadder"
+	            android:ems="10"
+	            android:hint="@string/describ" >
+	        </EditText>
+	
+	        <fragment
+	            android:id="@+id/submit_fragment"
+	            android:name="edu.gatech.oad.rocket.findmythings.SubmitFragment"
+	            android:layout_width="match_parent"
+	            android:layout_height="130dp"
+	            android:layout_below="@id/description"
+	            tools:layout="@android:layout/list_content" />
+	
+	        <TextView
+	            android:id="@+id/optional"
+	            style="@style/Header"
+	            android:layout_below="@id/submit_fragment"
+	            android:layout_toLeftOf="@id/rightPadder"
+	            android:layout_toRightOf="@id/leftPadder"
+	            android:text="@string/optional" />
+	
+	        <EditText
+	            android:id="@+id/locationtext"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/optional"
+	            android:layout_toLeftOf="@id/rightPadder"
+	            android:layout_toRightOf="@id/leftPadder"
+	            android:ems="10"
+	            android:hint="@string/location"
+	            android:inputType="textPostalAddress" />
+	
+	        <EditText
+	            android:id="@+id/rewardtext"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/locationtext"
+	            android:layout_toLeftOf="@id/rightPadder"
+	            android:layout_toRightOf="@id/leftPadder"
+	            android:ems="10"
+	            android:hint="@string/reward"
+	            android:inputType="number" />
+	    </RelativeLayout>
+	</ScrollView>
+
+</merge>

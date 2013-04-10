@@ -73,11 +73,13 @@
     </string-array>
 
     <string name="key_nooverride_animation">findmythings.activity.nooverride_animation</string>
+    
     <string name="title_activity_admin_popup">Admin_popup</string>
     <string name="title_activity_admin_create">Admin_create</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_my_account">MyAccount</string>
     <string name="title_activity_my_account_edit">MyAccountEdit</string>
     <string name="title_activity_filter">FilterActivity</string>
-
+    <string name="title_activity_submit">Submit an Item</string>
+    
 </resources>
