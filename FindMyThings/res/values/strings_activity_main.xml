@@ -22,6 +22,8 @@
     <string name="main_key_filter">findmythings.main.filter</string>
     <!-- End -->
     
+    <string name="main_menu_search">Search&#8230;</string>
+    <string name="main_menu_log_in">Log in</string>
     
     <string name="main_sign_out_title">Please wait&#8230;</string>
     <string name="main_sign_out_message">Logging out of Find My Things&#8230;</string>

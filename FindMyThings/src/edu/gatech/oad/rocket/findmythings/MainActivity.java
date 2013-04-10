@@ -185,38 +185,13 @@ public class MainActivity extends ListActivity  {
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 				return true;
 	       	case R.id.menu_login: 
-				return Login.currUser==null? toLogIn():logOut(); 
+				return LoginManager.getLoginManager().isLoggedIn() ? logOut() : toLogIn(); 
 			case R.id.menu_account: 
 				return toAccount();
 			case R.id.menu_admin:
 				return toAdmin();
-			case R.id.menu_test:
-				return testAuth();
 	    }
 	    return super.onOptionsItemSelected(item);
-	}
-	
-	public boolean testAuth() {
-		new AsyncTask<Void, Void, MessageBean>(){
-
-			@Override
-			protected MessageBean doInBackground(Void... arg0) {
-				try {
-					return EndpointUtils.getEndpoint().test().authenticated().execute();
-				} catch (IOException e) {
-					return null;
-				}
-				
-			}
-			
-			@Override
-			protected void onPostExecute(final MessageBean output) {
-				System.out.println("Got here!");
-			}
-			
-		}.execute();
-		
-		return true;
 	}
 
 	/**
@@ -302,7 +277,8 @@ public class MainActivity extends ListActivity  {
 		
 	    search = menu.findItem(R.id.main_search_bar);
 	    
-	    boolean loggedIn = LoginManager.getLoginManager().isLoggedIn();
+	    LoginManager mgr = LoginManager.getLoginManager();
+	    boolean loggedIn = mgr.isLoggedIn();
 	    
 		//Set Login Title
 		MenuItem loginMenu = menu.findItem(R.id.menu_login);
@@ -318,7 +294,7 @@ public class MainActivity extends ListActivity  {
 		}
 				
 		//Show/Hide admin button
-		if (!loggedIn || !Login.currUser.isAdmin()) {
+		if (!loggedIn && (mgr.getCurrentUser() != null && !mgr.getCurrentUser().getAdmin())) {
 			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
 			adminMenu.setVisible(false);
 		}
@@ -414,7 +390,7 @@ public class MainActivity extends ListActivity  {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				logOut = true;				
-				mProgressDialog = ProgressDialog.show(getApplicationContext(),
+				mProgressDialog = ProgressDialog.show(MainActivity.this,
 						getString(R.string.main_sign_out_title),
 						getString(R.string.main_sign_out_message), true, false);
 				new LogoutTask().execute();

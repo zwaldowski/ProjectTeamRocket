@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-     <item android:id="@+id/main_search_bar"
-          android:title="Search..."
-          android:icon="@drawable/action_search"
-          android:showAsAction="always|collapseActionView"
-         
-          android:actionViewClass="android.widget.SearchView" />
-     
-     <item android:id="@+id/menu_account"
-          android:title="My Account"
-          android:showAsAction="never"
-          />
-    <item android:id="@+id/menu_login"
-          android:icon="@drawable/ic_action_user"
-          android:showAsAction="never"
-          android:title="Login" >
-    </item> 		
-    <item android:id="@+id/menu_admin"
-          android:showAsAction="never"
-    	  android:title="@string/main_title_admin">
-    </item> 		
-    <item android:id="@+id/menu_test"
-          android:showAsAction="never"
-    	  android:title="Test authenticated">
-    </item>
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main_search_bar"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/action_search"
+        android:showAsAction="always|collapseActionView"
+        android:title="@string/main_menu_search"/>
+    <item
+        android:id="@+id/menu_account"
+        android:showAsAction="never"
+        android:title="@string/main_title_account"/>
+    <item
+        android:id="@+id/menu_login"
+        android:icon="@drawable/ic_action_user"
+        android:showAsAction="never"
+        android:title="@string/main_menu_log_in"/>
+    <item
+        android:id="@+id/menu_admin"
+        android:showAsAction="never"
+        android:title="@string/main_title_admin"/>
 </menu>
