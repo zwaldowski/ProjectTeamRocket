@@ -7,6 +7,8 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.inject.Singleton;
+import com.googlecode.objectify.Key;
+
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
@@ -138,10 +140,12 @@ public class AccountV1 extends BaseEndpoint {
 	}
 
 	@ApiMethod(name = "account.update", path = "account/update")
-	public void updateMember(AppMember member) {
+	public AppMember updateMember(AppMember member) {
 		if (member.isEditable()) {
-			DatabaseService.ofy().save().entity((DBMember)member);
+			Key<DBMember> result = DatabaseService.ofy().save().entity((DBMember)member).now();
+			return DatabaseService.ofy().load().key(result).get();
 		}
+		return null;
 	}
 
 	@ApiMethod(name = "account.login", path = "account/login")

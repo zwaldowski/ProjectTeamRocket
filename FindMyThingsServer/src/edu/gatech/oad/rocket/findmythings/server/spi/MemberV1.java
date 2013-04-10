@@ -3,6 +3,7 @@ package edu.gatech.oad.rocket.findmythings.server.spi;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.CollectionResponse;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
@@ -71,10 +72,12 @@ public class MemberV1 extends BaseEndpoint {
 	}
 
 	@ApiMethod(name = "members.update", path = "members/update")
-	public void updateMember(AppMember member) {
+	public AppMember updateMember(AppMember member) {
 		if (member.isEditable()) {
-			DatabaseService.ofy().save().entity((DBMember)member);
+			Key<DBMember> result = DatabaseService.ofy().save().entity((DBMember)member).now();
+			return DatabaseService.ofy().load().key(result).get();
 		}
+		return null;
 	}
 
 	@ApiMethod(name = "members.search", path = "members/search")
