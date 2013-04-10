@@ -122,9 +122,21 @@ public class MainActivity extends ListActivity  {
 	 * @param kind
 	 */
 	public static void update(ArrayList<Item> tempList, Type kind) {
+		mType = kind;
 		currList = tempList;
 		adapter.setList(tempList);		
+		adapter.notifyDataSetChanged();
 	}	
+	
+	/**
+	 * 
+	 * @param tempList
+	 */
+	public static void update(ArrayList<Item> tempList) {
+		currList = tempList;
+		adapter.setList(tempList);
+		adapter.notifyDataSetChanged();
+	}
 
 	/**
 	 * takes care of action when a key is pressed down
@@ -182,7 +194,8 @@ public class MainActivity extends ListActivity  {
 	protected void onListItemClick (ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Intent next = new Intent(this, ItemDetailActivity.class);
-		next.putExtra("id", id);
+	
+		next.putExtra("id", position);
 	    startActivity(next);
 	    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.oad.rocket.findmythings.model.Item;
+import edu.gatech.oad.rocket.findmythings.MainActivity;
 import edu.gatech.oad.rocket.findmythings.R;
 
 import android.app.Activity;
@@ -183,7 +184,7 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		protected void publishResults(CharSequence constraint,
 				FilterResults results) {
 			
-			mList = (ArrayList<Item>)results.values;
+			MainActivity.update((ArrayList<Item>)results.values);
             notifyDataSetChanged();
 			
 		}
