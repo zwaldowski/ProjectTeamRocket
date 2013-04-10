@@ -13,15 +13,15 @@ public class WelcomeMailmanServlet extends RegisterMailmanServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter(getUsernameParam());
+		String email = request.getParameter(getUsernameParam());
 		try {
 			String subject = "Welcome to Find My Things";
 			String htmlMessage = createDocument("inc/emailWelcome.ftl");
-			getEmailWrapper().send(username, subject, htmlMessage);
+			getEmailWrapper().send(email, subject, htmlMessage);
 
-			LOG.info("Registration email sent to " + username);
+			LOG.info("Registration email sent to " + email);
 		} catch (Exception e) {
-			LOG.severe("Error sending mail to " + username + ": " + e.getMessage());
+			LOG.severe("Error sending mail to " + email + ": " + e.getMessage());
 		}
 	}
 	

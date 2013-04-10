@@ -6,7 +6,7 @@
 			<attribute name="javadoc_location" value="http://developer.android.com/reference/android/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/google-api-client-1.14.1-beta.jar">
+	<classpathentry kind="lib" path="libs/google-api-client-1.14.1-beta.jar" sourcepath="/Users/zw/Desktop/Junk/libs-sources/google-api-client-1.14.1-beta-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://javadoc.google-api-java-client.googlecode.com/hg/1.14.1-beta"/>
 		</attributes>
@@ -48,6 +48,8 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="shared_src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/FindMyThingsShared"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

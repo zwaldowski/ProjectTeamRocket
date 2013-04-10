@@ -65,7 +65,7 @@
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Reset Password</button>
         </div>
-        <input type="hidden" name="${usernameParam!"username"}" value="${username!""}">
+        <input type="hidden" name="${usernameParam!"email"}" value="${email!""}">
         <input type="hidden" name="ticket" value="${code!""}">
         <input type="hidden" name="forgot" value="true">
       </form>

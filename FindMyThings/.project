@@ -30,6 +30,13 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>shared_src</name>
+			<type>2</type>
+			<location>/Users/zw/Documents/School/CS 2340/ProjectTeamRocket/FindMyThingsShared/src</location>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1365557647650</id>

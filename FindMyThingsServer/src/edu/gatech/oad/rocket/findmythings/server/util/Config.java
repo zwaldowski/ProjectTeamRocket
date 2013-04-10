@@ -24,10 +24,10 @@ public final class Config {
 	public static final String APP_EMAIL = "nataero@rocket-findmythings.appspot.com";
 
 	public static final String LOGIN_URL = "/login";
-	public static final String LOGIN_API_URL = "/api/login";
+	public static final String LOGIN_API_URL = "/_ah/api/fmthings/v1/account/login";
 	public static final String SUCCESS_URL = "/";
 
-	public static final String USERNAME_PARAM = "username";
+	public static final String USERNAME_PARAM = "email";
 	public static final String PASSWORD_PARAM = "password";
 	public static final String REMEMBER_ME_PARAM = "rememberMe";
 

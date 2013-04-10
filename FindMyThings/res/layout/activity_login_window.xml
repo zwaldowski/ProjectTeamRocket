@@ -68,18 +68,37 @@
                 android:paddingRight="@dimen/form_activity_input_pad_horizontal"
                 android:paddingTop="@dimen/form_activity_input_pad_vertical"
                 android:singleLine="true" />
-
-            <Button
-                android:id="@+id/sign_in_button"
-                style="@android:style/Widget.Holo.Button.Borderless"
-                android:layout_width="wrap_content"
+            
+            <LinearLayout android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="16dp"
-                android:background="@color/HoloLightBlue"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="@string/action_sign_in_register" />
+                android:orientation="horizontal"
+                style="@android:attr/buttonBarStyle"
+                android:layout_marginTop="16dp">
+    
+               <Button
+                   android:id="@+id/register_button"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:layout_gravity="left"
+                   android:text="@string/action_register_short"
+                   style="@android:style/Widget.Holo.Button.Borderless"
+                   android:background="@color/HoloLightBlue"
+                   android:layout_marginRight="8dp"
+                   android:onClick="goToRegister" />
+    
+               <Button
+                   android:id="@+id/sign_in_button"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:layout_gravity="right"
+                   android:text="@string/action_sign_in_short"
+                   style="@android:style/Widget.Holo.Button.Borderless"
+                   android:background="@color/HoloLightBlue"
+                   android:layout_marginLeft="8dp"
+                   android:onClick="attemptToLogin" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -32,6 +32,10 @@ public final class HTTP {
 		public int toInt() {
 			return code;
 		}
+		
+		public String toString() {
+			return Integer.toString(toInt());
+		}
 	}
 
 	public static final class JSON {
@@ -62,6 +66,7 @@ public final class HTTP {
 			response.setContentType(mimeType);
 			response.setStatus(returnCode.toInt());
 			response.getWriter().println(output);
+			response.getWriter().flush();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

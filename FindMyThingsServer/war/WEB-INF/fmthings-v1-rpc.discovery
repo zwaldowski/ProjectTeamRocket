@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/9WUB9EPZpLZ9PIzwbBEkVfRkKyg\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/EteilNfjOmjVyzLnXpMIcG5DLis\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -266,6 +266,9 @@
    "id": "MessageBean",
    "type": "object",
    "properties": {
+    "email": {
+     "type": "string"
+    },
     "failureReason": {
      "type": "string"
     },
@@ -273,12 +276,10 @@
      "type": "string"
     },
     "status": {
-     "$ref": "Status"
+     "type": "integer",
+     "format": "int32"
     },
     "token": {
-     "type": "string"
-    },
-    "username": {
      "type": "string"
     }
    }
@@ -291,38 +292,6 @@
      "type": "string"
     }
    }
-  },
-  "Status": {
-   "id": "Status",
-   "type": "string",
-   "enum": [
-    "BAD_REQUEST",
-    "BAD_REQUEST",
-    "FORBIDDEN",
-    "FORBIDDEN",
-    "INTERNAL_ERROR",
-    "INTERNAL_ERROR",
-    "NOT_FOUND",
-    "NOT_FOUND",
-    "OK",
-    "OK",
-    "UNAUTHORIZED",
-    "UNAUTHORIZED"
-   ],
-   "enumDescriptions": [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
-   ]
   },
   "Type": {
    "id": "Type",
@@ -348,6 +317,10 @@
     "address": {
      "type": "string"
     },
+    "email": {
+     "type": "string",
+     "required": true
+    },
     "name": {
      "type": "string"
     },
@@ -361,16 +334,12 @@
     },
     "phone": {
      "type": "string"
-    },
-    "username": {
-     "type": "string",
-     "required": true
     }
    },
    "parameterOrder": [
+    "email",
     "password",
-    "password_alt",
-    "username"
+    "password_alt"
    ],
    "returns": {
     "$ref": "MessageBean"
@@ -379,13 +348,13 @@
   "fmthings.account.forgot": {
    "id": "fmthings.account.forgot",
    "parameters": {
-    "username": {
+    "email": {
      "type": "string",
      "required": true
     }
    },
    "parameterOrder": [
-    "username"
+    "email"
    ],
    "returns": {
     "$ref": "MessageBean"
@@ -401,6 +370,20 @@
   "fmthings.account.login": {
    "id": "fmthings.account.login",
    "allowGet": true,
+   "parameters": {
+    "email": {
+     "type": "string",
+     "required": true
+    },
+    "password": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "email",
+    "password"
+   ],
    "returns": {
     "$ref": "MessageBean"
    }
@@ -462,6 +445,10 @@
     "address": {
      "type": "string"
     },
+    "email": {
+     "type": "string",
+     "required": true
+    },
     "name": {
      "type": "string"
     },
@@ -475,16 +462,12 @@
     },
     "phone": {
      "type": "string"
-    },
-    "username": {
-     "type": "string",
-     "required": true
     }
    },
    "parameterOrder": [
+    "email",
     "password",
-    "password_alt",
-    "username"
+    "password_alt"
    ],
    "returns": {
     "$ref": "MessageBean"

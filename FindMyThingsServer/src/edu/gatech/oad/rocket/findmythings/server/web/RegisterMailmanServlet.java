@@ -39,10 +39,10 @@ public class RegisterMailmanServlet extends TemplateServlet {
 		return emailWrapper;
 	}
 
-	private String urlFor(HttpServletRequest request, String code, String userName, boolean forgot) {
+	private String urlFor(HttpServletRequest request, String code, String email, boolean forgot) {
 		try {
 			URI url = new URI(request.getScheme(), null, request.getServerName(), request.getServerPort(), "/activate",
-					Config.TICKET_PARAM+"="+code+"&"+getUsernameParam()+"="+userName+"&"+Config.FORGOT_PASSWORD_PARAM +"="+Boolean.toString(forgot), null);
+					Config.TICKET_PARAM+"="+code+"&"+getUsernameParam()+"="+email+"&"+Config.FORGOT_PASSWORD_PARAM +"="+Boolean.toString(forgot), null);
 			return url.toString();
 		} catch (URISyntaxException e) {
 			throw new RuntimeException(e);
@@ -51,23 +51,23 @@ public class RegisterMailmanServlet extends TemplateServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter(getUsernameParam());
+		String email = request.getParameter(getUsernameParam());
 		try {
 			String registrationString = request.getParameter(Config.TICKET_PARAM);
 			boolean forgot = getBoolRequestParam(request, Config.FORGOT_PASSWORD_PARAM, false);
-			String url = urlFor(request, registrationString, username, forgot);
+			String url = urlFor(request, registrationString, email, forgot);
 			LOG.info("Link URL is " + url);
 
 			String subject = (forgot ? "Password Information" : "Complete Registration") + " for Find My Things";
 			String htmlMessage = createDocument("inc/email.ftl",
-					"email", username,
+					"email", email,
 					"href", url,
 					Config.FORGOT_PASSWORD_PARAM, Boolean.toString(forgot));
-			getEmailWrapper().send(username, subject, htmlMessage);
+			getEmailWrapper().send(email, subject, htmlMessage);
 
-			LOG.info("Registration email sent to " + username + " with return url " + url);
+			LOG.info("Registration email sent to " + email + " with return url " + url);
 		} catch (Exception e) {
-			LOG.severe("Error sending mail to " + username + ": " + e.getMessage());
+			LOG.severe("Error sending mail to " + email + ": " + e.getMessage());
 		}
 	}
 

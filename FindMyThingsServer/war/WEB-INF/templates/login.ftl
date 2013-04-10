@@ -57,7 +57,7 @@
           <div class="controls">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-envelope"></i></span>
-              <input name="${usernameParam!"username"}" id="inputEmail" type="text" placeholder="Email">
+              <input name="${usernameParam!"email"}" id="inputEmail" type="text" placeholder="Email">
             </div>
           </div>
         </div>

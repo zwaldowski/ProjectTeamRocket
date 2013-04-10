@@ -16,8 +16,8 @@ import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.validation.EmailValidator;
-import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
+import edu.gatech.oad.rocket.findmythings.shared.util.validation.EmailValidator;
+import edu.gatech.oad.rocket.findmythings.shared.util.validation.RegexValidator;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
@@ -37,7 +37,7 @@ public class AccountV1 extends BaseEndpoint {
 	MessageBean mailWelcomeReturnOK(String email) {
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.add(TaskOptions.Builder.withUrl("/sendWelcomeMail"));
-		return new MessageBean(HTTP.Status.OK, Messages.Status.OK.toString());
+		return new MessageBean(HTTP.Status.OK.toInt(), Messages.Status.OK.toString());
 	}
 
 	MessageBean mailAuthenticationTokenSendOK(String email, boolean isForgot) {
@@ -50,32 +50,32 @@ public class AccountV1 extends BaseEndpoint {
 				.param(Config.FORGOT_PASSWORD_PARAM, Boolean.toString(isForgot))
 				.param(Config.TICKET_PARAM, registrationToken));
 
-		return new MessageBean(HTTP.Status.OK, Messages.Status.OK.toString());
+		return new MessageBean(HTTP.Status.OK.toInt(), Messages.Status.OK.toString());
 	}
 	
 	private MessageBean createMember(String email, String password, String passwordAlt, 
 			String phone, String name, String address, boolean isAdmin) {
 		try {
 			if (emailIsInvalid(email)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
 			}
 
 			AppMember user = getMemberWithEmail(email);
 
 			if (user != null && user.isRegistered()) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.ALREADY_USER.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.ALREADY_USER.toString());
 			}
 
 			if (password == null || password.length() < 3 || passwordAlt == null || passwordAlt.length() < 3) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BAD_PASSWORD.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.BAD_PASSWORD.toString());
 			}
 
 			if (!password.equals(passwordAlt)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.PASSWORDS_MATCH.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.PASSWORDS_MATCH.toString());
 			}
 
 			if (!getPhoneNumberValidator().isValid(phone)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.INVALID_PHONE.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.INVALID_PHONE.toString());
 			}
 
 			PhoneNumber phoneNum = new PhoneNumber(phone);
@@ -99,38 +99,38 @@ public class AccountV1 extends BaseEndpoint {
 
 			return mailWelcomeReturnOK(email);
 		} catch (Exception e) {
-			return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.INVALID_DATA.toString());
+			return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.INVALID_DATA.toString());
 		}
 	}
 	
 	@ApiMethod(name = "account.createAdmin", path = "register/admin")
-	public MessageBean createAdmin(@Named("username") String email, @Named("password") String password,
+	public MessageBean createAdmin(@Named("email") String email, @Named("password") String password,
 			@Named("password_alt") String passwordAlt, @Named("phone") @Nullable String phone,
 			@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
 		return createMember(email, password, passwordAlt, phone, name, address, true);
 	}
 
 	@ApiMethod(name = "account.register", path = "register")
-	public MessageBean createUser(@Named("username") String email, @Named("password") String password,
+	public MessageBean createUser(@Named("email") String email, @Named("password") String password,
 			@Named("password_alt") String passwordAlt, @Named("phone") @Nullable String phone,
 			@Named("name") @Nullable String name, @Named("address") @Nullable String address) {
 		return createMember(email, password, passwordAlt, phone, name, address, false);
 	}
 
 	@ApiMethod(name = "account.forgot", path = "forgot")
-	public MessageBean memberForgotPassword(@Named("username") String email) {
+	public MessageBean memberForgotPassword(@Named("email") String email) {
 		try {
 			if (emailIsInvalid(email)) {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.BAD_EMAIL_ADDRESS.toString());
 			}
 
 			if (memberExistsWithEmail(email)) {
 				return mailAuthenticationTokenSendOK(email, true);
 			} else {
-				return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.NO_SUCH_MEMBER.toString());
+				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.NO_SUCH_MEMBER.toString());
 			}
 		} catch (Exception e) {
-			return new MessageBean(HTTP.Status.BAD_REQUEST, Messages.Status.FAILED.toString(), Messages.Register.INVALID_DATA.toString());
+			return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.INVALID_DATA.toString());
 		}
 	}
 
@@ -149,15 +149,15 @@ public class AccountV1 extends BaseEndpoint {
 	}
 
 	@ApiMethod(name = "account.login", path = "account/login")
-	public MessageBean getLoginToken() {
+	public MessageBean getLoginToken(@Named("email") String email, @Named("password") String password) {
 		// this was caught by BearerTokenAuthenticatingFilter
-		return new MessageBean(HTTP.Status.OK, Messages.Status.OK.toString());
+		return new MessageBean(HTTP.Status.OK.toInt(), Messages.Status.OK.toString());
 	}
 
 	@ApiMethod(name = "account.logout", path = "account/logout")
 	public MessageBean deleteLoginToken() {
 		// this was caught by BearerTokenRevokeFilter
-		return new MessageBean(HTTP.Status.OK, Messages.Status.OK.toString());
+		return new MessageBean(HTTP.Status.OK.toInt(), Messages.Status.OK.toString());
 	}
 
 }

@@ -1,5 +1,15 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import java.io.IOException;
+
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.services.fmthings.EndpointUtils;
+import com.google.api.services.fmthings.Fmthings;
+import com.google.api.services.fmthings.model.MessageBean;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -14,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,6 +32,7 @@ import edu.gatech.oad.rocket.findmythings.control.*;
 import edu.gatech.oad.rocket.findmythings.model.Admin;
 import edu.gatech.oad.rocket.findmythings.model.Member;
 import edu.gatech.oad.rocket.findmythings.model.User;
+import edu.gatech.oad.rocket.findmythings.shared.util.validation.EmailValidator;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -29,8 +41,7 @@ import edu.gatech.oad.rocket.findmythings.model.User;
  * @author TeamRocket
  * */
 public class LoginActivity extends Activity {
-
-
+	
 	/**
 	 * The default email to populate the email field with.
 	 */
@@ -53,10 +64,11 @@ public class LoginActivity extends Activity {
 
 
 	// Values for email and password at the time of the login attempt.
-	private String mEmail;
-	private String mPassword;
-	public static String Email = "";
+	//private String mEmail;
+	//private String mPassword;
+	//public static String Email = "";
 
+	private String mLastFailureMessage;
 
 	// UI references.
 	private EditText mEmailView;
@@ -75,16 +87,8 @@ public class LoginActivity extends Activity {
 		
 		setContentView(R.layout.activity_login_window);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		if(!Email.equals(RegisterActivity.rEmail))
-		//Email carried over from RegisterActivity.
-			Email = RegisterActivity.rEmail;
 
-		// Set up the login form.
-		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
-		if(Email!=null) //Saves Email even after you leave the Activity
-			mEmail = Email;
-		mEmailView.setText(mEmail);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView
@@ -93,7 +97,7 @@ public class LoginActivity extends Activity {
 					public boolean onEditorAction(TextView textView, int id,
 							KeyEvent keyEvent) {
 						if (id == R.id.login || id == EditorInfo.IME_NULL) {
-							attemptLogin();
+							attemptToLogin(textView);
 							return true;
 						}
 						return false;
@@ -103,15 +107,16 @@ public class LoginActivity extends Activity {
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-
-		findViewById(R.id.sign_in_button).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						attemptLogin();
-					}
-				});
-
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		// Set up the login form.
+		String extraEmail = getIntent().getStringExtra(EXTRA_EMAIL);
+		if (extraEmail == null) extraEmail = "";
+		mEmailView.setText(extraEmail);
 	}
 	
 	/**
@@ -158,20 +163,24 @@ public class LoginActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-
+	
 	/**
-	 * Creates Member object, will need to be modified once the admin class is created
-	 * but I was having problems instantiating elsewhere.
+	 * Goes to register screen
 	 */
-	public void createUser() {
-		temp = new User(mEmail,mPassword);
+	public void goToRegister(View registerButton) {
+		Intent goToNextActivity = new Intent(this, RegisterActivity.class);
+		String email = mEmailView.getText().toString();
+		goToNextActivity.putExtra("email", email); // Passes email to RegisterActivity
+		startActivity(goToNextActivity);
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 	}
+	
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
 	 * errors are presented and no actual login attempt is made.
 	 */
-	public void attemptLogin() {
+	public void attemptToLogin(View loginButton) {
 		if (mAuthTask != null) {
 			return;
 		}
@@ -181,76 +190,57 @@ public class LoginActivity extends Activity {
 		mPasswordView.setError(null);
 
 		// Store values at the time of the login attempt.
-		mEmail = mEmailView.getText().toString();
-		mPassword = mPasswordView.getText().toString();
+		String email = mEmailView.getText().toString();
+		String password = mPasswordView.getText().toString();
 
-		boolean cancel = false;
+
+		boolean continues = true;
 		View focusView = null;
+		
+		//Check for a valid password.
+		if (TextUtils.isEmpty(password)) {
+			mPasswordView.setError(getString(R.string.error_field_required));
+			focusView = mPasswordView;
+			continues = false;
+		} else if (email.length() < 4) {
+			mPasswordView.setError(getString(R.string.error_invalid_password));
+			focusView = mPasswordView;
+			continues = false;
+		}
 
-		/**If pass/email fields both empty
-		 *or if email not empty and email hasn't been registered
-		 *go to register activity
-		 */
-		if ( (mEmail.contains("@") && ((!TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword) && !Login.data.contains(new User(mEmail,"")))) || (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPassword))))
-			toRegister();
-		else {
-			//Check for a valid password.
-			if (TextUtils.isEmpty(mPassword)) {
-				mPasswordView.setError(getString(R.string.error_field_required));
-				focusView = mPasswordView;
-				cancel = true;
-			}
-			else if (mPassword.length() < 4) {
-				mPasswordView.setError(getString(R.string.error_invalid_password));
-				focusView = mPasswordView;
-				cancel = true;
-			}
-
-			// Check for a valid email address.
-			if (TextUtils.isEmpty(mEmail)) {
-				mEmailView.setError(getString(R.string.error_field_required));
-				focusView = mEmailView;
-				cancel = true;
-			} else if (!mEmail.contains("@")) {
-				mEmailView.setError(getString(R.string.error_invalid_email));
-				focusView = mEmailView;
-				cancel = true;
-			}
-		} // end of outer else
-
-		if (cancel) {
-			// There was an error; don't attempt login and focus the first
-			// form field with an error.
-			focusView.requestFocus();
-		} else {
+		// Check for a valid email address.
+		if (TextUtils.isEmpty(email)) {
+			mEmailView.setError(getString(R.string.error_field_required));
+			focusView = mEmailView;
+			continues = false;
+		} else if (!EmailValidator.getInstance().isValid(email)) {
+			mEmailView.setError(getString(R.string.error_invalid_email));
+			focusView = mEmailView;
+			continues = false;
+		}
+		
+		if (continues) {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
-
-			if(mEmail!=null && !mEmail.equals("")) {
-				Member chk = new User(mEmail,mPassword);
-				if(temp==null || !temp.equals(chk) || !temp.getPassword().equals(chk.getPassword())) {
-					//Instantiates member, checks to see if the username is the same on each attempt
-					createUser();
-					temp = log.update(temp);
-					//updates locked status of account
-
-				}
-			}
-
-			if(Login.data.contains(temp)) {
-				// Checks for valid user name
-				mAuthTask = new UserLoginTask();
-				mAuthTask.execute((Void) null);
-			}
-
-			else {
-				//To register activity
-				Email = mEmail;
-				toRegister();
-			}
+			
+			// Checks for valid user name
+			mAuthTask = new UserLoginTask();
+			mAuthTask.execute(email, password);
+		} else {
+			// There was an error; don't attempt login and focus the first
+			// form field with an error.
+			focusView.requestFocus();
 		}
+	}
+
+	/**
+	 * Creates Member object, will need to be modified once the admin class is created
+	 * but I was having problems instantiating elsewhere.
+	 */
+	public void createUser() {
+		//temp = new User(mEmail,mPassword);
 	}
 
 	/**
@@ -298,37 +288,38 @@ public class LoginActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	public class UserLoginTask extends AsyncTask<String, Void, MessageBean> {
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-
-
+		protected MessageBean doInBackground(String... params) {
+			String email = params[0];
+			String password = params[1];
+			
+			MessageBean result = null;
 			try {
-				// Simulate network access.
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				return false;
+				result = EndpointUtils.getEndpoint().account().login(email, password).execute();
+			} catch (IOException e) {
+				return null;
 			}
-			if(temp instanceof User) { // Won't be necessary for admin
-				if(log.verifyUser(temp) && !((User)temp).locked())
-					//Validates user info and checks to see if their account is locked
-					return true;
-			}
-			else if(temp instanceof Admin && log.verifyUser(temp))
-					return true;
-
-			return false;
-
+			return result;
 		}
 
 		/**
 		 * deals with action when user either log is sucessfully or not
-		 * @param final boolean success - true (user log in successfully), false (wrong password/username)
+		 * @param output - response from the login API method
 		 */
 		@Override
-		protected void onPostExecute(final Boolean success) {
-			mAuthTask = null;
+		protected void onPostExecute(final MessageBean output) {
+			System.out.println("Got here!");
+			
+			/*String token = result.getToken();
+			String outEmail = result.getUsername();
+			if (token != null && outEmail != null) {
+				return true;
+			} else {
+				mLastFailureMessage = result.getFailureReason();
+				return false;
+			}*/
+			/*mAuthTask = null;
 			showProgress(false);
 
 			if (!(temp).locked() && success) {
@@ -336,7 +327,6 @@ public class LoginActivity extends Activity {
 				if(temp instanceof User)
 					((User) temp).setAttempts(0);
 				Login.updateUser(temp); // Store current user
-				Email = mEmail; //Remembers User's email.
 				
 				toMainReload();
 			} else {
@@ -355,7 +345,7 @@ public class LoginActivity extends Activity {
 					.setError("Exceeded login attempts, account locked");
 					mPasswordView.requestFocus();
 				}
-			}
+			}*/
 		}
 
 		/**
@@ -366,16 +356,6 @@ public class LoginActivity extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 		}
-	}
-
-	/**
-	 * Goes to register screen
-	 */
-	private void toRegister() {
-		Intent goToNextActivity = new Intent(this, RegisterActivity.class);
-		goToNextActivity.putExtra("email",mEmail); // Passes email to RegisterActivity
-		startActivity(goToNextActivity);
-		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 	}
 	
 	/**

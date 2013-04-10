@@ -273,8 +273,7 @@ public class MainActivity extends ListActivity  {
 		//Set Account Title
 		MenuItem accountMenu = menu.findItem(R.id.menu_account);
 		if(Login.currUser!=null) {
-			String account = LoginActivity.Email;
-			accountMenu.setTitle(account);
+			accountMenu.setTitle(Login.currUser.getUser());
 		} else { 
 			accountMenu.setVisible(false);
 		}

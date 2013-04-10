@@ -73,7 +73,7 @@ public class MainContextListener extends GuiceServletContextListener {
 			serviceClasses.add(ItemV1.class);
 			serviceClasses.add(MemberV1.class);
 			serviceClasses.add(TestV1.class);
-			this.serveGuiceSystemServiceServlet("/_ah/spi/*", serviceClasses);
+			this.serveGuiceSystemServiceServlet("/_ah/api/*", serviceClasses);
 
 			try {
 				bindNamed(PageGenerator.TEMPLATES, URL.class, getServletContext().getResource("/WEB-INF/templates/"));

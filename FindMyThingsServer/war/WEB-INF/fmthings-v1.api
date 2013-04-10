@@ -33,7 +33,7 @@
       "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.createUser",
       "request" : {
         "parameters" : {
-          "username" : {
+          "email" : {
             "type" : "string",
             "required" : true
           },
@@ -73,7 +73,7 @@
       "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.createAdmin",
       "request" : {
         "parameters" : {
-          "username" : {
+          "email" : {
             "type" : "string",
             "required" : true
           },
@@ -112,6 +112,16 @@
       "clientIds" : [ ],
       "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.getLoginToken",
       "request" : {
+        "parameters" : {
+          "email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
         "body" : "empty"
       },
       "response" : {
@@ -155,7 +165,7 @@
       "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.memberForgotPassword",
       "request" : {
         "parameters" : {
-          "username" : {
+          "email" : {
             "type" : "string",
             "required" : true
           }
@@ -494,7 +504,7 @@
         "type" : "object",
         "properties" : {
           "status" : {
-            "$ref" : "Status"
+            "type" : "integer"
           },
           "message" : {
             "type" : "string"
@@ -502,18 +512,13 @@
           "failureReason" : {
             "type" : "string"
           },
-          "username" : {
+          "email" : {
             "type" : "string"
           },
           "token" : {
             "type" : "string"
           }
         }
-      },
-      "Status" : {
-        "id" : "Status",
-        "type" : "string",
-        "enum" : [ "OK", "BAD_REQUEST", "UNAUTHORIZED", "NOT_FOUND", "FORBIDDEN", "INTERNAL_ERROR", "OK", "BAD_REQUEST", "UNAUTHORIZED", "NOT_FOUND", "FORBIDDEN", "INTERNAL_ERROR" ]
       },
       "AppMember" : {
         "id" : "AppMember",

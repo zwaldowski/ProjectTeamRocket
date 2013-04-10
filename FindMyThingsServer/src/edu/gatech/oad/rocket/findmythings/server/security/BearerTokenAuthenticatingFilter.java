@@ -107,7 +107,7 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 					MessageBean.STATUS, HTTP.Status.OK.toInt(),
 					MessageBean.MESSAGE, Messages.Status.OK.toString(),
 					MessageBean.TOKEN, newToken,
-					MessageBean.USERNAME, email);
+					MessageBean.EMAIL, email);
 			return false;
 		} else {
 			return true;

@@ -12,7 +12,7 @@ public class TestV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "test.authenticated", path = "test/auth")
 	public MessageBean getTestAuthenticated() {
-		return new MessageBean(HTTP.Status.OK, "Hi.");
+		return new MessageBean(HTTP.Status.OK.toInt(), "Hi.");
 	}
 
 	@ApiMethod(name = "test.unauthenticated", path = "test")
@@ -24,7 +24,7 @@ public class TestV1 extends BaseEndpoint {
 		} else {
 			message = "You're not logged in.";
 		}
-		return new MessageBean(HTTP.Status.OK, message);
+		return new MessageBean(HTTP.Status.OK.toInt(), message);
 	}
 
 }

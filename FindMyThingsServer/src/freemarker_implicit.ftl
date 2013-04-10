@@ -6,4 +6,4 @@
 [#-- @ftlvariable name="usernameParam" type="java.lang.String" --]
 [#-- @ftlvariable name="passwordParam" type="java.lang.String" --]
 [#-- @ftlvariable name="rememberMeParam" type="java.lang.String" --]
-[#-- @ftlvariable name="username" type="java.lang.String" --]
+[#-- @ftlvariable name="email" type="java.lang.String" --]
