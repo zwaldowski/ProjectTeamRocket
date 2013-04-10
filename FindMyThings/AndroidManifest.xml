@@ -29,6 +29,7 @@
         android:targetSdkVersion="17" />
 
     <application
+        android:name="edu.gatech.oad.rocket.findmythings.control.SharedApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"

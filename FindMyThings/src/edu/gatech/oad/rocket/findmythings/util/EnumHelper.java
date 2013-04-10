@@ -1,5 +1,6 @@
 package edu.gatech.oad.rocket.findmythings.util;
 
+import edu.gatech.oad.rocket.findmythings.shared.util.StringedEnum;
 import android.content.Context;
 
 /**
@@ -11,6 +12,16 @@ import android.content.Context;
 public final class EnumHelper {
 
 	private EnumHelper() {}
+	
+	public static <T extends Enum<?> & StringedEnum> T forTextString(Class<T> clazz, String text) {
+		if (text == null || text.length() == 0) return null;
+		for (T enumt : clazz.getEnumConstants()) {
+			if (enumt.getText().equals(text)) {
+				return enumt;
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Simply unpacks an enumerated type for a given integer.

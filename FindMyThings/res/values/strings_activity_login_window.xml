@@ -10,10 +10,18 @@
     <string name="action_register_short">Register</string>
     <string name="action_forgot_password">Forgot Password</string><string name="menu_forgot_password">Recover lost password</string>
     <string name="login_progress_signing_in">Signing in&#8230;</string>
+    
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
 
-
+    <string name="error_no_response">Couldn\'t communicate with the Find My Things server. Please try again later.</string>
+    <string name="error_invalid_data">The Find My Things server reports it received bad information. Please try again later.</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    
+    <string name="error_no_such_user">No user exists with this email</string>
+    <string name="error_account_locked">This account has been locked</string>
+    <string name="error_many_attempts">Too many attempts</string>
+    
+    
 </resources>

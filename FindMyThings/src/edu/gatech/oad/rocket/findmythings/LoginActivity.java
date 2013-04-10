@@ -2,12 +2,7 @@ package edu.gatech.oad.rocket.findmythings;
 
 import java.io.IOException;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.services.fmthings.EndpointUtils;
-import com.google.api.services.fmthings.Fmthings;
 import com.google.api.services.fmthings.model.MessageBean;
 
 import android.animation.Animator;
@@ -24,15 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import edu.gatech.oad.rocket.findmythings.control.*;
-import edu.gatech.oad.rocket.findmythings.model.Admin;
-import edu.gatech.oad.rocket.findmythings.model.Member;
-import edu.gatech.oad.rocket.findmythings.model.User;
+import edu.gatech.oad.rocket.findmythings.shared.util.Messages;
 import edu.gatech.oad.rocket.findmythings.shared.util.validation.EmailValidator;
+import edu.gatech.oad.rocket.findmythings.util.ToastHelper;
+import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -51,24 +45,6 @@ public class LoginActivity extends Activity {
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
 	private UserLoginTask mAuthTask = null;
-
-	/**
-	 * Login reference
-	 */
-	private Login log = new Login();
-
-	/**
-	 * Member reference
-	 */
-	private Member temp = new User("","");
-
-
-	// Values for email and password at the time of the login attempt.
-	//private String mEmail;
-	//private String mPassword;
-	//public static String Email = "";
-
-	private String mLastFailureMessage;
 
 	// UI references.
 	private EditText mEmailView;
@@ -309,43 +285,46 @@ public class LoginActivity extends Activity {
 		 */
 		@Override
 		protected void onPostExecute(final MessageBean output) {
-			System.out.println("Got here!");
-			
-			/*String token = result.getToken();
-			String outEmail = result.getUsername();
-			if (token != null && outEmail != null) {
-				return true;
-			} else {
-				mLastFailureMessage = result.getFailureReason();
-				return false;
-			}*/
-			/*mAuthTask = null;
+			mAuthTask = null;
 			showProgress(false);
-
-			if (!(temp).locked() && success) {
-				//User successfully logs in
-				if(temp instanceof User)
-					((User) temp).setAttempts(0);
-				Login.updateUser(temp); // Store current user
-				
+			
+			String token = null, email = null, failureMessage = null;
+			if (output != null) {
+				token = output.getToken();
+				email = output.getEmail();
+				failureMessage = output.getFailureReason();
+			}
+			Messages.Login failureType = EnumHelper.<Messages.Login>forTextString(Messages.Login.class, failureMessage);
+			
+			if (token != null && email != null) {
+				LoginManager.getLoginManager().setCurrentEmailAndToken(email, token);
 				toMainReload();
+			} else if (failureType != null) {
+				switch (failureType) {
+				case NO_SUCH_USER:
+					mEmailView.setError(getString(R.string.error_no_such_user));
+					mEmailView.requestFocus();
+					break;
+				case BAD_PASSWORD:
+					mPasswordView.setError(getString(R.string.error_incorrect_password));
+					mPasswordView.requestFocus();
+					break;
+				case ACCOUNT_LOCKED:
+				case ACCT_DISABLE:
+					mEmailView.setError(getString(R.string.error_account_locked));
+					mEmailView.requestFocus();
+					break;
+				case MANY_ATTEMPT:
+					mEmailView.setError(getString(R.string.error_many_attempts));
+					mEmailView.requestFocus();
+					break;
+				case INVALID_DATA:
+					ToastHelper.showError(LoginActivity.this, getString(R.string.error_invalid_data));
+					break;
+				}
 			} else {
-				if(temp instanceof User && !(temp).locked()) {
-					//Wrong password
-					((User)temp).incrment();
-					mPasswordView
-						.setError(getString(R.string.error_incorrect_password) + " ");
-					mPasswordView.requestFocus();
-
-				}
-				else {
-					if(!temp.isAdmin() && temp.locked()) //locks the account after three attempts
-						log.checkAttempts((User)temp);
-					mPasswordView
-					.setError("Exceeded login attempts, account locked");
-					mPasswordView.requestFocus();
-				}
-			}*/
+				ToastHelper.showError(LoginActivity.this, getString(R.string.error_no_response));
+			}
 		}
 
 		/**
