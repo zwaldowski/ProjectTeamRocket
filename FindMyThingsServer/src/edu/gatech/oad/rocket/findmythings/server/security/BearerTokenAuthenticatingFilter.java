@@ -3,10 +3,10 @@ package edu.gatech.oad.rocket.findmythings.server.security;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
+import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.codec.Base64;
@@ -86,13 +86,6 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 		}
 	}
 
-	private void sendError(ServletResponse response, boolean unauthorizedOrForbidden, String failureReason) {
-		HTTP.writeAsJSON(response,
-				Responses.STATUS, (unauthorizedOrForbidden ? HTTP.Status.UNAUTHORIZED : HTTP.Status.FORBIDDEN).toInt(),
-				Responses.MESSAGE, Messages.Status.UNAUTHORIZED.toString(),
-				Responses.FAILURE_REASON, failureReason == null ? Messages.Permissions.REQUIRES_LOGIN.toString() : failureReason);
-	}
-
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		boolean authHasToken = hasAuthorizationToken(request);
@@ -100,7 +93,7 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 		if (authHasToken || isLogin) {
 			return executeLogin(request, response);
 		} else {
-			sendError(response, true, null);
+			HTTP.writeError(response, HTTP.Status.UNAUTHORIZED);
 			return false;
 		}
 	}
@@ -111,10 +104,10 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 			String email = (String)subject.getPrincipal();
 			String newToken = DatabaseService.ofy().createAuthenticationToken(email);
 			HTTP.writeAsJSON(response,
-					Responses.STATUS, HTTP.Status.OK.toInt(),
-					Responses.MESSAGE, Messages.Status.OK.toString(),
-					Responses.TOKEN, newToken,
-					getUsernameParam(), email);
+					MessageBean.STATUS, HTTP.Status.OK.toInt(),
+					MessageBean.MESSAGE, Messages.Status.OK.toString(),
+					MessageBean.TOKEN, newToken,
+					MessageBean.USERNAME, email);
 			return false;
 		} else {
 			return true;
@@ -124,9 +117,12 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 	@Override
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
 		if (isLoginRequest(request, response)) {
-			sendError(response, true, Messages.Login.getMessage(e));
+			HTTP.writeAsJSON(response,
+					MessageBean.STATUS, HTTP.Status.UNAUTHORIZED.toInt(),
+					MessageBean.MESSAGE, Messages.Status.UNAUTHORIZED.toString(),
+					MessageBean.FAILURE_REASON, Messages.Login.getMessage(e));
 		} else {
-			sendError(response, false, null);
+			HTTP.writeError(response, HTTP.Status.UNAUTHORIZED);
 		}
 		return false;
 	}

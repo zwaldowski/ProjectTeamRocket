@@ -9,9 +9,9 @@ import edu.gatech.oad.rocket.findmythings.server.TemplateServlet;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.EmailValidator;
 import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
 import org.apache.shiro.web.util.WebUtils;
@@ -124,7 +124,7 @@ public class RegisterServlet extends TemplateServlet {
 	}
 
 	void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Register message) {
-		request.setAttribute(Responses.FAILURE_REASON, message.toString());
+		request.setAttribute(MessageBean.FAILURE_REASON, message.toString());
 		try {
 			doGet(request, response);
 		} catch (IOException e) {

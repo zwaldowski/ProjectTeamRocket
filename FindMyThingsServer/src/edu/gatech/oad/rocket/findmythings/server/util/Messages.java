@@ -24,22 +24,6 @@ public final class Messages {
 
 	}
 
-	public enum Permissions {
-		REQUIRES_LOGIN("requiresLogin");
-
-		private final String text;
-
-		private Permissions(final String text) {
-			this.text = text;
-		}
-
-		@Override
-		public String toString() {
-			return text;
-		}
-
-	}
-
 	public enum Login {
 		NO_SUCH_USER("noSuchUser"),
 		BAD_PASSWORD("badPassword"),

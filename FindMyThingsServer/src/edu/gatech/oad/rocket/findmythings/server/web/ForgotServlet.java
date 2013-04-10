@@ -1,9 +1,10 @@
 package edu.gatech.oad.rocket.findmythings.server.web;
 
 import com.google.inject.Singleton;
+
+import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class ForgotServlet extends RegisterServlet {
 
 	@Override
 	protected void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Register message) {
-		request.setAttribute(Responses.FAILURE_REASON, message.toString());
+		request.setAttribute(MessageBean.FAILURE_REASON, message.toString());
 		try {
 			doGet(request, response);
 		} catch (IOException e) {

@@ -5,9 +5,9 @@ import edu.gatech.oad.rocket.findmythings.server.TemplateServlet;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletException;
@@ -45,7 +45,7 @@ public class ActivateServlet extends TemplateServlet {
 		} else {
 			String userNameFromCode = DatabaseService.ofy().emailFromRegistrationCode(code);
 			if (userNameFromCode == null) {
-				request.setAttribute(Responses.FAILURE_REASON, Messages.Activate.CODE_EXPIRED.toString());
+				request.setAttribute(MessageBean.FAILURE_REASON, Messages.Activate.CODE_EXPIRED.toString());
 			} else {
 				DatabaseService.ofy().register(code, userNameFromCode);
 			}
@@ -96,7 +96,7 @@ public class ActivateServlet extends TemplateServlet {
 	}
 
 	void sendError(HttpServletRequest request, HttpServletResponse response, Messages.Activate message) {
-		request.setAttribute(Responses.FAILURE_REASON, message.toString());
+		request.setAttribute(MessageBean.FAILURE_REASON, message.toString());
 		try {
 			writeDocument(response, getDefaultTemplateURI(request), getParameterMap(request));
 		} catch (IOException e) {

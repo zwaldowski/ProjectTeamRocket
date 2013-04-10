@@ -3,9 +3,10 @@ package edu.gatech.oad.rocket.findmythings.server.security;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+
+import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -49,7 +50,7 @@ public class WebAuthenticationFilter extends FormAuthenticationFilter {
 
 	@Override
 	protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {
-		request.setAttribute(Responses.FAILURE_REASON, Messages.Login.getMessage(ae));
+		request.setAttribute(MessageBean.FAILURE_REASON, Messages.Login.getMessage(ae));
 	}
 
 	@Override

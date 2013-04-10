@@ -146,7 +146,8 @@ public class AccountV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "account.login", path = "account/login")
 	public MessageBean getLoginToken() {
-		return new MessageBean(HTTP.Status.OK, "Hi.");
+		// this was caught by BearerTokenAuthenticatingFilter
+		return new MessageBean(HTTP.Status.OK, Messages.Status.OK.toString());
 	}
 
 	@ApiMethod(name = "account.logout", path = "account/logout")

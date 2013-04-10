@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
-import edu.gatech.oad.rocket.findmythings.server.util.Responses;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -129,8 +129,8 @@ public abstract class PageServlet extends HttpServlet {
 		String email = getCurrentUserEmail();
 		if (email != null) params.put("userEmail", email);
 
-		Object failureReason = request.getAttribute(Responses.FAILURE_REASON);
-		if (failureReason != null) params.put(Responses.FAILURE_REASON, failureReason);
+		Object failureReason = request.getAttribute(MessageBean.FAILURE_REASON);
+		if (failureReason != null) params.put(MessageBean.FAILURE_REASON, failureReason);
 
 		params.put("usernameParam", getUsernameParam());
 		params.put("passwordParam", getPasswordParam());

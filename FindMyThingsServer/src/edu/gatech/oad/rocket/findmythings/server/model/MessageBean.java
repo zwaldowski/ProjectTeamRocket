@@ -13,6 +13,14 @@ import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 		include=com.google.appengine.repackaged.org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL)
 public class MessageBean {
 
+
+	public static final String STATUS = "status";
+	public static final String MESSAGE = "message";
+	public static final String FAILURE_REASON = "failureReason";
+
+	public static final String TOKEN = "token";
+	public static final String USERNAME = "username";
+
 	public MessageBean(HTTP.Status status, String message) {
 		this.status = status;
 		this.message = message;
@@ -24,9 +32,18 @@ public class MessageBean {
 		this.failureReason = failureReason;
 	}
 
+	public MessageBean(HTTP.Status status, String message, String username, String token) {
+		this.status = status;
+		this.message = message;
+		this.username = username;
+		this.token = token;
+	}
+
 	private HTTP.Status status;
 	private String message;
 	private String failureReason;
+	private String username;
+	private String token;
 
 	public HTTP.Status getStatus() {
 		return status;
@@ -50,5 +67,21 @@ public class MessageBean {
 
 	public void setFailureReason(String failureReason) {
 		this.failureReason = failureReason;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 }
