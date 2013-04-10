@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/uBerfHofw6wW7Ao-mYbixv4csXo\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/XbNTBmAigXVoOM1t_WHLHx2iBgc\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -277,6 +277,12 @@
     },
     "status": {
      "$ref": "Status"
+    },
+    "token": {
+     "type": "string"
+    },
+    "username": {
+     "type": "string"
     }
    }
   },
@@ -448,6 +454,9 @@
       "type": "string"
      }
     }
+   },
+   "returns": {
+    "$ref": "AppMember"
    }
   },
   "fmthings.account.register": {
@@ -493,7 +502,10 @@
    },
    "parameterOrder": [
     "resource"
-   ]
+   ],
+   "returns": {
+    "$ref": "AppMember"
+   }
   },
   "fmthings.items.delete": {
    "id": "fmthings.items.delete",
@@ -776,7 +788,10 @@
    },
    "parameterOrder": [
     "email"
-   ]
+   ],
+   "returns": {
+    "$ref": "AppMember"
+   }
   },
   "fmthings.members.search": {
    "id": "fmthings.members.search",
@@ -809,7 +824,10 @@
    },
    "parameterOrder": [
     "resource"
-   ]
+   ],
+   "returns": {
+    "$ref": "AppMember"
+   }
   },
   "fmthings.test.authenticated": {
    "id": "fmthings.test.authenticated",

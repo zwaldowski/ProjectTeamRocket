@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/uBerfHofw6wW7Ao-mYbixv4csXo\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/XbNTBmAigXVoOM1t_WHLHx2iBgc\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -279,6 +279,12 @@
     },
     "status": {
      "$ref": "Status"
+    },
+    "token": {
+     "type": "string"
+    },
+    "username": {
+     "type": "string"
     }
    }
   },
@@ -433,6 +439,9 @@
      "httpMethod": "PATCH",
      "request": {
       "$ref": "AppMember"
+     },
+     "response": {
+      "$ref": "AppMember"
      }
     },
     "register": {
@@ -482,6 +491,9 @@
      "path": "account/update",
      "httpMethod": "PUT",
      "request": {
+      "$ref": "AppMember"
+     },
+     "response": {
       "$ref": "AppMember"
      }
     }
@@ -736,6 +748,9 @@
      ],
      "request": {
       "$ref": "AppMember"
+     },
+     "response": {
+      "$ref": "AppMember"
      }
     },
     "search": {
@@ -770,6 +785,9 @@
      "path": "members/update",
      "httpMethod": "PUT",
      "request": {
+      "$ref": "AppMember"
+     },
+     "response": {
       "$ref": "AppMember"
      }
     }

@@ -178,7 +178,7 @@
         "bodyName" : "resource"
       },
       "response" : {
-        "body" : "empty"
+        "body" : "autoTemplate(backendResponse)"
       }
     },
     "fmthings.items.search" : {
@@ -455,7 +455,7 @@
         "bodyName" : "resource"
       },
       "response" : {
-        "body" : "empty"
+        "body" : "autoTemplate(backendResponse)"
       }
     },
     "fmthings.test.unauthenticated" : {
@@ -501,6 +501,12 @@
           },
           "failureReason" : {
             "type" : "string"
+          },
+          "username" : {
+            "type" : "string"
+          },
+          "token" : {
+            "type" : "string"
           }
         }
       },
@@ -534,14 +540,14 @@
           "editable" : {
             "type" : "boolean"
           },
+          "phone" : {
+            "$ref" : "PhoneNumber"
+          },
           "roles" : {
             "type" : "array",
             "items" : {
               "type" : "string"
             }
-          },
-          "phone" : {
-            "$ref" : "PhoneNumber"
           },
           "stringPermissions" : {
             "type" : "array",
@@ -753,6 +759,9 @@
       "edu.gatech.oad.rocket.findmythings.server.spi.AccountV1.updateMember" : {
         "request" : {
           "$ref" : "AppMember"
+        },
+        "response" : {
+          "$ref" : "AppMember"
         }
       },
       "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.searchItems" : {
@@ -818,6 +827,9 @@
       },
       "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.updateMember" : {
         "request" : {
+          "$ref" : "AppMember"
+        },
+        "response" : {
           "$ref" : "AppMember"
         }
       },
