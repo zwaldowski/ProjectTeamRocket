@@ -12,8 +12,9 @@ import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
-import edu.gatech.oad.rocket.findmythings.server.util.validation.EmailValidator;
-import edu.gatech.oad.rocket.findmythings.server.util.validation.RegexValidator;
+import edu.gatech.oad.rocket.findmythings.shared.util.validation.EmailValidator;
+import edu.gatech.oad.rocket.findmythings.shared.util.validation.RegexValidator;
+
 import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
