@@ -1,5 +1,8 @@
 package edu.gatech.oad.rocket.findmythings.control;
 
+import com.google.api.client.util.Base64;
+import com.google.api.services.fmthings.model.AppMember;
+
 import android.content.SharedPreferences;
 
 public class LoginManager {
@@ -23,6 +26,7 @@ public class LoginManager {
 	
 	private String email;
 	private String token;
+	private AppMember currentUser;
 	
 	public void setCurrentEmailAndToken(String email, String token) {
 		this.email = email;
@@ -41,8 +45,27 @@ public class LoginManager {
 		return token;
 	}
 	
+	public void setCurrentUser(AppMember currentUser) {
+		this.currentUser = currentUser;
+	}
+	
+	public AppMember getCurrentUser() {
+		return currentUser;
+	}
+	
 	public boolean isLoggedIn() {
 		return email != null && token != null && email.length() > 0 && token.length() > 0;
+	}
+	
+	public String getAuthorizationHeader() {
+		if (!isLoggedIn()) return null;
+		byte[] bytes = (email + ":" + token).getBytes();
+		return "FMTTOKEN " + Base64.encodeBase64String(bytes);
+	}
+	
+	public void logout() {
+		setCurrentEmailAndToken(null, null);
+		setCurrentUser(null);
 	}
 
 }

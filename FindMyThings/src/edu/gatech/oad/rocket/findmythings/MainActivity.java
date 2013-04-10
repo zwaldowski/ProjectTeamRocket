@@ -1,13 +1,19 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.google.api.services.fmthings.EndpointUtils;
+import com.google.api.services.fmthings.model.MessageBean;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.ActionBar.Tab;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -78,6 +84,11 @@ public class MainActivity extends ListActivity  {
 	 * Direct reference to the search bar in the ActionBar
 	 */
 	private SearchView mSearch;
+	
+	/**
+	 * Box shown to prevent user interaction during logout
+	 */
+	private ProgressDialog mProgressDialog;
 	
 	/**
 	 * creates window with correct layout
@@ -179,8 +190,33 @@ public class MainActivity extends ListActivity  {
 				return toAccount();
 			case R.id.menu_admin:
 				return toAdmin();
+			case R.id.menu_test:
+				return testAuth();
 	    }
 	    return super.onOptionsItemSelected(item);
+	}
+	
+	public boolean testAuth() {
+		new AsyncTask<Void, Void, MessageBean>(){
+
+			@Override
+			protected MessageBean doInBackground(Void... arg0) {
+				try {
+					return EndpointUtils.getEndpoint().test().authenticated().execute();
+				} catch (IOException e) {
+					return null;
+				}
+				
+			}
+			
+			@Override
+			protected void onPostExecute(final MessageBean output) {
+				System.out.println("Got here!");
+			}
+			
+		}.execute();
+		
+		return true;
 	}
 
 	/**
@@ -248,9 +284,9 @@ public class MainActivity extends ListActivity  {
 		    public boolean onQueryTextChange(String newText) { 
 		    	// TODO actually search
 		    	if(!newText.isEmpty()) {
-			    	adapter.getFilter().filter(newText);
-					adapter.notifyDataSetChanged();
-			    	}
+		    		adapter.getFilter().filter(newText);
+		    		adapter.notifyDataSetChanged();
+		    	}
 		    	else adapter.setList(currList);
 		        return true; 
 		    } 
@@ -265,21 +301,24 @@ public class MainActivity extends ListActivity  {
 		mSearch.setOnQueryTextListener(queryTextListener);
 		
 	    search = menu.findItem(R.id.main_search_bar);
+	    
+	    boolean loggedIn = LoginManager.getLoginManager().isLoggedIn();
+	    
 		//Set Login Title
 		MenuItem loginMenu = menu.findItem(R.id.menu_login);
-		String title = Login.currUser==null? "Login":"Logout";
+		String title = loggedIn ? "Logout" : "Login";
 		loginMenu.setTitle(title);
 					
 		//Set Account Title
 		MenuItem accountMenu = menu.findItem(R.id.menu_account);
-		if(Login.currUser!=null) {
-			accountMenu.setTitle(Login.currUser.getUser());
+		if (loggedIn) {
+			accountMenu.setTitle(LoginManager.getLoginManager().getCurrentEmail());
 		} else { 
 			accountMenu.setVisible(false);
 		}
 				
 		//Show/Hide admin button
-		if(Login.currUser==null || !Login.currUser.isAdmin()) {
+		if (!loggedIn || !Login.currUser.isAdmin()) {
 			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
 			adminMenu.setVisible(false);
 		}
@@ -374,16 +413,11 @@ public class MainActivity extends ListActivity  {
 			 */
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-				//Clear current user
-				Login.currUser=null;
-				//Making sense is for squares
-				Intent newMain = getIntent();
-				newMain.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-				newMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-				finish(); 
-				startActivity(newMain);
-				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-				logOut = true;
+				logOut = true;				
+				mProgressDialog = ProgressDialog.show(getApplicationContext(),
+						getString(R.string.main_sign_out_title),
+						getString(R.string.main_sign_out_message), true, false);
+				new LogoutTask().execute();
 			}	
 		}, 
 		
@@ -402,5 +436,36 @@ public class MainActivity extends ListActivity  {
 			});
 		temp.show();
     	return logOut;    	
+    }
+    
+    public class LogoutTask extends AsyncTask<Void, Void, MessageBean> {
+
+    	@Override
+    	protected MessageBean doInBackground(Void... arg0) {
+    		try {
+    			return EndpointUtils.getEndpoint().account().logout().execute();
+    		} catch (IOException e) {
+    			return null;
+    		}
+    	}
+    	
+    	@Override
+    	protected void onPostExecute(final MessageBean output) {
+    		mProgressDialog.dismiss();
+    		mProgressDialog = null;
+    		
+    		//Clear current user
+    		Login.currUser=null;
+    		LoginManager.getLoginManager().logout();
+    		
+    		//Making sense is for squares
+    		Intent newMain = getIntent();
+    		newMain.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+    		newMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    		finish(); 
+    		startActivity(newMain);
+    		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    	}
+
     }
 }

@@ -18,13 +18,15 @@
 
 package com.google.api.services.fmthings;
 
+import com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest;
+
 /**
  * Fmthings request.
  *
  * @since 1.3
  */
 @SuppressWarnings("javadoc")
-public abstract class FmthingsRequest<T> extends com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest<T> {
+public abstract class FmthingsRequest<T> extends AbstractGoogleJsonClientRequest<T> {
 
   /**
    * @param client Google client

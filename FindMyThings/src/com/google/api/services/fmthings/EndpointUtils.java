@@ -10,6 +10,8 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson.JacksonFactory;
 
+import edu.gatech.oad.rocket.findmythings.control.LoginManager;
+
 public class EndpointUtils {
 	
 	private static final Fmthings initializeEndpoint() {
@@ -70,14 +72,16 @@ public class EndpointUtils {
 
 	    // only enable GZip when connecting to remote server
 	    final boolean enableGZip = builder.getRootUrl().startsWith("https:");
-
-	    builder.setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-	      public void initialize(AbstractGoogleClientRequest<?> request)
-	          throws IOException {
-	        if (!enableGZip) {
-	          request.setDisableGZipContent(true);
-	        }
-	      }
+	    
+	    builder.setGoogleClientRequestInitializer(new FmthingsRequestInitializer(){
+	    	protected void initializeFmthingsRequest(FmthingsRequest<?> request) throws IOException {
+	    		if (!enableGZip) {
+	    			request.setDisableGZipContent(true);
+	    		}
+	    		
+    			String authHeader = LoginManager.getLoginManager().getAuthorizationHeader();
+    			if (authHeader != null) request.getRequestHeaders().put("X-Authorization", authHeader);
+	    	}
 	    });
 
 	    return builder;

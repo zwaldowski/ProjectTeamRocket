@@ -20,6 +20,10 @@
     <item android:id="@+id/menu_admin"
           android:showAsAction="never"
     	  android:title="@string/main_title_admin">
+    </item> 		
+    <item android:id="@+id/menu_test"
+          android:showAsAction="never"
+    	  android:title="Test authenticated">
     </item>
 
 </menu>

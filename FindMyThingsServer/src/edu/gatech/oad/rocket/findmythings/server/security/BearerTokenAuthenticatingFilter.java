@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter {
 
-	private static final String AUTHORIZATION_HEADER = "Authorization";
+	private static final String AUTHORIZATION_HEADER = "X-Authorization";
 	private static final String AUTHORIZATION_PARAM = "fmthings_auth";
 	private static final String AUTHORIZATION_SCHEME = "FMTTOKEN";
 	private static final String AUTHORIZATION_SCHEME_ALT = "Basic";

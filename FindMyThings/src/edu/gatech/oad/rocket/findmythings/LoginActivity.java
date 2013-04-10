@@ -3,6 +3,7 @@ package edu.gatech.oad.rocket.findmythings;
 import java.io.IOException;
 
 import com.google.api.services.fmthings.EndpointUtils;
+import com.google.api.services.fmthings.model.AppMember;
 import com.google.api.services.fmthings.model.MessageBean;
 
 import android.animation.Animator;
@@ -286,8 +287,7 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(final MessageBean output) {
 			mAuthTask = null;
-			showProgress(false);
-			
+
 			String token = null, email = null, failureMessage = null;
 			if (output != null) {
 				token = output.getToken();
@@ -298,7 +298,27 @@ public class LoginActivity extends Activity {
 			
 			if (token != null && email != null) {
 				LoginManager.getLoginManager().setCurrentEmailAndToken(email, token);
-				toMainReload();
+				new AsyncTask<Void, Void, AppMember>(){
+
+					@Override
+					protected AppMember doInBackground(Void... arg0) {
+						try {
+							return EndpointUtils.getEndpoint().account().get().execute();
+						} catch (IOException e) {
+							return null;
+						}
+						
+					}
+					
+					@Override
+					protected void onPostExecute(final AppMember output) {
+						showProgress(false);
+						LoginManager.getLoginManager().setCurrentUser(output);
+						toMainReload();
+					}
+					
+				}.execute();
+				return;
 			} else if (failureType != null) {
 				switch (failureType) {
 				case NO_SUCH_USER:
@@ -325,6 +345,8 @@ public class LoginActivity extends Activity {
 			} else {
 				ToastHelper.showError(LoginActivity.this, getString(R.string.error_no_response));
 			}
+			
+			showProgress(false);
 		}
 
 		/**
