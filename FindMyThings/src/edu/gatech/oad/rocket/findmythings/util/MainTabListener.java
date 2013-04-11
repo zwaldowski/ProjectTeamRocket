@@ -1,5 +1,6 @@
 package edu.gatech.oad.rocket.findmythings.util;
 
+import edu.gatech.oad.rocket.findmythings.FilterActivity;
 import edu.gatech.oad.rocket.findmythings.MainActivity;
 import edu.gatech.oad.rocket.findmythings.control.Controller;
 import edu.gatech.oad.rocket.findmythings.model.Type;
@@ -34,7 +35,11 @@ public class MainTabListener implements TabListener{
 	 */
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub	
+		if(name.equals("ALL")) {
+			if(MainActivity.adapter!=null) {
+				MainActivity.update(control.getAllItems(), null);
+			}
+		}	
 	}
 
 	/**
@@ -51,16 +56,20 @@ public class MainTabListener implements TabListener{
 		}
 		if(name.equals("LOST")) {
 			if(MainActivity.adapter!=null) {
+				FilterActivity.toReturn = null;
 				MainActivity.update(control.getItem(Type.LOST), Type.LOST);
 			}
 		}
 		else if(name.equals("FOUND")) {
+			FilterActivity.toReturn = null;
 			MainActivity.update(control.getItem(Type.FOUND), Type.FOUND);			
 		}
 		else if(name.equals("DONATIONS")) {
+			FilterActivity.toReturn = null;
 			MainActivity.update(control.getItem(Type.DONATION), Type.DONATION);
 		}
 		else if(name.equals("REQUESTS")) {
+			FilterActivity.toReturn = null;
 			MainActivity.update(control.getItem(Type.REQUEST), Type.REQUEST);
 		}
 		
@@ -72,9 +81,6 @@ public class MainTabListener implements TabListener{
 	 * @param FragmentTransaction ft
 	 */
 	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {}
 
 }

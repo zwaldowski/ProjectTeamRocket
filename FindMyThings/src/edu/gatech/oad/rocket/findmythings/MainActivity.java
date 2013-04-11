@@ -89,6 +89,7 @@ public class MainActivity extends ListActivity  {
 	 * Box shown to prevent user interaction during logout
 	 */
 	private ProgressDialog mProgressDialog;
+
 	
 	/**
 	 * creates window with correct layout
@@ -114,7 +115,15 @@ public class MainActivity extends ListActivity  {
 	    createTabs();
 	   
 	    //Array to be represented by the adapter
-	  	currList = control.getItem(mType);
+	    
+	    if (FilterActivity.toReturn!=null) {
+	    	currList =  FilterActivity.toReturn;
+	    } else {
+	    	currList = control.getItem(mType);
+	    }
+	  	
+	  	
+	  	
 	  	//Takes the array and creates individual views for each item
 	  	adapter = new Adapter(this,
 	  			android.R.layout.simple_list_item_activated_1,
@@ -127,6 +136,7 @@ public class MainActivity extends ListActivity  {
 		
 	}
 	
+
 	/**
 	 * Updates the ArrayList the adapter is displaying as well as the Type of items being displayed
 	 * @param tempList
@@ -181,7 +191,7 @@ public class MainActivity extends ListActivity  {
 			return toSubmit();
 	        case R.id.menu_list_filter:
 	        	Intent i = new Intent(MainActivity.this, FilterActivity.class);
-				startActivityForResult(i, 1);
+	        	startActivityForResult(i, 1);
 			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
 				return true;
 	       	case R.id.menu_login: 

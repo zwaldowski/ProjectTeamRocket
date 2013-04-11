@@ -141,9 +141,9 @@ public final class Controller {
 		dummy[2] = new Item("Box of gummy bears", Type.FOUND);
 			dummy[2].setCategory(Category.KEEPSAKE);
 		dummy[3] = new Item("Hot wheels", Type.FOUND);
-			dummy[0].setCategory(Category.HEIR);
+			dummy[3].setCategory(Category.HEIR);
 		dummy[4] = new Item("Socks", Type.DONATION);
-			dummy[0].setCategory(Category.KEEPSAKE);
+			dummy[4].setCategory(Category.KEEPSAKE);
 		dummy[5] = new Item("Hair", Type.DONATION);
 		dummy[6] = new Item("Water", Type.REQUEST);
 		dummy[7] = new Item("Ipad", Type.REQUEST);
