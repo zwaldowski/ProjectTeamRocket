@@ -31,11 +31,4 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>com.google.appengine.eclipse.core.gaeNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>shared_src</name>
-			<type>2</type>
-			<location>/Users/zw/Documents/School/CS 2340/ProjectTeamRocket/FindMyThingsShared/src</location>
-		</link>
-	</linkedResources>
 </projectDescription>

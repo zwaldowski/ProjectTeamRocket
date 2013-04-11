@@ -3,6 +3,7 @@
 	<name>FindMyThings</name>
 	<comment></comment>
 	<projects>
+		<project>FindMyThingsShared</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

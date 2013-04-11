@@ -48,8 +48,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="shared_src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/FindMyThingsShared"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

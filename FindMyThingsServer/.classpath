@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="shared_src"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-servlet-3.0.jar"/>
@@ -23,6 +22,5 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-endpoints.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/lucene-analyzers-common-4.2.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/lucene-core-4.2.1.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/FindMyThingsShared"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
