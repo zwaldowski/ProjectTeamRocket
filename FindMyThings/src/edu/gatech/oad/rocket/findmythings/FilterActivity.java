@@ -98,10 +98,13 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	 * @return true
 	 */
 	public boolean toParent() {
-		Intent toPar = new Intent(getApplicationContext(), MainActivity.class);
+		Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
+			goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+		    goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		finish();
-		startActivity(toPar);
-		return true;
+	    startActivity(goToNextActivity);
+		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
+		   return true;
 	}
 	
 	public void setFilter(int status, int category, int date) {
