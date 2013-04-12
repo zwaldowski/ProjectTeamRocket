@@ -142,4 +142,8 @@
  <color name="DarkBlue">#00008B</color>
  <color name="Navy">#000080</color>
  <color name="Black">#000000</color>
+    <color name="pager_footer">#1fb6ed</color>
+    <color name="pager_selected_text">#FFFFFF</color>
+    <color name="pager_background">#F4F4F4</color>
+    <color name="pager_background_alternate">#E7E7E7</color>
 </resources>
