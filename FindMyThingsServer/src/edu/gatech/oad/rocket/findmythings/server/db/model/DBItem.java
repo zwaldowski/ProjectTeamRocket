@@ -209,9 +209,14 @@ public class DBItem implements Searchable {
 	public Date getSubmittedDate() {
 		return submittedDate;
 	}
+	
+	public boolean canGetSearchableContent() {
+		return name != null && category != null && description != null;
+	}
 
 	public String getSearchableContent() {
-		return getName() + " " + getCategory().searchableValue() + " " + Integer.toString(getReward()) + " " + getDescription();
+		String rewardString = (reward != 0) ? (Integer.toString(getReward()) + " ") : "";
+		return getName() + " " + getCategory().searchableValue() + " " + rewardString + getDescription();
 	}
 
 	public Set<String> getSearchTokens() {

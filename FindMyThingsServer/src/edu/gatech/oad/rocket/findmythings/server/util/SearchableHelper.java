@@ -48,10 +48,14 @@ public class SearchableHelper {
 	}
 
 	public static void updateSearchTokens(Searchable item) {
-		String sb = item.getSearchableContent();
-		Set<String> new_ftsTokens = getSearchTokens(sb, MAX_NUMBER_OF_WORDS_TO_PUT_IN_INDEX);
 		Set<String> ftsTokens = item.getSearchTokens();
 		ftsTokens.clear();
+		
+		if (!item.canGetSearchableContent()) {
+			return;
+		}
+		String sb = item.getSearchableContent();
+		Set<String> new_ftsTokens = getSearchTokens(sb, MAX_NUMBER_OF_WORDS_TO_PUT_IN_INDEX);
 
 		for (String token : new_ftsTokens) {
 			ftsTokens.add(token);

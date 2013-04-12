@@ -12,6 +12,8 @@ import java.util.Set;
  * @see SearchableHelper
  */
 public abstract interface Searchable {
+	
+	abstract boolean canGetSearchableContent();
 
 	abstract String getSearchableContent();
 
