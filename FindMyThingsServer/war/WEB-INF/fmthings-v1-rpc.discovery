@@ -1,11 +1,13 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/an9Ob4v0a5G79KLX7GeREJ9ix-w\"",
+ "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/9ciMdhhmx6BPULFGaJmWGPuMkK4\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
  "version": "v1",
  "description": "This is an API",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
