@@ -82,7 +82,6 @@ public class WebAuthenticationFilter extends FormAuthenticationFilter {
 			return onLoginSuccess(token, subject, request, response);
 		} catch (AuthenticationException e) {
 			LOGGER.fine("Failed log in.");
-			setFailureAttribute(request, e);
 			return onLoginFailure(token, e, request, response);
 		}
 	}
