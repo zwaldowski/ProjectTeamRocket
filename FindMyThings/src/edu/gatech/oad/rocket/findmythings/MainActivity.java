@@ -105,7 +105,7 @@ public class MainActivity extends ListActivity  {
 
 		
 		mView = (ListView)findViewById(android.R.id.list);
-		mView.setTextFilterEnabled(true); //TODO: gestures
+		/*mView.setTextFilterEnabled(true); //TODO: gestures
 		//Hides the actionbar when scrolling down, shows it when you scroll back up to the top
 		mView.setOnTouchListener(new OnTouchListener() {
 	        @Override
@@ -118,7 +118,7 @@ public class MainActivity extends ListActivity  {
 	           return false;
 	        }
 	       
-	     });
+	     });*/
 		
 		//Create tabs and hide title
 		actionBar = getActionBar();
