@@ -38,16 +38,19 @@ public class AccountActivity extends Activity {
 		mEmail = (EditText) findViewById(R.id.emailview);
 		mPhone = (EditText) findViewById(R.id.phoneview);
 		mAddy = (EditText) findViewById(R.id.addressview);
+
+		//Current Login manager
+		LoginManager manage = LoginManager.getLoginManager();
 		
-		if(Login.currUser!=null) {
+		if(manage.isLoggedIn()) {
 			// Display user info
-			mEmail.setText(Login.currUser.getUser());
-			if(Login.currUser.getName()!=null)
-				mName.setText(Login.currUser.getName());
-			if(Login.currUser.getAddress()!=null)
-				mAddy.setText(Login.currUser.getAddress());
-			if(Login.currUser.getPhone()!=null)
-				mPhone.setText(Login.currUser.getPhone());
+			mEmail.setText(manage.getCurrentUser().getEmail());
+			if(manage.getCurrentUser().getName()!=null)
+				mName.setText(manage.getCurrentUser().getName());
+			if(manage.getCurrentUser().getAddress()!=null)
+				mAddy.setText(manage.getCurrentUser().getAddress());
+			if(manage.getCurrentUser().getPhone()!=null)
+				mPhone.setText(manage.getCurrentUser().getPhone().getNumber());
 		}
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}

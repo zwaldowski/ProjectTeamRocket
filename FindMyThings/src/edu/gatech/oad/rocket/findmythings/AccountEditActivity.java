@@ -22,6 +22,11 @@ public class AccountEditActivity extends Activity {
 	private EditText mName, mEmail, mPhone, mAddy;
 	
 	/**
+	 * Reference to current LoginManagers
+	 */
+	private LoginManager manage = LoginManager.getLoginManager();
+	
+	/**
 	 * creates new window with correct layout
 	 * @param Bundle savedInstanceState
 	 */
@@ -37,16 +42,17 @@ public class AccountEditActivity extends Activity {
 		mPhone = (EditText) findViewById(R.id.phoneedit);
 		mAddy = (EditText) findViewById(R.id.addressedit);
 		
-		if(Login.currUser!=null) {
+				
+		if(manage.isLoggedIn()) {
 			// Display user info
-			mEmail.setText(Login.currUser.getUser());
-			if(Login.currUser.getName()!=null)
-				mName.setText(Login.currUser.getName());
-			if(Login.currUser.getAddress()!=null)
-				mAddy.setText(Login.currUser.getAddress());
-			if(Login.currUser.getPhone()!=null)
-				mPhone.setText(Login.currUser.getPhone());
-		}	
+			mEmail.setText(manage.getCurrentUser().getEmail());
+			if(manage.getCurrentUser().getName()!=null)
+				mName.setText(manage.getCurrentUser().getName());
+			if(manage.getCurrentUser().getAddress()!=null)
+				mAddy.setText(manage.getCurrentUser().getAddress());
+			if(manage.getCurrentUser().getPhone()!=null)
+				mPhone.setText(manage.getCurrentUser().getPhone().getNumber());
+		}
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
@@ -76,9 +82,9 @@ public class AccountEditActivity extends Activity {
 			startActivity(i);
 			return true;
 		case R.id.edit_ok:
-			Login.currUser.setName(mName.getText().toString());
-			Login.currUser.setAddress(mAddy.getText().toString());
-			Login.currUser.setPhone(mPhone.getText().toString());
+			manage.getCurrentUser().setName(mName.getText().toString());
+			manage.getCurrentUser().setAddress(mAddy.getText().toString());
+			manage.getCurrentUser().getPhone().setNumber(mPhone.getText().toString());
 			return toAccount(true);
 		case R.id.edit_cancel:
 			return toAccount(false);
