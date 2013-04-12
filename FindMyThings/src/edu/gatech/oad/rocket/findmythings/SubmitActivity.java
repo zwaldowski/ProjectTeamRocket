@@ -1,7 +1,9 @@
 package edu.gatech.oad.rocket.findmythings;
 
 import java.io.IOException;
+import java.util.Date;
 
+import com.google.api.client.util.DateTime;
 import com.google.api.services.fmthings.EndpointUtils;
 import com.google.api.services.fmthings.model.DBItem;
 
@@ -45,11 +47,6 @@ public class SubmitActivity extends Activity {
 	//Hold strings from the UI
 	private String desc, loc, name;
 	private int rward;
-
-	/**
-	 * Data source we submit to.
-	 */
-	private Controller control = Controller.shared();
 
 	/**
 	 * The list to submit this item to.
@@ -183,6 +180,8 @@ public class SubmitActivity extends Activity {
 			rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 
 			DBItem newItem = new DBItem().setName(name).setReward(rward)
+					.setDate(new DateTime(new Date()))
+					.setSubmittingUser(LoginManager.getLoginManager().getCurrentEmail())
 					.setCategory(mCategory.name()).setType(mType.name())
 					.setDescription(desc).setLocation(loc);
 			
@@ -327,68 +326,7 @@ public class SubmitActivity extends Activity {
 		protected void onPostExecute(final DBItem output) {
 			toItemList();
 			//control.addItem(temp);
-			
-			/*mAuthTask = null;
-
-			String token = null, email = null, failureMessage = null;
-			if (output != null) {
-				token = output.getToken();
-				email = output.getEmail();
-				failureMessage = output.getFailureReason();
-			}
-			Messages.Login failureType = EnumHelper.<Messages.Login>forTextString(Messages.Login.class, failureMessage);
-			
-			if (token != null && email != null) {
-				LoginManager.getLoginManager().setCurrentEmailAndToken(email, token);
-				new AsyncTask<Void, Void, AppMember>(){
-
-					@Override
-					protected AppMember doInBackground(Void... arg0) {
-						try {
-							return EndpointUtils.getEndpoint().account().get().execute();
-						} catch (IOException e) {
-							return null;
-						}
-						
-					}
-					
-					@Override
-					protected void onPostExecute(final AppMember output) {
-						showProgress(false);
-						LoginManager.getLoginManager().setCurrentUser(output);
-						toMainReload();
-					}
-					
-				}.execute();
-				return;
-			} else if (failureType != null) {
-				switch (failureType) {
-				case NO_SUCH_USER:
-					mEmailView.setError(getString(R.string.error_no_such_user));
-					mEmailView.requestFocus();
-					break;
-				case BAD_PASSWORD:
-					mPasswordView.setError(getString(R.string.error_incorrect_password));
-					mPasswordView.requestFocus();
-					break;
-				case ACCOUNT_LOCKED:
-				case ACCT_DISABLE:
-					mEmailView.setError(getString(R.string.error_account_locked));
-					mEmailView.requestFocus();
-					break;
-				case MANY_ATTEMPT:
-					mEmailView.setError(getString(R.string.error_many_attempts));
-					mEmailView.requestFocus();
-					break;
-				case INVALID_DATA:
-					ToastHelper.showError(LoginActivity.this, getString(R.string.error_invalid_data));
-					break;
-				}
-			} else {
-				ToastHelper.showError(LoginActivity.this, getString(R.string.error_no_response));
-			}
-			
-			showProgress(false);*/
+			showProgress(false);
 		}
 
 		/**
@@ -396,8 +334,8 @@ public class SubmitActivity extends Activity {
 		 */
 		@Override
 		protected void onCancelled() {
-			//mAuthTask = null;
-			//showProgress(false);
+			mSubmitTask = null;
+			showProgress(false);
 		}
 	}
 	

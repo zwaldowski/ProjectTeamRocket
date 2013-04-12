@@ -225,7 +225,7 @@ public class MainActivity extends ListActivity  {
 	 * Opens a new SubmitActivity activity with the current type of item.
 	 */
 	public boolean toSubmit() {
-		if (Login.currUser != null) {
+		if (LoginManager.getLoginManager().isLoggedIn()) {
 			Intent goToNextActivity = new Intent(this, SubmitActivity.class);
 			if (mType != null) goToNextActivity.putExtra(Type.ID, mType.ordinal());
 			startActivity(goToNextActivity);
