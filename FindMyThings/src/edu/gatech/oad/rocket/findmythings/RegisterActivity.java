@@ -67,6 +67,7 @@ public class RegisterActivity extends Activity {
 		// Gets mEmail from LoginActivity
 		Intent i = getIntent();
 		String s = i.getExtras().getString("email");
+		if (s == null) s = "";
 
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(s);
