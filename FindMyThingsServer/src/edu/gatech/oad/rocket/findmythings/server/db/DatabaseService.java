@@ -28,24 +28,18 @@ public abstract class DatabaseService {
 		ObjectifyService.setFactory(new DatabaseFactory());
 	}
 
-	@Singleton
 	public static class DatabaseFactory extends ObjectifyFactory {
 
 		@Inject private static Injector injector;
 
 		/** Register our entity types*/
 		public DatabaseFactory() {
+			super();
 			register(DBItem.class);
 			register(DBMember.class);
 			register(DBUserCounter.class);
 			register(DBRegistrationTicket.class);
 			register(DBAuthenticationToken.class);
-		}
-
-		/** Use guice to make instances instead! */
-		@Override
-		public <T> T construct(Class<T> type) {
-			return injector.getInstance(type);
 		}
 
 		@Override

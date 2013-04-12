@@ -52,7 +52,7 @@ public class MainContextListener extends GuiceServletContextListener {
 
 	@Override
 	protected Injector getInjector() {
-		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule(), new MainModule());
+		return Guice.createInjector(new MainShiroWebModule(servletContext), ShiroWebModule.guiceFilterModule(), new MainServletModule());
 	}
 
 	private class MainServletModule extends GuiceSystemServiceServletModule {
@@ -112,16 +112,6 @@ public class MainContextListener extends GuiceServletContextListener {
 			bindConstant(Config.Keys.REMEMBER_ME).to(Config.REMEMBER_ME_PARAM);
 		}
 
-	}
-
-	private static class MainModule extends AbstractModule {
-		@Override
-		protected void configure() {
-			requestStaticInjection(DatabaseFactory.class);
-
-			// External things that don't have Guice annotations
-			bind(ObjectifyFilter.class).in(Singleton.class);
-		}
 	}
 
 	private class MainShiroWebModule extends ShiroWebModule {
