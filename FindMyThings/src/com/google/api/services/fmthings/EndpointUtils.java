@@ -35,7 +35,7 @@ public class EndpointUtils {
 	   * http://developers.google.com/eclipse/docs/cloud_endpoints for more
 	   * information.
 	   */
-	  protected static final boolean LOCAL_ANDROID_RUN = false;
+	  protected static final boolean LOCAL_ANDROID_RUN = true;
 
 	  /*
 	   * The root URL of where your DevAppServer is running (if you're running the

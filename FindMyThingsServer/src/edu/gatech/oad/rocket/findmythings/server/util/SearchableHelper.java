@@ -75,12 +75,15 @@ public class SearchableHelper {
 		Set<String> returnSet = new HashSet<>();
 
 		try (Analyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42)) {
-			TokenStream tokenStream = analyzer.tokenStream("content", new StringReader(indexCleanedOfHTMLTags));
+			TokenStream tokenStream = analyzer.tokenStream(null, new StringReader(indexCleanedOfHTMLTags));
 			CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
-
-			while (tokenStream.incrementToken() && returnSet.size() < maximumNumberOfTokens) {
+			tokenStream.reset();
+			while (tokenStream.incrementToken()) {
 				String term = charTermAttribute.toString();
-				returnSet.add(term);
+				if (term != null) {
+					returnSet.add(term);
+				}
+				if (returnSet.size() == maximumNumberOfTokens - 1) break;
 			}
 		} catch (IOException e) {
 			log.severe(e.getMessage());

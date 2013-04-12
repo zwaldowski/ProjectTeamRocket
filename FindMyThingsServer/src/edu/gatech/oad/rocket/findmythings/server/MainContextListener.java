@@ -31,8 +31,11 @@ import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class MainContextListener extends GuiceServletContextListener {
+	
+	private static final Logger LOG = Logger.getLogger(MainContextListener.class.getName());
 
 	private static final boolean ENABLE_TEST_MODE = false;
 
@@ -67,13 +70,6 @@ public class MainContextListener extends GuiceServletContextListener {
 
 		@Override protected void configureServlets() {
 			filter("/*").through(ObjectifyFilter.class);
-
-			Set<Class<?>> serviceClasses = new HashSet<>();
-			serviceClasses.add(AccountV1.class);
-			serviceClasses.add(ItemV1.class);
-			serviceClasses.add(MemberV1.class);
-			serviceClasses.add(TestV1.class);
-			this.serveGuiceSystemServiceServlet("/_ah/api/*", serviceClasses);
 
 			try {
 				bindNamed(PageGenerator.TEMPLATES, URL.class, getServletContext().getResource("/WEB-INF/templates/"));

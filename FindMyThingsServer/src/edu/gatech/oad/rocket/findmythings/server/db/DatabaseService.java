@@ -1,8 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.server.db;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Singleton;
 import com.googlecode.objectify.*;
 import com.googlecode.objectify.util.cmd.ObjectifyWrapper;
 import edu.gatech.oad.rocket.findmythings.server.db.model.*;
@@ -29,8 +26,6 @@ public abstract class DatabaseService {
 	}
 
 	public static class DatabaseFactory extends ObjectifyFactory {
-
-		@Inject private static Injector injector;
 
 		/** Register our entity types*/
 		public DatabaseFactory() {

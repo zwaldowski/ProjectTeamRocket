@@ -173,9 +173,6 @@ public class SubmitActivity extends Activity {
 			mStatusMessageView.setText(R.string.submit_progress_message);
 			showProgress(true);
 			
-			// setDate?
-			// setSubmittedDate?
-			// setSubmittingUser?
 			loc = location.getText().toString();
 			rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 
@@ -183,7 +180,10 @@ public class SubmitActivity extends Activity {
 					.setDate(new DateTime(new Date()))
 					.setSubmittingUser(LoginManager.getLoginManager().getCurrentEmail())
 					.setCategory(mCategory.name()).setType(mType.name())
+					.setSearchableContent(null).setSearchTokens(null)
+					.setSubmittedDate(new DateTime(new Date()))
 					.setDescription(desc).setLocation(loc);
+			// date is obviously duplicitous here
 			
 			// Checks for valid user name
 			mSubmitTask = new SubmitItemTask();

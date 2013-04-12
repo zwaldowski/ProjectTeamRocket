@@ -211,7 +211,7 @@ public class DBItem implements Searchable {
 	}
 	
 	public boolean canGetSearchableContent() {
-		return name != null && category != null && description != null;
+		return name != null && name.length() > 0 && category != null && description != null && description.length() > 0;
 	}
 
 	public String getSearchableContent() {
