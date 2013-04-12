@@ -1,10 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
-import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import org.apache.shiro.authc.AuthenticationException;
@@ -33,18 +30,11 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 	private String usernameParam;
 	private String passwordParam;
 
-	@Override @Inject
-	public void setLoginUrl(@Named(Config.Keys.LOGIN_API_URL) String loginUrl) {
-		super.setLoginUrl(loginUrl);
-	}
-
-	@Inject
-	public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {
+	public void setUsernameParam(String usernameParam) {
 		this.usernameParam = usernameParam;
 	}
 
-	@Inject
-	public void setPasswordParam(@Named(Config.Keys.PASSWORD) String passwordParam) {
+	public void setPasswordParam(String passwordParam) {
 		this.passwordParam = passwordParam;
 	}
 

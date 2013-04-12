@@ -1,7 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.server.web;
 
-import com.google.inject.Singleton;
-
 import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@Singleton
 public class ForgotServlet extends RegisterServlet {
 
 	/**
@@ -47,7 +44,7 @@ public class ForgotServlet extends RegisterServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			String email = WebUtils.getCleanParam(request, getUsernameParam());
+			String email = WebUtils.getCleanParam(request, Config.USERNAME_PARAM);
 
 			if (emailIsInvalid(email)) {
 				sendError(request, response, Messages.Register.BAD_EMAIL_ADDRESS);

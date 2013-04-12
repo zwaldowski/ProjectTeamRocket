@@ -5,22 +5,90 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<display-name>Find My Things</display-name>
 	
-	<filter>
-		<filter-name>guiceFilter</filter-name>
-		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
-	</filter>
+    <security-constraint>
+        <web-resource-collection>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <url-pattern>/_ah/spi/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <listener>
+    	<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+	</listener>
+    
+	<servlet>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+		<init-param>
+			<param-name>services</param-name>
+			<param-value>edu.gatech.oad.rocket.findmythings.server.spi.AccountV1,edu.gatech.oad.rocket.findmythings.server.spi.ItemV1,edu.gatech.oad.rocket.findmythings.server.spi.MemberV1,edu.gatech.oad.rocket.findmythings.server.spi.TestV1</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<url-pattern>/_ah/spi/*</url-pattern>
+	</servlet-mapping>
 	
+	<servlet>
+        <servlet-name>recvmail</servlet-name>
+        <servlet-class>edu.gatech.oad.rocket.findmythings.server.web.MailboxServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>recvmail</servlet-name>
+        <url-pattern>/_ah/mail/*</url-pattern>
+    </servlet-mapping>
+	
+	<servlet>
+        <servlet-name>sendwelcomemail</servlet-name>
+        <servlet-class>edu.gatech.oad.rocket.findmythings.server.web.WelcomeMailmanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sendwelcomemail</servlet-name>
+        <url-pattern>/sendWelcomeMail</url-pattern>
+    </servlet-mapping>
+	
+	<servlet>
+        <servlet-name>sendregistrationmail</servlet-name>
+        <servlet-class>edu.gatech.oad.rocket.findmythings.server.web.RegisterMailmanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sendregistrationmail</servlet-name>
+        <url-pattern>/sendMail</url-pattern>
+    </servlet-mapping>
+	
+	
+	<filter>
+        <filter-name>ObjectifyFilter</filter-name>
+        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+	</filter>
 	<filter-mapping>
-		<filter-name>guiceFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>ERROR</dispatcher>
+        <filter-name>ObjectifyFilter</filter-name>
+        <url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<listener>
-		<listener-class>edu.gatech.oad.rocket.findmythings.server.MainContextListener</listener-class>
-	</listener>
+<filter>
+    <filter-name>ShiroFilter</filter-name>
+    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+</filter>
+
+<filter-mapping>
+    <filter-name>ShiroFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher> 
+    <dispatcher>FORWARD</dispatcher> 
+    <dispatcher>INCLUDE</dispatcher> 
+    <dispatcher>ERROR</dispatcher>
+</filter-mapping>
 	
 </web-app>

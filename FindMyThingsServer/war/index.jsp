@@ -1,13 +1,14 @@
-<#assign title="Find My Things &raquo; Hello World!">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% String title ="Find My Things"; %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <#include "inc/_head.ftl">
+  	<%@ include file ="inc/_head.inc" %>
   </head>
 
   <body>
 
-    <#include "inc/nav.ftl">
+    <%@ include file ="inc/nav.inc" %>
 
     <div class="container">
 
@@ -26,19 +27,19 @@
       </div>
 
       <!-- Example row of columns -->
-      
+
         <div class="centre">
           <h2>Heading</h2>
           <p>Donde Esta La Biblioteca</p>
           <p><a class="btn" href="#">View details &raquo;</a></p>
         </div>
-    
 
-      <#include "inc/footer.ftl">
+
+      <%@ include file ="inc/footer.inc" %>
 
     </div> <!-- /container -->
 
-    <#include "inc/_foot.ftl">
+    <%@ include file ="inc/_foot.inc" %>
 
   </body>
 </html>

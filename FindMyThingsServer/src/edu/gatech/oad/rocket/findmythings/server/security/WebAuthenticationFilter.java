@@ -1,11 +1,8 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
 import com.google.common.collect.Maps;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
-import edu.gatech.oad.rocket.findmythings.server.util.Config;
 import edu.gatech.oad.rocket.findmythings.server.util.Messages;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -22,31 +19,6 @@ import java.util.logging.Logger;
 
 public class WebAuthenticationFilter extends FormAuthenticationFilter {
 	private static final Logger LOGGER = Logger.getLogger(WebAuthenticationFilter.class.getName());
-
-	@Override @Inject
-	public void setUsernameParam(@Named(Config.Keys.USERNAME) String usernameParam) {
-		super.setUsernameParam(usernameParam);
-	}
-
-	@Override @Inject
-	public void setPasswordParam(@Named(Config.Keys.PASSWORD) String passwordParam) {
-		super.setPasswordParam(passwordParam);
-	}
-
-	@Override @Inject
-	public void setRememberMeParam(@Named(Config.Keys.REMEMBER_ME) String rememberMeParam) {
-		super.setRememberMeParam(rememberMeParam);
-	}
-
-	@Override @Inject
-	public void setLoginUrl(@Named(Config.Keys.LOGIN_URL) String loginUrl) {
-		super.setLoginUrl(loginUrl);
-	}
-
-	@Override @Inject
-	public void setSuccessUrl(@Named(Config.Keys.LOGIN_SUCCESS_URL) String successUrl) {
-		super.setSuccessUrl(successUrl);
-	}
 
 	@Override
 	protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {

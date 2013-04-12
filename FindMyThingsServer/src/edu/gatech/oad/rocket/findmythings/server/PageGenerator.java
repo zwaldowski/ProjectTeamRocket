@@ -2,9 +2,6 @@ package edu.gatech.oad.rocket.findmythings.server;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
 import edu.gatech.oad.rocket.findmythings.server.util.tags.PageAuthTags;
 import freemarker.cache.URLTemplateLoader;
 import freemarker.template.Configuration;
@@ -41,8 +38,7 @@ public class PageGenerator {
 	private final Charset charset;
 	private Configuration config;
 
-	@Inject
-	PageGenerator(@Named(TEMPLATES) URL templateBase, @Named(LOCALE) Locale locale, @Named(CHARSET) Charset charset) throws IOException {
+	PageGenerator(URL templateBase, Locale locale, Charset charset) throws IOException {
 		Preconditions.checkNotNull(templateBase);
 		Preconditions.checkNotNull(locale);
 		Preconditions.checkNotNull(charset);
@@ -125,7 +121,6 @@ public class PageGenerator {
 		};
 	}
 
-	@Singleton
 	synchronized Configuration getConfig() {
 		if (config == null) {
 			config = new Configuration();

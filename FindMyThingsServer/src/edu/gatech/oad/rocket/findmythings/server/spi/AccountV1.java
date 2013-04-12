@@ -6,7 +6,6 @@ import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.inject.Singleton;
 import com.googlecode.objectify.Key;
 
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
@@ -29,9 +28,10 @@ public class AccountV1 extends BaseEndpoint {
 		return email == null || email.length() == 0 || !EmailValidator.getInstance().isValid(email);
 	}
 
-	@Singleton
-	private static RegexValidator getPhoneNumberValidator() {
-		return new RegexValidator("[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}", false);
+	private static final RegexValidator PHONE_VALIDATOR = new RegexValidator("[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}", false);
+
+	public static RegexValidator getPhoneNumberValidator() {
+		return PHONE_VALIDATOR;
 	}
 
 	MessageBean mailWelcomeReturnOK(String email) {

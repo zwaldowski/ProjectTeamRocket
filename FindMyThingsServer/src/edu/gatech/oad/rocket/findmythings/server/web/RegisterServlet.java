@@ -4,7 +4,6 @@ import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.inject.Singleton;
 import edu.gatech.oad.rocket.findmythings.server.TemplateServlet;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
 
-@Singleton
 public class RegisterServlet extends TemplateServlet {
 
 	@SuppressWarnings("unused")
@@ -43,16 +41,17 @@ public class RegisterServlet extends TemplateServlet {
 	// user clicks link, GET on activate with URL param, activates user
 
 	// fun fact: password recovery is almost identical
+	
+	private static final RegexValidator PHONE_VALIDATOR = new RegexValidator("[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}", false);
 
-	@Singleton
-	private static RegexValidator getPhoneNumberValidator() {
-		return new RegexValidator("[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}", false);
+	public static RegexValidator getPhoneNumberValidator() {
+		return PHONE_VALIDATOR;
 	}
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			String email = WebUtils.getCleanParam(request, getUsernameParam());
+			String email = WebUtils.getCleanParam(request, Config.USERNAME_PARAM);
 
 			if (emailIsInvalid(email)) {
 				sendError(request, response, Messages.Register.BAD_EMAIL_ADDRESS);
@@ -66,7 +65,7 @@ public class RegisterServlet extends TemplateServlet {
 				return;
 			}
 
-			String password = WebUtils.getCleanParam(request, getPasswordParam());
+			String password = WebUtils.getCleanParam(request, Config.PASSWORD_PARAM);
 			String passwordAlt = WebUtils.getCleanParam(request, PASSWORD_CONFIRM);
 
 			if (password == null || password.length() < 3 || passwordAlt == null || passwordAlt.length() < 3) {
@@ -151,7 +150,7 @@ public class RegisterServlet extends TemplateServlet {
 		// send email with registrationToken
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.add(TaskOptions.Builder.withUrl("/sendMail")
-				.param(getUsernameParam(), email)
+				.param(Config.USERNAME_PARAM, email)
 				.param(Config.FORGOT_PASSWORD_PARAM, Boolean.toString(isForgot))
 				.param(Config.TICKET_PARAM, registrationToken));
 

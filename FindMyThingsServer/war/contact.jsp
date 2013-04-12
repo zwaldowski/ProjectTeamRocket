@@ -1,20 +1,21 @@
-<#assign title="Find My Things &raquo; Register">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% String title ="Find My Things &raquo; Contact"; %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <#include "inc/_head.ftl">
+    <%@ include file ="inc/_head.inc" %>
   </head>
 
   <body>
 
-    <#include "inc/nav.ftl">
+    <%@ include file ="inc/nav.inc" %>
 
     <div class="container">
 
       <div class="page-header">
         <h1>Find My Things <small>has been built by...</small></h1>
       </div>
-      
+
       <div class="row">
         <div class="span1">&nbsp;</div>
         <div class="span10 container">
@@ -59,11 +60,11 @@
         <div class="span1">&nbsp;</div>
       </div>
 
-      <#include "inc/footer.ftl">
+      <%@ include file ="inc/footer.inc" %>
 
-    </div>
+    </div> <!-- /container -->
 
-    <#include "inc/_foot.ftl">
+    <%@ include file ="inc/_foot.inc" %>
 
   </body>
 </html>

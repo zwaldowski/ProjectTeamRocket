@@ -1,7 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.server.web;
 
-import com.google.inject.Singleton;
-
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
@@ -12,7 +10,6 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-@Singleton
 public class MailboxServlet extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(MailboxServlet.class.getName());
 

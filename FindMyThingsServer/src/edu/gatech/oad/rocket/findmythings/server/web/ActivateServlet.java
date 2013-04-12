@@ -1,6 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.server.web;
 
-import com.google.inject.Singleton;
 import edu.gatech.oad.rocket.findmythings.server.TemplateServlet;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.db.model.DBMember;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@Singleton
 public class ActivateServlet extends TemplateServlet {
 
 	/**
@@ -29,14 +27,15 @@ public class ActivateServlet extends TemplateServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String code = WebUtils.getCleanParam(request, Config.TICKET_PARAM);
-		String username = WebUtils.getCleanParam(request, getUsernameParam());
+		String username = WebUtils.getCleanParam(request, Config.USERNAME_PARAM);
 		if (code == null || code.length() == 0 || username == null || username.length() == 0) {
 			WebUtils.issueRedirect(request, response, "/");
 		}
-		boolean forgot = getBoolRequestParam(request, Config.FORGOT_PASSWORD_PARAM, false);
+		String forgotString = WebUtils.getCleanParam(request, Config.FORGOT_PASSWORD_PARAM);
+		boolean forgot = forgotString == null ? false : Boolean.parseBoolean(forgotString);
 
 		request.setAttribute(Config.TICKET_PARAM, code);
-		request.setAttribute(getUsernameParam(), username);
+		request.setAttribute(Config.USERNAME_PARAM, username);
 		request.setAttribute(Config.FORGOT_PASSWORD_PARAM, forgot);
 
 		if (forgot) {
@@ -60,13 +59,13 @@ public class ActivateServlet extends TemplateServlet {
 
 		try {
 			String code = WebUtils.getCleanParam(request, Config.TICKET_PARAM);
-			String email = WebUtils.getCleanParam(request, getUsernameParam());
+			String email = WebUtils.getCleanParam(request, Config.USERNAME_PARAM);
 			if (code == null || code.length() == 0 || email == null || email.length() == 0) {
 				sendError(request, response, Messages.Activate.INVALID_DATA);
 				return;
 			}
 
-			String password = WebUtils.getCleanParam(request, getPasswordParam());
+			String password = WebUtils.getCleanParam(request, Config.PASSWORD_PARAM);
 			String passwordAlt = WebUtils.getCleanParam(request, PASSWORD_CONFIRM);
 
 			if (password == null || password.length() < 3 || passwordAlt == null || passwordAlt.length() < 3) {
@@ -114,8 +113,8 @@ public class ActivateServlet extends TemplateServlet {
 		Object forgot = request.getAttribute(Config.FORGOT_PASSWORD_PARAM);
 		if (forgot != null) params.put(Config.FORGOT_PASSWORD_PARAM, code);
 
-		Object user = request.getAttribute(getUsernameParam());
-		if (user != null) params.put(getUsernameParam(), code);
+		Object user = request.getAttribute(Config.USERNAME_PARAM);
+		if (user != null) params.put(Config.USERNAME_PARAM, code);
 	}
 
 }

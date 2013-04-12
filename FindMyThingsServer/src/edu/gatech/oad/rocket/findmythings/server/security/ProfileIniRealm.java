@@ -1,7 +1,6 @@
 package edu.gatech.oad.rocket.findmythings.server.security;
 
 import com.google.appengine.api.datastore.PhoneNumber;
-import com.google.inject.Inject;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -101,7 +100,6 @@ public class ProfileIniRealm extends IniRealm implements ProfileRealm {
 		setCredentialsMatcher(new PasswordMatcher());
 	}
 
-	@Inject
 	public ProfileIniRealm(Ini ini) {
 		this();
 		setAuthenticationTokenClass(UsernamePasswordToken.class);

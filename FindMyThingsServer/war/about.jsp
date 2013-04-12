@@ -1,13 +1,14 @@
-<#assign title="Find My Things &raquo; Register">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% String title ="Find My Things &raquo; About"; %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <#include "inc/_head.ftl">
+    <%@ include file ="inc/_head.inc" %>
   </head>
 
   <body>
 
-    <#include "inc/nav.ftl">
+    <%@ include file ="inc/nav.inc" %>
 
     <div class="container">
 
@@ -35,11 +36,11 @@
       <p>It might seem a little far-fetched that the first thing someone pulls out after a disaster is their Android smartphone, but it's a future that's not too far off. Cellular towers are one of the few things to survive a disaster with relatively little change in service. Already, third-world countries who can't even get water to all their citizens ubiquitous cellular networks, because they're far easier to set up and maintain.</p>
       <p>Goals for the semester includes building a secure, modern, well-designed Android app, with features ranging from search to authentication. Students were allowed to expand on the ideas however they pleased. Our group brought mapping and a web backend to the fold.</p>
 
-      <#include "inc/footer.ftl">
+      <%@ include file ="inc/footer.inc" %>
 
-    </div>
+    </div> <!-- /container -->
 
-    <#include "inc/_foot.ftl">
+    <%@ include file ="inc/_foot.inc" %>
 
   </body>
 </html>
