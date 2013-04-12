@@ -60,8 +60,6 @@ public class Login {
 			else if(data.get(index).getPassword().equals(m.getPassword()))
 				found = true;
 
-
-
 		}
 		return found;
 	}
