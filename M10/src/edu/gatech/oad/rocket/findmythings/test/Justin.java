@@ -32,6 +32,7 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 	 * then goes to AccountActivity and validates that the user's name was successfully changed
 	 * @throws Throwable
 	 */
+	
 	public void testMenu() throws Throwable {
 		String email = "test@test.test";
 		String pass = "test";
