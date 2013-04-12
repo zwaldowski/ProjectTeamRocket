@@ -18,7 +18,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -99,14 +101,24 @@ public class MainActivity extends ListActivity  {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
-		
+		 
 
 		
 		mView = (ListView)findViewById(android.R.id.list);
 		mView.setTextFilterEnabled(true); //TODO: gestures
-		//mView.setOnScrollListener(new OnScrollListener { 
-			//public void onScroll
-		//});
+		//Hides the actionbar when scrolling down, shows it when you scroll back up to the top
+		mView.setOnTouchListener(new OnTouchListener() {
+	        @Override
+	        public boolean onTouch(final View view, final MotionEvent event) {
+	           if(event.getAction() == MotionEvent.ACTION_DOWN) 
+	        	   getActionBar().hide();
+	           
+	           if(event.getAction() == MotionEvent.ACTION_UP && !mView.canScrollVertically(-1))
+	        	   getActionBar().show();
+	           return false;
+	        }
+	       
+	     });
 		
 		//Create tabs and hide title
 		actionBar = getActionBar();
