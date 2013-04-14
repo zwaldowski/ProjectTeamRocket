@@ -1,12 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.control;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.gatech.oad.rocket.findmythings.model.Item;
-import edu.gatech.oad.rocket.findmythings.MainActivity;
-import edu.gatech.oad.rocket.findmythings.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -20,14 +13,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-
 import android.widget.TextView;
+import edu.gatech.oad.rocket.findmythings.R;
+import edu.gatech.oad.rocket.findmythings.model.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CS 2340 - FindMyStuff Android App
  *
  * @author TeamRocket
  * */
+// TODO: delete, implement Filterable on mai nactivity
 public class Adapter extends ArrayAdapter<Item> implements Filterable {
 
 	/**
@@ -75,7 +73,7 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	
 	/**
 	 * sets the main list of the Adapter
-	 * @param List<Item> l
+	 * @param l
 	 */
 	public void setList(List<Item> l) {
 		if (!l.isEmpty()) {
@@ -110,10 +108,10 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	
 	/**
 	 * returns the current View being used
-	 * @param int position
-	 * @param View convertView
-	 * @param ViewGroup parent
-	 * @return View
+	 * @param position
+	 * @param convertView
+	 * @param parent
+	 * @return view
 	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -158,8 +156,8 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 
 		/**
 		 * filtering by sequence of characters
-		 * @param CharSequence constraint
-		 * @return FilterResults 
+		 * @param constraint
+		 * @return
 		 */
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
@@ -176,15 +174,15 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		}
 
 		/**
-		 * @param CharSequence constraint
-		 * @param FilterResults results
+		 * @param constraint
+		 * @param results
 		 */
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint,
 				FilterResults results) {
-			
-			MainActivity.update((ArrayList<Item>)results.values);
+			//TODO: refilter
+			//MainActivity.update((ArrayList<Item>)results.values);
             notifyDataSetChanged();
 			
 		}

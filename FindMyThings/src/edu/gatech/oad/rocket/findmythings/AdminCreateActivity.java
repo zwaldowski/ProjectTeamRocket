@@ -106,7 +106,9 @@ public class AdminCreateActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_invalid_email));
 			focusView = mEmailView;
 			cancel = true;
-		} else if(Login.data.contains(new Admin(mEmail,""))) {
+		} else if (false) {
+			// Login.data.contains(new Admin(mEmail,""))
+			// TODO: Replace with backend error
 			mEmailView .setError("Email has already been registered.");
 			focusView = mEmailView;
 			cancel = true;
@@ -118,7 +120,7 @@ public class AdminCreateActivity extends Activity {
 			focusView.requestFocus();
 		}
 		else {
-			Login.data.add(new Admin(mEmail, mPassword));
+			// Login.data.add(new Admin(mEmail, mPassword));
 			finish();
 			return true;
 		}

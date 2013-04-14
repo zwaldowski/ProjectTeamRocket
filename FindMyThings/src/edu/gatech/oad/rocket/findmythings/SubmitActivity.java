@@ -1,20 +1,13 @@
 package edu.gatech.oad.rocket.findmythings;
 
-import java.io.IOException;
-import java.util.Date;
-
-import com.google.api.client.util.DateTime;
-import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
-import com.google.api.services.fmthings.model.DBItem;
-
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -22,11 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import edu.gatech.oad.rocket.findmythings.control.*;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.fmthings.model.DBItem;
+import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.model.Category;
 import edu.gatech.oad.rocket.findmythings.model.Type;
-import edu.gatech.oad.rocket.findmythings.util.*;
+import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
+
+import java.io.IOException;
+import java.util.Date;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -35,6 +32,9 @@ import edu.gatech.oad.rocket.findmythings.util.*;
  * @author TeamRocket
  * */
 public class SubmitActivity extends Activity {
+
+	public static final String EXTRA_TYPE = "submittingType";
+	public static final int SUBMIT_REQUEST = 8002;
 
 	//UI references
 	private EditText description;
@@ -69,7 +69,7 @@ public class SubmitActivity extends Activity {
 
 	/**
 	 * creates new window with correct layout
-	 * @param Bundle savedInstanceState
+	 * @param savedInstanceState
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +83,9 @@ public class SubmitActivity extends Activity {
 		location = (EditText) findViewById(R.id.locationtext);
 		reward = (EditText) findViewById(R.id.rewardtext);
 
-		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null && extraInfo.containsKey(Type.ID)) {
-			int value = extraInfo.getInt(Type.ID);
-			mType = EnumHelper.forInt(value, Type.class);
+		if (getIntent() != null && getIntent().getExtras() != null) {
+			String typeString = getIntent().getExtras().getString(EXTRA_TYPE);
+			mType = typeString == null ? Type.LOST : Type.valueOf(typeString);
 		}
 
 		// Hide the Up button in the action bar.
@@ -110,8 +109,8 @@ public class SubmitActivity extends Activity {
 
 	/**
 	 * creates the options menu 
-	 * @param Menu menu
-	 * @return boolean true when done
+	 * @param menu
+	 * @return true when done
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,14 +121,15 @@ public class SubmitActivity extends Activity {
 
 	/**
 	 * deals with action to do once a key is pressed down
-	 * @param int keyCode - key pressed
-	 * @param KeyEvent event - event to do in case of pressed
-	 * @return boolean 
+	 * @param keyCode - key pressed
+	 * @param event - event to do in case of pressed
+	 * @return boolean signifying whether we responded to the event
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			setResult(RESULT_CANCELED);
 	    	super.onBackPressed();
 			return true;
 	    }
@@ -197,7 +197,7 @@ public class SubmitActivity extends Activity {
 	
 	/**
 	 * deals with action when an options button is selected
-	 * @param MenuItem item
+	 * @param item
 	 * @return boolean  
 	 */
 	@Override
@@ -207,6 +207,7 @@ public class SubmitActivity extends Activity {
 			return attemptToSubmit();
 		case android.R.id.home:
 		case R.id.submit_cancel:
+			setResult(RESULT_CANCELED);
 			finish();
 			return true;
 		}
@@ -247,24 +248,6 @@ public class SubmitActivity extends Activity {
 	public Category getItemCategory() {
 		return mCategory;
 	}
-
-	/**
-	 * Returns to Item List activity. Animation and ID helper.
-	 * @return boolean
-	 */
-	public boolean toItemList() {
-		Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
-		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-		goToNextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-		goToNextActivity.putExtra(Type.ID, mType.ordinal());
-		finish();
-		startActivity(goToNextActivity);
-		overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
-		return true;
-	}
-	
-
-
 	/**
 	 * Shows the progress UI and hides the form.
 	 */
@@ -324,7 +307,10 @@ public class SubmitActivity extends Activity {
 		 */
 		@Override
 		protected void onPostExecute(final DBItem output) {
-			toItemList();
+			Intent resultIntent = new Intent();
+			resultIntent.putExtra(MainActivity.EXTRA_LIST, SubmitActivity.this.getItemType().toString());
+			setResult(Activity.RESULT_OK, resultIntent);
+			finish();
 			//control.addItem(temp);
 			showProgress(false);
 		}

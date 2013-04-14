@@ -1,11 +1,5 @@
 package edu.gatech.oad.rocket.findmythings;
 
-import java.io.IOException;
-
-import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
-import com.google.api.services.fmthings.model.AppMember;
-import com.google.api.services.fmthings.model.MessageBean;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -22,12 +16,16 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import edu.gatech.oad.rocket.findmythings.control.*;
+import com.google.api.services.fmthings.model.AppMember;
+import com.google.api.services.fmthings.model.MessageBean;
+import edu.gatech.oad.rocket.findmythings.control.LoginManager;
+import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.shared.util.Messages;
 import edu.gatech.oad.rocket.findmythings.shared.util.validation.EmailValidator;
-import edu.gatech.oad.rocket.findmythings.util.ToastHelper;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
+import edu.gatech.oad.rocket.findmythings.util.ToastHelper;
+
+import java.io.IOException;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -36,6 +34,8 @@ import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
  * @author TeamRocket
  * */
 public class LoginActivity extends Activity {
+
+	public static final int LOGIN_REQUEST = 42;
 	
 	/**
 	 * The default email to populate the email field with.
@@ -56,7 +56,7 @@ public class LoginActivity extends Activity {
 
 	/**
 	 * creates window with correct layout
-	 * @param Bundle
+	 * @param savedInstanceState
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,14 +98,15 @@ public class LoginActivity extends Activity {
 	
 	/**
 	 * takes care of action when key is pressed down
-	 * @param int keyCode key that is pressed
-	 * @param KeyEvent event - event that is to happen when the key is pressed
+	 * @param keyCode key that is pressed
+	 * @param event - event that is to happen when the key is pressed
 	 * @return boolean
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		//Tells Activity what to do when back key is pressed
 	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			setResult(RESULT_CANCELED);
 	    	super.onBackPressed();
 			return true;
 	    }
@@ -115,7 +116,7 @@ public class LoginActivity extends Activity {
 
 	/**
 	 * creates the menu with all the options
-	 * @param Menu menu
+	 * @param menu
 	 * @return boolean true when done
 	 */
 	@Override
@@ -132,9 +133,8 @@ public class LoginActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
-	        	Intent i = new Intent(LoginActivity.this, MainActivity.class);
+				setResult(RESULT_CANCELED);
 				finish();
-				startActivity(i);
 				return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -210,14 +210,6 @@ public class LoginActivity extends Activity {
 			// form field with an error.
 			focusView.requestFocus();
 		}
-	}
-
-	/**
-	 * Creates Member object, will need to be modified once the admin class is created
-	 * but I was having problems instantiating elsewhere.
-	 */
-	public void createUser() {
-		//temp = new User(mEmail,mPassword);
 	}
 
 	/**
@@ -309,7 +301,8 @@ public class LoginActivity extends Activity {
 					protected void onPostExecute(final AppMember output) {
 						showProgress(false);
 						LoginManager.getLoginManager().setCurrentUser(output);
-						toMainReload();
+						setResult(RESULT_OK);
+						finish();
 					}
 					
 				}.execute();
@@ -352,17 +345,6 @@ public class LoginActivity extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 		}
-	}
-	
-	/**
-	 * Reloads the main window with authenticated information
-	 */
-	private void toMainReload() {
-		Intent main = new Intent(getApplicationContext(), MainActivity.class);
-		main.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-		main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-		finish();
-	    startActivity(main);
 	}
 	
 	/**

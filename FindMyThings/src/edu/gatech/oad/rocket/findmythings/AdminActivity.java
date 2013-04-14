@@ -57,9 +57,8 @@ public class AdminActivity extends ListActivity {
 
 		mList.requestFocus();
 		//Instantiate ArrayAdapter and tell it to display the list of Members from Login
-		mUsers = new ArrayAdapter<Member>(this,
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, Login.data);
+		// TODO: REPLACE THIS
+		//mUsers = new ArrayAdapter<Member>(this, android.R.layout.simple_list_item_activated_1, android.R.id.text1, Login.data);
 		//TODO: add checkbox next to every item in the list for quicker deletion of users
 
 		mList.setAdapter(mUsers);

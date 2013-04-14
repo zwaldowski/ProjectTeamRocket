@@ -23,11 +23,6 @@ import edu.gatech.oad.rocket.findmythings.model.User;
 public class RegisterActivity extends Activity {
 
 	/**
-	 * The Login manager backing this Registration window.
-	 */
-	private Login log = new Login();
-
-	/**
 	 * Form values.
 	 */
 	private String mEmail, mPassword, mCon, mPhone, mName, mAddress;
@@ -141,7 +136,9 @@ public class RegisterActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_invalid_email));
 			focusView = mEmailView;
 			cancel = true;
-		} else if(Login.data.contains(new User(mEmail,""))) {
+		} else if(false) {
+			// TODO: replace with backend error
+			// Login.data.contains(new User(mEmail,""))
 			mEmailView .setError("Email has already been registered.");
 			focusView = mEmailView;
 			cancel = true;

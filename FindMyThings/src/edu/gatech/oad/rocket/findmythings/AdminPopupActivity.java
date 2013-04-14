@@ -58,7 +58,8 @@ public class AdminPopupActivity extends Activity implements OnPreferenceChangeLi
 		checkAdmin = (Switch)findViewById(R.id.isAdmin);
 		checkLock = (Switch)findViewById(R.id.isLocked);
 
-		checkAdmin.setChecked((Login.data.get(id).isAdmin()));
+		// TOOD: reimplement user editing on backend
+		/*checkAdmin.setChecked((Login.data.get(id).isAdmin()));
 		checkLock.setChecked((Login.data.get(id).locked()));
 
 		checkLock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -86,7 +87,8 @@ public class AdminPopupActivity extends Activity implements OnPreferenceChangeLi
 						Login.data.remove(id);
 						finish();
 					}
-				});
+				});*/
+
 		setTitle("User Attributes");
 	}
 

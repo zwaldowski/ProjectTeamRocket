@@ -1,33 +1,34 @@
 package edu.gatech.oad.rocket.findmythings;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
-import com.google.api.services.fmthings.model.MessageBean;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.app.ActionBar.Tab;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.widget.ListView;
 import android.widget.SearchView;
-
-import edu.gatech.oad.rocket.findmythings.control.*;
-import edu.gatech.oad.rocket.findmythings.model.Item;
+import com.google.api.services.fmthings.model.MessageBean;
+import com.viewpagerindicator.TabPageIndicator;
+import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.model.Type;
-import edu.gatech.oad.rocket.findmythings.util.*;
+import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
+import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
+import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
+
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+
 /**
  * CS 2340 - FindMyStuff Android App
  *
@@ -40,59 +41,45 @@ import edu.gatech.oad.rocket.findmythings.util.*;
  *
  * @author TeamRocket
  */
-public class MainActivity extends ListActivity  {
+public class MainActivity extends FragmentActivity {
+
+	public static final String EXTRA_LIST = "displayedList";
 
 	/**
-	 * The class of {@link Item} displayed in this list.
+	 * Quick at-a-glance identifier of the XML layout used for this activity.
 	 */
-	public static Type mType = null;
-	
+	private static final int mTabsLayoutRes = R.layout.activity_main_tabs;
+
 	/**
-	 * Reference to the actionbar (the thing at the top of every activity)
+	 * Quick at-a-glance identifier of the strings used to populate this activity's tabs.
 	 */
-	private ActionBar actionBar;
-	
+	private static final int mTabsListRes = R.array.main_tabs;
+
+	/**
+	 * Cached list of tab strings.
+	 */
+	private String[] mTabs = null;
+
 	/**
 	 * Used for the AlertDialog when user tries to sign out
 	 */
 	private boolean logOut = false;
-	
+
 	/**
-	 * Reference to Singleton class
+	 * Used for querying what Type is being displayed
 	 */
-	private Controller control = Controller.shared();
-	
-	/**
-	 * The ArrayAdapter to be displayed
-	 */
-	public static Adapter adapter;
-	
-	/**
-	 * Current list the Adapter is displaying
-	 */
-	public static ArrayList<Item> currList;
-	
-	/**
-	 * Reference to the view holding the ArrayAdapter
-	 */
-	private ListView mView;
-	
+	private ViewPager pager;
+
 	/**
 	 * Indirect reference to the search bar in the ActionBar
 	 */
-	private MenuItem search;
-	
-	/**
-	 * Direct reference to the search bar in the ActionBar
-	 */
-	private SearchView mSearch;
-	
+	private MenuItem searchMenuItem;
+
 	/**
 	 * Box shown to prevent user interaction during logout
 	 */
 	private ProgressDialog mProgressDialog;
 
-	
 	/**
 	 * creates window with correct layout
 	 * @param savedInstanceState
@@ -100,76 +87,144 @@ public class MainActivity extends ListActivity  {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_list);
-		 
+		setContentView(mTabsLayoutRes);
 
-		
-		mView = (ListView)findViewById(android.R.id.list);
-		/*mView.setTextFilterEnabled(true); //TODO: gestures
-		//Hides the actionbar when scrolling down, shows it when you scroll back up to the top
-		mView.setOnTouchListener(new OnTouchListener() {
-	        @Override
-	        public boolean onTouch(final View view, final MotionEvent event) {
-	           if(event.getAction() == MotionEvent.ACTION_DOWN) 
-	        	   getActionBar().hide();
-	           
-	           if(event.getAction() == MotionEvent.ACTION_UP && !mView.canScrollVertically(-1))
-	        	   getActionBar().show();
-	           return false;
-	        }
-	       
-	     });*/
-		
-		//Create tabs and hide title
-		actionBar = getActionBar();
-	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	    actionBar.setDisplayShowTitleEnabled(true);
-	    createTabs();
-	   
-	    //Array to be represented by the adapter
-	    
-	    if (FilterActivity.toReturn!=null) {
-	    	currList =  FilterActivity.toReturn;
-	    } else {
-	    	currList = control.getItem(mType);
-	    }
-	  	
-	  	
-	  	
-	  	//Takes the array and creates individual views for each item
-	  	adapter = new Adapter(this,
-	  			android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, currList);
-	  	
-	  	mView.setAdapter(adapter);
-	    	
-		setTitle("Find My Things");
-		getActionBar().setDisplayHomeAsUpEnabled(false);
-		
+		mTabs = getResources().getStringArray(mTabsListRes);
+
+		FragmentPagerAdapter adapter = new FragmentPagerAdapter(getFragmentManager()) {
+
+			@Override
+			public Fragment getItem(int position) {
+				Type thisType = getDisplayedTypeInPager(position);
+				return ItemListFragment.newInstance(thisType);
+			}
+
+			@Override
+			public CharSequence getPageTitle(int position) {
+				return mTabs[position % mTabs.length].toUpperCase();
+			}
+
+			@Override
+			public int getCount() {
+				return mTabs.length;
+			}
+		};
+
+		pager = (ViewPager)findViewById(R.id.pager);
+		pager.setAdapter(adapter);
+
+		TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
+		indicator.setViewPager(pager);
+
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(true);
+
+		setTitle(getString(R.string.app_name));
 	}
-	
+
+	private Type getDisplayedTypeInPager(int pagerPosition) {
+		int offIndex = pagerPosition % mTabs.length;
+		return offIndex == 0 ? null : EnumHelper.forInt(offIndex-1, Type.class);
+	}
+
+	protected Type getDisplayedType() {
+		return getDisplayedTypeInPager(pager.getCurrentItem());
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// Check which request we're responding to
+		if (requestCode == LoginActivity.LOGIN_REQUEST) {
+			// Make sure the request was successful
+			if (resultCode == RESULT_OK) {
+				// The user picked a contact.
+				// The Intent's data Uri identifies which contact was selected.
+
+				// Do something with the contact here (bigger example below)
+			}
+		} else if (requestCode == SubmitActivity.SUBMIT_REQUEST) {
+			if (resultCode == RESULT_OK) {
+
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
-	 * Updates the ArrayList the adapter is displaying as well as the Type of items being displayed
-	 * @param tempList
-	 * @param kind
+	 * creates the options menu (login, account, admin button)
+	 * @param menu
 	 */
-	public static void update(ArrayList<Item> tempList, Type kind) {
-		mType = kind;
-		currList = tempList;
-		adapter.setList(tempList);		
-		adapter.notifyDataSetChanged();
-	}	
-	
-	/**
-	 * 
-	 * @param tempList
-	 */
-	public static void update(ArrayList<Item> tempList) {
-		currList = tempList;
-		adapter.setList(tempList);
-		adapter.notifyDataSetChanged();
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+
+		searchMenuItem = menu.findItem(R.id.main_search_bar);
+
+		SearchView mSearch = (SearchView) searchMenuItem.getActionView();
+		mSearch.bringToFront();
+
+		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				// TODO actually search
+				return true;
+			}
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				// TODO actually search
+				return true;
+			}
+		};
+
+		mSearch.setOnQueryTextListener(queryTextListener);
+
+		LoginManager mgr = LoginManager.getLoginManager();
+		boolean loggedIn = mgr.isLoggedIn();
+
+		//Set Login Title
+		MenuItem loginMenu = menu.findItem(R.id.menu_login);
+		String title = loggedIn ? "Logout" : "Login";
+		loginMenu.setTitle(title);
+
+		//Set Account Title
+		MenuItem accountMenu = menu.findItem(R.id.menu_account);
+		if (loggedIn) {
+			accountMenu.setTitle(LoginManager.getLoginManager().getCurrentEmail());
+		} else {
+			accountMenu.setVisible(false);
+		}
+
+		//Show/Hide admin button
+		if (!loggedIn || (mgr.getCurrentUser() != null && !mgr.getCurrentUser().getAdmin())) {
+			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
+			adminMenu.setVisible(false);
+		}
+		return true;
 	}
+
+
+
+
+
+
+
+
 
 	/**
 	 * takes care of action when a key is pressed down
@@ -185,7 +240,7 @@ public class MainActivity extends ListActivity  {
 	    }
 	    if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 	    	//Shows the search bar
-	    	search.expandActionView();
+		searchMenuItem.expandActionView();
 	    	return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
@@ -194,44 +249,35 @@ public class MainActivity extends ListActivity  {
 	/**
 	 * shows the options that are available for user depending on the item selected (submit/search/login/etc)
 	 * @param item - menu selected
-	 * @return boolean 
+	 * @return boolean
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case R.id.item_list_submit:
-			return toSubmit();
-	        case R.id.menu_list_filter:
-	        	Intent i = new Intent(MainActivity.this, FilterActivity.class);
-	        	startActivityForResult(i, 1);
-			    overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+		switch (item.getItemId()) {
+			case android.R.id.home:  // This is the home button in the top left corner of the screen.
+				// Don't call finish! Because activity could have been started by an outside activity and the home button would not operated as expected!
+				Intent homeIntent = new Intent(this, MainActivity.class);
+				homeIntent.addFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
+				startActivity(homeIntent);
 				return true;
-	       	case R.id.menu_login: 
-				return LoginManager.getLoginManager().isLoggedIn() ? logOut() : toLogIn(); 
-			case R.id.menu_account: 
+			case R.id.item_list_submit:
+				return toSubmit();
+			case R.id.menu_list_filter:
+				Intent i = new Intent(this, FilterActivity.class);
+				startActivityForResult(i, 1);
+				overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
+				return true;
+			case R.id.menu_login:
+				return LoginManager.getLoginManager().isLoggedIn() ? logOut() : toLogIn();
+			case R.id.menu_account:
 				return toAccount();
 			case R.id.menu_admin:
 				return toAdmin();
-	    }
-	    return super.onOptionsItemSelected(item);
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
-	/**
-	 * takes user to new window with the clicked item's details
-	 * @param l
-	 * @param v
-	 * @param position
-	 * @param id
-	 */
-	@Override
-	protected void onListItemClick (ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-		Intent next = new Intent(this, ItemDetailActivity.class);
-	
-		next.putExtra("id", position);
-	    startActivity(next);
-	    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-	}
 
 	/**
 	 * Opens a new SubmitActivity activity with the current type of item.
@@ -239,135 +285,39 @@ public class MainActivity extends ListActivity  {
 	public boolean toSubmit() {
 		if (LoginManager.getLoginManager().isLoggedIn()) {
 			Intent goToNextActivity = new Intent(this, SubmitActivity.class);
-			if (mType != null) goToNextActivity.putExtra(Type.ID, mType.ordinal());
+			Type type = getDisplayedType();
+			if (type != null) goToNextActivity.putExtra(SubmitActivity.EXTRA_TYPE, type.toString());
+			startActivityForResult(goToNextActivity, SubmitActivity.SUBMIT_REQUEST);
 			startActivity(goToNextActivity);
 			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		}
 		else {
-			ErrorDialog toLogin =  new ErrorDialog("Must Sign-in to submit an item.", "Sign-in", "Cancel");
+			ErrorDialog toLogin =  new ErrorDialog(R.string.main_submit_log_in_message, R.string.main_submit_log_in, R.string.main_submit_log_in_cancel);
 			AlertDialog.Builder temp = toLogin.getDialog(this,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						MainActivity.this.toLogIn();
-					}	
-				}, 
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-			            	//cancel
-					}
-				});
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							MainActivity.this.toLogIn();
+						}
+					},
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							//cancel
+						}
+					});
 			temp.show();
-		}
-	    return true;
-	}
-
-	/**
-	 * creates the options menu (login, account, admin button)
-	 * @param menu
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
-		
-	    mSearch = (SearchView) menu.findItem(R.id.main_search_bar).getActionView();
-	    mSearch.bringToFront();
-	    //Used for filtering results
-		final SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() { 
-		    @Override 
-		    public boolean onQueryTextChange(String newText) { 
-		    	// TODO actually search
-		    	if(!newText.isEmpty()) {
-		    		adapter.getFilter().filter(newText);
-		    		adapter.notifyDataSetChanged();
-		    	}
-		    	else adapter.setList(currList);
-		        return true; 
-		    } 
-
-		    @Override 
-		    public boolean onQueryTextSubmit(String query) { 
-		    	
-		        return true; 
-		    } 
-		}; 
-		
-		mSearch.setOnQueryTextListener(queryTextListener);
-		
-	    search = menu.findItem(R.id.main_search_bar);
-	    
-	    LoginManager mgr = LoginManager.getLoginManager();
-	    boolean loggedIn = mgr.isLoggedIn();
-	    
-		//Set Login Title
-		MenuItem loginMenu = menu.findItem(R.id.menu_login);
-		String title = loggedIn ? "Logout" : "Login";
-		loginMenu.setTitle(title);
-					
-		//Set Account Title
-		MenuItem accountMenu = menu.findItem(R.id.menu_account);
-		if (loggedIn) {
-			accountMenu.setTitle(LoginManager.getLoginManager().getCurrentEmail());
-		} else { 
-			accountMenu.setVisible(false);
-		}
-				
-		//Show/Hide admin button
-		if (!loggedIn || (mgr.getCurrentUser() != null && !mgr.getCurrentUser().getAdmin())) {
-			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
-			adminMenu.setVisible(false);
 		}
 		return true;
 	}
-	
-	/**
-	 * Creates the tabs, duh.
-	 */
-	public void createTabs() {
-		Tab tab;
-	    String tabName = "";
-	    for(int i = 0; i <5;i++) {
-	    	switch(i) { //Create tabs
-	    	case 0:
-	    		tabName = "ALL";
-	    		break;
-	    	case 1:
-	    		tabName = "LOST";
-	    		break;
-	    	case 2:
-	    		tabName = "FOUND";
-	    		break;
-	    	case 3: 
-	    		tabName = "DONATIONS";
-	    		break;
-	    	case 4:
-	    		tabName = "REQUESTS";
-	    		break;
-	    	}
-	    	tab = actionBar.newTab()
-		            .setText(tabName)
-		    		.setTabListener(new MainTabListener(tabName));
-	    	 actionBar.addTab(tab);
-	    }
-	}
 
-	/**
-	 * Returns the kind of Item displayed in this list.
-	 * @return An enumerated Type value
-	 */
-	public Type getItemType() {
-		return mType;
-	}
-	
 	 /**
      * Go to LoginActivity
      * @return boolean true when done
      */
     public boolean toLogIn() {
     	Intent toLogin = new Intent(this, LoginActivity.class);
-    	startActivity(toLogin);
+		startActivityForResult(toLogin, LoginActivity.LOGIN_REQUEST);
 		overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		return true;
     }
@@ -399,39 +349,40 @@ public class MainActivity extends ListActivity  {
      * @return boolean: true if logout, false if not
      */
     public boolean logOut() {
-    	ErrorDialog toLogin =  new ErrorDialog(getString(R.string.main_message_signout), "Sign out", "Cancel");
-		AlertDialog.Builder temp = toLogin.getDialog(this,
+	ErrorDialog toLogin = new ErrorDialog(R.string.main_sign_out_confirm, R.string.main_sign_out_ok, R.string.main_sign_out_cancel);
+		AtomicReference<AlertDialog.Builder> temp = new AtomicReference<>(toLogin.getDialog(this,
 				new DialogInterface.OnClickListener() {
 
-			/**
-			 * logs current user out
-			 * @param dialog
-			 * @param id
-			 */
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				logOut = true;				
-				mProgressDialog = ProgressDialog.show(MainActivity.this,
-						getString(R.string.main_sign_out_title),
-						getString(R.string.main_sign_out_message), true, false);
-				new LogoutTask().execute();
-			}	
-		}, 
-		
-		new DialogInterface.OnClickListener() {
+					/**
+					 * logs current user out
+					 * @param dialog
+					 * @param id
+					 */
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						logOut = true;
+						mProgressDialog = ProgressDialog.show(MainActivity.this,
+								getString(R.string.main_sign_out_title),
+								getString(R.string.main_sign_out_message), true, false);
+						new LogoutTask().execute();
+					}
+				},
 
-			/**
-			 * keeps user loged in
-			 * @param DialogInterface dialog
-			 * @param int id
-			 */
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				logOut = false;
-				}    
-		
-			});
-		temp.show();
+				new DialogInterface.OnClickListener() {
+
+					/**
+					 * keeps user logged in
+					 * @param dialog
+					 * @param id
+					 */
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						logOut = false;
+					}
+
+				}
+		));
+		temp.get().show();
     	return logOut;    	
     }
     
@@ -452,7 +403,6 @@ public class MainActivity extends ListActivity  {
     		mProgressDialog = null;
     		
     		//Clear current user
-    		Login.currUser=null;
     		LoginManager.getLoginManager().logout();
     		
     		//Making sense is for squares

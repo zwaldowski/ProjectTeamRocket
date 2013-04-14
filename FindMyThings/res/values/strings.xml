@@ -84,5 +84,14 @@
     <string name="title_activity_my_account_edit">MyAccountEdit</string>
     <string name="title_activity_filter">FilterActivity</string>
     <string name="title_activity_submit">Submit an Item</string>
-    
+
+    <string name="dialog_positive_default">OK</string>
+    <string name="dialog_negative_default">Cancel</string>
+
+    <string name="item_detail_inet_err">Error: no active internet connection.</string>
+    <string name="item_detail_playstore_err">Error: please make sure that you have the Play Store installed.</string>
+    <string name="maps_location_find_err">Unable to find the location using Google Maps at this time, please try again later.</string>
+    <string name="maps_location_inet_err">Unable to reach Google Maps at this time, please check your connection strength.</string>
+
+
 </resources>

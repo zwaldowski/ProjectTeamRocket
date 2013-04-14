@@ -45,24 +45,19 @@ public class ItemDetailActivity extends FragmentActivity {
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		DBItem mItemNew = null;
-		Item mItem = null;
+		DBItem mItem = null;
 
 		if (getIntent() != null && getIntent().getExtras() != null) {
-			mItemNew = getIntent().getExtras().getParcelable(ITEM_EXTRA);
-			if (mItemNew == null) {
-				int value = getIntent().getExtras().getInt("id");
-				mItem = MainActivity.currList.get(value);
-			}
+			mItem = getIntent().getExtras().getParcelable(ITEM_EXTRA);
 		}
 
-		setTitle(mItemNew != null ? mItemNew.getName() : mItem.getName());
+		// this /should/ never happen if we TODO: intent filter
+		if (mItem != null) setTitle(mItem.getName());
 
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
-			mFrag = new ItemDetailFragment(); // change this to ItemDetailFragment.newInstance(mItemNew) and remove next line
-			mFrag.setArguments(getIntent().getExtras());
+			mFrag = ItemDetailFragment.newInstance(mItem); // change this to ItemDetailFragment.newInstance(mItemNew) and remove next line
 			getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, mFrag).commit();
 		}
 	}
@@ -91,7 +86,7 @@ public class ItemDetailActivity extends FragmentActivity {
 	 */
 	public void toMap (View locationButton) {
 		if (hasInternet()) {
-			new ErrorDialog("Error: no active internet connection.").getDialog(this).show();
+			new ErrorDialog(R.string.item_detail_inet_err).getDialog(this).show();
 		} else {
 			DBItem mItemNew = mFrag.getItemNew();
 			Item mItem = mFrag.getItem();
@@ -107,7 +102,7 @@ public class ItemDetailActivity extends FragmentActivity {
 					}
 					else
 					{
-						new ErrorDialog("Something went wrong. Please make sure that you have the Play Store installed and that you are connected to the internet.").getDialog(this).show();
+						new ErrorDialog(R.string.item_detail_playstore_err).getDialog(this).show();
 					}
 				} else {
 					startActivity(new Intent(this, MapsActivity.class).putExtra(MapsActivity.LOCATION_EXTRA, loc));

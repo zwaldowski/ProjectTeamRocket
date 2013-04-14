@@ -22,10 +22,20 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 	public static final int LOAD_LIMIT = 25;
 
 	// class needs to be changed to alter these
-	private boolean isAll = true;
-	private Type queriedType = Type.LOST;
+	private boolean hasType = true;
+	private Type type = Type.LOST;
 	private String lastNextPageToken = null;
 	private String searchQuery = null;
+
+	public static ItemListFragment newInstance(Type type) {
+
+		ItemListFragment fragment = new ItemListFragment();
+
+		fragment.hasType = type != null;
+		fragment.type = type;
+
+		return fragment;
+	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -44,7 +54,7 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 				Fmthings.Items.List query = EndpointUtils.getEndpoint().items().list();
 
 				query.setLimit(LOAD_LIMIT);
-				if (!isAll) query.setType(queriedType.toString());
+				if (hasType) query.setType(type.toString());
 				if (lastNextPageToken != null) query.setCursor(lastNextPageToken);
 				if (searchQuery != null) query.setQuery(searchQuery);
 

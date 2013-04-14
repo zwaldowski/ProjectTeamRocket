@@ -3,6 +3,7 @@ package edu.gatech.oad.rocket.findmythings.util;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import edu.gatech.oad.rocket.findmythings.R;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -10,28 +11,26 @@ import android.content.DialogInterface;
  * @author TeamRocket
  */
 public class ErrorDialog {
-	private String message, buttonpos, buttonneg;
-		
+	private int messageID, positiveButtonID, negativeButtonID;
+
 	/**
-	 * constructor1
-	 * @param message 
+	 * An dialog builder with "OK" and "Cancel".
+	 * @param messageID
 	 */
-	public ErrorDialog(String message) {
-		this.message = message;
-		buttonpos = "Ok";
-		buttonneg = "Cancel";
+	public ErrorDialog(int messageID) {
+		this(messageID, R.string.dialog_positive_default, R.string.dialog_negative_default);
 	}
-	
+
 	/**
-	 * constructor2
-	 * @param message
-	 * @param pos
-	 * @param neg
+	 * An dialog builder with custom buttons.
+	 * @param messageID
+	 * @param positiveMessageID
+	 * @param negativeMessageID
 	 */
-	public ErrorDialog(String message, String pos, String neg) {
-		this.message = message;
-		buttonpos = pos;
-		buttonneg = neg;
+	public ErrorDialog(int messageID, int positiveMessageID, int negativeMessageID) {
+		this.messageID = messageID;
+		this.positiveButtonID = positiveMessageID;
+		this.negativeButtonID = negativeMessageID;
 	}
 	
 	/**
@@ -41,8 +40,8 @@ public class ErrorDialog {
 	 */
 	public AlertDialog.Builder getDialog(Context context) {
 		AlertDialog.Builder noConnection = new AlertDialog.Builder(context);
-		noConnection.setMessage(message);
-		noConnection.setPositiveButton(buttonpos, new DialogInterface.OnClickListener() {
+		noConnection.setMessage(messageID);
+		noConnection.setPositiveButton(positiveButtonID, new DialogInterface.OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int id) {
             	//close	
@@ -53,43 +52,35 @@ public class ErrorDialog {
 	}
 	
 	/**
-	 * Returns dialog with custom onclicklistener for OK button
+	 * Returns dialog with custom on-click listener for the positive button
 	 * @param context
-	 * @param temp
+	 * @param positive
 	 * @return
 	 */
-	public AlertDialog.Builder getDialog(Context context, DialogInterface.OnClickListener pos) {
+	public AlertDialog.Builder getDialog(Context context, DialogInterface.OnClickListener positive) {
 		AlertDialog.Builder noConnection = new AlertDialog.Builder(context);
-		
-		noConnection.setMessage(message);
-		noConnection.setPositiveButton(buttonpos,pos);
+
+		noConnection.setMessage(messageID);
+		noConnection.setPositiveButton(positiveButtonID, positive);
 		
 		return noConnection;
 	}
 	
 	/**
-	 * returns dialog with custom onclicklistener for ok and cancel buttons
+	 * returns dialog with custom on-click listener for both positive and negative buttons
 	 * @param context
-	 * @param pos 
-	 * @param neg
+	 * @param positive
+	 * @param negative
 	 * @return AlertDialog.Builder
 	 */
-	public AlertDialog.Builder getDialog(Context context, DialogInterface.OnClickListener pos, DialogInterface.OnClickListener neg) {
+	public AlertDialog.Builder getDialog(Context context, DialogInterface.OnClickListener positive, DialogInterface.OnClickListener negative) {
 		AlertDialog.Builder noConnection = new AlertDialog.Builder(context);
 		
-		noConnection.setMessage(message);
-		noConnection.setPositiveButton(buttonpos,pos);
-		noConnection.setNegativeButton(buttonneg,neg);
+		noConnection.setMessage(messageID);
+		noConnection.setPositiveButton(positiveButtonID, positive);
+		noConnection.setNegativeButton(negativeButtonID, negative);
 		
 		return noConnection;
-	}
-	
-	/**
-	 * returns the message about error
-	 * @return message
-	 */
-	public String getMessage() {
-		return message;
 	}
 
 }

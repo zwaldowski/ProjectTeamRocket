@@ -76,10 +76,10 @@ public class MapsActivity extends FragmentActivity {
 				//Object to store lat/long
 				currlocation = new LatLng(locations.get(0).getLatitude(),locations.get(0).getLongitude());
 			} else {
-				new ErrorDialog("Unable to find the location using Google Maps at this time, please try again later.").getDialog(this).show();
+				new ErrorDialog(R.string.maps_location_find_err).getDialog(this).show();
 			}
 		} catch (IOException e) {
-			new ErrorDialog("Unable to reach Google Maps at this time, please check your connection strength.").getDialog(this).show();
+			new ErrorDialog(R.string.maps_location_inet_err).getDialog(this).show();
 		}
 
 		if (currlocation != null) {
