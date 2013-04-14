@@ -6,12 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.google.api.services.fmthings.model.CollectionResponseDBItem;
 import com.google.api.services.fmthings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.list.AlternatingTwoLineListAdapter;
 import edu.gatech.oad.rocket.findmythings.list.ArrayListFragment;
-import edu.gatech.oad.rocket.findmythings.list.ThrowableLoader;
+import edu.gatech.oad.rocket.findmythings.list.ListAsyncTaskLoader;
 import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.service.Fmthings;
@@ -41,13 +40,13 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		((TextView)getListView().getEmptyView()).setText(R.string.no_items_found);
+		setEmptyText(R.string.no_items_found);
 	}
 
 	@Override
 	public Loader<List<DBItem>> onCreateLoader(int id, Bundle args) {
 		// TODO Auto-generated method stub
-		return new ThrowableLoader<List<DBItem>>(getActivity()){
+		return new ListAsyncTaskLoader<DBItem>(getActivity()){
 
 			@Override
 			public List<DBItem> loadData() throws Exception {

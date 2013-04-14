@@ -10,23 +10,25 @@ import android.content.Context;
  * Time: 1:41 AM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class ThrowableLoader<T> extends AsyncTaskLoader<T> {
+public abstract class ThrowableAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
 
 	private Exception lastException;
+	protected T mData;
 
-	public ThrowableLoader(Context context) {
+	public ThrowableAsyncTaskLoader(Context context) {
 		super(context);
 	}
 
 	@Override
 	public T loadInBackground() {
+		mData = null;
 		lastException = null;
 		try {
-			return loadData();
+			mData = loadData();
 		} catch (Exception e) {
 			lastException = e;
-			return null;
 		}
+		return mData;
 	}
 
 	/**

@@ -5,8 +5,7 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
+import android.widget.*;
 import edu.gatech.oad.rocket.findmythings.R;
 import edu.gatech.oad.rocket.findmythings.util.ToastHelper;
 
@@ -23,15 +22,6 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 
 	private static final String FORCE_REFRESH = "forceRefresh";
 
-	/**
-	 * Progress bar
-	 */
-	protected ProgressBar progressBar;
-
-	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_arraylist, container, false);
-	}
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -43,19 +33,8 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		progressBar = (ProgressBar) view.findViewById(R.id.loading_spinner);
-
 		setListAdapter(onCreateAdapter());
-	}
-
-	/**
-	 * Detach from list view.
-	 */
-	@Override
-	public void onDestroyView() {
-		progressBar = null;
-
-		super.onDestroyView();
+		setListShown(false);
 	}
 
 	@Override
@@ -93,14 +72,6 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	}
 
 	/**
-	 * Refresh the list with the progress bar showing
-	 */
-	protected void refreshWithProgress() {
-		setListShown(false);
-		refresh();
-	}
-
-	/**
 	 * @param args
 	 *            bundle passed to the loader by the LoaderManager
 	 * @return true if the bundle indicates a requested forced refresh of the
@@ -113,7 +84,7 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	private void refresh(final Bundle args) {
 		if (!isUsable()) return;
 
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		setListShown(false);
 
 		getLoaderManager().restartLoader(0, args, this);
 	}
@@ -126,8 +97,6 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	}
 
 	public void onLoadFinished(Loader<List<T>> loader, List<T> items) {
-
-		getActivity().setProgressBarIndeterminateVisibility(false);
 
 		Exception exception = getException(loader);
 		if (exception != null) {
@@ -160,14 +129,14 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 
 	/**
 	 * Get exception from loader if it provides one by being a
-	 * {@link ThrowableLoader}
+	 * {@link ThrowableAsyncTaskLoader}
 	 *
 	 * @param loader The loader being used and to check for an exception using
 	 * @return exception or null if none provided
 	 */
 	protected Exception getException(final Loader<List<T>> loader) {
-		if (loader instanceof ThrowableLoader)
-			return ((ThrowableLoader<List<T>>) loader).popLastException();
+		if (loader instanceof ThrowableAsyncTaskLoader)
+			return ((ThrowableAsyncTaskLoader<List<T>>) loader).popLastException();
 		else
 			return null;
 	}
