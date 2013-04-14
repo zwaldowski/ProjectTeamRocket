@@ -21,10 +21,11 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 
 	public static final int LOAD_LIMIT = 25;
 
+	// class needs to be changed to alter these
 	private boolean isAll = true;
 	private Type queriedType = Type.LOST;
-
-	private String lastNextPageToken;
+	private String lastNextPageToken = null;
+	private String searchQuery = null;
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 				query.setLimit(LOAD_LIMIT);
 				if (!isAll) query.setType(queriedType.toString());
 				if (lastNextPageToken != null) query.setCursor(lastNextPageToken);
+				if (searchQuery != null) query.setQuery(searchQuery);
 
 				CollectionResponseDBItem result = query.execute();
 				lastNextPageToken = result.getNextPageToken();

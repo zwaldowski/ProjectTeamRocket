@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/9ciMdhhmx6BPULFGaJmWGPuMkK4\"",
+ "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/dkb9M4dGouwlnYNFYwPhaoYA9Tg\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -521,6 +521,9 @@
      "type": "integer",
      "format": "int32"
     },
+    "query": {
+     "type": "string"
+    },
     "type": {
      "type": "string"
     }
@@ -585,31 +588,6 @@
     "$ref": "DBItem"
    }
   },
-  "fmthings.items.search": {
-   "id": "fmthings.items.search",
-   "parameters": {
-    "cursor": {
-     "type": "string"
-    },
-    "limit": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "query": {
-     "type": "string",
-     "required": true
-    },
-    "type": {
-     "type": "string"
-    }
-   },
-   "parameterOrder": [
-    "query"
-   ],
-   "returns": {
-    "$ref": "CollectionResponse_DBItem"
-   }
-  },
   "fmthings.items.update": {
    "id": "fmthings.items.update",
    "parameters": {
@@ -645,6 +623,9 @@
    "allowGet": true,
    "parameters": {
     "cursor": {
+     "type": "string"
+    },
+    "email": {
      "type": "string"
     },
     "limit": {
@@ -702,28 +683,6 @@
    ],
    "returns": {
     "$ref": "AppMember"
-   }
-  },
-  "fmthings.members.search": {
-   "id": "fmthings.members.search",
-   "parameters": {
-    "cursor": {
-     "type": "string"
-    },
-    "email": {
-     "type": "string",
-     "required": true
-    },
-    "limit": {
-     "type": "integer",
-     "format": "int32"
-    }
-   },
-   "parameterOrder": [
-    "email"
-   ],
-   "returns": {
-    "$ref": "CollectionResponse_AppMember"
    }
   },
   "fmthings.members.update": {

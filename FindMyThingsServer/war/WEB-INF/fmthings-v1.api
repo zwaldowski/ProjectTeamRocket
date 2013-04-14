@@ -191,38 +191,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "fmthings.items.search" : {
-      "path" : "search",
-      "httpMethod" : "POST",
-      "scopes" : [ ],
-      "audiences" : [ ],
-      "clientIds" : [ ],
-      "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.searchItems",
-      "request" : {
-        "parameters" : {
-          "query" : {
-            "type" : "string",
-            "required" : true
-          },
-          "type" : {
-            "type" : "string",
-            "required" : false
-          },
-          "cursor" : {
-            "type" : "string",
-            "required" : false
-          },
-          "limit" : {
-            "type" : "int32",
-            "required" : false
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "fmthings.items.delete" : {
       "path" : "items/delete",
       "httpMethod" : "DELETE",
@@ -272,6 +240,10 @@
       "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.listItems",
       "request" : {
         "parameters" : {
+          "query" : {
+            "type" : "string",
+            "required" : false
+          },
           "type" : {
             "type" : "string",
             "required" : false
@@ -381,34 +353,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "fmthings.members.search" : {
-      "path" : "members/search",
-      "httpMethod" : "POST",
-      "scopes" : [ ],
-      "audiences" : [ ],
-      "clientIds" : [ ],
-      "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.searchMembers",
-      "request" : {
-        "parameters" : {
-          "email" : {
-            "type" : "string",
-            "required" : true
-          },
-          "cursor" : {
-            "type" : "string",
-            "required" : false
-          },
-          "limit" : {
-            "type" : "int32",
-            "required" : false
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "fmthings.members.get" : {
       "path" : "members/get",
       "httpMethod" : "GET",
@@ -438,6 +382,10 @@
       "rosyMethod" : "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.listMembers",
       "request" : {
         "parameters" : {
+          "email" : {
+            "type" : "string",
+            "required" : false
+          },
           "cursor" : {
             "type" : "string",
             "required" : false
@@ -571,21 +519,6 @@
           }
         }
       },
-      "CollectionResponse_DBItem" : {
-        "id" : "CollectionResponse_DBItem",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "DBItem"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
-      },
       "DBItem" : {
         "id" : "DBItem",
         "type" : "object",
@@ -639,6 +572,21 @@
         "id" : "Category",
         "type" : "string",
         "enum" : [ "HEIR", "KEEPSAKE", "MISC" ]
+      },
+      "CollectionResponse_DBItem" : {
+        "id" : "CollectionResponse_DBItem",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "DBItem"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
       },
       "CollectionResponse_AppMember" : {
         "id" : "CollectionResponse_AppMember",
@@ -695,11 +643,6 @@
           "$ref" : "AppMember"
         }
       },
-      "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.searchItems" : {
-        "response" : {
-          "$ref" : "CollectionResponse_DBItem"
-        }
-      },
       "edu.gatech.oad.rocket.findmythings.server.spi.ItemV1.removeItem" : {
         "response" : {
           "$ref" : "DBItem"
@@ -739,11 +682,6 @@
         },
         "response" : {
           "$ref" : "DBItem"
-        }
-      },
-      "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.searchMembers" : {
-        "response" : {
-          "$ref" : "CollectionResponse_AppMember"
         }
       },
       "edu.gatech.oad.rocket.findmythings.server.spi.MemberV1.getMember" : {

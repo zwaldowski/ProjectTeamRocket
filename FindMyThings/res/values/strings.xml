@@ -42,7 +42,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="search">Search</string>
     <string name="no_items_found">No items found!</string>
-    <string name="error_loading_items">Couldn't load items! Please try again later.</string>
+    <string name="error_loading_items">Couldn\'t load items! Please try again later.</string>
 
     <!-- Extra stuff added -->
     <string name="title_activity_searches">Search</string>

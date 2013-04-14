@@ -17,13 +17,16 @@ import java.util.HashMap;
 public class ItemV1 extends BaseEndpoint {
 
 	@ApiMethod(name = "items.list", path = "items")
-	public CollectionResponse<DBItem> listItems(@Nullable @Named("type") String type,
+	public CollectionResponse<DBItem> listItems(
+			@Nullable @Named("query") String query,
+			@Nullable @Named("type") String type,
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
 		HashMap<String, Object> filter = new HashMap<>();
-		filter.put("type", type);
+		if (type != null) filter.put("type", type);
+		SearchableHelper.addSearchFilter(filter, query);
 		Query<DBItem> baseQuery = DatabaseService.ofy().load().type(DBItem.class).order("-dateSubmitted");
-		return ItemV1.pagedQuery(baseQuery, cursorString, limit, filter);
+		return pagedQuery(baseQuery, cursorString, limit, filter);
 	}
 
 	@ApiMethod(name = "items.get", path = "items/get")
@@ -56,18 +59,6 @@ public class ItemV1 extends BaseEndpoint {
 		return ret;
 	}
 
-	@SuppressWarnings("unchecked")
-	@ApiMethod(name = "items.search", path = "search")
-	public CollectionResponse<DBItem> searchItems(@Named("query") String query,
-			@Nullable @Named("type") String type,
-			@Nullable @Named("cursor") String cursorString,
-			@Nullable @Named("limit") Integer limit) {
-		HashMap<String, Object> filter = new HashMap<>();
-		filter.put("type", type);
-		SearchableHelper.addSearchFilter(filter, query);
-		return (CollectionResponse<DBItem>)pagedQuery(DBItem.class, cursorString, limit, filter);
-	}
-
 	@ApiMethod(name = "items.getMine", path = "items/mine")
 	public CollectionResponse<DBItem> listMyItems(@Nullable @Named("type") String type,
 			@Nullable @Named("cursor") String cursorString,
@@ -84,7 +75,7 @@ public class ItemV1 extends BaseEndpoint {
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
 		HashMap<String, Object> filter = new HashMap<>();
-		filter.put("type", type);
+		if (type != null) filter.put("type", type);
 		filter.put("submittingUser", email);
 		return (CollectionResponse<DBItem>)pagedQuery(DBItem.class, cursorString, limit, filter);
 	}

@@ -30,10 +30,6 @@ public class AccountV1 extends BaseEndpoint {
 
 	private static final RegexValidator PHONE_VALIDATOR = new RegexValidator("[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}", false);
 
-	public static RegexValidator getPhoneNumberValidator() {
-		return PHONE_VALIDATOR;
-	}
-
 	MessageBean mailWelcomeReturnOK(String email) {
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.add(TaskOptions.Builder.withUrl("/sendWelcomeMail"));
@@ -74,7 +70,7 @@ public class AccountV1 extends BaseEndpoint {
 				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.PASSWORDS_MATCH.toString());
 			}
 
-			if (!getPhoneNumberValidator().isValid(phone)) {
+			if (!PHONE_VALIDATOR.isValid(phone)) {
 				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.INVALID_PHONE.toString());
 			}
 

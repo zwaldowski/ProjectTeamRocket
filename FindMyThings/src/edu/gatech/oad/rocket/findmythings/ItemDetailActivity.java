@@ -38,7 +38,7 @@ public class ItemDetailActivity extends FragmentActivity {
 
 	/**
 	 * creates new window with correct layout
-	 * @param Bundle savedInstanceState
+	 * @param savedInstanceState
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +73,9 @@ public class ItemDetailActivity extends FragmentActivity {
 	 
 	/**
 	 * deals with action to do once a key is pressed down
-	 * @param int keyCode - key pressed
-	 * @param KeyEvent event - event to do in case of pressed
-	 * @return boolean true when done
+	 * @param keyCode - key pressed
+	 * @param event - event to do in case of pressed
+	 * @return true when done
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {

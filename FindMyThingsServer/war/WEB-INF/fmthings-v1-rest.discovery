@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/9ciMdhhmx6BPULFGaJmWGPuMkK4\"",
+ "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/dkb9M4dGouwlnYNFYwPhaoYA9Tg\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -531,6 +531,10 @@
        "format": "int32",
        "location": "query"
       },
+      "query": {
+       "type": "string",
+       "location": "query"
+      },
       "type": {
        "type": "string",
        "location": "query"
@@ -560,37 +564,6 @@
      },
      "response": {
       "$ref": "DBItem"
-     }
-    },
-    "search": {
-     "id": "fmthings.items.search",
-     "path": "search",
-     "httpMethod": "POST",
-     "parameters": {
-      "cursor": {
-       "type": "string",
-       "location": "query"
-      },
-      "limit": {
-       "type": "integer",
-       "format": "int32",
-       "location": "query"
-      },
-      "query": {
-       "type": "string",
-       "required": true,
-       "location": "query"
-      },
-      "type": {
-       "type": "string",
-       "location": "query"
-      }
-     },
-     "parameterOrder": [
-      "query"
-     ],
-     "response": {
-      "$ref": "CollectionResponse_DBItem"
      }
     },
     "update": {
@@ -635,6 +608,10 @@
        "type": "string",
        "location": "query"
       },
+      "email": {
+       "type": "string",
+       "location": "query"
+      },
       "limit": {
        "type": "integer",
        "format": "int32",
@@ -664,33 +641,6 @@
      },
      "response": {
       "$ref": "AppMember"
-     }
-    },
-    "search": {
-     "id": "fmthings.members.search",
-     "path": "members/search",
-     "httpMethod": "POST",
-     "parameters": {
-      "cursor": {
-       "type": "string",
-       "location": "query"
-      },
-      "email": {
-       "type": "string",
-       "required": true,
-       "location": "query"
-      },
-      "limit": {
-       "type": "integer",
-       "format": "int32",
-       "location": "query"
-      }
-     },
-     "parameterOrder": [
-      "email"
-     ],
-     "response": {
-      "$ref": "CollectionResponse_AppMember"
      }
     },
     "update": {

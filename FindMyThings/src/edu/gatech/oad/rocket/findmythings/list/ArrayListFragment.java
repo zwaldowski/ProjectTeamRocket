@@ -43,7 +43,7 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		progressBar = (ProgressBar) view.findViewById(R.id.pb_loading);
+		progressBar = (ProgressBar) view.findViewById(R.id.loading_spinner);
 
 		setListAdapter(onCreateAdapter());
 	}
@@ -192,7 +192,6 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	/**
 	 * Create adapter to display items
 	 *
-	 * @param items A reusable list of items owned by the fragment/loader chain
 	 * @return adapter
 	 */
 	protected abstract ArrayAdapter<T> onCreateAdapter();
