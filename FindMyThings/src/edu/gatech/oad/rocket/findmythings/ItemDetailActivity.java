@@ -48,11 +48,10 @@ public class ItemDetailActivity extends FragmentActivity {
 		DBItem mItemNew = null;
 		Item mItem = null;
 
-		Bundle extraInfo = getIntent().getExtras();
-		if (extraInfo != null) {
-			mItemNew = extraInfo.getParcelable(ITEM_EXTRA);
+		if (getIntent() != null && getIntent().getExtras() != null) {
+			mItemNew = getIntent().getExtras().getParcelable(ITEM_EXTRA);
 			if (mItemNew == null) {
-				int value = extraInfo.getInt("id");
+				int value = getIntent().getExtras().getInt("id");
 				mItem = MainActivity.currList.get(value);
 			}
 		}
@@ -62,7 +61,7 @@ public class ItemDetailActivity extends FragmentActivity {
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
-			mFrag = new ItemDetailFragment();
+			mFrag = new ItemDetailFragment(); // change this to ItemDetailFragment.newInstance(mItemNew) and remove next line
 			mFrag.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, mFrag).commit();
 		}

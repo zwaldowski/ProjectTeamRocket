@@ -16,11 +16,11 @@ import java.util.Date;
 
 /**
  * CS 2340 - FindMyStuff Android App
- * 
+ *
  * A fragment representing a single Item detail screen. This fragment is either
  * contained in a {@link ItemListActivity} in two-pane mode (on tablets) or a
  * {@link ItemDetailActivity} on handsets.
- * 
+ *
  * @author TeamRocket
  */
 public class ItemDetailFragment extends Fragment {
@@ -76,13 +76,13 @@ public class ItemDetailFragment extends Fragment {
 			}
 		}
 	}
-	
+
 	/**
 	 * creates all UI features of the window
 	 * @param inflater
 	 * @param container
 	 * @param savedInstanceState
-	 * @return View 
+	 * @return View
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,9 +128,9 @@ public class ItemDetailFragment extends Fragment {
 	protected  Item getItem() {
 		return mItem;
 	}
-	
+
 	protected DBItem getItemNew() {
 		return mItemNew;
 	}
-	
+
 }
