@@ -1,16 +1,14 @@
 package edu.gatech.oad.rocket.findmythings;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.text.TextUtils;
-
-import edu.gatech.oad.rocket.findmythings.control.*;
 import edu.gatech.oad.rocket.findmythings.model.Member;
 import edu.gatech.oad.rocket.findmythings.model.User;
 
@@ -49,7 +47,7 @@ public class RegisterActivity extends Activity {
 
 	/**
 	 * creates new window with correct layout
-	 * @param Bundle savedInstanceState
+	 * @param savedInstanceState
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +75,9 @@ public class RegisterActivity extends Activity {
 
 	/**
 	 * deals with action to do once a key is pressed down
-	 * @param int keyCode - key pressed
-	 * @param KeyEvent event - event to do in case of pressed
-	 * @return boolean true when done
+	 * @param keyCode - key pressed
+	 * @param event - event to do in case of pressed
+	 * @return true when done
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -158,7 +156,7 @@ public class RegisterActivity extends Activity {
 
 				if(mPassword.equals(mCon)) {
 					//User is registered, goes back to login screen.
-					log.register(toreg);
+					//log.register(toreg);
 
 					// Saves email so it can be passed to LoginActivity
 					rEmail = mEmail;
@@ -184,8 +182,8 @@ public class RegisterActivity extends Activity {
 
 	/**
 	 * creates the options menu 
-	 * @param Menu menu
-	 * @return boolean true when done
+	 * @param menu
+	 * @return true when done
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -196,7 +194,7 @@ public class RegisterActivity extends Activity {
 
 	/**
 	 * deals with action when an options button is selected
-	 * @param MenuItem item
+	 * @param item
 	 * @return boolean  
 	 */
 	@Override
