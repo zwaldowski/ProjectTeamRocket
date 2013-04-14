@@ -18,6 +18,12 @@
 
 package com.google.api.services.fmthings.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import edu.gatech.oad.rocket.findmythings.list.TwoLineListProvider;
+
+import java.io.IOException;
+
 /**
  * Model definition for DBItem.
  *
@@ -29,7 +35,7 @@ package com.google.api.services.fmthings.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class DBItem extends com.google.api.client.json.GenericJson {
+public final class DBItem extends com.google.api.client.json.GenericJson implements Parcelable, TwoLineListProvider {
 
   /**
    * The value may be {@code null}.
@@ -271,5 +277,40 @@ public final class DBItem extends com.google.api.client.json.GenericJson {
   public DBItem clone() {
     return (DBItem) super.clone();
   }
+
+
+
+	public static final Parcelable.Creator<DBItem> CREATOR = new Parcelable.Creator<DBItem>() {
+		public DBItem createFromParcel(Parcel in) {
+			return new DBItem(in);
+		}
+
+		public DBItem[] newArray(int size) {
+			return new DBItem[size];
+		}
+	};
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel out, int flags) {
+		try {
+			out.writeString(getFactory().toString(this));
+		} throw (IOException e) {
+			throw new RuntimeException(e);
+		}
+		// TODO
+	}
+
+	private DBItem(Parcel in) {
+		try {
+			return getFactory().fromString(in.readString(), DBItem.class);
+		} catch (IOException e) {
+			return null;
+		}
+	}
 
 }

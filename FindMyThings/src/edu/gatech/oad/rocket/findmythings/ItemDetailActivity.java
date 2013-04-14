@@ -29,6 +29,8 @@ import edu.gatech.oad.rocket.findmythings.util.*;
  */
 public class ItemDetailActivity extends FragmentActivity {
 
+	public static final String ITEM_EXTRA = "item";
+
 	/**
 	 * The class of Item displayed.
 	 */
