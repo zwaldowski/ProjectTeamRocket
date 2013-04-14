@@ -16,7 +16,7 @@
  * Modify at your own risk.
  */
 
-package com.google.api.services.fmthings;
+package edu.gatech.oad.rocket.findmythings.service;
 
 /**
  * Service definition for Fmthings (v1).

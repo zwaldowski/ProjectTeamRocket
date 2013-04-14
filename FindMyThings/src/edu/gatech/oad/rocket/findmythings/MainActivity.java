@@ -3,7 +3,7 @@ package edu.gatech.oad.rocket.findmythings;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.google.api.services.fmthings.EndpointUtils;
+import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import com.google.api.services.fmthings.model.MessageBean;
 
 import android.app.ActionBar;

@@ -1,4 +1,4 @@
-package com.google.api.services.fmthings;
+package edu.gatech.oad.rocket.findmythings.service;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import com.google.api.client.json.jackson.JacksonFactory;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 
 public class EndpointUtils {
-	
+
 	private static final Fmthings initializeEndpoint() {
 		return updateBuilder(new Fmthings.Builder(
 				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
@@ -20,7 +20,7 @@ public class EndpointUtils {
 					}
 				})).build();
 	}
-	
+
 	private static final class EndpointSingleton {
 		static final Fmthings endpoint = initializeEndpoint();
 	}
@@ -35,7 +35,7 @@ public class EndpointUtils {
 	   * http://developers.google.com/eclipse/docs/cloud_endpoints for more
 	   * information.
 	   */
-	  protected static final boolean LOCAL_ANDROID_RUN = false;
+	  protected static final boolean LOCAL_ANDROID_RUN = true;
 
 	  /*
 	   * The root URL of where your DevAppServer is running (if you're running the
@@ -56,7 +56,7 @@ public class EndpointUtils {
 	  /**
 	   * Updates the Google client builder to connect the appropriate server based
 	   * on whether LOCAL_ANDROID_RUN is true or false.
-	   * 
+	   *
 	   * @param builder
 	   *            Google client builder
 	   * @return same Google client builder
@@ -70,16 +70,16 @@ public class EndpointUtils {
 
 	    // only enable GZip when connecting to remote server
 	    final boolean enableGZip = builder.getRootUrl().startsWith("https:");
-	    
+
 	    builder.setGoogleClientRequestInitializer(new FmthingsRequestInitializer(){
-	    	protected void initializeFmthingsRequest(FmthingsRequest<?> request) throws IOException {
-	    		if (!enableGZip) {
-	    			request.setDisableGZipContent(true);
-	    		}
-	    		
-    			String authHeader = LoginManager.getLoginManager().getAuthorizationHeader();
-    			if (authHeader != null) request.getRequestHeaders().put("X-Authorization", authHeader);
-	    	}
+		protected void initializeFmthingsRequest(FmthingsRequest<?> request) throws IOException {
+			if (!enableGZip) {
+				request.setDisableGZipContent(true);
+			}
+
+			String authHeader = LoginManager.getLoginManager().getAuthorizationHeader();
+			if (authHeader != null) request.getRequestHeaders().put("X-Authorization", authHeader);
+		}
 	    });
 
 	    return builder;

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import com.google.api.client.util.DateTime;
-import com.google.api.services.fmthings.EndpointUtils;
+import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import com.google.api.services.fmthings.model.DBItem;
 
 import android.os.AsyncTask;
