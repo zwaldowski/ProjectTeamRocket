@@ -29,7 +29,7 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	protected ProgressBar progressBar;
 
 	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_arraylist, container);
+		return inflater.inflate(R.layout.fragment_arraylist, container, false);
 	}
 
 	@Override

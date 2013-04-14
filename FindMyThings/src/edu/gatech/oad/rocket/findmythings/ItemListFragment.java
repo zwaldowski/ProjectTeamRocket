@@ -6,14 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
-import edu.gatech.oad.rocket.findmythings.service.Fmthings;
+import android.widget.TextView;
 import com.google.api.services.fmthings.model.CollectionResponseDBItem;
 import com.google.api.services.fmthings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.list.AlternatingTwoLineListAdapter;
 import edu.gatech.oad.rocket.findmythings.list.ArrayListFragment;
 import edu.gatech.oad.rocket.findmythings.list.ThrowableLoader;
 import edu.gatech.oad.rocket.findmythings.model.Type;
+import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
+import edu.gatech.oad.rocket.findmythings.service.Fmthings;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		this.setEmptyText(R.string.no_items_found);
+		((TextView)getListView().getEmptyView()).setText(R.string.no_items_found);
 	}
 
 	@Override

@@ -12,7 +12,6 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.services.fmthings.model.DBItem;
-import edu.gatech.oad.rocket.findmythings.model.Item;
 import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
 
 /**
@@ -88,9 +87,8 @@ public class ItemDetailActivity extends FragmentActivity {
 		if (hasInternet()) {
 			new ErrorDialog(R.string.item_detail_inet_err).getDialog(this).show();
 		} else {
-			DBItem mItemNew = mFrag.getItemNew();
-			Item mItem = mFrag.getItem();
-			String loc = mItemNew != null ? mItemNew.getLocation() : mItem.getLoc();
+			DBItem mItemNew = mFrag.getItem();
+			String loc = mItemNew.getLocation();
 			if (loc != null && loc.length() > 0) {
 				int googlePlayAccess = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 				if(googlePlayAccess != ConnectionResult.SUCCESS)

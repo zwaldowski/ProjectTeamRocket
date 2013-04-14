@@ -1,22 +1,17 @@
 package edu.gatech.oad.rocket.findmythings;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.ProgressDialog;
+import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import com.google.api.services.fmthings.model.MessageBean;
-import com.viewpagerindicator.TabPageIndicator;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
@@ -41,7 +36,7 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
  *
  * @author TeamRocket
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends Activity {
 
 	public static final String EXTRA_LIST = "displayedList";
 
@@ -71,6 +66,11 @@ public class MainActivity extends FragmentActivity {
 	private ViewPager pager;
 
 	/**
+	 * Used for picking/choosing tabs... I dunno...
+	 */
+	private TypeTabsAdapter adapter;
+
+	/**
 	 * Indirect reference to the search bar in the ActionBar
 	 */
 	private MenuItem searchMenuItem;
@@ -79,6 +79,54 @@ public class MainActivity extends FragmentActivity {
 	 * Box shown to prevent user interaction during logout
 	 */
 	private ProgressDialog mProgressDialog;
+
+	private class TypeTabsAdapter extends FragmentPagerAdapter
+			implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
+		private final ActionBar mActionBar;
+		private final ViewPager mViewPager;
+
+		TypeTabsAdapter(FragmentManager fragmentManager, ActionBar actionBar, ViewPager pager) {
+			super(fragmentManager);
+			mActionBar = actionBar;
+			mViewPager = pager;
+			mViewPager.setAdapter(this);
+			mViewPager.setOnPageChangeListener(this);
+			mViewPager.setOffscreenPageLimit(mTabs.length);
+			for (String mTab : mTabs) {
+				ActionBar.Tab tab = mActionBar.newTab();
+				tab.setTabListener(this);
+				tab.setText(mTab);
+				mActionBar.addTab(tab);
+			}
+			notifyDataSetChanged();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			Type thisType = getDisplayedTypeInPager(position);
+			return ItemListFragment.newInstance(thisType);
+		}
+
+		@Override
+		public void onPageSelected(int i) {
+			mActionBar.setSelectedNavigationItem(i);
+		}
+
+		@Override
+		public int getCount() {
+			return mTabs.length;
+		}
+
+		@Override
+		public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+			mViewPager.setCurrentItem(tab.getPosition());
+		}
+
+		@Override public void onPageScrolled(int i, float v, int i2) {}
+		@Override public void onPageScrollStateChanged(int i) {}
+		@Override public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
+		@Override public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
+	}
 
 	/**
 	 * creates window with correct layout
@@ -91,30 +139,8 @@ public class MainActivity extends FragmentActivity {
 
 		mTabs = getResources().getStringArray(mTabsListRes);
 
-		FragmentPagerAdapter adapter = new FragmentPagerAdapter(getFragmentManager()) {
-
-			@Override
-			public Fragment getItem(int position) {
-				Type thisType = getDisplayedTypeInPager(position);
-				return ItemListFragment.newInstance(thisType);
-			}
-
-			@Override
-			public CharSequence getPageTitle(int position) {
-				return mTabs[position % mTabs.length].toUpperCase();
-			}
-
-			@Override
-			public int getCount() {
-				return mTabs.length;
-			}
-		};
-
 		pager = (ViewPager)findViewById(R.id.pager);
-		pager.setAdapter(adapter);
-
-		TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
-		indicator.setViewPager(pager);
+		adapter = new TypeTabsAdapter(getFragmentManager(), getActionBar(), pager);
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(false);

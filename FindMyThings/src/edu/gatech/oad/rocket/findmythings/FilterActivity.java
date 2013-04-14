@@ -1,24 +1,20 @@
 package edu.gatech.oad.rocket.findmythings;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import android.os.Bundle;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
-
-import edu.gatech.oad.rocket.findmythings.model.Category;
 import edu.gatech.oad.rocket.findmythings.model.Item;
-import android.content.Intent;
+
+import java.util.ArrayList;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -45,7 +41,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	
 	/**
 	 * creates new window with correct layout
-	 * @param Bundle savedInstanceState
+	 * @param savedInstanceState
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +62,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	
 	/**
 	 * creates the options menu 
-	 * @param Menu menu
-	 * @return boolean true when done
+	 * @param menu
+	 * @return true when done
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,7 +74,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	
 	/**
 	 * deals with action when an options button is selected
-	 * @param MenuItem item
+	 * @param item
 	 * @return boolean  
 	 */
 	@Override
@@ -108,7 +104,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 	}
 	
 	public void setFilter(int status, int category, int date) {
-		ArrayList<Item> filtered = new ArrayList<Item>();
+		/*ArrayList<Item> filtered = new ArrayList<Item>();
 		//getting items by date
 		Calendar today = new GregorianCalendar(); //get current date
 		Calendar date2 = (Calendar)today.clone(); //will be change to yesterday, 14dayago or 30daysago
@@ -141,6 +137,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 			categor = Category.MISC;
 			break;
 			}
+
+
 		ArrayList<Item> current = MainActivity.currList;
 		for(Item temp : current) {
 			toComp.setTime(temp.getDate());
@@ -175,16 +173,16 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 			
 			
 		} //end of for
-		toReturn = filtered;
+		toReturn = filtered;*/
 	}
 	
 	
 	/**
 	 * deals with action when an item is selected
-	 * @param AdapterView<?> parent
-	 * @param View view
-	 * @param int pos
-	 * @param long id 
+	 * @param parent
+	 * @param view
+	 * @param pos
+	 * @param id
 	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -205,7 +203,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 
 	/**
 	 * deals with what to do when nothing is selected
-	 * @param AdapterView<?> arg0
+	 * @param arg0
 	 */
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
@@ -215,8 +213,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 
 	/**
 	 * deals with action when a tab is reselected
-	 * @param Tab tab
-	 * @param FragmentTransaction ft
+	 * @param tab
+	 * @param ft
 	 */
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -226,8 +224,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 
 	/**
 	 * deals with action to take when a tab is selected
-	 * @param Tab tab
-	 * @param FragmentTransaction ft
+	 * @param tab
+	 * @param ft
 	 */
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -237,8 +235,8 @@ public class FilterActivity extends Activity implements OnItemSelectedListener, 
 
 	/**
 	 * deals with action to take when a tab is not selected
-	 * @param Tab tab
-	 * @param FragmentTransaction ft
+	 * @param tab
+	 * @param ft
 	 */
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {

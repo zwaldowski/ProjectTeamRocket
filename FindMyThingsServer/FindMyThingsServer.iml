@@ -51,45 +51,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="aopalliance.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/aopalliance.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="guice-3.0.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/guice-3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="guice-servlet-3.0.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/guice-servlet-3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="shiro-core-1.2.1.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/shiro-core-1.2.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="shiro-guice-1-1.2.1.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/shiro-guice-1-1.2.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -123,24 +87,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="commons-codec-1.5.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/commons-codec-1.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-lang-2.5.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/commons-lang-2.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="commons-logging-1.1.1.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/commons-logging-1.1.1.jar!/" />
@@ -162,15 +108,6 @@
       <library name="objectify-4.0b2.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/objectify-4.0b2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="guice-multibindings-3.0.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/war/WEB-INF/lib/guice-multibindings-3.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
