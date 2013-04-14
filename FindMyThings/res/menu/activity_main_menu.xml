@@ -6,29 +6,40 @@
         android:icon="@drawable/action_search"
         android:showAsAction="always|collapseActionView"
         android:title="@string/main_menu_search"/>
+
     <item
         android:id="@+id/menu_account"
         android:showAsAction="never"
-        android:title="@string/main_title_account"/>
+        android:title="@string/main_title_account"
+        android:menuCategory="secondary"
+            android:orderInCategory="0"/>
+
+    <item
+            android:id="@+id/menu_list_filter"
+            android:title="@string/main_title_filter"
+            android:icon="@drawable/action_filter"
+            android:showAsAction="ifRoom|withText"
+            android:menuCategory="secondary"
+            android:orderInCategory="1" />
+
+    <item
+            android:id="@+id/item_list_submit"
+            android:title="@string/action_submit"
+            android:icon="@drawable/action_submit"
+            android:menuCategory="secondary"
+            android:orderInCategory="2" />
+
     <item
         android:id="@+id/menu_login"
         android:icon="@drawable/ic_action_user"
         android:showAsAction="never"
-        android:title="@string/main_menu_log_in"/>
+        android:title="@string/main_menu_log_in"
+        android:menuCategory="secondary"
+        android:orderInCategory="3"/>
     <item
         android:id="@+id/menu_admin"
         android:showAsAction="never"
-        android:title="@string/main_title_admin"/>
-
-      <item
-        android:id="@+id/menu_list_filter"
-        android:title="@string/main_title_filter"
-        android:icon="@drawable/action_filter"
-        android:showAsAction="ifRoom|withText"
-        android:menuCategory="secondary" />
-    <item
-        android:id="@+id/item_list_submit"
-        android:title="@string/action_submit"
-        android:icon="@drawable/action_submit"
-        android:menuCategory="secondary" />
+        android:title="@string/main_title_admin"
+        android:menuCategory="secondary"
+        android:orderInCategory="4"/>
 </menu>
