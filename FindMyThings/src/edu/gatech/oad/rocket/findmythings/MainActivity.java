@@ -270,7 +270,6 @@ public class MainActivity extends ListActivity  {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_item_list, menu);
 		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
 		
 	    mSearch = (SearchView) menu.findItem(R.id.main_search_bar).getActionView();
