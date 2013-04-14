@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.api.services.fmthings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.model.Item;
-import edu.gatech.oad.rocket.findmythings.util.*;
+import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -31,10 +31,7 @@ public class ItemDetailActivity extends FragmentActivity {
 
 	public static final String ITEM_EXTRA = "item";
 
-	/**
-	 * The class of Item displayed.
-	 */
-	private Item mItem;
+	private ItemDetailFragment mFrag;
 
 	/**
 	 * creates new window with correct layout
@@ -48,26 +45,26 @@ public class ItemDetailActivity extends FragmentActivity {
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
+		DBItem mItemNew = null;
+		Item mItem = null;
+
 		Bundle extraInfo = getIntent().getExtras();
 		if (extraInfo != null) {
-			int value = extraInfo.getInt("id");
-			mItem = MainActivity.currList.get(value);
+			mItemNew = extraInfo.getParcelable(ITEM_EXTRA);
+			if (mItemNew == null) {
+				int value = extraInfo.getInt("id");
+				mItem = MainActivity.currList.get(value);
+			}
 		}
 
-		// savedInstanceState is non-null when there is fragment state
-		// saved from previous configurations of this activity
-		// (e.g. when rotating the screen from portrait to landscape).
-		// In this case, the fragment will automatically be re-added
-		// to its container so we don't need to manually add it.
-		// For more information, see the Fragments API guide at:
-		//
-		// http://developer.android.com/guide/components/fragments.html
-		//
+		setTitle(mItemNew != null ? mItemNew.getName() : mItem.getName());
+
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
-			ItemDetailFragment fragment = new ItemDetailFragment();
-			getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+			mFrag = new ItemDetailFragment();
+			mFrag.setArguments(getIntent().getExtras());
+			getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, mFrag).commit();
 		}
 	}
 	 
@@ -89,38 +86,34 @@ public class ItemDetailActivity extends FragmentActivity {
 	}
 
 	/**
-	 * A read-only getter for the kinds of Item displayed in this view.
-	 * @return An enumerated Type value.
-	 */
-	public Item getItem() {
-		return mItem;
-	}
-
-	/**
 	 * Method called when the location button is clicked
 	 * Goes to MapsActivity
 	 * @param locationButton
 	 */
 	public void toMap (View locationButton) {
-		if(hasInternet() && ItemDetailFragment.mItem.getLoc()!=null && ItemDetailFragment.mItem.getLoc().length()>0) {
-			int googlePlayAccess = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-			if(googlePlayAccess != ConnectionResult.SUCCESS)
-			{
-				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(googlePlayAccess, this, 2340);
-				if(dialog != null)
-				{
-					dialog.show();
-				}
-				else
-				{
-					new ErrorDialog("Something went wrong. Please make sure that you have the Play Store installed and that you are connected to the internet.").getDialog(this).show();
-				}
-			} else {
-				startActivity(new Intent(getApplicationContext(), MapsActivity.class));
-			}
+		if (hasInternet()) {
+			new ErrorDialog("Error: no active internet connection.").getDialog(this).show();
 		} else {
-			if(ItemDetailFragment.mItem.getLoc()!=null && ItemDetailFragment.mItem.getLoc().length()>0)
-				new ErrorDialog("Error: no active internet connection.").getDialog(this).show();
+			DBItem mItemNew = mFrag.getItemNew();
+			Item mItem = mFrag.getItem();
+			String loc = mItemNew != null ? mItemNew.getLocation() : mItem.getLoc();
+			if (loc != null && loc.length() > 0) {
+				int googlePlayAccess = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+				if(googlePlayAccess != ConnectionResult.SUCCESS)
+				{
+					Dialog dialog = GooglePlayServicesUtil.getErrorDialog(googlePlayAccess, this, 2340);
+					if(dialog != null)
+					{
+						dialog.show();
+					}
+					else
+					{
+						new ErrorDialog("Something went wrong. Please make sure that you have the Play Store installed and that you are connected to the internet.").getDialog(this).show();
+					}
+				} else {
+					startActivity(new Intent(this, MapsActivity.class).putExtra(MapsActivity.LOCATION_EXTRA, loc));
+				}
+			}
 		}
 	}
 	
@@ -141,7 +134,7 @@ public class ItemDetailActivity extends FragmentActivity {
 		        if (ni.isConnectedOrConnecting())
 		        	hasMobile = true;
 		}
-		if(hasWifi || hasMobile)
+		if (hasWifi || hasMobile)
 			return true;
 		return false;
 		

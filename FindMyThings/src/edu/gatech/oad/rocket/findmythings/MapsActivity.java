@@ -1,17 +1,19 @@
 package edu.gatech.oad.rocket.findmythings;
 
-import java.io.IOException;
-import java.util.List;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
 
-import edu.gatech.oad.rocket.findmythings.util.*;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -20,6 +22,8 @@ import edu.gatech.oad.rocket.findmythings.util.*;
  * @author TeamRocket
  * */
 public class MapsActivity extends FragmentActivity {
+
+	public static final String LOCATION_EXTRA = "location";
 	
 	/**
 	 * Used to convert address into longitude and latitude
@@ -34,7 +38,9 @@ public class MapsActivity extends FragmentActivity {
 	/**
 	 * Stores a list of possible addresses
 	 */
-	private List<Address> loc;
+	private List<Address> locations;
+
+	private String location;
 
 	private void setupMapIfNeeded() {
 
@@ -51,6 +57,8 @@ public class MapsActivity extends FragmentActivity {
 	}
 
 	private void setupMap() {
+		if (location == null) return;
+
 		//Geocoder object to convert a text address into an Address object
 		findLoc = new Geocoder(this);
 
@@ -60,13 +68,13 @@ public class MapsActivity extends FragmentActivity {
 		MarkerOptions options = new MarkerOptions();
 
 		try { //Converts the location string into a list of possible long/lag addresses
-			for (int i = 0; i < 10 && (loc == null || loc.size() == 0); i++) {
-				loc = findLoc.getFromLocationName(ItemDetailFragment.mItem.getLoc(), 1);
+			for (int i = 0; i < 10 && (locations == null || locations.size() == 0); i++) {
+				locations = findLoc.getFromLocationName(location, 1);
 			}
 
-			if (loc.size() >= 1) {
+			if (locations.size() >= 1) {
 				//Object to store lat/long
-				currlocation = new LatLng(loc.get(0).getLatitude(),loc.get(0).getLongitude());
+				currlocation = new LatLng(locations.get(0).getLatitude(),locations.get(0).getLongitude());
 			} else {
 				new ErrorDialog("Unable to find the location using Google Maps at this time, please try again later.").getDialog(this).show();
 			}
@@ -102,7 +110,8 @@ public class MapsActivity extends FragmentActivity {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-		setTitle(ItemDetailFragment.mItem.getLoc());
+		location = getIntent().getStringExtra(LOCATION_EXTRA);
+		setTitle(location);
 	}
 	
 	/**
