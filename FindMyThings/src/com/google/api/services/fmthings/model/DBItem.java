@@ -37,6 +37,10 @@ import java.io.IOException;
 @SuppressWarnings("javadoc")
 public final class DBItem extends com.google.api.client.json.GenericJson implements Parcelable, TwoLineListProvider {
 
+	public DBItem() {
+		super();
+	}
+
   /**
    * The value may be {@code null}.
    */
@@ -309,6 +313,7 @@ public final class DBItem extends com.google.api.client.json.GenericJson impleme
 	}
 
 	private DBItem(Parcel in) throws IOException {
+		super();
 		getFactory().createJsonParser(in.readString()).parse(this, null);
 	}
 
