@@ -105,7 +105,9 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 			return;
 		}
 
-		getListAdapter().addAll(items);
+		if (items != null) {
+			getListAdapter().addAll(items);
+		}
 		setListShown(true);
 	}
 
