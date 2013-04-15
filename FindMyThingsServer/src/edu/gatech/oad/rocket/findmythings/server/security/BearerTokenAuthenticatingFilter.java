@@ -11,9 +11,13 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.BufferedReader;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -49,8 +53,10 @@ public final class BearerTokenAuthenticatingFilter extends AuthenticatingFilter 
 	@Override
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
 		if (isLoginRequest(request, response)) {
-			String username = getUsername(request);
-			String password = getPassword(request);
+			String JSON = request.getReader().readLine();
+			JSONObject contents = new JSONObject(JSON);
+			String username = (String) contents.get(getUsernameParam());
+			String password = (String) contents.get(getPasswordParam());
 			return createToken(username, password, request, response);
 		} else {
 			String authorizeHeader = getAuthorizationHeader(request);
