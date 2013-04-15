@@ -32,17 +32,20 @@ public class SearchableHelper {
 
 	private static final int MAX_NUMBER_OF_WORDS_TO_PUT_IN_INDEX = 200;
 
-	public static <T extends Searchable> Query<T> search(Objectify objectify, Class<T> clazz, String query) {
-		Set<String> queryTokens = getSearchTokens(query, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
+	public static <T extends Searchable> Query<T> search(Objectify objectify, Class<T> clazz, String searchString) {
+		if (searchString == null || searchString.length() == 0 || objectify == null || clazz == null) return null;
+		Set<String> queryTokens = getSearchTokens(searchString, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
 		return objectify.load().type(clazz).filter("searchTokens in", queryTokens);
 	}
 
 	public static <T extends Searchable> Query<T> search(LoadType<T> query, String searchString) {
+		if (searchString == null || searchString.length() == 0 || query == null) return null;
 		Set<String> queryTokens = getSearchTokens(searchString, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
 		return query.filter("searchTokens in", queryTokens);
 	}
 
 	public static void addSearchFilter(Map<String, Object> queryFilters, String searchString) {
+		if (searchString == null || searchString.length() == 0 || queryFilters == null) return;
 		Set<String> queryTokens = getSearchTokens(searchString, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
 		queryFilters.put("searchTokens in", queryTokens);
 	}
