@@ -18,9 +18,6 @@
 
 package com.google.api.services.fmthings.model;
 
-import org.codehaus.jackson.annotate.JsonSubTypes;
-import org.codehaus.jackson.annotate.JsonTypeInfo;
-
 /**
  * Model definition for AppMember.
  *
@@ -32,13 +29,6 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-@JsonTypeInfo(  
-	    use = JsonTypeInfo.Id.NAME,  
-	    include = JsonTypeInfo.As.PROPERTY,  
-	    property = "admin")  
-	@JsonSubTypes({  
-		@JsonSubTypes.Type(value = AppAdmin.class, name = "true"),  
-		@JsonSubTypes.Type(value = AppUser.class, name = "false") })  
 public abstract class AppMember extends com.google.api.client.json.GenericJson {
 
   /**
