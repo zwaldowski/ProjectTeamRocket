@@ -376,7 +376,7 @@ public class MainActivity extends Activity {
      */
     public boolean logOut() {
 	ErrorDialog toLogin = new ErrorDialog(R.string.main_sign_out_confirm, R.string.main_sign_out_ok, R.string.main_sign_out_cancel);
-		AtomicReference<AlertDialog.Builder> temp = new AtomicReference<>(toLogin.getDialog(this,
+		AtomicReference<AlertDialog.Builder> temp = new AtomicReference<AlertDialog.Builder>(toLogin.getDialog(this,
 				new DialogInterface.OnClickListener() {
 
 					/**
