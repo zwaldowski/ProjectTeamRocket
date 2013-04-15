@@ -17,7 +17,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import java.io.BufferedReader;
 import java.util.Locale;
 import java.util.logging.Logger;
 
