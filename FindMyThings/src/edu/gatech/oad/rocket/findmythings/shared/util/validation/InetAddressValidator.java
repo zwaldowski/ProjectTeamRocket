@@ -81,15 +81,11 @@ public class InetAddressValidator implements Serializable {
                 return false;
             }
 
-            int iIpSegment = 0;
-
             try {
-                iIpSegment = Integer.parseInt(ipSegment);
+				if (Integer.parseInt(ipSegment) > 255) {
+					return false;
+				}
             } catch(NumberFormatException e) {
-                return false;
-            }
-
-            if (iIpSegment > 255) {
                 return false;
             }
 

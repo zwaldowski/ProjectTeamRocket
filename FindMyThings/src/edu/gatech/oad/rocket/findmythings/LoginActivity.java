@@ -283,7 +283,7 @@ public class LoginActivity extends Activity {
 				email = output.getEmail();
 				failureMessage = output.getFailureReason();
 			}
-			Messages.Login failureType = EnumHelper.<Messages.Login>forTextString(Messages.Login.class, failureMessage);
+			Messages.Login failureType = EnumHelper.forTextString(Messages.Login.class, failureMessage);
 			
 			if (token != null && email != null) {
 				LoginManager.getLoginManager().setCurrentEmailAndToken(email, token);

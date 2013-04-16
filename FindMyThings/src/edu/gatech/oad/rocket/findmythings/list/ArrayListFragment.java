@@ -51,7 +51,7 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (!isUsable()) return false;
+		if (isUnavailable()) return false;
 
 		switch (item.getItemId()) {
 			case R.id.refresh:
@@ -82,7 +82,7 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	}
 
 	private void refresh(final Bundle args) {
-		if (!isUsable()) return;
+		if (isUnavailable()) return;
 
 		setListShown(false);
 
@@ -116,8 +116,8 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	 *
 	 * @return true if usable on the UI-thread, false otherwise
 	 */
-	protected boolean isUsable() {
-		return getActivity() != null;
+	protected boolean isUnavailable() {
+		return getActivity() == null;
 	}
 
 	/**

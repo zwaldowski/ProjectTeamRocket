@@ -1,18 +1,17 @@
 package edu.gatech.oad.rocket.findmythings.service;
 
-import java.io.IOException;
-
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson.JacksonFactory;
-
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
+
+import java.io.IOException;
 
 public class EndpointUtils {
 
-	private static final Fmthings initializeEndpoint() {
+	private static Fmthings initializeEndpoint() {
 		return updateBuilder(new Fmthings.Builder(
 				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 				new HttpRequestInitializer() {

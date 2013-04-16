@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
  * @version $Revision: 1227719 $ $Date: 2012-01-05 12:45:51 -0500 (Thu, 05 Jan 2012) $
  * @since Validator 1.4
  */
+@SuppressWarnings({"BooleanMethodIsAlwaysInverted", "RedundantIfStatement"})
 public class EmailValidator implements Serializable {
 
     private static final long serialVersionUID = 1705927040799295880L;

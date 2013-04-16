@@ -70,7 +70,7 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 
 	@Override
 	protected ArrayAdapter<DBItem> onCreateAdapter() {
-		return new AlternatingTwoLineListAdapter<DBItem>(getActivity());
+		return new AlternatingTwoLineListAdapter<>(getActivity());
 	}
 
 	@Override

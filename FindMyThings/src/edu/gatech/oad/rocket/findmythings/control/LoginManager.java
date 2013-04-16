@@ -1,14 +1,13 @@
 package edu.gatech.oad.rocket.findmythings.control;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
+import android.content.SharedPreferences;
 import com.google.api.client.json.JsonGenerator;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.client.util.Base64;
 import com.google.api.services.fmthings.model.AppMember;
 
-import android.content.SharedPreferences;
+import java.io.IOException;
+import java.io.StringWriter;
 
 public class LoginManager {
 	
@@ -64,20 +63,21 @@ public class LoginManager {
 	public void setCurrentUser(AppMember currentUser) {
 		this.currentUser = currentUser;
 		this.currentUserCouldBeOutOfDate = false;
-		String stringValue = null;
-		
+
+		SharedPreferences.Editor edit = prefs.edit();
 		if (this.currentUser != null) {
 			try {
 				StringWriter writer = new StringWriter();
 				JsonGenerator gen = new JacksonFactory().createJsonGenerator(writer);
 				gen.serialize(currentUser);
 				gen.close();
-				stringValue = writer.toString();
-			} catch (IOException e) {}
+				String stringValue = writer.toString();
+				edit.putString("currentUser", stringValue);
+			} catch (IOException e) {
+				edit.remove("currentUser");
+			}
 		}
-		
-		SharedPreferences.Editor edit = prefs.edit();
-		edit.putString("currentUser", stringValue);
+
 		edit.commit();
 	}
 	

@@ -139,12 +139,10 @@ public class SubmitActivity extends Activity {
 	
 	/**
 	 * Checks for errors
-	 * @return boolean false(no errors) or true(there are errors)
+	 * @return boolean true (no errors) or false (there are errors)
 	 */
-	public boolean checkforErrors() {
-		boolean cancel = false;
+	public boolean containsNoErrors() {
 		focusView = null;
-
 		desc = description.getText().toString();
 		name = iName.getText().toString();
 
@@ -152,17 +150,17 @@ public class SubmitActivity extends Activity {
 		if (TextUtils.isEmpty(name.trim())) {
 			iName.setError(getString(R.string.error_field_required));
 			focusView = iName;
-			cancel = true;
+			return false;
 		}
 
 		//Check to see if description is empty
 		if (TextUtils.isEmpty(desc.trim())) {
 			description.setError(getString(R.string.error_field_required));
 			focusView = description;
-			cancel = true;
+			return false;
 		}
-		return cancel;
 
+		return true;
 	}
 	
 	private boolean attemptToSubmit() {
@@ -170,7 +168,7 @@ public class SubmitActivity extends Activity {
 			return false;
 		}
 		
-		if (!checkforErrors()) {
+		if (containsNoErrors()) {
 			mStatusMessageView.setText(R.string.submit_progress_message);
 			showProgress(true);
 			

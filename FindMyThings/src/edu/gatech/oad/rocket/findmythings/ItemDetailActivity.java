@@ -126,10 +126,7 @@ public class ItemDetailActivity extends FragmentActivity {
 		        if (ni.isConnectedOrConnecting())
 		        	hasMobile = true;
 		}
-		if (hasWifi || hasMobile)
-			return true;
-		return false;
-		
+		return hasWifi || hasMobile;
 	}
 	
 	/**

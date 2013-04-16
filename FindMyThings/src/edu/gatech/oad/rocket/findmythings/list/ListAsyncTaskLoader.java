@@ -23,9 +23,6 @@ public abstract class ListAsyncTaskLoader<T> extends ThrowableAsyncTaskLoader<Li
 			return;
 		}
 
-		// Hold a reference to the old data so it doesn't get garbage collected.
-		// We must protect it until the new data has been delivered.
-		List<T> oldData = mData;
 		mData = data;
 
 		if (isStarted()) {

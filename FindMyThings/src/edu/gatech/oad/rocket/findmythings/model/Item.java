@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import edu.gatech.oad.rocket.findmythings.model.Type;
-
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -157,9 +155,7 @@ public class Item {
 	 * @return All string instance data
 	 */
 	public String getAll() {
-		String sum = name + loc +  description;
-		return sum;
-		
+		return name + loc +  description;
 	}
 
 	/**
