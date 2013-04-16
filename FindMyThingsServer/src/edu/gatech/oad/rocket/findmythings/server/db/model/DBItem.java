@@ -26,9 +26,9 @@ public class DBItem implements Searchable {
 	/**
 	 * Basic string descriptors.
 	 */
-	private String name = "";
+	@Unindex private String name = "";
 	@Unindex private String location = "";
-	private String description = "";
+	@Unindex private String description = "";
 	private String submittingUser = "";
 
 	private Set<String> searchTokens = new HashSet<>();
