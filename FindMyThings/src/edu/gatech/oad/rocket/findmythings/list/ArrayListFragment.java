@@ -86,6 +86,10 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 
 		setListShown(false);
 
+		if (isForceRefresh(args)) {
+			getListAdapter().clear();
+		}
+
 		getLoaderManager().restartLoader(0, args, this);
 	}
 
@@ -97,7 +101,6 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	}
 
 	public void onLoadFinished(Loader<List<T>> loader, List<T> items) {
-
 		Exception exception = getException(loader);
 		if (exception != null) {
 			showError(getErrorMessage(exception));
