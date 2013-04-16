@@ -541,10 +541,6 @@
               "type" : "string"
             }
           },
-          "submittedDate" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
           "type" : {
             "$ref" : "Type"
           },

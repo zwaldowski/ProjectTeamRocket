@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/dkb9M4dGouwlnYNFYwPhaoYA9Tg\"",
+ "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/HeO9-ViHfcGZsePAJE4DH4ajlFw\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -180,10 +180,6 @@
     },
     "searchableContent": {
      "type": "string"
-    },
-    "submittedDate": {
-     "type": "string",
-     "format": "date-time"
     },
     "submittingUser": {
      "type": "string"
@@ -569,10 +565,6 @@
     },
     "searchableContent": {
      "type": "string"
-    },
-    "submittedDate": {
-     "type": "string",
-     "format": "date-time"
     },
     "submittingUser": {
      "type": "string"
