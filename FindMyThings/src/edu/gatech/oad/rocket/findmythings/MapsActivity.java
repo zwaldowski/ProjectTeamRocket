@@ -14,6 +14,7 @@ import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -60,7 +61,7 @@ public class MapsActivity extends FragmentActivity {
 		if (location == null) return;
 
 		//Geocoder object to convert a text address into an Address object
-		findLoc = new Geocoder(this);
+		findLoc = new Geocoder(this, Locale.US);
 
 		LatLng currlocation = null;
 
