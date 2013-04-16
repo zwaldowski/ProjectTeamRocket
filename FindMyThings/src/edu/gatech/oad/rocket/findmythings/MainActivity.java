@@ -189,14 +189,18 @@ public class MainActivity extends Activity {
 		MenuItem accountMenu = menu.findItem(R.id.menu_account);
 		if (loggedIn) {
 			accountMenu.setTitle(LoginManager.getLoginManager().getCurrentEmail());
+			accountMenu.setVisible(true);
 		} else {
+			accountMenu.setTitle(R.string.main_title_account);
 			accountMenu.setVisible(false);
 		}
 
 		//Show/Hide admin button
+		MenuItem adminMenu = menu.findItem(R.id.menu_admin);
 		if (!loggedIn || (mgr.getCurrentUser() != null && !mgr.getCurrentUser().getAdmin())) {
-			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
 			adminMenu.setVisible(false);
+		} else {
+			adminMenu.setVisible(true);
 		}
 
 		return true;

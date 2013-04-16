@@ -31,7 +31,7 @@ public class DBItem implements Searchable {
 	private String description = "";
 	private String submittingUser = "";
 
-	private final Set<String> searchTokens = new HashSet<>();
+	private Set<String> searchTokens = new HashSet<>();
 
 	private final Date submittedDate = new Date();
 
@@ -221,6 +221,14 @@ public class DBItem implements Searchable {
 
 	public Set<String> getSearchTokens() {
 		return searchTokens;
+	}
+
+	public void setSearchTokens(Set<String> searchTokens) {
+		if (searchTokens == null || searchTokens.size() == 0) {
+			SearchableHelper.updateSearchTokens(this);
+		} else {
+			this.searchTokens = searchTokens;
+		}
 	}
 
 }

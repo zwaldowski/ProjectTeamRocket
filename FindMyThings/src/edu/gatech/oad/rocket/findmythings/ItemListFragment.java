@@ -3,6 +3,7 @@ package edu.gatech.oad.rocket.findmythings;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -45,6 +46,7 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 
 	@Override
 	public Loader<List<DBItem>> onCreateLoader(int id, Bundle args) {
+		if (isForceRefresh(args)) lastNextPageToken = null;
 		// TODO Auto-generated method stub
 		return new ListAsyncTaskLoader<DBItem>(getActivity()){
 
@@ -56,7 +58,7 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 				query.setLimit(LOAD_LIMIT);
 				if (hasType) query.setType(type.toString());
 				if (lastNextPageToken != null) query.setCursor(lastNextPageToken);
-				if (searchQuery != null) query.setQuery(searchQuery);
+				if (!TextUtils.isEmpty(searchQuery)) query.setQuery(searchQuery);
 
 				CollectionResponseDBItem result = query.execute();
 				lastNextPageToken = result.getNextPageToken();

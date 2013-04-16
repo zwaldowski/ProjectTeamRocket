@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -263,6 +264,7 @@ public class LoginActivity extends Activity {
 			try {
 				return EndpointUtils.getEndpoint().account().login(params[0], params[1]).execute();
 			} catch (IOException e) {
+				Log.e("LoginActivity", "couldn't log in", e);
 				return null;
 			}
 		}

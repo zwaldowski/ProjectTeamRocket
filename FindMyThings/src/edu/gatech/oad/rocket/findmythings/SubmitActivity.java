@@ -23,6 +23,7 @@ import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -176,10 +177,12 @@ public class SubmitActivity extends Activity {
 			loc = location.getText().toString();
 			rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 
+
 			DBItem newItem = new DBItem().setName(name).setReward(rward)
 					.setDate(new DateTime(new Date()))
 					.setSubmittingUser(LoginManager.getLoginManager().getCurrentEmail())
-					.setCategory(mCategory.name()).setType(mType.name())
+					.setCategory(mCategory.toString()).setType(mType.toString())
+					.setSearchableContent("").setSearchTokens(new ArrayList<String>())
 					.setSearchableContent(null).setSearchTokens(null)
 					.setSubmittedDate(new DateTime(new Date()))
 					.setDescription(desc).setLocation(loc);
