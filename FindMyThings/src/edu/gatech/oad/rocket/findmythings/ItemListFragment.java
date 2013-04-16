@@ -28,14 +28,15 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 	private String lastNextPageToken = null;
 	private String searchQuery = null;
 
-	public static ItemListFragment newInstance(Type type) {
+	public ItemListFragment(Type type) {
+		super();
+		this.hasType = type != null;
+		this.type = type;
+	}
 
-		ItemListFragment fragment = new ItemListFragment();
-
-		fragment.hasType = type != null;
-		fragment.type = type;
-
-		return fragment;
+	public ItemListFragment(Type type, String searchQuery) {
+		this(type);
+		this.searchQuery = searchQuery;
 	}
 
 	@Override

@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 		@Override
 		public Fragment getItem(int position) {
 			Type thisType = getDisplayedTypeInPager(position);
-			return ItemListFragment.newInstance(thisType);
+			return new ItemListFragment(thisType);
 		}
 
 		@Override
