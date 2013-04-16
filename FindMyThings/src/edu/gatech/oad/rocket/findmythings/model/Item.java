@@ -1,5 +1,8 @@
 package edu.gatech.oad.rocket.findmythings.model;
 
+import edu.gatech.oad.rocket.findmythings.shared.Category;
+import edu.gatech.oad.rocket.findmythings.shared.Type;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

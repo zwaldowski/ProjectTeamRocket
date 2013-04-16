@@ -41,8 +41,6 @@ public class AdminCreateActivity extends Activity {
 
 		mEmailView = (EditText)findViewById(R.id.admin_email);
 		mPasswordView = (EditText)findViewById(R.id.admin_pass);
-
-
 	}
 
 	/**

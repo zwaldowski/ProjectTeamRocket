@@ -60,6 +60,8 @@ public class MapsActivity extends FragmentActivity {
 	private void setupMap() {
 		if (location == null) return;
 
+		setTitle(location);
+
 		//Geocoder object to convert a text address into an Address object
 		findLoc = new Geocoder(this, Locale.US);
 
@@ -112,9 +114,8 @@ public class MapsActivity extends FragmentActivity {
         setContentView(R.layout.activity_maps);
 
 		location = getIntent().getStringExtra(LOCATION_EXTRA);
-		setTitle(location);
 	}
-	
+
 	/**
 	 * Called to pop the map window from the navigation stack
 	 */

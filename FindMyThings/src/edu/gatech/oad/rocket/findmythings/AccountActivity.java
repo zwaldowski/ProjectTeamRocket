@@ -31,9 +31,7 @@ public class AccountActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_account);
-		
-		setTitle("My Account");
-		
+
 		mName = (EditText) findViewById(R.id.personname);
 		mEmail = (EditText) findViewById(R.id.emailview);
 		mPhone = (EditText) findViewById(R.id.phoneview);

@@ -15,8 +15,6 @@
     <string name="address">Address</string>
     <string name="phone_number">Phone number</string>
     <string name="register">Register</string>
-    <string name="title_item_list">Items</string>
-    <string name="title_item_detail">Item Detail</string>
     <string name="action_cancel">Cancel</string>
     <string name="looking">I\'m looking for&#8230;</string>
     <string name="title_activity_submit">Submit</string>
@@ -27,7 +25,6 @@
     <string name="cat_type">Category</string>
     <string name="location">Location</string>
     <string name="reward">Reward</string>
-    <string name="admin_title">Admin</string>
     <string name="rewardcaps">REWARD</string>
     <string name="description">DESCRIPTION</string>
     <string name="datesub">DATE SUBMITTED</string>
@@ -43,6 +40,7 @@
     <string name="search">Search</string>
     <string name="no_items_found">No items found!</string>
     <string name="error_loading_items">Couldn\'t load items! Please try again later.</string>
+    <string name="search">Search</string>
 
     <!-- Extra stuff added -->
     <string name="title_activity_searches">Search</string>
@@ -75,15 +73,16 @@
         <item>I\'m looking for something I need.</item>
     </string-array>
 
-    <string name="key_nooverride_animation">findmythings.activity.nooverride_animation</string>
-    
-    <string name="title_activity_admin_popup">Admin_popup</string>
-    <string name="title_activity_admin_create">Admin_create</string>
-    <string name="title_activity_maps">MapsActivity</string>
-    <string name="title_activity_my_account">MyAccount</string>
-    <string name="title_activity_my_account_edit">MyAccountEdit</string>
-    <string name="title_activity_filter">FilterActivity</string>
+    <string name="title_activity_item_detail">Item Detail</string>
+    <string name="title_activity_admin">Administration</string>
+    <string name="title_activity_admin_popup">Edit User</string>
+    <string name="title_activity_admin_create">Create an Admin</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_my_account">My Account</string>
+    <string name="title_activity_my_account_edit">Edit Account</string>
+    <string name="title_activity_filter">Filter Items</string>
     <string name="title_activity_submit">Submit an Item</string>
+    <string name="title_activity_search_results">Search Results</string>
 
     <string name="dialog_positive_default">OK</string>
     <string name="dialog_negative_default">Cancel</string>

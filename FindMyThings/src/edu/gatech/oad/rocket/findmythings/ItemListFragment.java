@@ -12,7 +12,7 @@ import com.google.api.services.fmthings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.list.AlternatingTwoLineListAdapter;
 import edu.gatech.oad.rocket.findmythings.list.ArrayListFragment;
 import edu.gatech.oad.rocket.findmythings.list.ListAsyncTaskLoader;
-import edu.gatech.oad.rocket.findmythings.model.Type;
+import edu.gatech.oad.rocket.findmythings.shared.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.service.Fmthings;
 
@@ -20,23 +20,46 @@ import java.util.List;
 
 public class ItemListFragment extends ArrayListFragment<DBItem> {
 
+	public static final String ARG_TYPE = "type";
+	public static final String ARG_QUERY = "searchQuery";
+
 	public static final int LOAD_LIMIT = 25;
 
-	// class needs to be changed to alter these
-	private boolean hasType = true;
-	private Type type = Type.LOST;
 	private String lastNextPageToken = null;
-	private String searchQuery = null;
 
-	public ItemListFragment(Type type) {
+	public ItemListFragment() {
 		super();
-		this.hasType = type != null;
-		this.type = type;
 	}
 
-	public ItemListFragment(Type type, String searchQuery) {
-		this(type);
-		this.searchQuery = searchQuery;
+	static ItemListFragment newInstance(Type type) {
+		ItemListFragment f = new ItemListFragment();
+
+		// Supply input as an argument.
+		Bundle args = new Bundle();
+		args.putSerializable(ARG_TYPE, type);
+		f.setArguments(args);
+
+		return f;
+	}
+
+	static ItemListFragment newInstance(Type type, String searchQuery) {
+		ItemListFragment f = new ItemListFragment();
+
+		// Supply input as an argument.
+		Bundle args = new Bundle();
+		args.putSerializable(ARG_TYPE, type);
+		args.putString(ARG_QUERY, searchQuery);
+		f.setArguments(args);
+
+		return f;
+	}
+
+	private String getSearchQuery() {
+		return getArguments().getString(ARG_QUERY);
+	}
+
+	private Type getType() {
+		return (Type)getArguments().getSerializable(ARG_TYPE);
 	}
 
 	@Override
@@ -57,8 +80,13 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 				Fmthings.Items.List query = EndpointUtils.getEndpoint().items().list();
 
 				query.setLimit(LOAD_LIMIT);
-				if (hasType) query.setType(type.toString());
+
+				Type type = getType();
+				if (type != null) query.setType(type.toString());
+
 				if (lastNextPageToken != null) query.setCursor(lastNextPageToken);
+
+				String searchQuery = getSearchQuery();
 				if (!TextUtils.isEmpty(searchQuery)) query.setQuery(searchQuery);
 
 				CollectionResponseDBItem result = query.execute();

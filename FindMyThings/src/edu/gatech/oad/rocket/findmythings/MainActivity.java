@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import com.google.api.services.fmthings.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
-import edu.gatech.oad.rocket.findmythings.model.Type;
+import edu.gatech.oad.rocket.findmythings.shared.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 		@Override
 		public Fragment getItem(int position) {
 			Type thisType = getDisplayedTypeInPager(position);
-			return new ItemListFragment(thisType);
+			return ItemListFragment.newInstance(thisType);
 		}
 
 		@Override
@@ -141,8 +141,6 @@ public class MainActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
-
-		setTitle(getString(R.string.app_name));
 	}
 
 	private Type getDisplayedTypeInPager(int pagerPosition) {
@@ -300,7 +298,7 @@ public class MainActivity extends Activity {
 		if (LoginManager.getLoginManager().isLoggedIn()) {
 			Intent goToNextActivity = new Intent(this, SubmitActivity.class);
 			Type type = getDisplayedType();
-			if (type != null) goToNextActivity.putExtra(SubmitActivity.EXTRA_TYPE, type.toString());
+			if (type != null) goToNextActivity.putExtra(SubmitActivity.EXTRA_TYPE, type);
 			startActivityForResult(goToNextActivity, SubmitActivity.SUBMIT_REQUEST);
 			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		}

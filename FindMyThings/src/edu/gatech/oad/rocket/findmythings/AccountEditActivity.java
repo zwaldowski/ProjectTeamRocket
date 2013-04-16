@@ -35,14 +35,11 @@ public class AccountEditActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_account_edit);
 		
-		setTitle("Edit Account");
-		
 		mName = (EditText) findViewById(R.id.personnameedit);
 		mEmail = (EditText) findViewById(R.id.emailedit);
 		mPhone = (EditText) findViewById(R.id.phoneedit);
 		mAddy = (EditText) findViewById(R.id.addressedit);
-		
-				
+
 		if(manage.isLoggedIn()) {
 			// Display user info
 			mEmail.setText(manage.getCurrentUser().getEmail());
@@ -53,6 +50,7 @@ public class AccountEditActivity extends Activity {
 			if(manage.getCurrentUser().getPhone()!=null)
 				mPhone.setText(manage.getCurrentUser().getPhone().getNumber());
 		}
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 

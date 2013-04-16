@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.fmthings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
-import edu.gatech.oad.rocket.findmythings.model.Category;
-import edu.gatech.oad.rocket.findmythings.model.Type;
+import edu.gatech.oad.rocket.findmythings.shared.Category;
+import edu.gatech.oad.rocket.findmythings.shared.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 
 import java.io.IOException;
@@ -85,12 +85,11 @@ public class SubmitActivity extends Activity {
 		reward = (EditText) findViewById(R.id.rewardtext);
 
 		if (getIntent() != null && getIntent().getExtras() != null) {
-			String typeString = getIntent().getExtras().getString(EXTRA_TYPE);
-			mType = typeString == null ? Type.LOST : Type.valueOf(typeString);
+			mType = (Type)getIntent().getExtras().getSerializable(EXTRA_TYPE);
 		}
 
 		// Hide the Up button in the action bar.
-		setupActionBar();
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 
 		SubmitFragment frag = (SubmitFragment) getFragmentManager().findFragmentById(R.id.submit_fragment);
 		frag.syncTypePref(mType);
@@ -99,13 +98,6 @@ public class SubmitActivity extends Activity {
 		mStatusForm = findViewById(R.id.submit_form);
 		mStatusView = findViewById(R.id.submit_status);
 		mStatusMessageView = (TextView) findViewById(R.id.submit_status_message);
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
-	private void setupActionBar() {
-		getActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 
 	/**
