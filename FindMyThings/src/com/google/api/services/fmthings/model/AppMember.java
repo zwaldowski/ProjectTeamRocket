@@ -29,7 +29,7 @@ package com.google.api.services.fmthings.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public abstract class AppMember extends com.google.api.client.json.GenericJson {
+public class AppMember extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
