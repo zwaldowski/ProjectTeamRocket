@@ -262,7 +262,7 @@ public class UrlValidator implements Serializable {
             if (schemes == null) {
                 schemes = DEFAULT_SCHEMES;
             }
-            this.allowedSchemes = new HashSet<>();
+            this.allowedSchemes = new HashSet<String>();
             this.allowedSchemes.addAll(Arrays.asList(schemes));
         }
 

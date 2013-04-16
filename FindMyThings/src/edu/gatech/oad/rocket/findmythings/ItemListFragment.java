@@ -98,7 +98,7 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 
 	@Override
 	protected ArrayAdapter<DBItem> onCreateAdapter() {
-		return new AlternatingTwoLineListAdapter<>(getActivity());
+		return new AlternatingTwoLineListAdapter<DBItem>(getActivity());
 	}
 
 	@Override
