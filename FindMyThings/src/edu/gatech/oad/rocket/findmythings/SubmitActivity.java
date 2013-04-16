@@ -183,10 +183,7 @@ public class SubmitActivity extends Activity {
 					.setSubmittingUser(LoginManager.getLoginManager().getCurrentEmail())
 					.setCategory(mCategory.toString()).setType(mType.toString())
 					.setSearchableContent("").setSearchTokens(new ArrayList<String>())
-					.setSearchableContent(null).setSearchTokens(null)
-					.setSubmittedDate(new DateTime(new Date()))
 					.setDescription(desc).setLocation(loc);
-			// date is obviously duplicitous here
 			
 			// Checks for valid user name
 			mSubmitTask = new SubmitItemTask();
@@ -313,9 +310,9 @@ public class SubmitActivity extends Activity {
 			Intent resultIntent = new Intent();
 			resultIntent.putExtra(MainActivity.EXTRA_LIST, SubmitActivity.this.getItemType().toString());
 			setResult(Activity.RESULT_OK, resultIntent);
+			showProgress(false);
 			finish();
 			//control.addItem(temp);
-			showProgress(false);
 		}
 
 		/**

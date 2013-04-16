@@ -302,7 +302,6 @@ public class MainActivity extends Activity {
 			Type type = getDisplayedType();
 			if (type != null) goToNextActivity.putExtra(SubmitActivity.EXTRA_TYPE, type.toString());
 			startActivityForResult(goToNextActivity, SubmitActivity.SUBMIT_REQUEST);
-			startActivity(goToNextActivity);
 			overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		}
 		else {
