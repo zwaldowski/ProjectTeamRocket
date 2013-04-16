@@ -30,12 +30,12 @@ import java.util.*;
  * A concrete BaseAdapter that is backed by an array of arbitrary
  * objects with custom, generic filtering logic.
  */
-public abstract class CustomArrayAdapter<T> extends BaseAdapter implements CustomFilterDelegate<T> {
+public abstract class CustomArrayAdapter<T, U extends CustomFilterConstraint<T>> extends BaseAdapter {
     /**
      * Contains the list of objects that represent the data of this ArrayAdapter.
      * The content of this list is referred to as "the array" in the documentation.
      */
-    private List<T> mObjects = new ArrayList<T>();
+    private List<T> mObjects = new ArrayList<>();
 
     /**
      * Lock used to modify the content of {@link #mObjects}. Any write operation
@@ -75,7 +75,7 @@ public abstract class CustomArrayAdapter<T> extends BaseAdapter implements Custo
     // A copy of the original mObjects array, initialized from and then used instead as soon as
     // the mFilter ArrayFilter is used. mObjects will then only contain the filtered values.
     private ArrayList<T> mOriginalValues;
-    private CustomAdapterFilter<T> mFilter;
+    private CustomArrayFilter mFilter;
 
     private LayoutInflater mInflater;
 
@@ -87,7 +87,7 @@ public abstract class CustomArrayAdapter<T> extends BaseAdapter implements Custo
      *                 instantiating views.
      */
     public CustomArrayAdapter(Context context, int textViewResourceId) {
-        init(context, textViewResourceId, 0);
+        this(context, textViewResourceId, 0);
     }
 
     /**
@@ -99,7 +99,10 @@ public abstract class CustomArrayAdapter<T> extends BaseAdapter implements Custo
      * @param textViewResourceId The id of the TextView within the layout resource to be populated
      */
     public CustomArrayAdapter(Context context, int resource, int textViewResourceId) {
-        init(context, resource, textViewResourceId);
+		mContext = context;
+		mInflater = LayoutInflater.from(context);
+		mResource = mDropDownResource = resource;
+		mFieldId = textViewResourceId;
     }
 
     /**
@@ -241,13 +244,6 @@ public abstract class CustomArrayAdapter<T> extends BaseAdapter implements Custo
         mNotifyOnChange = notifyOnChange;
     }
 
-    private void init(Context context, int resource, int textViewResourceId) {
-        mContext = context;
-        mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mResource = mDropDownResource = resource;
-        mFieldId = textViewResourceId;
-    }
-
     /**
      * Returns the context associated with this array adapter. The context is used
      * to create views from the resource passed to the constructor.
@@ -353,22 +349,63 @@ public abstract class CustomArrayAdapter<T> extends BaseAdapter implements Custo
     /**
      * {@inheritDoc}
      */
-    public CustomAdapterFilter<T> getFilter() {
+    public CustomArrayFilter getFilter() {
         if (mFilter == null) {
-            mFilter = onCreateFilter();
+            mFilter = new CustomArrayFilter();
         }
         return mFilter;
     }
 
-	public abstract CustomAdapterFilter<T> onCreateFilter();
+	public abstract boolean applyFilter(T object, U constraint);
 
-	@Override
-	public void publishFilterResults(List<T> objects, int count) {
-		mObjects = objects;
-		if (count > 0) {
-			notifyDataSetChanged();
-		} else {
-			notifyDataSetInvalidated();
+	private class CustomArrayFilter extends CustomFilter<T, U> {
+		@Override
+		protected FilterResults performFiltering(U constraint) {
+			FilterResults results = new FilterResults();
+
+			if (mOriginalValues == null) {
+				synchronized (mLock) {
+					mOriginalValues = new ArrayList<>(mObjects);
+				}
+			}
+
+			if (constraint == null || constraint.isEmpty()) {
+				ArrayList<T> list;
+				synchronized (mLock) {
+					list = new ArrayList<>(mOriginalValues);
+				}
+				results.values = list;
+				results.count = list.size();
+			} else {
+				ArrayList<T> values;
+				synchronized (mLock) {
+					values = new ArrayList<>(mOriginalValues);
+				}
+
+				final ArrayList<T> newValues = new ArrayList<>();
+
+				for (final T value : values) {
+					if (applyFilter(value, constraint)) {
+						newValues.add(value);
+					}
+				}
+
+				results.values = newValues;
+				results.count = newValues.size();
+			}
+
+			return results;
+		}
+
+		@Override
+		protected void publishResults(U constraint, FilterResults results) {
+			//noinspection unchecked
+			mObjects = (List<T>) results.values;
+			if (results.count > 0) {
+				notifyDataSetChanged();
+			} else {
+				notifyDataSetInvalidated();
+			}
 		}
 	}
 

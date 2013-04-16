@@ -33,7 +33,7 @@ import android.util.Log;
  * @see android.widget.Filter
  * @see android.widget.Filterable
  */
-public abstract class CustomFilter<T> {
+public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
     private static final String LOG_TAG = "CustomFilter";
 
     private static final String THREAD_NAME = "CustomFilter";
@@ -59,7 +59,7 @@ public abstract class CustomFilter<T> {
      *
      * @param constraint the constraint used to filter the data
      */
-    public final void filter(CustomFilterConstraint<T> constraint) {
+    public final void filter(U constraint) {
         filter(constraint, null);
     }
 
@@ -72,12 +72,8 @@ public abstract class CustomFilter<T> {
      *
      * @param constraint the constraint used to filter the data
      * @param listener a listener notified upon completion of the operation
-     *
-     * @see #filter(CustomFilterConstraint)
-     * @see #performFiltering(CustomFilterConstraint)
-     * @see #publishResults(CustomFilterConstraint, CustomFilter.FilterResults)
      */
-    public final void filter(CustomFilterConstraint<T> constraint, FilterListener listener) {
+    public final void filter(U constraint, FilterListener listener) {
         synchronized (mLock) {
             if (mThreadHandler == null) {
                 HandlerThread thread = new HandlerThread(
@@ -110,7 +106,7 @@ public abstract class CustomFilter<T> {
      * @param constraint the constraint used to filter the data
      * @return the results of the filtering operation
      */
-    protected abstract FilterResults performFiltering(CustomFilterConstraint<T> constraint);
+    protected abstract FilterResults performFiltering(U constraint);
 
     /**
      * <p>Invoked in the UI thread to publish the filtering results in the
@@ -120,7 +116,7 @@ public abstract class CustomFilter<T> {
      * @param constraint the constraint used to filter the data
      * @param results the results of the filtering operation
      */
-    protected abstract void publishResults(CustomFilterConstraint<T> constraint, FilterResults results);
+    protected abstract void publishResults(U constraint, FilterResults results);
 
     /**
      * <p>Holds the results of a filtering operation. The results are the values
@@ -177,7 +173,7 @@ public abstract class CustomFilter<T> {
             Message message;
             switch (what) {
                 case FILTER_TOKEN:
-                    RequestArguments<T> args = (RequestArguments<T>) msg.obj;
+                    RequestArguments<U> args = (RequestArguments<U>) msg.obj;
                     try {
                         args.results = performFiltering(args.constraint);
                     } catch (Exception e) {
@@ -224,7 +220,7 @@ public abstract class CustomFilter<T> {
          */
         @Override @SuppressWarnings("unchecked")
         public void handleMessage(Message msg) {
-            RequestArguments<T> args = (RequestArguments<T>) msg.obj;
+            RequestArguments<U> args = (RequestArguments<U>) msg.obj;
 
             publishResults(args.constraint, args.results);
             if (args.listener != null) {
@@ -238,9 +234,9 @@ public abstract class CustomFilter<T> {
      * <p>Holds the arguments of a filtering request as well as the results
      * of the request.</p>
      */
-    private static class RequestArguments<T> {
+    private class RequestArguments<V> {
 
-		public RequestArguments(CustomFilterConstraint<T> constraint, FilterListener listener) {
+		public RequestArguments(V constraint, FilterListener listener) {
 			this.constraint = constraint;
 			this.listener = listener;
 		}
@@ -248,7 +244,7 @@ public abstract class CustomFilter<T> {
         /**
          * <p>The constraint used to filter the data.</p>
          */
-		CustomFilterConstraint<T> constraint;
+		V constraint;
 
         /**
          * <p>The listener to notify upon completion. Can be null.</p>

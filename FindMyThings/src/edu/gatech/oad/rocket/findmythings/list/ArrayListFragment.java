@@ -19,7 +19,7 @@ import java.util.List;
  * Date: 4/13/13
  * Time: 7:04 PM
  */
-public abstract class ArrayListFragment<T> extends ListFragment implements
+public abstract class ArrayListFragment<T, U extends CustomFilterConstraint<T>> extends ListFragment implements
 		LoaderManager.LoaderCallbacks<List<T>> {
 
 	private static final String FORCE_REFRESH = "forceRefresh";
@@ -170,7 +170,7 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	 *
 	 * @return adapter
 	 */
-	protected abstract CustomArrayAdapter<T> onCreateAdapter();
+	protected abstract CustomArrayAdapter<T, U> onCreateAdapter();
 
 	/**
 	 * Get list adapter
@@ -178,8 +178,8 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	 * @return list adapter
 	 */
 	@SuppressWarnings("unchecked")
-	public CustomArrayAdapter<T> getListAdapter() {
-		return (CustomArrayAdapter<T>) super.getListAdapter();
+	public CustomArrayAdapter<T, U> getListAdapter() {
+		return (CustomArrayAdapter<T, U>) super.getListAdapter();
 	}
 
 	/**
@@ -187,7 +187,7 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	 *
 	 * @param adapter Provide an adapter for the list view.
 	 */
-	public void setListAdapter(final CustomArrayAdapter<T> adapter) {
+	public void setListAdapter(final CustomArrayAdapter<T, U> adapter) {
 		super.setListAdapter(adapter);
 	}
 

@@ -15,7 +15,7 @@ import edu.gatech.oad.rocket.findmythings.shared.Type;
 
 import java.util.List;
 
-public class ItemListFragment extends ArrayListFragment<DBItem> {
+public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstraint> {
 
 	public static final String ARG_TYPE = "type";
 	public static final String ARG_QUERY = "searchQuery";
@@ -87,14 +87,13 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 	}
 
 	@Override
-	protected CustomArrayAdapter<DBItem> onCreateAdapter() {
-		return new AlternatingTwoLineListAdapter<DBItem>(getActivity()) {
-
+	protected CustomArrayAdapter<DBItem, ItemFilterConstraint> onCreateAdapter() {
+		return new AlternatingTwoLineListAdapter<DBItem, ItemFilterConstraint>(getActivity()) {
 			@Override
-			public CustomAdapterFilter<DBItem> onCreateFilter() {
-				return new ItemFilter(this);
+			public boolean applyFilter(DBItem object, ItemFilterConstraint constraint) {
+				// TODO
+				return false;
 			}
-
 		};
 	}
 
