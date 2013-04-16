@@ -210,7 +210,7 @@ public class DBItem implements Searchable {
 
 	public String getSearchableContent() {
 		String rewardString = (reward != 0) ? (Integer.toString(getReward()) + " ") : "";
-		return getName() + " " + getCategory().searchableValue() + " " + rewardString + getDescription();
+		return getName() + " " + getLocation() + " " + rewardString + getDescription();
 	}
 
 	public Set<String> getSearchTokens() {
