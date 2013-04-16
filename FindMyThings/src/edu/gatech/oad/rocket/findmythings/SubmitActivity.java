@@ -168,7 +168,7 @@ public class SubmitActivity extends Activity {
 			rward = reward.getText().length() == 0 ? 0:Integer.parseInt(reward.getText().toString());
 
 
-			DBItem newItem = new DBItem().setName(name).setReward(rward)
+			DBItem newItem = new DBItem().setName(name).setReward(rward).setOpen(true)
 					.setDate(new DateTime(new Date()))
 					.setSubmittingUser(LoginManager.getLoginManager().getCurrentEmail())
 					.setCategory(mCategory.toString()).setType(mType.toString())

@@ -4,8 +4,10 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import edu.gatech.oad.rocket.findmythings.R;
 import edu.gatech.oad.rocket.findmythings.util.ToastHelper;
 
@@ -168,7 +170,7 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	 *
 	 * @return adapter
 	 */
-	protected abstract ArrayAdapter<T> onCreateAdapter();
+	protected abstract CustomArrayAdapter<T> onCreateAdapter();
 
 	/**
 	 * Get list adapter
@@ -176,8 +178,8 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	 * @return list adapter
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayAdapter<T> getListAdapter() {
-		return (ArrayAdapter<T>) super.getListAdapter();
+	public CustomArrayAdapter<T> getListAdapter() {
+		return (CustomArrayAdapter<T>) super.getListAdapter();
 	}
 
 	/**
@@ -185,13 +187,11 @@ public abstract class ArrayListFragment<T> extends ListFragment implements
 	 *
 	 * @param adapter Provide an adapter for the list view.
 	 */
-	public void setListAdapter(final ArrayAdapter<T> adapter) {
+	public void setListAdapter(final CustomArrayAdapter<T> adapter) {
 		super.setListAdapter(adapter);
 	}
 
 	@Override
-	public void onLoaderReset(Loader<List<T>> loader) {
-		// Intentionally left blank
-	}
+	public void onLoaderReset(Loader<List<T>> loader) {}
 
 }

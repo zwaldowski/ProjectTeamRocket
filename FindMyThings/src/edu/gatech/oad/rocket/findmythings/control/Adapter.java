@@ -17,7 +17,6 @@ import android.widget.TextView;
 import edu.gatech.oad.rocket.findmythings.R;
 import edu.gatech.oad.rocket.findmythings.model.Item;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -148,12 +147,13 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
 			if(constraint != null && constraint.length()>0) {
-	            ArrayList<Item> list = new ArrayList<Item>();
+				// TODO fix!
+	            /*ArrayList<Item> list = new ArrayList<Item>();
 	            for(Item a : mList)
 	            	if(a.getAll().toLowerCase().contains(constraint.toString().toLowerCase()))
 	            		list.add(a);
 	            results.values = list;
-	            results.count = list.size();
+	            results.count = list.size();*/
 			}
 			return results;
 		}

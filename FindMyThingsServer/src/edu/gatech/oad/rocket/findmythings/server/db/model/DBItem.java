@@ -30,7 +30,6 @@ public class DBItem implements Searchable {
 	@Unindex private String location = "";
 	@Unindex private String description = "";
 	private String submittingUser = "";
-
 	private Set<String> searchTokens = new HashSet<>();
 
 	/**
@@ -52,6 +51,8 @@ public class DBItem implements Searchable {
 	 * The user-defined reward (used only for Lost Type).
 	 */
 	@Unindex private int reward;
+
+	@Unindex private boolean open;
 
 
 	protected DBItem() {}
@@ -202,6 +203,14 @@ public class DBItem implements Searchable {
 	 */
 	public String getSubmittingUser() {
 		return submittingUser;
+	}
+
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+
+	public boolean isOpen() {
+		return open;
 	}
 	
 	public boolean canGetSearchableContent() {

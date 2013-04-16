@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import edu.gatech.oad.rocket.findmythings.R;
@@ -16,12 +15,12 @@ import edu.gatech.oad.rocket.findmythings.R;
  * Time: 2:12 AM
  * To change this template use File | Settings | File Templates.
  */
-public class AlternatingTwoLineListAdapter<T extends TwoLineListProvider> extends ArrayAdapter<T> {
+public abstract class AlternatingTwoLineListAdapter<T extends TwoLineListProvider> extends CustomArrayAdapter<T> {
 
 	private static final int primarySelectableResource = R.drawable.table_background_selector;
 	private static final int secondarySelectableResource = R.drawable.table_background_alternate_selector;
-	private static final int primaryUnselectableResource = R.color.pager_background;
-	private static final int secondaryUnselectableResource = R.color.pager_background_alternate;
+	private static final int primaryResource = R.color.pager_background;
+	private static final int secondaryResource = R.color.pager_background_alternate;
 	private static final int cellLayout = R.layout.list_two_item_cell;
 
 	public AlternatingTwoLineListAdapter(Context context) {
@@ -34,7 +33,7 @@ public class AlternatingTwoLineListAdapter<T extends TwoLineListProvider> extend
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(getContext());
 			row = (RelativeLayout)inflater.inflate(cellLayout, null);
-		}else{
+		} else {
 			row = (RelativeLayout)convertView;
 		}
 
@@ -53,9 +52,9 @@ public class AlternatingTwoLineListAdapter<T extends TwoLineListProvider> extend
 				row.setBackgroundResource(secondarySelectableResource);
 		} else {
 			if (position % 2 != 0)
-				row.setBackgroundResource(primaryUnselectableResource);
+				row.setBackgroundResource(primaryResource);
 			else
-				row.setBackgroundResource(secondaryUnselectableResource);
+				row.setBackgroundResource(secondaryResource);
 		}
 
 		return row;

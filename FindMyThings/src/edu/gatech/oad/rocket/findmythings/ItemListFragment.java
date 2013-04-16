@@ -5,16 +5,13 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.api.services.fmthings.model.CollectionResponseDBItem;
 import com.google.api.services.fmthings.model.DBItem;
-import edu.gatech.oad.rocket.findmythings.list.AlternatingTwoLineListAdapter;
-import edu.gatech.oad.rocket.findmythings.list.ArrayListFragment;
-import edu.gatech.oad.rocket.findmythings.list.ListAsyncTaskLoader;
-import edu.gatech.oad.rocket.findmythings.shared.Type;
+import edu.gatech.oad.rocket.findmythings.list.*;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.service.Fmthings;
+import edu.gatech.oad.rocket.findmythings.shared.Type;
 
 import java.util.List;
 
@@ -37,18 +34,6 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 		// Supply input as an argument.
 		Bundle args = new Bundle();
 		args.putSerializable(ARG_TYPE, type);
-		f.setArguments(args);
-
-		return f;
-	}
-
-	static ItemListFragment newInstance(Type type, String searchQuery) {
-		ItemListFragment f = new ItemListFragment();
-
-		// Supply input as an argument.
-		Bundle args = new Bundle();
-		args.putSerializable(ARG_TYPE, type);
-		args.putString(ARG_QUERY, searchQuery);
 		f.setArguments(args);
 
 		return f;
@@ -97,16 +82,23 @@ public class ItemListFragment extends ArrayListFragment<DBItem> {
 	}
 
 	@Override
-	protected ArrayAdapter<DBItem> onCreateAdapter() {
-		return new AlternatingTwoLineListAdapter<DBItem>(getActivity());
-	}
-
-	@Override
 	protected int getErrorMessage(Exception exception) {
 		return R.string.error_loading_items;
 	}
 
-    public void onListItemClick(ListView l, View v, int position, long id) {
+	@Override
+	protected CustomArrayAdapter<DBItem> onCreateAdapter() {
+		return new AlternatingTwoLineListAdapter<DBItem>(getActivity()) {
+
+			@Override
+			public CustomAdapterFilter<DBItem> onCreateFilter() {
+				return new ItemFilter(this);
+			}
+
+		};
+	}
+
+	public void onListItemClick(ListView l, View v, int position, long id) {
         DBItem item = ((DBItem) l.getItemAtPosition(position));
 		startActivity(new Intent(getActivity(), ItemDetailActivity.class).putExtra(ItemDetailActivity.ITEM_EXTRA, item));
         getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
