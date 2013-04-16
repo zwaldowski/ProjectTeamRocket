@@ -23,6 +23,8 @@ import java.util.ArrayList;
  * @author TeamRocket
  * */
 public class FilterActivity extends Activity implements OnItemSelectedListener, TabListener {
+
+	public static final int FILTER_REQUEST = 9231;
 	
 	/**
 	 * References to layout

@@ -7,22 +7,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import com.google.api.services.fmthings.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
-import edu.gatech.oad.rocket.findmythings.shared.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
+import edu.gatech.oad.rocket.findmythings.shared.Type;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
+import edu.gatech.oad.rocket.findmythings.util.ToastHelper;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -125,7 +124,7 @@ public class MainActivity extends Activity {
 
 	/**
 	 * creates window with correct layout
-	 * @param savedInstanceState
+	 * @param savedInstanceState Initializing bundle
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -157,8 +156,8 @@ public class MainActivity extends Activity {
 		// Check which request we're responding to
 		if (requestCode == LoginActivity.LOGIN_REQUEST) {
 			if (resultCode == RESULT_OK) {
-				// nothing needs to be done here just yet
-				// isLoggedIn happens in onPrepareOptionsMenu
+				// isLoggedIn stuff happens in onPrepareOptionsMenu
+				ToastHelper.showShort(this, R.string.main_logged_in);
 			}
 		} else if (requestCode == SubmitActivity.SUBMIT_REQUEST) {
 			if (resultCode == RESULT_OK) {
@@ -166,12 +165,17 @@ public class MainActivity extends Activity {
 				// the Intent extras has MainActivity.EXTRA_LIST,
 				// switch to that tab and trigger a reload
 			}
+		} else if (requestCode == FilterActivity.FILTER_REQUEST) {
+			if (resultCode == RESULT_OK) {
+				// TODO
+				// we have a filter to get back
+			}
 		}
 	}
 
 	/**
 	 * updates the options menu (login, account, admin button)
-	 * @param menu
+	 * @param menu System action bar menu
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
@@ -207,7 +211,7 @@ public class MainActivity extends Activity {
 
 	/**
 	 * creates the options menu and adds the search listener
-	 * @param menu
+	 * @param menu System action bar menu
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -222,13 +226,18 @@ public class MainActivity extends Activity {
 		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				// TODO actually search
 				return true;
 			}
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				// TODO actually search
+				if (TextUtils.isEmpty(query)) return false;
+				Intent to = new Intent(MainActivity.this, SearchResultsActivity.class);
+				to.putExtra(ItemListFragment.ARG_QUERY, query);
+				Type type = getDisplayedType();
+				if (type != null) to.putExtra(ItemListFragment.ARG_TYPE, type);
+				startActivity(to);
+				overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 				return true;
 			}
 		};
@@ -240,8 +249,8 @@ public class MainActivity extends Activity {
 
 	/**
 	 * takes care of action when a key is pressed down
-	 * @param  keyCode
-	 * @param  event
+	 * @param  keyCode The value in event.getKeyCode().
+	 * @param  event description of the event
 	 * @return boolean 
 	 */
 	@Override
@@ -266,25 +275,16 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case android.R.id.home:  // This is the home button in the top left corner of the screen.
-				// Don't call finish! Because activity could have been started by an outside activity and the home button would not operated as expected!
-				Intent homeIntent = new Intent(this, MainActivity.class);
-				homeIntent.addFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(homeIntent);
-				return true;
 			case R.id.item_list_submit:
 				return toSubmit();
 			case R.id.menu_list_filter:
-				Intent i = new Intent(this, FilterActivity.class);
-				startActivityForResult(i, 1);
-				overridePendingTransition(R.anim.slide_up_modal, android.R.anim.fade_out);
-				return true;
+				return toActivity(FilterActivity.class, FilterActivity.FILTER_REQUEST);
 			case R.id.menu_login:
-				return LoginManager.getLoginManager().isLoggedIn() ? logOut() : toLogIn();
+				return LoginManager.getLoginManager().isLoggedIn() ? logOut() : toActivity(LoginActivity.class, LoginActivity.LOGIN_REQUEST);
 			case R.id.menu_account:
-				return toAccount();
+				return toActivity(AccountActivity.class, AccountActivity.REQUEST_ACCOUNT);
 			case R.id.menu_admin:
-				return toAdmin();
+				return toActivity(AdminActivity.class, AdminActivity.REQUEST_ADMIN);
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -308,7 +308,7 @@ public class MainActivity extends Activity {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int id) {
-							MainActivity.this.toLogIn();
+							MainActivity.this.toActivity(LoginActivity.class, LoginActivity.LOGIN_REQUEST);
 						}
 					},
 					new DialogInterface.OnClickListener() {
@@ -322,38 +322,18 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	 /**
-     * Go to LoginActivity
-     * @return boolean true when done
-     */
-    public boolean toLogIn() {
-    	Intent toLogin = new Intent(this, LoginActivity.class);
-		startActivityForResult(toLogin, LoginActivity.LOGIN_REQUEST);
+	/**
+	 * Go to a simple modal, wait-for-response activity.
+	 * @param clazz An activity
+	 * @param request An integer expressing the callback evaluated in onActivityResult()
+	 * @return boolean ALWAYS true, when the activity begins
+	 */
+	protected <T extends Activity> boolean toActivity(Class<T> clazz, int request) {
+		Intent to = new Intent(this, clazz);
+		startActivityForResult(to, request);
 		overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
 		return true;
-    }
-    
-    /**
-     * Go to AccountActivity
-     * @return true when done
-     */
-    public boolean toAccount() {
-    	Intent toAccount = new Intent(this, AccountActivity.class);
-		startActivity(toAccount);
-		overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
-		return true;
-    }
-    
-    /**
-     * Go to AdminActivity
-     * @return true when done
-     */
-    public boolean toAdmin() {
-    	Intent toAccount = new Intent(this, AdminActivity.class);
-		startActivity(toAccount);
-		overridePendingTransition(R.anim.slide_up_modal, R.anim.hold);
-		return true;
-    }
+	}
     
     /**
      * Logout
@@ -364,11 +344,6 @@ public class MainActivity extends Activity {
 		AtomicReference<AlertDialog.Builder> temp = new AtomicReference<>(toLogin.getDialog(this,
 				new DialogInterface.OnClickListener() {
 
-					/**
-					 * logs current user out
-					 * @param dialog
-					 * @param id
-					 */
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						logOut = true;
@@ -381,11 +356,6 @@ public class MainActivity extends Activity {
 
 				new DialogInterface.OnClickListener() {
 
-					/**
-					 * keeps user logged in
-					 * @param dialog
-					 * @param id
-					 */
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						logOut = false;
@@ -396,7 +366,10 @@ public class MainActivity extends Activity {
 		temp.get().show();
     	return logOut;    	
     }
-    
+
+	/**
+	 * Helper class: asynchronously log out and clear the LoginManager NO MATTER WHAT
+	 */
     public class LogoutTask extends AsyncTask<Void, Void, MessageBean> {
 
     	@Override

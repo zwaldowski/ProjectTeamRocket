@@ -17,6 +17,8 @@ import edu.gatech.oad.rocket.findmythings.control.*;
  * @author TeamRocket
  * */
 public class AccountActivity extends Activity {
+
+	public static final int REQUEST_ACCOUNT = 5321;
 	
 	/**
 	 * References to the layout 

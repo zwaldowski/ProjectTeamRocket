@@ -25,6 +25,8 @@ import edu.gatech.oad.rocket.findmythings.model.Member;
  * */
 public class AdminActivity extends ListActivity {
 
+	public static final int REQUEST_ADMIN = 1111;
+
 	/**
 	 * Used to display the users
 	 */

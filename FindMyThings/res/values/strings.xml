@@ -93,4 +93,7 @@
     <string name="maps_location_inet_err">Unable to reach Google Maps at this time, please check your connection strength.</string>
 
 
+    <string name="search_results_done">Done</string>
+
+    <string name="main_logged_in">Logged in!</string>
 </resources>
