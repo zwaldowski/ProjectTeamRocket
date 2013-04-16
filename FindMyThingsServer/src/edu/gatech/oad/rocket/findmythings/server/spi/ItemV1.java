@@ -22,10 +22,10 @@ public class ItemV1 extends BaseEndpoint {
 			@Nullable @Named("type") String type,
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
+		Query<DBItem> baseQuery = DatabaseService.ofy().load().type(DBItem.class).order("-date");
 		HashMap<String, Object> filter = new HashMap<>();
 		if (type != null) filter.put("type", type);
 		SearchableHelper.addSearchFilter(filter, query);
-		Query<DBItem> baseQuery = DatabaseService.ofy().load().type(DBItem.class).order("-dateSubmitted");
 		return pagedQuery(baseQuery, cursorString, limit, filter);
 	}
 

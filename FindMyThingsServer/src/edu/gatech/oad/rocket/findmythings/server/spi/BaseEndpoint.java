@@ -1,10 +1,10 @@
 package edu.gatech.oad.rocket.findmythings.server.spi;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import com.google.api.server.spi.response.CollectionResponse;
+import com.google.api.server.spi.response.CollectionResponse.Builder;
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.QueryResultIterator;
+import com.googlecode.objectify.cmd.Query;
 import edu.gatech.oad.rocket.findmythings.server.db.DatabaseService;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
@@ -13,11 +13,10 @@ import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import com.google.api.server.spi.response.CollectionResponse;
-import com.google.api.server.spi.response.CollectionResponse.Builder;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterator;
-import com.googlecode.objectify.cmd.Query;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 abstract class BaseEndpoint {
 	
@@ -26,14 +25,15 @@ abstract class BaseEndpoint {
 		Cursor cursor = cursorString == null ? null : Cursor.fromWebSafeString(cursorString);
 		if (filters != null) {
 			for (Entry<String, Object> entry : filters.entrySet()) {
+				String key = entry.getKey();
 				Object value = entry.getValue();
-				if (value != null) query = query.filter(entry.getKey(), entry.getValue());
+				if (key != null && value != null) query = query.filter(key, value);
 			}
 		}
 		if (cursor != null) query = query.startAt(cursor);
 		if (limit != null) query = query.limit(limit);
 
-		QueryResultIterator<T> iterator = query.chunk(Integer.MAX_VALUE).iterator();
+		QueryResultIterator<T> iterator = query.iterator();
 		while (iterator.hasNext()) {
 			outList.add(iterator.next());
 		}
