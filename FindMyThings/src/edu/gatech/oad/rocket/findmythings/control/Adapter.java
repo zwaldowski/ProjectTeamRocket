@@ -32,11 +32,6 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	 * Gets context from the activity using this adapter
 	 */
 	private Context mContext;
-
-	/**
-	 * Reference to the list passed into the adapter
-	 */
-	private List<Item> mList;
 	
 	/**
 	 * Instance of the text filter used to filter search results
@@ -53,7 +48,7 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 		super(context, textViewResourceId, objects);
 		
 		mContext = context;
-		mList = objects;
+		addAll(objects);
 	}
 
 	/**
@@ -67,8 +62,7 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 			List<Item> objects) {
 		super(context,resource,textViewResourceId, objects);
 		mContext=context;
-		mList = objects;
-		
+		addAll(objects);
 	}
 	
 	/**
@@ -76,12 +70,13 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	 * @param l
 	 */
 	public void setList(List<Item> l) {
-		if (!l.isEmpty()) {
-			mList = l;
+		if (l != null) {
+			clear();
+			if (!l.isEmpty()) {
+				addAll(l);
+			}
+			notifyDataSetChanged();
 		}
-		else mList = null;
-		
-		notifyDataSetChanged();
 	}
 	
 	/**
@@ -96,17 +91,6 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	}
 	
 	/**
-	 * returns the number of items on main list
-	 * @return int count
-	 */
-	@Override
-	public int getCount() {
-		if(mList==null)
-			return 0;
-	    return mList.size();
-	}
-	
-	/**
 	 * returns the current View being used
 	 * @param position
 	 * @param convertView
@@ -117,14 +101,15 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	public View getView(int position, View convertView, ViewGroup parent) {
 	 
 	 View row = convertView;
-	 if (row == null || mList == null) {
+	 if (row == null || isEmpty()) {
          LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
          row = inflater.inflate (R.layout.arrayadapter_view, parent, false);
 	 }
-	 if(mList == null || mList.isEmpty() || position>mList.size()) 
+
+	 if (isEmpty() || position > getCount())
 		 return row;
 	
-	 Item temp = mList.get(position);
+	 Item temp = getItem(position);
 	 
 	 Spannable span = new SpannableString(temp.toString() + " - " + temp.getLoc() + temp.getSummary());
 	 int start = temp.toString().length();
@@ -170,7 +155,7 @@ public class Adapter extends ArrayAdapter<Item> implements Filterable {
 	            results.values = list;
 	            results.count = list.size();
 			}
-		return results;	
+			return results;
 		}
 
 		/**
