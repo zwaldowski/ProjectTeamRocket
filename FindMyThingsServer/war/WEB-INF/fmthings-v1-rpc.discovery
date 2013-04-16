@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/HeO9-ViHfcGZsePAJE4DH4ajlFw\"",
+ "etag": "\"YVocwOe7q_W9_C504srbqpp7YGE/IiF0dUpXvsLQ5qSRxrlar_THbKI\"",
  "discoveryVersion": "v1",
  "id": "fmthings:v1",
  "name": "fmthings",
@@ -167,6 +167,9 @@
     },
     "name": {
      "type": "string"
+    },
+    "open": {
+     "type": "boolean"
     },
     "reward": {
      "type": "integer",
@@ -552,6 +555,9 @@
     },
     "name": {
      "type": "string"
+    },
+    "open": {
+     "type": "boolean"
     },
     "reward": {
      "type": "integer",

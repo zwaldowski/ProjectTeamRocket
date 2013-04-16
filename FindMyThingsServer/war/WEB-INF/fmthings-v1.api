@@ -554,6 +554,9 @@
           "reward" : {
             "type" : "integer"
           },
+          "open" : {
+            "type" : "boolean"
+          },
           "searchableContent" : {
             "type" : "string"
           }
