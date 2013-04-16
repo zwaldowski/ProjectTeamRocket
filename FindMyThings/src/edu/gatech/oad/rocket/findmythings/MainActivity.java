@@ -66,11 +66,6 @@ public class MainActivity extends Activity {
 	private ViewPager pager;
 
 	/**
-	 * Used for picking/choosing tabs... I dunno...
-	 */
-	private TypeTabsAdapter adapter;
-
-	/**
 	 * Indirect reference to the search bar in the ActionBar
 	 */
 	private MenuItem searchMenuItem;
@@ -140,7 +135,7 @@ public class MainActivity extends Activity {
 		mTabs = getResources().getStringArray(mTabsListRes);
 
 		pager = (ViewPager)findViewById(R.id.pager);
-		adapter = new TypeTabsAdapter(getFragmentManager(), getActionBar(), pager);
+		new TypeTabsAdapter(getFragmentManager(), getActionBar(), pager);
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(false);
@@ -163,35 +158,53 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// Check which request we're responding to
 		if (requestCode == LoginActivity.LOGIN_REQUEST) {
-			// Make sure the request was successful
 			if (resultCode == RESULT_OK) {
-				// The user picked a contact.
-				// The Intent's data Uri identifies which contact was selected.
-
-				// Do something with the contact here (bigger example below)
+				// nothing needs to be done here just yet
+				// isLoggedIn happens in onPrepareOptionsMenu
 			}
 		} else if (requestCode == SubmitActivity.SUBMIT_REQUEST) {
 			if (resultCode == RESULT_OK) {
-
+				// TODO
+				// the Intent extras has MainActivity.EXTRA_LIST,
+				// switch to that tab and trigger a reload
 			}
 		}
 	}
 
+	/**
+	 * updates the options menu (login, account, admin button)
+	 * @param menu
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		LoginManager mgr = LoginManager.getLoginManager();
+		boolean loggedIn = mgr.isLoggedIn();
 
+		//Set Login Title
+		MenuItem loginMenu = menu.findItem(R.id.menu_login);
+		String title = loggedIn ? "Logout" : "Login";
+		loginMenu.setTitle(title);
 
+		//Set Account Title
+		MenuItem accountMenu = menu.findItem(R.id.menu_account);
+		if (loggedIn) {
+			accountMenu.setTitle(LoginManager.getLoginManager().getCurrentEmail());
+		} else {
+			accountMenu.setVisible(false);
+		}
 
+		//Show/Hide admin button
+		if (!loggedIn || (mgr.getCurrentUser() != null && !mgr.getCurrentUser().getAdmin())) {
+			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
+			adminMenu.setVisible(false);
+		}
 
-
-
-
-
-
-
-
+		return true;
+	}
 
 
 	/**
-	 * creates the options menu (login, account, admin button)
+	 * creates the options menu and adds the search listener
 	 * @param menu
 	 */
 	@Override
@@ -220,37 +233,8 @@ public class MainActivity extends Activity {
 
 		mSearch.setOnQueryTextListener(queryTextListener);
 
-		LoginManager mgr = LoginManager.getLoginManager();
-		boolean loggedIn = mgr.isLoggedIn();
-
-		//Set Login Title
-		MenuItem loginMenu = menu.findItem(R.id.menu_login);
-		String title = loggedIn ? "Logout" : "Login";
-		loginMenu.setTitle(title);
-
-		//Set Account Title
-		MenuItem accountMenu = menu.findItem(R.id.menu_account);
-		if (loggedIn) {
-			accountMenu.setTitle(LoginManager.getLoginManager().getCurrentEmail());
-		} else {
-			accountMenu.setVisible(false);
-		}
-
-		//Show/Hide admin button
-		if (!loggedIn || (mgr.getCurrentUser() != null && !mgr.getCurrentUser().getAdmin())) {
-			MenuItem adminMenu = menu.findItem(R.id.menu_admin);
-			adminMenu.setVisible(false);
-		}
 		return true;
 	}
-
-
-
-
-
-
-
-
 
 	/**
 	 * takes care of action when a key is pressed down
