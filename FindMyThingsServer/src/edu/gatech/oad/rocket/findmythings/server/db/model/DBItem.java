@@ -33,8 +33,6 @@ public class DBItem implements Searchable {
 
 	private Set<String> searchTokens = new HashSet<>();
 
-	private final Date submittedDate = new Date();
-
 	/**
 	 * The type of an Item. Defines which list it goes on.
 	 */
@@ -48,7 +46,7 @@ public class DBItem implements Searchable {
 	/**
 	 * The user-defined date.
 	 */
-	@Unindex private Date date = new Date();
+	private Date date = new Date();
 
 	/**
 	 * The user-defined reward (used only for Lost Type).
@@ -204,10 +202,6 @@ public class DBItem implements Searchable {
 	 */
 	public String getSubmittingUser() {
 		return submittingUser;
-	}
-
-	public Date getSubmittedDate() {
-		return submittedDate;
 	}
 	
 	public boolean canGetSearchableContent() {
