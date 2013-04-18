@@ -89,4 +89,6 @@
     <string name="admin_user_search">Search by user</string>
 
     <string name="submit_progress_message">Submitting…</string>
+
+    <string name="item_load_more">Load more…</string>
 </resources>

@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.google.api.client.util.DateTime;
 import edu.gatech.oad.rocket.findmythings.list.*;
 import edu.gatech.oad.rocket.findmythings.model.Category;
@@ -27,6 +29,8 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 	public static final int LOAD_LIMIT = 25;
 
 	private String lastNextPageToken = null;
+
+	private View mLoadMoreFooter;
 
 	public ItemListFragment() {
 		super();
@@ -91,6 +95,11 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 
 	@Override
 	protected CustomArrayAdapter<DBItem, ItemFilterConstraint> onCreateAdapter() {
+		mLoadMoreFooter = (View)getActivity().getLayoutInflater().inflate(R.layout.list_footer_button, null);
+		TextView label = (TextView)mLoadMoreFooter.getRootView().findViewById(R.id.button_cell_title);
+		label.setText(R.string.item_load_more);
+		getListView().addFooterView(mLoadMoreFooter);
+
 		return new AlternatingLineListAdapter<DBItem, ItemFilterConstraint>(getActivity()) {
 			@Override
 			public boolean applyFilter(DBItem object, ItemFilterConstraint constraint) {
@@ -122,12 +131,18 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 	}
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
-        DBItem item = ((DBItem) l.getItemAtPosition(position));
-		// this is a hashmap!
 
+		if (l.getAdapter().getItemViewType(position) != AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
+			DBItem item = ((DBItem) l.getItemAtPosition(position));
 
-		startActivity(new Intent(getActivity(), ItemDetailActivity.class).putExtra(ItemDetailActivity.ITEM_EXTRA, (Parcelable)item));
-        getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+			// this is a hashmap!
+			startActivity(new Intent(getActivity(), ItemDetailActivity.class).putExtra(ItemDetailActivity.ITEM_EXTRA, (Parcelable)item));
+			getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+		} else {
+			if (v.equals(mLoadMoreFooter)) {
+				refresh();
+			}
+		}
     }
 
 	public void performFilter(ItemFilterConstraint constraint) {
