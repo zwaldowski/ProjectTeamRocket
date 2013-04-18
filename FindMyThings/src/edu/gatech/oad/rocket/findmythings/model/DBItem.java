@@ -16,7 +16,7 @@
  * Modify at your own risk.
  */
 
-package com.google.api.services.fmthings.model;
+package edu.gatech.oad.rocket.findmythings.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,7 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.model;
 
-import com.google.api.services.fmthings.model.DBItem;
-
 import java.util.ArrayList;
 
 /**

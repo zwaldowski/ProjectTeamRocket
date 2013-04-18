@@ -2,7 +2,7 @@ package edu.gatech.oad.rocket.findmythings.list;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.google.api.services.fmthings.model.DBItem;
+import edu.gatech.oad.rocket.findmythings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.model.Category;
 
 import java.util.Date;

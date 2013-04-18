@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.google.api.services.fmthings.model.DBItem;
+import edu.gatech.oad.rocket.findmythings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.model.Category;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 

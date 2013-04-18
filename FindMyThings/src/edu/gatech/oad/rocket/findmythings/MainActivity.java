@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.*;
 import android.widget.SearchView;
-import com.google.api.services.fmthings.model.MessageBean;
+import edu.gatech.oad.rocket.findmythings.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.list.ItemFilterConstraint;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;

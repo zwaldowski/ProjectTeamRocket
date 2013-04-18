@@ -16,10 +16,10 @@
  * Modify at your own risk.
  */
 
-package com.google.api.services.fmthings.model;
+package edu.gatech.oad.rocket.findmythings.model;
 
 /**
- * Model definition for PhoneNumber.
+ * Model definition for CollectionResponseDBItem.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the . For a detailed explanation see:
@@ -29,37 +29,58 @@ package com.google.api.services.fmthings.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class PhoneNumber extends com.google.api.client.json.GenericJson {
+public final class CollectionResponseDBItem extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String number;
+  private java.util.List<DBItem> items;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.lang.String nextPageToken;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getNumber() {
-    return number;
+  public java.util.List<DBItem> getItems() {
+    return items;
   }
 
   /**
-   * @param number number or {@code null} for none
+   * @param items items or {@code null} for none
    */
-  public PhoneNumber setNumber(java.lang.String number) {
-    this.number = number;
+  public CollectionResponseDBItem setItems(java.util.List<DBItem> items) {
+    this.items = items;
+    return this;
+  }
+
+  /**
+   * @return value or {@code null} for none
+   */
+  public java.lang.String getNextPageToken() {
+    return nextPageToken;
+  }
+
+  /**
+   * @param nextPageToken nextPageToken or {@code null} for none
+   */
+  public CollectionResponseDBItem setNextPageToken(java.lang.String nextPageToken) {
+    this.nextPageToken = nextPageToken;
     return this;
   }
 
   @Override
-  public PhoneNumber set(String fieldName, Object value) {
-    return (PhoneNumber) super.set(fieldName, value);
+  public CollectionResponseDBItem set(String fieldName, Object value) {
+    return (CollectionResponseDBItem) super.set(fieldName, value);
   }
 
   @Override
-  public PhoneNumber clone() {
-    return (PhoneNumber) super.clone();
+  public CollectionResponseDBItem clone() {
+    return (CollectionResponseDBItem) super.clone();
   }
 
 }

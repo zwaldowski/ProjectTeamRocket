@@ -18,6 +18,8 @@
 
 package edu.gatech.oad.rocket.findmythings.service;
 
+import edu.gatech.oad.rocket.findmythings.model.*;
+
 /**
  * Service definition for Fmthings (v1).
  *
@@ -151,7 +153,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class CreateAdmin extends FmthingsRequest<com.google.api.services.fmthings.model.MessageBean> {
+    public class CreateAdmin extends FmthingsRequest<MessageBean> {
 
       private static final String REST_PATH = "register/admin";
 
@@ -170,7 +172,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected CreateAdmin(java.lang.String email, java.lang.String password, java.lang.String passwordAlt) {
-        super(Fmthings.this, "POST", REST_PATH, null, com.google.api.services.fmthings.model.MessageBean.class);
+        super(Fmthings.this, "POST", REST_PATH, null, MessageBean.class);
         this.email = com.google.api.client.util.Preconditions.checkNotNull(email, "Required parameter email must be specified.");
         this.password = com.google.api.client.util.Preconditions.checkNotNull(password, "Required parameter password must be specified.");
         this.passwordAlt = com.google.api.client.util.Preconditions.checkNotNull(passwordAlt, "Required parameter passwordAlt must be specified.");
@@ -321,7 +323,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Forgot extends FmthingsRequest<com.google.api.services.fmthings.model.MessageBean> {
+    public class Forgot extends FmthingsRequest<MessageBean> {
 
       private static final String REST_PATH = "forgot";
 
@@ -338,7 +340,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Forgot(java.lang.String email) {
-        super(Fmthings.this, "POST", REST_PATH, null, com.google.api.services.fmthings.model.MessageBean.class);
+        super(Fmthings.this, "POST", REST_PATH, null, MessageBean.class);
         this.email = com.google.api.client.util.Preconditions.checkNotNull(email, "Required parameter email must be specified.");
       }
 
@@ -411,7 +413,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Get extends FmthingsRequest<com.google.api.services.fmthings.model.AppMember> {
+    public class Get extends FmthingsRequest<AppMember> {
 
       private static final String REST_PATH = "account";
 
@@ -426,7 +428,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Get() {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.AppMember.class);
+        super(Fmthings.this, "GET", REST_PATH, null, AppMember.class);
       }
 
       @Override
@@ -495,7 +497,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Login extends FmthingsRequest<com.google.api.services.fmthings.model.MessageBean> {
+    public class Login extends FmthingsRequest<MessageBean> {
 
       private static final String REST_PATH = "account/login";
 
@@ -513,7 +515,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Login(java.lang.String email, java.lang.String password) {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.MessageBean.class);
+        super(Fmthings.this, "GET", REST_PATH, null, MessageBean.class);
         this.email = com.google.api.client.util.Preconditions.checkNotNull(email, "Required parameter email must be specified.");
         this.password = com.google.api.client.util.Preconditions.checkNotNull(password, "Required parameter password must be specified.");
       }
@@ -612,7 +614,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Logout extends FmthingsRequest<com.google.api.services.fmthings.model.MessageBean> {
+    public class Logout extends FmthingsRequest<MessageBean> {
 
       private static final String REST_PATH = "account/logout";
 
@@ -628,7 +630,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Logout() {
-        super(Fmthings.this, "DELETE", REST_PATH, null, com.google.api.services.fmthings.model.MessageBean.class);
+        super(Fmthings.this, "DELETE", REST_PATH, null, MessageBean.class);
       }
 
       @Override
@@ -677,16 +679,16 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
      * This request holds the parameters needed by the the fmthings server.  After setting any optional
      * parameters, call the {@link Patch#execute()} method to invoke the remote operation.
      *
-     * @param content the {@link com.google.api.services.fmthings.model.AppMember}
+     * @param content the {@link edu.gatech.oad.rocket.findmythings.model.AppMember}
      * @return the request
      */
-    public Patch patch(com.google.api.services.fmthings.model.AppMember content) throws java.io.IOException {
+    public Patch patch(AppMember content) throws java.io.IOException {
       Patch result = new Patch(content);
       initialize(result);
       return result;
     }
 
-    public class Patch extends FmthingsRequest<com.google.api.services.fmthings.model.AppMember> {
+    public class Patch extends FmthingsRequest<AppMember> {
 
       private static final String REST_PATH = "account/update";
 
@@ -699,11 +701,11 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * Patch#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)} must
        * be called to initialize this instance immediately after invoking the constructor. </p>
        *
-       * @param content the {@link com.google.api.services.fmthings.model.AppMember}
+       * @param content the {@link edu.gatech.oad.rocket.findmythings.model.AppMember}
        * @since 1.13
        */
-      protected Patch(com.google.api.services.fmthings.model.AppMember content) {
-        super(Fmthings.this, "PATCH", REST_PATH, content, com.google.api.services.fmthings.model.AppMember.class);
+      protected Patch(AppMember content) {
+        super(Fmthings.this, "PATCH", REST_PATH, content, AppMember.class);
       }
 
       @Override
@@ -763,7 +765,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Register extends FmthingsRequest<com.google.api.services.fmthings.model.MessageBean> {
+    public class Register extends FmthingsRequest<MessageBean> {
 
       private static final String REST_PATH = "register";
 
@@ -782,7 +784,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Register(java.lang.String email, java.lang.String password, java.lang.String passwordAlt) {
-        super(Fmthings.this, "POST", REST_PATH, null, com.google.api.services.fmthings.model.MessageBean.class);
+        super(Fmthings.this, "POST", REST_PATH, null, MessageBean.class);
         this.email = com.google.api.client.util.Preconditions.checkNotNull(email, "Required parameter email must be specified.");
         this.password = com.google.api.client.util.Preconditions.checkNotNull(password, "Required parameter password must be specified.");
         this.passwordAlt = com.google.api.client.util.Preconditions.checkNotNull(passwordAlt, "Required parameter passwordAlt must be specified.");
@@ -924,16 +926,16 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
      * This request holds the parameters needed by the the fmthings server.  After setting any optional
      * parameters, call the {@link Update#execute()} method to invoke the remote operation.
      *
-     * @param content the {@link com.google.api.services.fmthings.model.AppMember}
+     * @param content the {@link edu.gatech.oad.rocket.findmythings.model.AppMember}
      * @return the request
      */
-    public Update update(com.google.api.services.fmthings.model.AppMember content) throws java.io.IOException {
+    public Update update(AppMember content) throws java.io.IOException {
       Update result = new Update(content);
       initialize(result);
       return result;
     }
 
-    public class Update extends FmthingsRequest<com.google.api.services.fmthings.model.AppMember> {
+    public class Update extends FmthingsRequest<AppMember> {
 
       private static final String REST_PATH = "account/update";
 
@@ -946,11 +948,11 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * Update#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)} must
        * be called to initialize this instance immediately after invoking the constructor. </p>
        *
-       * @param content the {@link com.google.api.services.fmthings.model.AppMember}
+       * @param content the {@link edu.gatech.oad.rocket.findmythings.model.AppMember}
        * @since 1.13
        */
-      protected Update(com.google.api.services.fmthings.model.AppMember content) {
-        super(Fmthings.this, "PUT", REST_PATH, content, com.google.api.services.fmthings.model.AppMember.class);
+      protected Update(AppMember content) {
+        super(Fmthings.this, "PUT", REST_PATH, content, AppMember.class);
       }
 
       @Override
@@ -1031,7 +1033,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Delete extends FmthingsRequest<com.google.api.services.fmthings.model.DBItem> {
+    public class Delete extends FmthingsRequest<DBItem> {
 
       private static final String REST_PATH = "items/delete";
 
@@ -1048,7 +1050,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Delete(java.lang.Long id) {
-        super(Fmthings.this, "DELETE", REST_PATH, null, com.google.api.services.fmthings.model.DBItem.class);
+        super(Fmthings.this, "DELETE", REST_PATH, null, DBItem.class);
         this.id = com.google.api.client.util.Preconditions.checkNotNull(id, "Required parameter id must be specified.");
       }
 
@@ -1122,7 +1124,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Get extends FmthingsRequest<com.google.api.services.fmthings.model.DBItem> {
+    public class Get extends FmthingsRequest<DBItem> {
 
       private static final String REST_PATH = "items/get";
 
@@ -1138,7 +1140,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Get(java.lang.Long id) {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.DBItem.class);
+        super(Fmthings.this, "GET", REST_PATH, null, DBItem.class);
         this.id = com.google.api.client.util.Preconditions.checkNotNull(id, "Required parameter id must be specified.");
       }
 
@@ -1222,7 +1224,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class GetByUser extends FmthingsRequest<com.google.api.services.fmthings.model.CollectionResponseDBItem> {
+    public class GetByUser extends FmthingsRequest<CollectionResponseDBItem> {
 
       private static final String REST_PATH = "items/forMember";
 
@@ -1239,7 +1241,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected GetByUser(java.lang.String email) {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.CollectionResponseDBItem.class);
+        super(Fmthings.this, "GET", REST_PATH, null, CollectionResponseDBItem.class);
         this.email = com.google.api.client.util.Preconditions.checkNotNull(email, "Required parameter email must be specified.");
       }
 
@@ -1367,7 +1369,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class GetMine extends FmthingsRequest<com.google.api.services.fmthings.model.CollectionResponseDBItem> {
+    public class GetMine extends FmthingsRequest<CollectionResponseDBItem> {
 
       private static final String REST_PATH = "items/mine";
 
@@ -1383,7 +1385,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected GetMine() {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.CollectionResponseDBItem.class);
+        super(Fmthings.this, "GET", REST_PATH, null, CollectionResponseDBItem.class);
       }
 
       @Override
@@ -1487,16 +1489,16 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
      * This request holds the parameters needed by the the fmthings server.  After setting any optional
      * parameters, call the {@link Insert#execute()} method to invoke the remote operation.
      *
-     * @param content the {@link com.google.api.services.fmthings.model.DBItem}
+     * @param content the {@link edu.gatech.oad.rocket.findmythings.model.DBItem}
      * @return the request
      */
-    public Insert insert(com.google.api.services.fmthings.model.DBItem content) throws java.io.IOException {
+    public Insert insert(DBItem content) throws java.io.IOException {
       Insert result = new Insert(content);
       initialize(result);
       return result;
     }
 
-    public class Insert extends FmthingsRequest<com.google.api.services.fmthings.model.DBItem> {
+    public class Insert extends FmthingsRequest<DBItem> {
 
       private static final String REST_PATH = "items/insert";
 
@@ -1509,11 +1511,11 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * Insert#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)} must
        * be called to initialize this instance immediately after invoking the constructor. </p>
        *
-       * @param content the {@link com.google.api.services.fmthings.model.DBItem}
+       * @param content the {@link edu.gatech.oad.rocket.findmythings.model.DBItem}
        * @since 1.13
        */
-      protected Insert(com.google.api.services.fmthings.model.DBItem content) {
-        super(Fmthings.this, "POST", REST_PATH, content, com.google.api.services.fmthings.model.DBItem.class);
+      protected Insert(DBItem content) {
+        super(Fmthings.this, "POST", REST_PATH, content, DBItem.class);
       }
 
       @Override
@@ -1570,7 +1572,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class List extends FmthingsRequest<com.google.api.services.fmthings.model.CollectionResponseDBItem> {
+    public class List extends FmthingsRequest<CollectionResponseDBItem> {
 
       private static final String REST_PATH = "items";
 
@@ -1585,7 +1587,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected List() {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.CollectionResponseDBItem.class);
+        super(Fmthings.this, "GET", REST_PATH, null, CollectionResponseDBItem.class);
       }
 
       @Override
@@ -1705,16 +1707,16 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
      * parameters, call the {@link Patch#execute()} method to invoke the remote operation.
      *
      * @param id
-     * @param content the {@link com.google.api.services.fmthings.model.DBItem}
+     * @param content the {@link edu.gatech.oad.rocket.findmythings.model.DBItem}
      * @return the request
      */
-    public Patch patch(java.lang.Long id, com.google.api.services.fmthings.model.DBItem content) throws java.io.IOException {
+    public Patch patch(java.lang.Long id, DBItem content) throws java.io.IOException {
       Patch result = new Patch(id, content);
       initialize(result);
       return result;
     }
 
-    public class Patch extends FmthingsRequest<com.google.api.services.fmthings.model.DBItem> {
+    public class Patch extends FmthingsRequest<DBItem> {
 
       private static final String REST_PATH = "items/update";
 
@@ -1728,11 +1730,11 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * be called to initialize this instance immediately after invoking the constructor. </p>
        *
        * @param id
-       * @param content the {@link com.google.api.services.fmthings.model.DBItem}
+       * @param content the {@link edu.gatech.oad.rocket.findmythings.model.DBItem}
        * @since 1.13
        */
-      protected Patch(java.lang.Long id, com.google.api.services.fmthings.model.DBItem content) {
-        super(Fmthings.this, "PATCH", REST_PATH, content, com.google.api.services.fmthings.model.DBItem.class);
+      protected Patch(java.lang.Long id, DBItem content) {
+        super(Fmthings.this, "PATCH", REST_PATH, content, DBItem.class);
         this.id = com.google.api.client.util.Preconditions.checkNotNull(id, "Required parameter id must be specified.");
       }
 
@@ -1797,16 +1799,16 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
      * This request holds the parameters needed by the the fmthings server.  After setting any optional
      * parameters, call the {@link Update#execute()} method to invoke the remote operation.
      *
-     * @param content the {@link com.google.api.services.fmthings.model.DBItem}
+     * @param content the {@link edu.gatech.oad.rocket.findmythings.model.DBItem}
      * @return the request
      */
-    public Update update(com.google.api.services.fmthings.model.DBItem content) throws java.io.IOException {
+    public Update update(DBItem content) throws java.io.IOException {
       Update result = new Update(content);
       initialize(result);
       return result;
     }
 
-    public class Update extends FmthingsRequest<com.google.api.services.fmthings.model.DBItem> {
+    public class Update extends FmthingsRequest<DBItem> {
 
       private static final String REST_PATH = "items/update";
 
@@ -1819,11 +1821,11 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * Update#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)} must
        * be called to initialize this instance immediately after invoking the constructor. </p>
        *
-       * @param content the {@link com.google.api.services.fmthings.model.DBItem}
+       * @param content the {@link edu.gatech.oad.rocket.findmythings.model.DBItem}
        * @since 1.13
        */
-      protected Update(com.google.api.services.fmthings.model.DBItem content) {
-        super(Fmthings.this, "PUT", REST_PATH, content, com.google.api.services.fmthings.model.DBItem.class);
+      protected Update(DBItem content) {
+        super(Fmthings.this, "PUT", REST_PATH, content, DBItem.class);
       }
 
       @Override
@@ -1904,7 +1906,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Get extends FmthingsRequest<com.google.api.services.fmthings.model.AppMember> {
+    public class Get extends FmthingsRequest<AppMember> {
 
       private static final String REST_PATH = "members/get";
 
@@ -1920,7 +1922,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Get(java.lang.String email) {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.AppMember.class);
+        super(Fmthings.this, "GET", REST_PATH, null, AppMember.class);
         this.email = com.google.api.client.util.Preconditions.checkNotNull(email, "Required parameter email must be specified.");
       }
 
@@ -2003,7 +2005,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class List extends FmthingsRequest<com.google.api.services.fmthings.model.CollectionResponseAppMember> {
+    public class List extends FmthingsRequest<CollectionResponseAppMember> {
 
       private static final String REST_PATH = "members";
 
@@ -2018,7 +2020,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected List() {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.CollectionResponseAppMember.class);
+        super(Fmthings.this, "GET", REST_PATH, null, CollectionResponseAppMember.class);
       }
 
       @Override
@@ -2123,16 +2125,16 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
      * parameters, call the {@link Patch#execute()} method to invoke the remote operation.
      *
      * @param email
-     * @param content the {@link com.google.api.services.fmthings.model.AppMember}
+     * @param content the {@link edu.gatech.oad.rocket.findmythings.model.AppMember}
      * @return the request
      */
-    public Patch patch(java.lang.String email, com.google.api.services.fmthings.model.AppMember content) throws java.io.IOException {
+    public Patch patch(java.lang.String email, AppMember content) throws java.io.IOException {
       Patch result = new Patch(email, content);
       initialize(result);
       return result;
     }
 
-    public class Patch extends FmthingsRequest<com.google.api.services.fmthings.model.AppMember> {
+    public class Patch extends FmthingsRequest<AppMember> {
 
       private static final String REST_PATH = "members/update";
 
@@ -2146,11 +2148,11 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * be called to initialize this instance immediately after invoking the constructor. </p>
        *
        * @param email
-       * @param content the {@link com.google.api.services.fmthings.model.AppMember}
+       * @param content the {@link edu.gatech.oad.rocket.findmythings.model.AppMember}
        * @since 1.13
        */
-      protected Patch(java.lang.String email, com.google.api.services.fmthings.model.AppMember content) {
-        super(Fmthings.this, "PATCH", REST_PATH, content, com.google.api.services.fmthings.model.AppMember.class);
+      protected Patch(java.lang.String email, AppMember content) {
+        super(Fmthings.this, "PATCH", REST_PATH, content, AppMember.class);
         this.email = com.google.api.client.util.Preconditions.checkNotNull(email, "Required parameter email must be specified.");
       }
 
@@ -2215,16 +2217,16 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
      * This request holds the parameters needed by the the fmthings server.  After setting any optional
      * parameters, call the {@link Update#execute()} method to invoke the remote operation.
      *
-     * @param content the {@link com.google.api.services.fmthings.model.AppMember}
+     * @param content the {@link edu.gatech.oad.rocket.findmythings.model.AppMember}
      * @return the request
      */
-    public Update update(com.google.api.services.fmthings.model.AppMember content) throws java.io.IOException {
+    public Update update(AppMember content) throws java.io.IOException {
       Update result = new Update(content);
       initialize(result);
       return result;
     }
 
-    public class Update extends FmthingsRequest<com.google.api.services.fmthings.model.AppMember> {
+    public class Update extends FmthingsRequest<AppMember> {
 
       private static final String REST_PATH = "members/update";
 
@@ -2237,11 +2239,11 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * Update#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)} must
        * be called to initialize this instance immediately after invoking the constructor. </p>
        *
-       * @param content the {@link com.google.api.services.fmthings.model.AppMember}
+       * @param content the {@link edu.gatech.oad.rocket.findmythings.model.AppMember}
        * @since 1.13
        */
-      protected Update(com.google.api.services.fmthings.model.AppMember content) {
-        super(Fmthings.this, "PUT", REST_PATH, content, com.google.api.services.fmthings.model.AppMember.class);
+      protected Update(AppMember content) {
+        super(Fmthings.this, "PUT", REST_PATH, content, AppMember.class);
       }
 
       @Override
@@ -2321,7 +2323,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Authenticated extends FmthingsRequest<com.google.api.services.fmthings.model.MessageBean> {
+    public class Authenticated extends FmthingsRequest<MessageBean> {
 
       private static final String REST_PATH = "test/auth";
 
@@ -2337,7 +2339,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Authenticated() {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.MessageBean.class);
+        super(Fmthings.this, "GET", REST_PATH, null, MessageBean.class);
       }
 
       @Override
@@ -2404,7 +2406,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
       return result;
     }
 
-    public class Unauthenticated extends FmthingsRequest<com.google.api.services.fmthings.model.MessageBean> {
+    public class Unauthenticated extends FmthingsRequest<MessageBean> {
 
       private static final String REST_PATH = "test";
 
@@ -2420,7 +2422,7 @@ public class Fmthings extends com.google.api.client.googleapis.services.json.Abs
        * @since 1.13
        */
       protected Unauthenticated() {
-        super(Fmthings.this, "GET", REST_PATH, null, com.google.api.services.fmthings.model.MessageBean.class);
+        super(Fmthings.this, "GET", REST_PATH, null, MessageBean.class);
       }
 
       @Override

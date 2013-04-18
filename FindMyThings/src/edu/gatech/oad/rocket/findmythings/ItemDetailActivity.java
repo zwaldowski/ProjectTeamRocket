@@ -11,7 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.api.services.fmthings.model.DBItem;
+import edu.gatech.oad.rocket.findmythings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
 
 /**

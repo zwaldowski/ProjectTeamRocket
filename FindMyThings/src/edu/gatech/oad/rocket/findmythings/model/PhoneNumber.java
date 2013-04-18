@@ -16,10 +16,10 @@
  * Modify at your own risk.
  */
 
-package com.google.api.services.fmthings.model;
+package edu.gatech.oad.rocket.findmythings.model;
 
 /**
- * Model definition for CollectionResponseAppMember.
+ * Model definition for PhoneNumber.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the . For a detailed explanation see:
@@ -29,58 +29,37 @@ package com.google.api.services.fmthings.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class CollectionResponseAppMember extends com.google.api.client.json.GenericJson {
+public final class PhoneNumber extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<AppMember> items;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String nextPageToken;
+  private java.lang.String number;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<AppMember> getItems() {
-    return items;
+  public java.lang.String getNumber() {
+    return number;
   }
 
   /**
-   * @param items items or {@code null} for none
+   * @param number number or {@code null} for none
    */
-  public CollectionResponseAppMember setItems(java.util.List<AppMember> items) {
-    this.items = items;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getNextPageToken() {
-    return nextPageToken;
-  }
-
-  /**
-   * @param nextPageToken nextPageToken or {@code null} for none
-   */
-  public CollectionResponseAppMember setNextPageToken(java.lang.String nextPageToken) {
-    this.nextPageToken = nextPageToken;
+  public PhoneNumber setNumber(java.lang.String number) {
+    this.number = number;
     return this;
   }
 
   @Override
-  public CollectionResponseAppMember set(String fieldName, Object value) {
-    return (CollectionResponseAppMember) super.set(fieldName, value);
+  public PhoneNumber set(String fieldName, Object value) {
+    return (PhoneNumber) super.set(fieldName, value);
   }
 
   @Override
-  public CollectionResponseAppMember clone() {
-    return (CollectionResponseAppMember) super.clone();
+  public PhoneNumber clone() {
+    return (PhoneNumber) super.clone();
   }
 
 }

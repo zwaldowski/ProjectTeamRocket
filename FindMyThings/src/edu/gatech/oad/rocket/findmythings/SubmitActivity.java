@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.google.api.client.util.DateTime;
-import com.google.api.services.fmthings.model.DBItem;
+import edu.gatech.oad.rocket.findmythings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.model.Category;
 import edu.gatech.oad.rocket.findmythings.model.Type;

@@ -16,10 +16,10 @@
  * Modify at your own risk.
  */
 
-package com.google.api.services.fmthings.model;
+package edu.gatech.oad.rocket.findmythings.model;
 
 /**
- * Model definition for CollectionResponseDBItem.
+ * Model definition for CollectionResponseAppMember.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the . For a detailed explanation see:
@@ -29,13 +29,13 @@ package com.google.api.services.fmthings.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class CollectionResponseDBItem extends com.google.api.client.json.GenericJson {
+public final class CollectionResponseAppMember extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<DBItem> items;
+  private java.util.List<AppMember> items;
 
   /**
    * The value may be {@code null}.
@@ -46,14 +46,14 @@ public final class CollectionResponseDBItem extends com.google.api.client.json.G
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<DBItem> getItems() {
+  public java.util.List<AppMember> getItems() {
     return items;
   }
 
   /**
    * @param items items or {@code null} for none
    */
-  public CollectionResponseDBItem setItems(java.util.List<DBItem> items) {
+  public CollectionResponseAppMember setItems(java.util.List<AppMember> items) {
     this.items = items;
     return this;
   }
@@ -68,19 +68,19 @@ public final class CollectionResponseDBItem extends com.google.api.client.json.G
   /**
    * @param nextPageToken nextPageToken or {@code null} for none
    */
-  public CollectionResponseDBItem setNextPageToken(java.lang.String nextPageToken) {
+  public CollectionResponseAppMember setNextPageToken(java.lang.String nextPageToken) {
     this.nextPageToken = nextPageToken;
     return this;
   }
 
   @Override
-  public CollectionResponseDBItem set(String fieldName, Object value) {
-    return (CollectionResponseDBItem) super.set(fieldName, value);
+  public CollectionResponseAppMember set(String fieldName, Object value) {
+    return (CollectionResponseAppMember) super.set(fieldName, value);
   }
 
   @Override
-  public CollectionResponseDBItem clone() {
-    return (CollectionResponseDBItem) super.clone();
+  public CollectionResponseAppMember clone() {
+    return (CollectionResponseAppMember) super.clone();
   }
 
 }

@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import com.google.api.client.json.JsonGenerator;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.client.util.Base64;
-import com.google.api.services.fmthings.model.AppMember;
+import edu.gatech.oad.rocket.findmythings.model.AppMember;
 
 import java.io.IOException;
 import java.io.StringWriter;
