@@ -282,20 +282,6 @@ public final class DBItem extends com.google.api.client.json.GenericJson impleme
     return (DBItem) super.clone();
   }
 
-	public static final Parcelable.Creator<DBItem> CREATOR = new Parcelable.Creator<DBItem>() {
-		public DBItem createFromParcel(Parcel in) {
-			try {
-				return new DBItem(in);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		public DBItem[] newArray(int size) {
-			return new DBItem[size];
-		}
-	};
-
 	@Override
 	public int describeContents() {
 		return 0;
@@ -303,16 +289,8 @@ public final class DBItem extends com.google.api.client.json.GenericJson impleme
 
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		try {
-			out.writeString(getFactory().toString(this));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private DBItem(Parcel in) throws IOException {
-		super();
-		getFactory().createJsonParser(in.readString()).parse(this, null);
+		// never gets called
+		out.writeMap(this);
 	}
 
 	@Override

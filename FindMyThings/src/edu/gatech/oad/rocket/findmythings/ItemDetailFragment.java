@@ -1,14 +1,16 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import edu.gatech.oad.rocket.findmythings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.model.Category;
+import edu.gatech.oad.rocket.findmythings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
+
+import java.util.Map;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -26,17 +28,6 @@ public class ItemDetailFragment extends Fragment {
 	 */
 	public static DBItem mItem;
 
-	public static ItemDetailFragment newInstance(DBItem item) {
-		ItemDetailFragment f = new ItemDetailFragment();
-
-		// Supply index input as an argument.
-		Bundle args = new Bundle();
-		args.putParcelable(ItemDetailActivity.ITEM_EXTRA, item);
-		f.setArguments(args);
-
-		return f;
-	}
-
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -47,12 +38,15 @@ public class ItemDetailFragment extends Fragment {
 	 * creates new instance of ItemDetailActivity
 	 * @param savedInstanceState
 	 */
-	@Override
+	@Override @SuppressWarnings("unchecked")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle extraInfo = getArguments();
 		if (extraInfo != null) {
-			mItem = extraInfo.getParcelable(ItemDetailActivity.ITEM_EXTRA);
+			Map<String, Object> derp = (Map<String, Object>) extraInfo.get(ItemDetailActivity.ITEM_EXTRA);
+			mItem = new DBItem();
+			mItem.putAll(derp);
+			getActivity().setTitle(mItem.getTitle());
 		}
 	}
 

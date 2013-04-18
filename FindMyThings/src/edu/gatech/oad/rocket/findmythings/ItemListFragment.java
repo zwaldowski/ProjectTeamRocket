@@ -3,17 +3,18 @@ package edu.gatech.oad.rocket.findmythings;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 import com.google.api.client.util.DateTime;
+import edu.gatech.oad.rocket.findmythings.list.*;
+import edu.gatech.oad.rocket.findmythings.model.Category;
 import edu.gatech.oad.rocket.findmythings.model.CollectionResponseDBItem;
 import edu.gatech.oad.rocket.findmythings.model.DBItem;
-import edu.gatech.oad.rocket.findmythings.list.*;
+import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.service.Fmthings;
-import edu.gatech.oad.rocket.findmythings.model.Category;
-import edu.gatech.oad.rocket.findmythings.model.Type;
 
 import java.util.Date;
 import java.util.List;
@@ -122,7 +123,10 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
         DBItem item = ((DBItem) l.getItemAtPosition(position));
-		startActivity(new Intent(getActivity(), ItemDetailActivity.class).putExtra(ItemDetailActivity.ITEM_EXTRA, item));
+		// this is a hashmap!
+
+
+		startActivity(new Intent(getActivity(), ItemDetailActivity.class).putExtra(ItemDetailActivity.ITEM_EXTRA, (Parcelable)item));
         getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 

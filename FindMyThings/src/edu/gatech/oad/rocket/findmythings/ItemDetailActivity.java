@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -44,20 +45,12 @@ public class ItemDetailActivity extends FragmentActivity {
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		DBItem mItem = null;
-
-		if (getIntent() != null && getIntent().getExtras() != null) {
-			mItem = getIntent().getExtras().getParcelable(ITEM_EXTRA);
-		}
-
-		// this /should/ never happen if we TODO: intent filter
-		if (mItem != null) setTitle(mItem.getName());
-
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
-			mFrag = ItemDetailFragment.newInstance(mItem); // change this to ItemDetailFragment.newInstance(mItemNew) and remove next line
-			getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, mFrag).commit();
+			mFrag = new ItemDetailFragment();
+			mFrag.setArguments(getIntent().getExtras());
+			getFragmentManager().beginTransaction().add(R.id.item_detail_container, mFrag).commit();
 		}
 	}
 	 
@@ -76,6 +69,22 @@ public class ItemDetailActivity extends FragmentActivity {
 		}
 
 		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
+	 * reacts to the action bar options that are available for the user
+	 * @param item menu selected
+	 * @return boolean
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/**

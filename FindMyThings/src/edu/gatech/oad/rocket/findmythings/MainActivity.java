@@ -178,7 +178,11 @@ public class MainActivity extends Activity {
 			}
 		} else if (requestCode == FilterActivity.FILTER_REQUEST) {
 			ItemListFragment frag = getDisplayedFragment();
-			ItemFilterConstraint constraint = (ItemFilterConstraint)data.getParcelableExtra(FilterActivity.FILTER_RESPONSE);
+			ItemFilterConstraint constraint = null;
+			if (data != null && data.hasExtra(FilterActivity.FILTER_RESPONSE)) {
+				constraint = (ItemFilterConstraint)data.getParcelableExtra(FilterActivity.FILTER_RESPONSE);
+			}
+
 			// null filter removes filtering
 			frag.performFilter(constraint);
 
