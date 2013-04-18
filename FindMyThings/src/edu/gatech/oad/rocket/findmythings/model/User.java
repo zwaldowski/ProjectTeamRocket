@@ -1,5 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.model;
 
+import com.google.api.services.fmthings.model.DBItem;
+
 import java.util.ArrayList;
 
 /**
@@ -25,7 +27,7 @@ public class User extends Member {
 	/**
 	 * Store all items the user has submitted
 	 */
-	private ArrayList<Item> currSubmits; //TODO: this
+	private ArrayList<DBItem> currSubmits; //TODO: this
 
 	/**
 	 * constructor for new User
