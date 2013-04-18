@@ -94,8 +94,6 @@ public class ItemDetailActivity extends FragmentActivity {
 	 */
 	public void toMap (View locationButton) {
 		if (hasInternet()) {
-			new ErrorDialog(R.string.item_detail_inet_err).getDialog(this).show();
-		} else {
 			DBItem mItemNew = mFrag.getItem();
 			String loc = mItemNew.getLocation();
 			if (loc != null && loc.length() > 0) {
@@ -115,6 +113,8 @@ public class ItemDetailActivity extends FragmentActivity {
 					startActivity(new Intent(this, MapsActivity.class).putExtra(MapsActivity.LOCATION_EXTRA, loc));
 				}
 			}
+		} else {
+			new ErrorDialog(R.string.item_detail_inet_err).getDialog(this).show();
 		}
 	}
 	
