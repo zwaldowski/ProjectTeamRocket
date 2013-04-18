@@ -14,7 +14,7 @@ import com.google.api.services.fmthings.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.list.ItemFilterConstraint;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
-import edu.gatech.oad.rocket.findmythings.shared.Type;
+import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
 import edu.gatech.oad.rocket.findmythings.util.ToastHelper;

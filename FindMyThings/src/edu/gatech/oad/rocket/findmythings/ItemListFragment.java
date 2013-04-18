@@ -12,8 +12,8 @@ import com.google.api.services.fmthings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.list.*;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.service.Fmthings;
-import edu.gatech.oad.rocket.findmythings.shared.Category;
-import edu.gatech.oad.rocket.findmythings.shared.Type;
+import edu.gatech.oad.rocket.findmythings.model.Category;
+import edu.gatech.oad.rocket.findmythings.model.Type;
 
 import java.util.Date;
 import java.util.List;

@@ -1,4 +1,4 @@
-package edu.gatech.oad.rocket.findmythings.shared;
+package edu.gatech.oad.rocket.findmythings.model;
 
 /**
  * CS 2340 - FindMyStuff Android App

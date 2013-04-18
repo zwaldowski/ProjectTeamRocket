@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import edu.gatech.oad.rocket.findmythings.list.ItemFilterConstraint;
-import edu.gatech.oad.rocket.findmythings.shared.Category;
+import edu.gatech.oad.rocket.findmythings.model.Category;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 
 import java.util.Calendar;

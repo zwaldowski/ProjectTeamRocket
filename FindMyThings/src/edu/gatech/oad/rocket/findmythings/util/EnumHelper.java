@@ -1,6 +1,5 @@
 package edu.gatech.oad.rocket.findmythings.util;
 
-import edu.gatech.oad.rocket.findmythings.shared.util.StringedEnum;
 import android.content.Context;
 
 /**
@@ -11,9 +10,15 @@ import android.content.Context;
  * */
 public final class EnumHelper {
 
+	public static interface StringBasedEnum {
+
+		public abstract String getText();
+
+	}
+
 	private EnumHelper() {}
 	
-	public static <T extends Enum<?> & StringedEnum> T forTextString(Class<T> clazz, String text) {
+	public static <T extends Enum<?> & StringBasedEnum> T forTextString(Class<T> clazz, String text) {
 		if (text == null || text.length() == 0) return null;
 		for (T enumt : clazz.getEnumConstants()) {
 			if (enumt.getText().equals(text)) {

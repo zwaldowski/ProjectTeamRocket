@@ -1,10 +1,12 @@
-package edu.gatech.oad.rocket.findmythings.shared.util;
+package edu.gatech.oad.rocket.findmythings.util;
+
+import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 
 public final class Messages {
 
 	private Messages() {}
 
-	public enum Status implements StringedEnum {
+	public enum Status implements EnumHelper.StringBasedEnum {
 		OK("ok"),
 		FAILED("nope"),
 		UNAUTHORIZED("nopeNopeNope");
@@ -14,7 +16,7 @@ public final class Messages {
 		private Status(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		public String getText() {
 			return text;
@@ -27,7 +29,7 @@ public final class Messages {
 
 	}
 
-	public enum Login implements StringedEnum {
+	public enum Login implements EnumHelper.StringBasedEnum {
 		NO_SUCH_USER("noSuchUser"),
 		BAD_PASSWORD("badPassword"),
 		ACCOUNT_LOCKED("accountLocked"),
@@ -40,7 +42,7 @@ public final class Messages {
 		private Login(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		public String getText() {
 			return text;
@@ -52,7 +54,7 @@ public final class Messages {
 		}
 	}
 
-	public enum Register implements StringedEnum {
+	public enum Register implements EnumHelper.StringBasedEnum {
 		ALREADY_USER("alreadyUser"),
 		BAD_EMAIL_ADDRESS("badEmailAdd"),
 		BAD_PASSWORD("badPassword"),
@@ -66,7 +68,7 @@ public final class Messages {
 		private Register(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		public String getText() {
 			return text;
@@ -78,7 +80,7 @@ public final class Messages {
 		}
 	}
 
-	public enum Activate implements StringedEnum {
+	public enum Activate implements EnumHelper.StringBasedEnum {
 		CODE_EXPIRED("expiredCode"),
 		NO_SUCH_USER("noSuchUser"),
 		BAD_PASSWORD("badPassword"),
@@ -90,7 +92,7 @@ public final class Messages {
 		private Activate(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		public String getText() {
 			return text;

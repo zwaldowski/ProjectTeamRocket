@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.fmthings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
-import edu.gatech.oad.rocket.findmythings.shared.Category;
-import edu.gatech.oad.rocket.findmythings.shared.Type;
+import edu.gatech.oad.rocket.findmythings.model.Category;
+import edu.gatech.oad.rocket.findmythings.model.Type;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 
 import java.io.IOException;

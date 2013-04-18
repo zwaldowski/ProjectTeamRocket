@@ -21,8 +21,8 @@ import com.google.api.services.fmthings.model.AppMember;
 import com.google.api.services.fmthings.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
-import edu.gatech.oad.rocket.findmythings.shared.util.Messages;
-import edu.gatech.oad.rocket.findmythings.shared.util.validation.EmailValidator;
+import edu.gatech.oad.rocket.findmythings.util.Messages;
+import edu.gatech.oad.rocket.findmythings.util.validation.EmailValidator;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 import edu.gatech.oad.rocket.findmythings.util.ToastHelper;
 
