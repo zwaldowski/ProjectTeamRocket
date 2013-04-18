@@ -19,51 +19,21 @@
         <item>&#8230;help someone needs.</item>
     </string-array>
 
-    <string name="main_title_lost">Lost</string>
-    <string name="main_summary_lost">&#8230;the owner of something I\'ve found.</string>
-    <string name="main_title_found">Found</string>
-    <string name="main_summary_found">&#8230;something that I lost.</string>
-    <string name="main_title_donations">Donations</string>
-    <string name="main_summary_donations">&#8230;something that I need.</string>
-    <string name="main_title_requests">Requests</string>
-    <string name="main_summary_requests">&#8230;help someone needs.</string>
-
-
     <string name="main_title_account">My Account</string>
     <string name="main_title_admin">Administration</string>
-    <string name="main_title_sign_out">Sign out</string>
-    <string name="main_title_sign_in">Sign in</string>
-    
-    <!-- New Stuff Added -->
-    <string name="main_title_filter">Filter</string>
-    <string name="main_summary_filter">&#8230;filter items by criteria</string>
-    <string name="main_key_filter">findmythings.main.filter</string>
-    <!-- End -->
-    
+
+    <string name="main_menu_filter">Filter</string>
     <string name="main_menu_search">Search&#8230;</string>
     <string name="main_menu_log_in">Log in</string>
+    <string name="main_menu_log_out">Log out</string>
 
     <string name="main_submit_log_in_message">You must be signed in to Find My Things to submit an item.</string>
     <string name="main_submit_log_in">Sign in</string>
     <string name="main_submit_log_in_cancel">No thanks</string>
-
 
     <string name="main_sign_out_confirm">Are you sure you want to log out of Find My Things?</string>
     <string name="main_sign_out_ok">Log out</string>
     <string name="main_sign_out_cancel">Cancel</string>
     <string name="main_sign_out_title">Please wait&#8230;</string>
     <string name="main_sign_out_message">Logging out of Find My Things&#8230;</string>
-    
-    <string name="main_key_lost">findmythings.main.lost</string>
-    <string name="main_key_found">findmythings.main.found</string>
-    <string name="main_key_donations">findmythings.main.donations</string>
-    <string name="main_key_requests">findmythings.main.requests</string>
-    <string name="main_key_myaccount">findmythings.main.myaccount</string>
-    <string name="main_key_admin">findmythings.main.admin</string>
-    <string name="main_key_signout">findmythings.main.signout</string>
-    <string name="main_key_signin">findmythings.main.signin</string>
-    
-    
-    <string name="main_group_key_other">findmythings.main.othergroup</string>
-
 </resources>

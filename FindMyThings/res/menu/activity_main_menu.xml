@@ -16,7 +16,7 @@
 
     <item
             android:id="@+id/menu_list_filter"
-            android:title="@string/main_title_filter"
+            android:title="@string/main_menu_filter"
             android:icon="@drawable/action_filter"
             android:showAsAction="ifRoom|withText"
             android:menuCategory="secondary"

@@ -45,7 +45,7 @@ public class SubmitFragment extends PreferenceFragment implements OnPreferenceCh
 		SubmitActivity activity = (SubmitActivity)getActivity();
 		
 		String literal = EnumHelper.toIntString(value);
-		String name = getString(R.string.cat_type) + " - " + EnumHelper.localizedFromArray(activity, R.array.item_category, value);
+		String name = getString(R.string.category_type) + " - " + EnumHelper.localizedFromArray(activity, R.array.item_category, value);
 		String desc = EnumHelper.localizedFromArray(activity, R.array.item_category_descriptions, value);
 		
 		CatListPref.setValue(literal);

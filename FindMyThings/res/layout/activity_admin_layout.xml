@@ -11,7 +11,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:ems="10"
-        android:hint="Search by user" >
+        android:hint="@string/admin_user_search">
         
     </EditText>
     

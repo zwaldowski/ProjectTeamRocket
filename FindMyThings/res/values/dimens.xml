@@ -8,6 +8,5 @@
     <dimen name="form_activity_standard_padding">12.0dip</dimen>
     <dimen name="form_activity_input_pad_vertical">8.0dip</dimen>
     <dimen name="form_activity_input_pad_horizontal">8.0dip</dimen>
-    <dimen name="list_section_divider_min_height">32.0dip</dimen>
 
 </resources>

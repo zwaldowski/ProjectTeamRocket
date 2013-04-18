@@ -14,7 +14,7 @@
         android:key="cat_pref"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/cat_type" 	
+        android:title="@string/category_type"
         android:defaultValue="2"
         android:summary="Items not fitting into another category."/>
 	

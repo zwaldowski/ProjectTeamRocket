@@ -78,7 +78,7 @@
 	            android:layout_toLeftOf="@id/rightPadder"
 	            android:layout_toRightOf="@id/leftPadder"
 	            android:ems="10"
-	            android:hint="@string/describ" >
+	            android:hint="@string/submit_describe">
 	        </EditText>
 	
 	        <fragment

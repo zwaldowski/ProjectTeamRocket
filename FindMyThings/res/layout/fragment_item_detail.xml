@@ -11,7 +11,7 @@
 	tools:context=".ItemDetailFragment">
 	   			
 			    
-			<TextView
+			<edu.gatech.oad.rocket.findmythings.util.AllCapsTextView
 	        	android:id="@+id/describecap"
 	        	android:text="@string/description"
 	        	style="@style/HeaderGrey"
@@ -32,13 +32,13 @@
 	        	
 			</TextView>
 			
-			<TextView
+			<edu.gatech.oad.rocket.findmythings.util.AllCapsTextView
 			    android:layout_below="@+id/reward_detail"
 			    android:id="@+id/cat_cap"
 			    style="@style/HeaderGrey"
 			    android:paddingBottom="15dp"
 			    android:paddingTop="15dp"
-			    android:text="@string/cat_caps" />
+			    android:text="@string/category_type" />
 
 			<TextView
 			    android:layout_below="@+id/cat_cap"
@@ -55,13 +55,13 @@
 	        	
 			</TextView>
 			
-			<TextView
+			<edu.gatech.oad.rocket.findmythings.util.AllCapsTextView
 			    android:layout_below="@+id/cat_detail"
 			    android:id="@+id/date"
 			    style="@style/HeaderGrey"
 			    android:paddingBottom="15dp"
 			    android:paddingTop="15dp"
-			    android:text="@string/date_caps" />
+			    android:text="@string/date_submitted" />
 
 				<TextView
 				    android:layout_below="@+id/date"
@@ -105,21 +105,21 @@
 				    android:textIsSelectable="true"
 				    android:textSize="15sp" />
 
-				<TextView
+				<edu.gatech.oad.rocket.findmythings.util.AllCapsTextView
 				    android:id="@+id/locationcap"
 				    style="@style/HeaderGrey"
 				    android:layout_alignParentLeft="true"
 				    android:layout_below="@+id/item_detail"
-				    android:text="@string/locationcaps" />
+				    android:text="@string/location" />
 
-				<TextView
+				<edu.gatech.oad.rocket.findmythings.util.AllCapsTextView
 				    android:id="@+id/reward"
 				    style="@style/HeaderGrey"
 				    android:layout_alignParentLeft="true"
 				    android:layout_below="@+id/loc_detail"
 				    android:paddingBottom="15dp"
 				    android:paddingTop="15dp"
-				    android:text="@string/rewardcaps" />
+				    android:text="@string/reward" />
 
 				<Button
 				    android:id="@+id/loc_button"

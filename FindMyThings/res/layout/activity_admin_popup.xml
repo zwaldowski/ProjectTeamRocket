@@ -9,7 +9,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="156dp"
-        android:text="Delete user" />
+        android:text="@string/admin_delete_user" />
 
     <Switch
         android:id="@+id/isLocked"
@@ -19,7 +19,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:paddingLeft="15dp"
-        android:text="Account lock" />
+        android:text="@string/admin_lock_user" />
 
     <Switch
         android:id="@+id/isAdmin"
@@ -29,6 +29,6 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/isLocked"
         android:paddingLeft="15dp"
-        android:text="Admin" />
+        android:text="@string/admin_elevate_user" />
    
 </RelativeLayout>

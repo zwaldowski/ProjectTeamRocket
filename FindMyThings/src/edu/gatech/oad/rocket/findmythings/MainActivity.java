@@ -47,11 +47,13 @@ public class MainActivity extends Activity {
 	 * Quick at-a-glance identifier of the strings used to populate this activity's tabs.
 	 */
 	private static final int mTabsListRes = R.array.main_tabs;
+	private static final int mTabsSummaryRes = R.array.main_tabs_summary;
 
 	/**
 	 * Cached list of tab strings.
 	 */
 	private String[] mTabs = null;
+	private String[] mTabSummaries = null;
 
 	/**
 	 * Used for the AlertDialog when user tries to sign out
@@ -85,10 +87,13 @@ public class MainActivity extends Activity {
 			mViewPager.setAdapter(this);
 			mViewPager.setOnPageChangeListener(this);
 			mViewPager.setOffscreenPageLimit(mTabs.length);
-			for (String mTab : mTabs) {
+			for (int i = 0; i < mTabs.length; i++) {
+				String mTab = mTabs[i];
+				String mTabDesc = mTabSummaries[i];
 				ActionBar.Tab tab = mActionBar.newTab();
 				tab.setTabListener(this);
 				tab.setText(mTab);
+				tab.setContentDescription(mTabDesc);
 				mActionBar.addTab(tab);
 			}
 			notifyDataSetChanged();
@@ -131,6 +136,7 @@ public class MainActivity extends Activity {
 		setContentView(mTabsLayoutRes);
 
 		mTabs = getResources().getStringArray(mTabsListRes);
+		mTabSummaries = getResources().getStringArray(mTabsSummaryRes);
 
 		pager = (ViewPager)findViewById(R.id.pager);
 		new TypeTabsAdapter(getFragmentManager(), getActionBar(), pager);
@@ -225,8 +231,7 @@ public class MainActivity extends Activity {
 
 		//Set Login Title
 		MenuItem loginMenu = menu.findItem(R.id.menu_login);
-		String title = loggedIn ? "Logout" : "Login";
-		loginMenu.setTitle(title);
+		loginMenu.setTitle(loggedIn ? R.string.main_menu_log_out : R.string.main_menu_log_in);
 
 		//Set Account Title
 		MenuItem accountMenu = menu.findItem(R.id.menu_account);
