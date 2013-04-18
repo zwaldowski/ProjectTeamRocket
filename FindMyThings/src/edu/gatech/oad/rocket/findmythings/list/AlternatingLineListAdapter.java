@@ -15,7 +15,7 @@ import edu.gatech.oad.rocket.findmythings.R;
  * Time: 2:12 AM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class AlternatingTwoLineListAdapter<T extends TwoLineListProvider, U extends CustomFilter.Constraint<T>> extends CustomArrayAdapter<T, U> {
+public abstract class AlternatingLineListAdapter<T extends TwoLineListProvider, U extends CustomFilter.Constraint<T>> extends CustomArrayAdapter<T, U> {
 
 	private static final int primarySelectableResource = R.drawable.table_background_selector;
 	private static final int secondarySelectableResource = R.drawable.table_background_alternate_selector;
@@ -23,7 +23,7 @@ public abstract class AlternatingTwoLineListAdapter<T extends TwoLineListProvide
 	private static final int secondaryResource = R.color.pager_background_alternate;
 	private static final int cellLayout = R.layout.list_two_item_cell;
 
-	public AlternatingTwoLineListAdapter(Context context) {
+	public AlternatingLineListAdapter(Context context) {
 		super(context, cellLayout);
 	}
 

@@ -27,7 +27,7 @@ import android.widget.TextView;
 import java.util.*;
 
 /**
- * A concrete BaseAdapter that is backed by an array of arbitrary
+ * A concrete BaseAdapter that is backed by a List of arbitrary
  * objects with custom, generic filtering logic.
  */
 public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>> extends BaseAdapter {

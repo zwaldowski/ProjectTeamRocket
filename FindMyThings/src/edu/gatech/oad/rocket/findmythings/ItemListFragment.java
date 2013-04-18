@@ -90,7 +90,7 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 
 	@Override
 	protected CustomArrayAdapter<DBItem, ItemFilterConstraint> onCreateAdapter() {
-		return new AlternatingTwoLineListAdapter<DBItem, ItemFilterConstraint>(getActivity()) {
+		return new AlternatingLineListAdapter<DBItem, ItemFilterConstraint>(getActivity()) {
 			@Override
 			public boolean applyFilter(DBItem object, ItemFilterConstraint constraint) {
 				Date consDate = constraint.getDateAfter();
