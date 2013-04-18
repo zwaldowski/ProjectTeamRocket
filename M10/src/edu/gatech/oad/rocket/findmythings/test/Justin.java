@@ -1,11 +1,12 @@
 package edu.gatech.oad.rocket.findmythings.test;
 
+import com.google.api.services.fmthings.model.AppMember;
+import com.google.api.services.fmthings.model.AppUser;
+
 import edu.gatech.oad.rocket.findmythings.AccountActivity;
 import edu.gatech.oad.rocket.findmythings.AccountEditActivity;
-import edu.gatech.oad.rocket.findmythings.control.Login;
+import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.R;
-import edu.gatech.oad.rocket.findmythings.model.Member;
-import edu.gatech.oad.rocket.findmythings.model.User;
 import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
@@ -35,12 +36,15 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 	
 	public void testMenu() throws Throwable {
 		String email = "test@test.test";
-		String pass = "test";
+		//String pass = "test";
 		//Test user
-		Member toTest = new User(email, pass);
+		AppMember toTest = new AppUser();
 		toTest.setName("Doug");
+		toTest.setEmail(email);
 		
-		Login.currUser = toTest;
+		
+		LoginManager currUser = LoginManager.getLoginManager();
+		currUser.setCurrentUser(toTest);
 				
 		//Menu button should go to AccountEditActivity Activity
 		ActivityMonitor monitor = getInstrumentation().addMonitor(AccountActivity.class.getName(), null, false);
@@ -63,7 +67,7 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		//Check if AccountActivity Activity was started
 		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
 		//Check if name was successfully changes
-		assertEquals("Funny", Login.currUser.getName());
+		assertEquals("Funny", currUser.getCurrentUser().getName());
 		toAccountActivity.finish();
 	}
 	
