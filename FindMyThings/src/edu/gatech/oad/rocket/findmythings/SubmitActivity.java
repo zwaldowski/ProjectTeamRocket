@@ -297,12 +297,12 @@ public class SubmitActivity extends Activity {
 		 */
 		@Override
 		protected void onPostExecute(final DBItem output) {
+			mSubmitTask = null;
 			Intent resultIntent = new Intent();
 			resultIntent.putExtra(MainActivity.EXTRA_LIST, SubmitActivity.this.getItemType().toString());
 			setResult(Activity.RESULT_OK, resultIntent);
 			showProgress(false);
 			finish();
-			//control.addItem(temp);
 		}
 
 		/**

@@ -12,7 +12,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="prompt_password">Password</string>
     <string name="address">Address</string>
-    <string name="phone_number">Phone number</string>
+    <string name="phone_number">11 Digit phone number</string>
     <string name="register">Register</string>
     <string name="action_cancel">Cancel</string>
     <string name="title_activity_submit">Submit</string>
@@ -89,6 +89,11 @@
     <string name="admin_user_search">Search by user</string>
 
     <string name="submit_progress_message">Submitting…</string>
+    <string name="register_progress_message">Registering…</string>
 
     <string name="item_load_more">Load more…</string>
+    <string name="error_passwords_match">Passwords do not match.</string>
+    <string name="error_invalid_phone">Phone number not correct.</string>
+    <string name="error_short_password">Password too short.</string>
+    <string name="error_already_user">Already registered.</string>
 </resources>

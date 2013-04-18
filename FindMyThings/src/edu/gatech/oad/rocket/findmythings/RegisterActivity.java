@@ -1,16 +1,28 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import edu.gatech.oad.rocket.findmythings.model.Member;
-import edu.gatech.oad.rocket.findmythings.model.User;
+import android.widget.TextView;
+import edu.gatech.oad.rocket.findmythings.model.MessageBean;
+import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
+import edu.gatech.oad.rocket.findmythings.service.Fmthings;
+import edu.gatech.oad.rocket.findmythings.util.*;
+import edu.gatech.oad.rocket.findmythings.util.validation.EmailValidator;
+
+import java.io.IOException;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -31,11 +43,6 @@ public class RegisterActivity extends Activity {
 	public static String rEmail = "";
 
 	/**
-	 * A prefilled Member to register potentially.
-	 */
-	private Member toreg = null;
-
-	/**
 	 * UI references.
 	 */
 	private EditText mEmailView;
@@ -44,6 +51,17 @@ public class RegisterActivity extends Activity {
 	private EditText mAddressView;
 	private EditText mNameView;
 	private EditText mConfirmView;
+
+	private View focusView;
+
+	private View mStatusForm;
+	private View mStatusView;
+	private TextView mStatusMessageView;
+
+	/**
+	 * Keep track of the task to ensure we can cancel it if requested.
+	 */
+	private RegisterUserTask mSubmitTask = null;
 
 	/**
 	 * creates new window with correct layout
@@ -67,10 +85,16 @@ public class RegisterActivity extends Activity {
 		rEmail = s;
 
 		mPasswordView = (EditText) findViewById(R.id.pass);
-		mPhoneView = (EditText) findViewById(R.id.phone);
 		mAddressView = (EditText) findViewById(R.id.address);
 		mNameView = (EditText) findViewById(R.id.lookingfor);
 		mConfirmView = (EditText) findViewById(R.id.confirmpass);
+		mPhoneView = (EditText) findViewById(R.id.phone);
+		mPhoneView.addTextChangedListener(new PhoneNumberTextWatcher());
+		mPhoneView.setFilters(new InputFilter[] { new PhoneNumberFilter(), new InputFilter.LengthFilter(14) });
+
+		mStatusForm = findViewById(R.id.register_form);
+		mStatusView = findViewById(R.id.register_status);
+		mStatusMessageView = (TextView) findViewById(R.id.register_status_message);
 	}
 
 	/**
@@ -96,16 +120,34 @@ public class RegisterActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowHomeEnabled(true);
 	}
+
+	private boolean containsNoErrors() {
+		if (TextUtils.isEmpty(mPassword)) {
+			mPasswordView.setError(getString(R.string.error_field_required));
+			focusView = mPasswordView;
+			return false;
+		} else if (TextUtils.isEmpty(mEmail)) {
+			mEmailView.setError(getString(R.string.error_field_required));
+			focusView = mEmailView;
+			return false;
+		} else if (!EmailValidator.getInstance().isValid(mEmail)) {
+			mEmailView.setError(getString(R.string.error_invalid_email));
+			focusView = mEmailView;
+			return false;
+		} else if (!mPassword.equals(mCon)) {
+			mPasswordView.setError(getString(R.string.error_passwords_match));
+			focusView = mPasswordView;
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * RegisterActivity new user and return to login screen
 	 * or just move on to the main screen with the newly created user
 	 * already logged in.
 	 */
-	private void register() {
-
-		View focusView = null;
-		boolean cancel = false;
-
+	private boolean attemptToRegister() {
 		mEmail = mEmailView.getText().toString();
 		mPassword = mPasswordView.getText().toString();
 		mPhone = mPhoneView.getText().toString();
@@ -113,71 +155,22 @@ public class RegisterActivity extends Activity {
 		mName = mNameView.getText().toString();
 		mAddress = mAddressView.getText().toString();
 
-			//Copied and pasted from LoginActivity
-		// Check for a valid password.
-		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordView.setError(getString(R.string.error_field_required));
-			focusView = mPasswordView;
-			cancel = true;
-		} else if (mPassword.length() < 4) {
-			mPasswordView.setError(getString(R.string.error_invalid_password));
-			focusView = mPasswordView;
-			cancel = true;
+		if (mSubmitTask != null) {
+			return false;
 		}
 
-		// Check for a valid email address.
-		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
-			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
-			cancel = true;
-		} else if(false) {
-			// TODO: replace with backend error
-			// Login.data.contains(new User(mEmail,""))
-			mEmailView .setError("Email has already been registered.");
-			focusView = mEmailView;
-			cancel = true;
-		}
+		if (containsNoErrors()) {
+			mStatusMessageView.setText(R.string.submit_progress_message);
+			showProgress(true);
 
-		if (cancel) {
-			// There was an error; don't attempt login and focus the first
-			// form field with an error.
+			mSubmitTask = new RegisterUserTask();
+			mSubmitTask.execute();
+
+			return true;
+		} else {
 			focusView.requestFocus();
+			return false;
 		}
-		else {
-			toreg = new User(mEmail,mPassword,mPhone);
-				if(mName!=null)
-					toreg.setName(mName);
-				if(mAddress!=null)
-					toreg.setAddress(mAddress);
-
-				if(mPassword.equals(mCon)) {
-					//User is registered, goes back to login screen.
-					//log.register(toreg);
-
-					// Saves email so it can be passed to LoginActivity
-					rEmail = mEmail;
-
-					Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
-					goToNextActivity.addFlags(
-			                Intent.FLAG_ACTIVITY_CLEAR_TOP |
-			                Intent.FLAG_ACTIVITY_NEW_TASK);
-					finish();
-					startActivity(goToNextActivity);
-				    overridePendingTransition(R.anim.hold, R.anim.slide_down_modal);
-
-
-				}
-				else {
-					mPasswordView
-					.setError("Passwords do not match.");
-					mPasswordView.requestFocus();
-				}
-		}
-
 	}
 
 	/**
@@ -201,8 +194,7 @@ public class RegisterActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.register_ok:
-			register();
-			return true;
+			return attemptToRegister();
 		case R.id.register_cancel:
 		case android.R.id.home:
 			return toLogin(false);
@@ -210,6 +202,123 @@ public class RegisterActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+
+	/**
+	 * Shows the progress UI and hides the form.
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+	private void showProgress(final boolean show) {
+		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+		// for very easy animations. If available, use these APIs to fade-in
+		// the progress spinner.
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+			int shortAnimTime = getResources().getInteger(
+					android.R.integer.config_shortAnimTime);
+
+			mStatusView.setVisibility(View.VISIBLE);
+			mStatusView.animate().setDuration(shortAnimTime)
+					.alpha(show ? 1 : 0)
+					.setListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							mStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+						}
+					});
+
+			mStatusForm.setVisibility(View.VISIBLE);
+			mStatusForm.animate().setDuration(shortAnimTime)
+					.alpha(show ? 0 : 1)
+					.setListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							mStatusForm.setVisibility(show ? View.GONE : View.VISIBLE);
+						}
+					});
+		} else {
+			// The ViewPropertyAnimator APIs are not available, so simply show
+			// and hide the relevant UI components.
+			mStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+			mStatusForm.setVisibility(show ? View.GONE : View.VISIBLE);
+		}
+	}
+
+	/**
+	 * Represents an asynchronous submission task used to upload an item.
+	 */
+	public class RegisterUserTask extends AsyncTask<Void, Void, MessageBean> {
+
+		@Override
+		protected MessageBean doInBackground(Void... param) {
+			try {
+				Fmthings.Account.Register op = EndpointUtils.getEndpoint().account().register(mEmail, mPassword, mCon);
+				if (mPhone != null) op.setPhone(mPhone);
+				if (mName != null) op.setName(mName);
+				if (mAddress != null) op.setAddress(mAddress);
+				return op.execute();
+			} catch (IOException e) {
+				return null;
+			}
+		}
+
+		/**
+		 * deals with action when registered either successfully or not
+		 * @param output - response from the API method
+		 */
+		@Override
+		protected void onPostExecute(final MessageBean output) {
+			mSubmitTask = null;
+
+			String status = null, failureMessage = null;
+			if (output != null) {
+				status = output.getMessage();
+				failureMessage = output.getFailureReason();
+			}
+			Messages.Register failureType = EnumHelper.forTextString(Messages.Register.class, failureMessage);
+
+			if (status != null && status.equals(Messages.Status.OK.getText())) {
+				toLogin(true);
+			} else if (failureType != null){
+				switch (failureType) {
+					case ALREADY_USER:
+						mEmailView.setError(getString(R.string.error_already_user));
+						mEmailView.requestFocus();
+						break;
+					case BAD_EMAIL_ADDRESS:
+						mEmailView.setError(getString(R.string.error_invalid_email));
+						mEmailView.requestFocus();
+						break;
+					case BAD_PASSWORD:
+						mPasswordView.setError(getString(R.string.error_short_password));
+						mPasswordView.requestFocus();
+						break;
+					case PASSWORDS_MATCH:
+						mPasswordView.setError(getString(R.string.error_passwords_match));
+						mPasswordView.requestFocus();
+						break;
+					case INVALID_PHONE:
+						mPhoneView.setError(getString(R.string.error_invalid_phone));
+						mPhoneView.requestFocus();
+						break;
+					default:
+						ToastHelper.showError(RegisterActivity.this, getString(R.string.error_invalid_data));
+						break;
+				}
+			} else {
+				ToastHelper.showError(RegisterActivity.this, getString(R.string.error_no_response));
+			}
+
+			showProgress(false);
+		}
+
+		/**
+		 * deals with action when task cancelled
+		 */
+		@Override
+		protected void onCancelled() {
+			mSubmitTask = null;
+			showProgress(false);
+		}
+	}
 	
 	/**
 	 * Called to pop the login window from the navigation stack
