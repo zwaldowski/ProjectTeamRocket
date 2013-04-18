@@ -70,7 +70,7 @@ import java.util.regex.Pattern;
  * @version $Revision: 1227719 $ $Date: 2012-01-05 12:45:51 -0500 (Thu, 05 Jan 2012) $
  * @since Validator 1.4
  */
-@SuppressWarnings("RedundantIfStatement")
+@SuppressWarnings({"RedundantIfStatement", "BooleanMethodIsAlwaysInverted"})
 public class UrlValidator implements Serializable {
 
     private static final long serialVersionUID = 7557161713937335013L;

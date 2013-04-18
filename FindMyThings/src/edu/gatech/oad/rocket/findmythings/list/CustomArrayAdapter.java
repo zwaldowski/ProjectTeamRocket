@@ -138,22 +138,6 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>
     }
 
     /**
-     * Adds the specified items at the end of the array.
-     *
-     * @param items The items to add at the end of the array.
-     */
-    public void addAll(T ... items) {
-        synchronized (mLock) {
-            if (mOriginalValues != null) {
-                Collections.addAll(mOriginalValues, items);
-            } else {
-                Collections.addAll(mObjects, items);
-            }
-        }
-        if (mNotifyOnChange) notifyDataSetChanged();
-    }
-
-    /**
      * Inserts the specified object at the specified index in the array.
      *
      * @param object The object to insert into the array.
