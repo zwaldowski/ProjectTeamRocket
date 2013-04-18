@@ -35,7 +35,7 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>
      * Contains the list of objects that represent the data of this ArrayAdapter.
      * The content of this list is referred to as "the array" in the documentation.
      */
-    private List<T> mObjects = new ArrayList<>();
+    private List<T> mObjects = new ArrayList<T>();
 
     /**
      * Lock used to modify the content of {@link #mObjects}. Any write operation
@@ -347,23 +347,23 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>
 		protected List<T> performFiltering(U constraint) {
 			if (mOriginalValues == null) {
 				synchronized (mLock) {
-					mOriginalValues = new ArrayList<>(mObjects);
+					mOriginalValues = new ArrayList<T>(mObjects);
 				}
 			}
 
 			if (constraint == null || constraint.isEmpty()) {
 				ArrayList<T> list;
 				synchronized (mLock) {
-					list = new ArrayList<>(mOriginalValues);
+					list = new ArrayList<T>(mOriginalValues);
 				}
 				return list;
 			} else {
 				ArrayList<T> values;
 				synchronized (mLock) {
-					values = new ArrayList<>(mOriginalValues);
+					values = new ArrayList<T>(mOriginalValues);
 				}
 
-				final ArrayList<T> newValues = new ArrayList<>();
+				final ArrayList<T> newValues = new ArrayList<T>();
 
 				for (final T value : values) {
 					if (applyFilter(value, constraint)) {

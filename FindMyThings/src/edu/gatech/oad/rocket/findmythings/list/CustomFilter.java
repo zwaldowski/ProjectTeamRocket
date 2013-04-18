@@ -22,7 +22,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import java.util.ArrayList;
+import java.lang.ref.WeakReference;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,8 +44,8 @@ public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
     private static final int FILTER_TOKEN = 0xD0D0F00D;
     private static final int FINISH_TOKEN = 0xDEADBEEF;
 
-    private Handler mThreadHandler;
-    private Handler mResultHandler;
+    private RequestHandler<T, U> mThreadHandler;
+    private ResultsHandler<T, U> mResultsHandler;
 
     private final Object mLock = new Object();
 
@@ -61,7 +62,7 @@ public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
      * <p>Creates a new asynchronous filter.</p>
      */
     public CustomFilter() {
-        mResultHandler = new ResultsHandler();
+        mResultsHandler = new ResultsHandler<T, U>(this);
     }
 
     /**
@@ -91,13 +92,13 @@ public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
                 HandlerThread thread = new HandlerThread(
                         THREAD_NAME, android.os.Process.THREAD_PRIORITY_BACKGROUND);
                 thread.start();
-                mThreadHandler = new RequestHandler(thread.getLooper());
+                mThreadHandler = new RequestHandler<T, U>(this, thread.getLooper());
             }
 
             final long delay = 0;
 
             Message message = mThreadHandler.obtainMessage(FILTER_TOKEN);
-            message.obj = new RequestArguments<>(constraint, listener);
+            message.obj = new RequestArguments<T, U>(constraint, listener);
 
             mThreadHandler.removeMessages(FILTER_TOKEN);
             mThreadHandler.removeMessages(FINISH_TOKEN);
@@ -148,9 +149,13 @@ public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
      * {@link android.widget.Filter#filter(CharSequence, android.widget.Filter.FilterListener)},
      * it is sent to this handler.</p>
      */
-    private class RequestHandler extends Handler {
-        public RequestHandler(Looper looper) {
-            super(looper);
+    private static class RequestHandler<T, U extends CustomFilter.Constraint<T>> extends Handler {
+
+	WeakReference<CustomFilter<T, U>> mFilter;
+
+		RequestHandler(CustomFilter<T, U> filter, Looper looper) {
+			super(looper);
+            mFilter = new WeakReference<CustomFilter<T, U>>(filter);
         }
 
         /**
@@ -162,34 +167,37 @@ public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
          */
 		@SuppressWarnings("unchecked")
         public void handleMessage(Message msg) {
+			CustomFilter<T, U> filt = mFilter.get();
+			if (filt == null) return;
+
             int what = msg.what;
             Message message;
             switch (what) {
                 case FILTER_TOKEN:
                     RequestArguments<T, U> args = (RequestArguments<T, U>) msg.obj;
                     try {
-                        args.results = performFiltering(args.constraint);
+                        args.results = filt.performFiltering(args.constraint);
                     } catch (Exception e) {
-                        args.results = new ArrayList<>();
+                        args.results = Collections.emptyList();
                         Log.w(LOG_TAG, "An exception occurred during performFiltering()!", e);
                     } finally {
-                        message = mResultHandler.obtainMessage(what);
+                        message = filt.mResultsHandler.obtainMessage(what);
                         message.obj = args;
                         message.sendToTarget();
                     }
 
-                    synchronized (mLock) {
-                        if (mThreadHandler != null) {
-                            Message finishMessage = mThreadHandler.obtainMessage(FINISH_TOKEN);
-                            mThreadHandler.sendMessageDelayed(finishMessage, 3000);
+                    synchronized (filt.mLock) {
+                        if (filt.mThreadHandler != null) {
+                            Message finishMessage = filt.mThreadHandler.obtainMessage(FINISH_TOKEN);
+                            filt.mThreadHandler.sendMessageDelayed(finishMessage, 3000);
                         }
                     }
                     break;
                 case FINISH_TOKEN:
-                    synchronized (mLock) {
-                        if (mThreadHandler != null) {
-                            mThreadHandler.getLooper().quit();
-                            mThreadHandler = null;
+                    synchronized (filt.mLock) {
+                        if (filt.mThreadHandler != null) {
+				filt.mThreadHandler.getLooper().quit();
+                            filt.mThreadHandler = null;
                         }
                     }
                     break;
@@ -201,7 +209,14 @@ public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
      * <p>Handles the results of a filtering operation. The results are
      * handled in the UI thread.</p>
      */
-    private class ResultsHandler extends Handler {
+    private static class ResultsHandler<T, U extends CustomFilter.Constraint<T>> extends Handler {
+
+	 WeakReference<CustomFilter<T, U>> mFilter;
+
+	 ResultsHandler(CustomFilter<T, U> filter) {
+             mFilter = new WeakReference<CustomFilter<T, U>>(filter);
+         }
+
         /**
          * <p>Messages received from the request handler are processed in the
          * UI thread. The processing involves calling
@@ -214,12 +229,17 @@ public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
         @Override @SuppressWarnings("unchecked")
         public void handleMessage(Message msg) {
             RequestArguments<T, U> args = (RequestArguments<T, U>) msg.obj;
+            CustomFilter<T, U> filt = mFilter.get();
 
-            publishResults(args.results, args.constraint);
-            if (args.listener != null) {
-                int count = args.results != null ? args.results.size() : -1;
-                args.listener.onFilterComplete(count);
+            if (filt != null) {
+		filt.publishResults(args.results, args.constraint);
+                if (args.listener != null) {
+                    int count = args.results != null ? args.results.size() : -1;
+                    args.listener.onFilterComplete(count);
+                }
             }
+
+
         }
     }
 
