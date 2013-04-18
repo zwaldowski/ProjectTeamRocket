@@ -9,8 +9,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
+import edu.gatech.oad.rocket.findmythings.list.ItemFilterConstraint;
+import edu.gatech.oad.rocket.findmythings.shared.Category;
+import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -21,17 +25,12 @@ import java.util.Date;
 public class FilterActivity extends Activity implements OnItemSelectedListener {
 
 	public static final int FILTER_REQUEST = 9231;
+	public static final String FILTER_RESPONSE = "filterOutput";
 
-	/**
-	 * References to layout
-	 */
-	private Spinner mStatus, mCat, mDate;
-	
 	/**
 	 * Stores spinner information as int
 	 */
-	private Date compareTo;
-	private int status, cat, date;
+	private ItemFilterConstraint constraint = new ItemFilterConstraint();
 
 	/**
 	 * creates new window with correct layout
@@ -41,14 +40,14 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_filter);
-		
-		mStatus = (Spinner)findViewById(R.id.status_spinner);
+
+		Spinner mStatus = (Spinner) findViewById(R.id.status_spinner);
 		mStatus.setOnItemSelectedListener(this);
-		
-		mCat = (Spinner)findViewById(R.id.cat_spinner);
+
+		Spinner mCat = (Spinner) findViewById(R.id.cat_spinner);
 		mCat.setOnItemSelectedListener(this);
-		
-		mDate = (Spinner)findViewById(R.id.date_spinner);
+
+		Spinner mDate = (Spinner) findViewById(R.id.date_spinner);
 		mDate.setOnItemSelectedListener(this);
 	}
 
@@ -74,7 +73,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 	    switch (item.getItemId()) {
 	        case R.id.filter_ok:
 				Intent output = new Intent();
-				//setFilter(status, cat, date);
+				output.putExtra(FILTER_RESPONSE, constraint);
 				setResult(RESULT_OK, output);
 				return true;
 	        case R.id.filter_cancel:
@@ -84,80 +83,6 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 	    }
 	    return super.onOptionsItemSelected(item);
 	}
-
-	public void setFilter(int status, int category, int date) {
-		/*ArrayList<Item> filtered = new ArrayList<Item>();
-		//getting items by date
-		Calendar today = new GregorianCalendar(); //get current date
-		Calendar date2 = (Calendar)today.clone(); //will be change to yesterday, 14dayago or 30daysago
-		
-		Calendar toComp = Calendar.getInstance();
-		
-		boolean open = status==1? true:false;
-		Category categor = null;
-		
-		switch(date) {
-		case 1: 
-			date2.add(Calendar.DATE, -2);
-			break;
-		case 2: 
-			date2.add(Calendar.DATE, -15);
-			break;
-		case 3:
-			date2.add(Calendar.DATE, -31);
-			break;
-		}
-		
-		switch(category) {
-		case 1:
-			categor = Category.HEIR;
-			break;
-		case 2: 
-			categor = Category.KEEPSAKE;
-			break;
-		case 3:
-			categor = Category.MISC;
-			break;
-			}
-
-
-		ArrayList<Item> current = MainActivity.currList;
-		for(Item temp : current) {
-			toComp.setTime(temp.getDate());
-			if(categor!=null && status!=0) {
-				if(date!=0) {
-					if(toComp.after(date2) && temp.getCat()==categor && temp.isOpen()==open)
-						filtered.add(temp);
-				}
-				else {
-					if(temp.getCat()==categor && temp.isOpen()==open)
-						filtered.add(temp);
-				}
-			}
-			else if(status==0 && categor!=null) {
-				if(date!=0) {
-					if(toComp.after(date2) && temp.getCat()==categor)
-						filtered.add(temp);
-				}
-				else {
-					if(temp.getCat()==categor)
-						filtered.add(temp);
-				}
-			}
-			else if(status==0 && categor==null) {
-				if(date!=0) {
-					if(toComp.after(date2))
-						filtered.add(temp);
-				} else {
-						filtered.add(temp);
-				}
-			}
-			
-			
-		} //end of for
-		toReturn = filtered;*/
-	}
-	
 
 	/**
 	 * deals with action when an item is selected
@@ -169,14 +94,46 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 	switch(parent.getId()) {
-		case R.id.status_spinner: //status
-			status = pos;
+		case R.id.status_spinner:
+			switch (pos) {
+				case 1:
+					constraint.setOpen(true);
+					break;
+				case 2:
+					constraint.setOpen(false);
+					break;
+				default:
+					constraint.setOpen(null);
+					break;
+			}
 			break;
 		case R.id.cat_spinner: //category
-			cat = pos; //misc = 3
+			if (pos == 0) {
+				constraint.setCategory(null);
+			} else {
+				constraint.setCategory(EnumHelper.forInt(pos-1, Category.class));
+			}
 			break;
 		case R.id.date_spinner: //date
-			date = pos;
+			if (pos == 0) {
+				constraint.setDateAfter(null);
+			} else {
+				Calendar today = new GregorianCalendar(); //get current date
+				Calendar date2 = (Calendar)today.clone(); //will be change to yesterday, 14dayago or 30daysago
+				switch(pos) {
+					case 1:
+						date2.add(Calendar.DATE, -2);
+						break;
+					case 2:
+						date2.add(Calendar.DATE, -15);
+						break;
+					case 3:
+						date2.add(Calendar.DATE, -31);
+						break;
+				}
+
+				constraint.setDateAfter(date2.getTime());
+			}
 			break;
 		}
 	}

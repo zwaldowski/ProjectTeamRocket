@@ -19,7 +19,7 @@ import java.util.List;
  * Date: 4/13/13
  * Time: 7:04 PM
  */
-public abstract class ArrayListFragment<T, U extends CustomFilterConstraint<T>> extends ListFragment implements
+public abstract class ArrayListFragment<T, U extends CustomFilter.Constraint<T>> extends ListFragment implements
 		LoaderManager.LoaderCallbacks<List<T>> {
 
 	private static final String FORCE_REFRESH = "forceRefresh";
@@ -109,6 +109,8 @@ public abstract class ArrayListFragment<T, U extends CustomFilterConstraint<T>> 
 			setListShown(true);
 			return;
 		}
+
+
 
 		if (items != null) {
 			getListAdapter().addAll(items);

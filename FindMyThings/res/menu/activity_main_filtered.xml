@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/filtering_done"
+            android:title="@string/filtering_done"
+            android:icon="@drawable/action_accept"
+            android:showAsAction="always|withText" />
+
+</menu>

@@ -30,7 +30,7 @@ import java.util.*;
  * A concrete BaseAdapter that is backed by an array of arbitrary
  * objects with custom, generic filtering logic.
  */
-public abstract class CustomArrayAdapter<T, U extends CustomFilterConstraint<T>> extends BaseAdapter {
+public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>> extends BaseAdapter {
     /**
      * Contains the list of objects that represent the data of this ArrayAdapter.
      * The content of this list is referred to as "the array" in the documentation.
@@ -356,13 +356,11 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilterConstraint<T>>
         return mFilter;
     }
 
-	public abstract boolean applyFilter(T object, U constraint);
+	protected abstract boolean applyFilter(T object, U constraint);
 
 	private class CustomArrayFilter extends CustomFilter<T, U> {
 		@Override
-		protected FilterResults performFiltering(U constraint) {
-			FilterResults results = new FilterResults();
-
+		protected List<T> performFiltering(U constraint) {
 			if (mOriginalValues == null) {
 				synchronized (mLock) {
 					mOriginalValues = new ArrayList<>(mObjects);
@@ -374,8 +372,7 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilterConstraint<T>>
 				synchronized (mLock) {
 					list = new ArrayList<>(mOriginalValues);
 				}
-				results.values = list;
-				results.count = list.size();
+				return list;
 			} else {
 				ArrayList<T> values;
 				synchronized (mLock) {
@@ -390,18 +387,14 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilterConstraint<T>>
 					}
 				}
 
-				results.values = newValues;
-				results.count = newValues.size();
+				return newValues;
 			}
-
-			return results;
 		}
 
 		@Override
-		protected void publishResults(U constraint, FilterResults results) {
-			//noinspection unchecked
-			mObjects = (List<T>) results.values;
-			if (results.count > 0) {
+		protected void publishResults(List<T> results, U constraint) {
+			mObjects = results;
+			if (results.size() > 0) {
 				notifyDataSetChanged();
 			} else {
 				notifyDataSetInvalidated();

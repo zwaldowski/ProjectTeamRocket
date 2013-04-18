@@ -22,6 +22,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * In Android parlance, a filter constrains data by a filtering pattern.
  *
@@ -33,7 +36,7 @@ import android.util.Log;
  * @see android.widget.Filter
  * @see android.widget.Filterable
  */
-public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
+public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
     private static final String LOG_TAG = "CustomFilter";
 
     private static final String THREAD_NAME = "CustomFilter";
@@ -44,6 +47,15 @@ public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
     private Handler mResultHandler;
 
     private final Object mLock = new Object();
+
+	/**
+	 * An object describing how to filter the given parametrized object.
+	 */
+	public static interface Constraint<T> {
+
+		public boolean isEmpty();
+
+	}
 
     /**
      * <p>Creates a new asynchronous filter.</p>
@@ -97,7 +109,7 @@ public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
      * <p>Invoked in a worker thread to filter the data according to the
      * constraint. Subclasses must implement this method to perform the
      * filtering operation. Results computed by the filtering operation
-     * must be returned as a {@link CustomFilter.FilterResults} that
+     * must be returned as a {@link List} that
      * will then be published in the UI thread through publishResults()</p>
      *
      * <p><strong>Contract:</strong> When the constraint is null, the original
@@ -106,36 +118,17 @@ public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
      * @param constraint the constraint used to filter the data
      * @return the results of the filtering operation
      */
-    protected abstract FilterResults performFiltering(U constraint);
+    protected abstract List<T> performFiltering(U constraint);
 
     /**
      * <p>Invoked in the UI thread to publish the filtering results in the
      * user interface. Subclasses must implement this method to display the
      * results computed in {@link #performFiltering}.</p>
      *
-     * @param constraint the constraint used to filter the data
-     * @param results the results of the filtering operation
-     */
-    protected abstract void publishResults(U constraint, FilterResults results);
-
-    /**
-     * <p>Holds the results of a filtering operation. The results are the values
-     * computed by the filtering operation and the number of these values.</p>
-     */
-    protected static class FilterResults {
-        public FilterResults() {}
-
-        /**
-         * <p>Contains all the values computed by the filtering operation.</p>
-         */
-        public Object values;
-
-        /**
-         * <p>Contains the number of values computed by the filtering
-         * operation.</p>
-         */
-        public int count;
-    }
+	 * @param results the results of the filtering operation
+	 * @param constraint the constraint used to filter the data
+	 */
+    protected abstract void publishResults(List<T> results, U constraint);
 
     /**
      * <p>Listener used to receive a notification upon completion of a filtering
@@ -173,11 +166,11 @@ public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
             Message message;
             switch (what) {
                 case FILTER_TOKEN:
-                    RequestArguments<U> args = (RequestArguments<U>) msg.obj;
+                    RequestArguments<T, U> args = (RequestArguments<T, U>) msg.obj;
                     try {
                         args.results = performFiltering(args.constraint);
                     } catch (Exception e) {
-                        args.results = new FilterResults();
+                        args.results = new ArrayList<>();
                         Log.w(LOG_TAG, "An exception occurred during performFiltering()!", e);
                     } finally {
                         message = mResultHandler.obtainMessage(what);
@@ -220,11 +213,11 @@ public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
          */
         @Override @SuppressWarnings("unchecked")
         public void handleMessage(Message msg) {
-            RequestArguments<U> args = (RequestArguments<U>) msg.obj;
+            RequestArguments<T, U> args = (RequestArguments<T, U>) msg.obj;
 
-            publishResults(args.constraint, args.results);
+            publishResults(args.results, args.constraint);
             if (args.listener != null) {
-                int count = args.results != null ? args.results.count : -1;
+                int count = args.results != null ? args.results.size() : -1;
                 args.listener.onFilterComplete(count);
             }
         }
@@ -234,9 +227,9 @@ public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
      * <p>Holds the arguments of a filtering request as well as the results
      * of the request.</p>
      */
-    private class RequestArguments<V> {
+    private static class RequestArguments<V, W> {
 
-		public RequestArguments(V constraint, FilterListener listener) {
+		public RequestArguments(W constraint, FilterListener listener) {
 			this.constraint = constraint;
 			this.listener = listener;
 		}
@@ -244,7 +237,7 @@ public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
         /**
          * <p>The constraint used to filter the data.</p>
          */
-		V constraint;
+		W constraint;
 
         /**
          * <p>The listener to notify upon completion. Can be null.</p>
@@ -254,6 +247,6 @@ public abstract class CustomFilter<T, U extends CustomFilterConstraint<T>> {
         /**
          * <p>The results of the filtering operation.</p>
          */
-        FilterResults results;
+        List<V> results;
     }
 }

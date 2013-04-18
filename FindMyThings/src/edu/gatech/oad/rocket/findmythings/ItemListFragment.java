@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
+import com.google.api.client.util.DateTime;
 import com.google.api.services.fmthings.model.CollectionResponseDBItem;
 import com.google.api.services.fmthings.model.DBItem;
 import edu.gatech.oad.rocket.findmythings.list.*;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.service.Fmthings;
+import edu.gatech.oad.rocket.findmythings.shared.Category;
 import edu.gatech.oad.rocket.findmythings.shared.Type;
 
+import java.util.Date;
 import java.util.List;
 
 public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstraint> {
@@ -56,7 +59,6 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 	@Override
 	public Loader<List<DBItem>> onCreateLoader(int id, Bundle args) {
 		if (isForceRefresh(args)) lastNextPageToken = null;
-		// TODO Auto-generated method stub
 		return new ListAsyncTaskLoader<DBItem>(getActivity()){
 
 			@Override
@@ -91,8 +93,29 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 		return new AlternatingTwoLineListAdapter<DBItem, ItemFilterConstraint>(getActivity()) {
 			@Override
 			public boolean applyFilter(DBItem object, ItemFilterConstraint constraint) {
-				// TODO
-				return false;
+				Date consDate = constraint.getDateAfter();
+				if (consDate != null) {
+					DateTime objDate = object.getDate();
+					if (objDate == null) return false;
+					Date objTime = new Date(objDate.getValue());
+					if (objTime.before(consDate)) return false;
+				}
+
+				Boolean consOpen = constraint.isOpen();
+				if (consOpen != null) {
+					boolean objOpen = object.getOpen();
+					if (objOpen != consOpen) return false;
+				}
+
+				Category consCat = constraint.getCategory();
+				if (consCat != null) {
+					String objCatString = object.getCategory();
+					if (TextUtils.isEmpty(objCatString)) return false;
+					Category objCat = Category.valueOf(objCatString);
+					if (consCat != objCat) return false;
+				}
+
+				return true;
 			}
 		};
 	}
@@ -102,5 +125,14 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 		startActivity(new Intent(getActivity(), ItemDetailActivity.class).putExtra(ItemDetailActivity.ITEM_EXTRA, item));
         getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
+
+	public void performFilter(ItemFilterConstraint constraint) {
+		performFilter(constraint, null);
+	}
+
+	public void performFilter(ItemFilterConstraint constraint, CustomFilter.FilterListener listener) {
+		CustomFilter<DBItem, ItemFilterConstraint> filter = getListAdapter().getFilter();
+		filter.filter(constraint, listener);
+	}
 
 }

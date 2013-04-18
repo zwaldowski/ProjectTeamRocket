@@ -8,12 +8,11 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.*;
 import android.widget.SearchView;
 import com.google.api.services.fmthings.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
+import edu.gatech.oad.rocket.findmythings.list.ItemFilterConstraint;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.shared.Type;
 import edu.gatech.oad.rocket.findmythings.util.EnumHelper;
@@ -151,6 +150,12 @@ public class MainActivity extends Activity {
 		return getDisplayedTypeInPager(pager.getCurrentItem());
 	}
 
+	private ItemListFragment getDisplayedFragment() {
+		int position = pager.getCurrentItem();
+		String tag = "android:switcher:" + pager.getId() + ":" + position;
+		return (ItemListFragment)getFragmentManager().findFragmentByTag(tag);
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// Check which request we're responding to
@@ -166,9 +171,45 @@ public class MainActivity extends Activity {
 				// switch to that tab and trigger a reload
 			}
 		} else if (requestCode == FilterActivity.FILTER_REQUEST) {
-			if (resultCode == RESULT_OK) {
-				// TODO
-				// we have a filter to get back
+			ItemListFragment frag = getDisplayedFragment();
+			ItemFilterConstraint constraint = (ItemFilterConstraint)data.getParcelableExtra(FilterActivity.FILTER_RESPONSE);
+			// null filter removes filtering
+			frag.performFilter(constraint);
+
+			if (constraint != null && !constraint.isEmpty()) {
+				startActionMode(new ActionMode.Callback() {
+					@Override
+					public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+						String titleFormat = getString(R.string.filtering_title);
+						String title = String.format(titleFormat, mTabs[pager.getCurrentItem()]);
+						actionMode.setTitle(title);
+
+						MenuInflater inf = actionMode.getMenuInflater();
+						inf.inflate(R.menu.activity_main_filtered, menu);
+						return true;
+					}
+
+					@Override
+					public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+						return false; // nothing to do, nothing to see
+					}
+
+					@Override
+					public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+						switch (menuItem.getItemId()) {
+							case R.id.filtering_done:
+								actionMode.finish();
+								return true;
+							default:
+								return false;
+						}
+					}
+
+					@Override
+					public void onDestroyActionMode(ActionMode actionMode) {
+						getDisplayedFragment().performFilter(null);
+					}
+				});
 			}
 		}
 	}
