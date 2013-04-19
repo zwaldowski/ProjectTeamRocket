@@ -249,7 +249,7 @@ public class MainActivity extends Activity {
 
 		//Show/Hide admin button
 		MenuItem adminMenu = menu.findItem(R.id.menu_admin);
-		if (!loggedIn || (mgr.getCurrentUser() != null && !mgr.getCurrentUser().getAdmin())) {
+		if ((mgr.getCurrentUser()!= null && mgr.getCurrentUser().getAdmin()!=null && !mgr.getCurrentUser().getAdmin() )|| !loggedIn) {
 			adminMenu.setVisible(false);
 		} else {
 			adminMenu.setVisible(true);

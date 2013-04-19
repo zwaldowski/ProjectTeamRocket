@@ -1,11 +1,10 @@
 package edu.gatech.oad.rocket.findmythings.test;
 
-import com.google.api.services.fmthings.model.AppMember;
-import com.google.api.services.fmthings.model.AppUser;
 
 import edu.gatech.oad.rocket.findmythings.AccountActivity;
 import edu.gatech.oad.rocket.findmythings.AccountEditActivity;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
+import edu.gatech.oad.rocket.findmythings.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.R;
 import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
@@ -38,7 +37,7 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		String email = "test@test.test";
 		//String pass = "test";
 		//Test user
-		AppMember toTest = new AppUser();
+		AppMember toTest = new AppMember();
 		toTest.setName("Doug");
 		toTest.setEmail(email);
 		
@@ -68,6 +67,7 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
 		//Check if name was successfully changes
 		assertEquals("Funny", currUser.getCurrentUser().getName());
+		currUser.setCurrentUser(null);
 		toAccountActivity.finish();
 	}
 	

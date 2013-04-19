@@ -3,6 +3,7 @@ package edu.gatech.oad.rocket.findmythings;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -80,9 +81,10 @@ public class AccountEditActivity extends Activity {
 			startActivity(i);
 			return true;
 		case R.id.edit_ok:
-			manage.getCurrentUser().setName(mName.getText().toString());
-			manage.getCurrentUser().setAddress(mAddy.getText().toString());
-			manage.getCurrentUser().getPhone().setNumber(mPhone.getText().toString());
+			manage.getCurrentUser().setName(TextUtils.isEmpty(mName.getText().toString())? "":mName.getText().toString());
+			manage.getCurrentUser().setAddress(TextUtils.isEmpty(mAddy.getText().toString())? "":mAddy.getText().toString());
+			if(manage.getCurrentUser().getPhone()!=null)
+				manage.getCurrentUser().getPhone().setNumber(TextUtils.isEmpty(mPhone.getText().toString())? "":mPhone.getText().toString());
 			return toAccount(true);
 		case R.id.edit_cancel:
 			return toAccount(false);
