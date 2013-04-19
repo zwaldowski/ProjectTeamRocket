@@ -108,7 +108,9 @@ public class AccountEditActivity extends Activity {
 	 * @return true, always true. Why? Because.
 	 */
 	private boolean toAccount(boolean saved) {
+		Intent back = new Intent(getApplicationContext(),AccountActivity.class);
 		finish();
+		startActivity(back);
 	    if (saved) overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 	    return true;
 	}

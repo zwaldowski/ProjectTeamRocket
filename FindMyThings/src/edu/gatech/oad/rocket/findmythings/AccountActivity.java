@@ -106,6 +106,7 @@ public class AccountActivity extends Activity {
 	 */
 	public boolean toEdit() {
 		Intent goToNextActivity = new Intent(this, AccountEditActivity.class);
+		finish();
 		startActivity(goToNextActivity);
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 		return true;
