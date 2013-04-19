@@ -35,19 +35,20 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 	
 	public void testMenu() throws Throwable {
 		String email = "test@test.test";
-		//String pass = "test";
 		//Test user
 		AppMember toTest = new AppMember();
+		
 		toTest.setName("Doug");
 		toTest.setEmail(email);
 		
-		
+		//Get LoginManager
 		LoginManager currUser = LoginManager.getLoginManager();
+		
+		//Current user to Doug
 		currUser.setCurrentUser(toTest);
 				
 		//Menu button should go to AccountEditActivity Activity
 		ActivityMonitor monitor = getInstrumentation().addMonitor(AccountActivity.class.getName(), null, false);
-		
 		
 		runTestOnUiThread(new Runnable() {
 		     public void run() {
@@ -67,8 +68,10 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
 		//Check if name was successfully changes
 		assertEquals("Funny", currUser.getCurrentUser().getName());
-		currUser.setCurrentUser(null);
+		//Patty Mayonnaise
+		currUser.logout();
 		toAccountActivity.finish();
+		
 	}
 	
 }
