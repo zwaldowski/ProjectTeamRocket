@@ -70,8 +70,8 @@ public class MemberV1 extends BaseEndpoint {
 			return CollectionResponse.<AppMember>builder().setItems(list).setNextPageToken(cursorString).build();
 		} else {
 			Map<String, Object> filter = new HashMap<>();
-			filter.put("submittingUser >=", email);
-			filter.put("submittingUser <=", email+"\ufffd");
+			filter.put("email >=", email);
+			filter.put("email <=", email+"\ufffd");
 			return (CollectionResponse<AppMember>)pagedQuery(DBMember.class, cursorString, limit, filter);
 		}
 
