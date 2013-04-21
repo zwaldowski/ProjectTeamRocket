@@ -42,9 +42,8 @@ public class DBMember implements AppMutableMember {
 	 */
 	private byte[] salt;
 
-	private final Set<String> roles;
-
-	private final Set<String> permissions;
+	private Set<String> roles;
+	private Set<String> permissions;
 
 	@Index private Date dateRegistered;
 
