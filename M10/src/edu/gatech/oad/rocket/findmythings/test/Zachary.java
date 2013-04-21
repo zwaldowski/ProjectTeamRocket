@@ -70,7 +70,7 @@ public class Zachary extends InstrumentationTestCase {
 
 		AppMember adminLockUserOutput = null;
 		try {
-			adminLockUserOutput = EndpointUtils.getEndpoint().members().patch(testEmail, new AppMember().setLocked(true)).execute();
+			adminLockUserOutput = EndpointUtils.getEndpoint().members().patch(testEmail, new AppMember().setLocked(false)).execute();
 		} catch (IOException e) {
 			fail("Raised exception while locking user");
 		}
