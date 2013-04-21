@@ -4,11 +4,13 @@ import edu.gatech.oad.rocket.findmythings.LoginActivity;
 import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
+import android.text.Editable;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import edu.gatech.oad.rocket.findmythings.R;
-import edu.gatech.oad.rocket.findmythings.control.Login;
+import edu.gatech.oad.rocket.findmythings.control.LoginManager;
+import edu.gatech.oad.rocket.findmythings.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.model.Member;
 import edu.gatech.oad.rocket.findmythings.model.User;
 
@@ -17,19 +19,19 @@ import edu.gatech.oad.rocket.findmythings.model.User;
  * 
  * @author cristinachu
  */
-public class Cristina extends ActivityInstrumentationTestCase2<LoginActivity> {
+public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 
   public LoginActivity activity;
-	public Login login = new Login();
 	public EditText email, password;
 	public Button signIn;
 	private boolean x;
+	private LoginManager login = LoginManager.getLoginManager();
 	
 	/**
 	 * constructor
 	 */
 	@SuppressWarnings("deprecation")
-	public Cristina() {
+	public Cristina2() {
 		super("andtest.threads.asynctask", LoginActivity.class);
 	}
 	
@@ -51,53 +53,42 @@ public class Cristina extends ActivityInstrumentationTestCase2<LoginActivity> {
 	 */
 	public void testLogin() {
 		
-		// emails and passwords that will be used for testing
+		// e-mails and passwords that will be used for testing
 		final String email1 = "Tyrion@Lannister";
 		final String pass1 = "lion";
 		final String email2 = "Daenerys@Targeryen";
 		final String pass2 = "dragon";
-		final String email3 = "Jon@Snow";
-		final String pass3 = "crow";
-		final String email4 = "Ned@Stark";
-		final String pass4 = "winter";
+		
+		/** Test Case 0 - checking for good user */
 		
 		
-		/** Test Case 0 - checking that registering a member is working*/
-		Member m1 = new User(email1, pass1);
-		login.register(m1);
-		assertTrue(login.verifyUser(m1));
+		activity.runOnUiThread(
+				new Runnable() {
+					public void run() {
+						Editable emailField = email.getText();
+						emailField.insert(email.getSelectionStart(), email1);
+						Editable passwordField = password.getText();
+						passwordField.insert(password.getSelectionStart(), pass1);
+						boolean x = signIn.performClick();
+						assertTrue(x);
+					}
+				}
+		);
+		
 		
 		/** Test Case 1 - checking for wrong user */
-	    activity.runOnUiThread(
+		activity.runOnUiThread(
 	    		new Runnable() {
 	    			public void run() {
-	    				email.setText(email2);
-	    				password.setText(pass2);
-	    				x = signIn.performClick();
+						Editable emailField = email.getText();
+						emailField.insert(email.getSelectionStart(), email2);
+						Editable passwordField = password.getText();
+						passwordField.insert(password.getSelectionStart(), pass2);
+						boolean x = signIn.performClick();
+						assertFalse(x); // x should be false because there is no user email2
 	    			}
-	    		});
-		
-	    // x should be false because there is no user email2
-	    assertFalse(x);
-	    
-		/** Test Case 2 - checking for good user */
-	    Member m3 = new User(email3, pass3);
-	    login.register(m3);
-	    
-	    activity.runOnUiThread(
-	    		new Runnable() {
-	    			public void run() {
-	    				email.setText(email3);
-	    				password.setText(pass3);
-	    				x = signIn.performClick();
-	    			}
-	    		});
-	    
-	    // x should be true because email3 just got registered.
-	    assertTrue(x);
-	    
-	    
-	    
+	    		}
+		);
 	    
 	    
 		//ActivityMonitor monitor = getInstrumentation().addMonitor(LoginActivity.class.getName(), null, false);
