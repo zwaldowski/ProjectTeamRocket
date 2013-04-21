@@ -30,7 +30,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 	/**
 	 * Stores spinner information as int
 	 */
-	private ItemFilterConstraint constraint = new ItemFilterConstraint();
+	public static ItemFilterConstraint constraint = new ItemFilterConstraint();
 
 	/**
 	 * creates new window with correct layout
@@ -75,6 +75,7 @@ public class FilterActivity extends Activity implements OnItemSelectedListener {
 				Intent output = new Intent();
 				output.putExtra(FILTER_RESPONSE, constraint);
 				setResult(RESULT_OK, output);
+				finish();
 				return true;
 	        case R.id.filter_cancel:
 				setResult(RESULT_CANCELED);

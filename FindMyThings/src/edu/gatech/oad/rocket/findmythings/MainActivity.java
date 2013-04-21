@@ -179,8 +179,10 @@ public class MainActivity extends Activity {
 		} else if (requestCode == FilterActivity.FILTER_REQUEST) {
 			ItemListFragment frag = getDisplayedFragment();
 			ItemFilterConstraint constraint = null;
-			if (data != null && data.hasExtra(FilterActivity.FILTER_RESPONSE)) {
-				constraint = (ItemFilterConstraint)data.getParcelableExtra(FilterActivity.FILTER_RESPONSE);
+			
+			if (data != null ) {
+				
+				constraint = FilterActivity.constraint;
 			}
 
 			// null filter removes filtering

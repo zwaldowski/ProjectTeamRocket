@@ -58,6 +58,7 @@ public class ItemFilterConstraint implements CustomFilter.Constraint<DBItem>, Pa
 		if (getDateAfter() != null) out.writeSerializable(getDateAfter());
 		int insanity = open == null ? 0 : (open ? 2: 1);
 		out.writeInt(insanity);
+		if(category!=null)
 		out.writeString(category.toString());
 	}
 
