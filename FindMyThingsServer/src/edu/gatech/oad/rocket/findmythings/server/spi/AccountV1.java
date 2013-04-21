@@ -32,7 +32,8 @@ public class AccountV1 extends BaseEndpoint {
 
 	MessageBean mailWelcomeReturnOK(String email) {
 		Queue queue = QueueFactory.getDefaultQueue();
-		queue.add(TaskOptions.Builder.withUrl("/sendWelcomeMail"));
+		queue.add(TaskOptions.Builder.withUrl("/sendWelcomeMail")
+				.param(Config.USERNAME_PARAM, email));
 		return new MessageBean(HTTP.Status.OK.toInt(), Messages.Status.OK.toString());
 	}
 
@@ -70,11 +71,14 @@ public class AccountV1 extends BaseEndpoint {
 				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.PASSWORDS_MATCH.toString());
 			}
 
-			if (!PHONE_VALIDATOR.isValid(phone)) {
+			if (phone != null && !PHONE_VALIDATOR.isValid(phone)) {
 				return new MessageBean(HTTP.Status.BAD_REQUEST.toInt(), Messages.Status.FAILED.toString(), Messages.Register.INVALID_PHONE.toString());
 			}
 
-			PhoneNumber phoneNum = new PhoneNumber(phone);
+			PhoneNumber phoneNum = null;
+			if (phone != null) {
+				phoneNum = new PhoneNumber(phone);
+			}
 			
 			DBMember newUser = (DBMember)user;
 
