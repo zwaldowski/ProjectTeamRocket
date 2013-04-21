@@ -16,7 +16,7 @@ public class Tyler2 extends ActivityInstrumentationTestCase2<MainActivity> {
 	MainActivity mActivity, mReg;
 	
 	@SuppressWarnings("deprecation")
-	public NewTyler() { 
+	public Tyler2() { 
 		super("edu.gatech.oad.rocket.findmythings", MainActivity.class);
 	}
 	
