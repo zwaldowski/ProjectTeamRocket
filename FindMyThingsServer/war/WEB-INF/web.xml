@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns="http://java.sun.com/xml/ns/javaee"
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
 	<display-name>Find My Things</display-name>
-    
-    <listener>
-    	<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+
+	<listener>
+		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
 	</listener>
-    
+
 	<servlet>
 		<servlet-name>SystemServiceServlet</servlet-name>
 		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
@@ -21,56 +18,66 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>SystemServiceServlet</servlet-name>
 		<url-pattern>/_ah/spi/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
-        <servlet-name>recvmail</servlet-name>
-        <servlet-class>edu.gatech.oad.rocket.findmythings.server.web.MailboxServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>recvmail</servlet-name>
-        <url-pattern>/_ah/mail/*</url-pattern>
-    </servlet-mapping>
-	
+		<display-name>Remote API Servlet</display-name>
+		<servlet-name>RemoteApiServlet</servlet-name>
+		<servlet-class>com.google.apphosting.utils.remoteapi.RemoteApiServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoteApiServlet</servlet-name>
+		<url-pattern>/_ah/remote_api</url-pattern>
+	</servlet-mapping>
+
 	<servlet>
-        <servlet-name>sendwelcomemail</servlet-name>
-        <servlet-class>edu.gatech.oad.rocket.findmythings.server.web.WelcomeMailmanServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>sendwelcomemail</servlet-name>
-        <url-pattern>/sendWelcomeMail</url-pattern>
-    </servlet-mapping>
-	
+		<servlet-name>recvmail</servlet-name>
+		<servlet-class>edu.gatech.oad.rocket.findmythings.server.web.MailboxServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>recvmail</servlet-name>
+		<url-pattern>/_ah/mail/*</url-pattern>
+	</servlet-mapping>
+
 	<servlet>
-        <servlet-name>sendregistrationmail</servlet-name>
-        <servlet-class>edu.gatech.oad.rocket.findmythings.server.web.RegisterMailmanServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>sendregistrationmail</servlet-name>
-        <url-pattern>/sendMail</url-pattern>
-    </servlet-mapping>
-	
-	
+		<servlet-name>sendwelcomemail</servlet-name>
+		<servlet-class>edu.gatech.oad.rocket.findmythings.server.web.WelcomeMailmanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>sendwelcomemail</servlet-name>
+		<url-pattern>/sendWelcomeMail</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>sendregistrationmail</servlet-name>
+		<servlet-class>edu.gatech.oad.rocket.findmythings.server.web.RegisterMailmanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>sendregistrationmail</servlet-name>
+		<url-pattern>/sendMail</url-pattern>
+	</servlet-mapping>
+
 	<filter>
-        <filter-name>ObjectifyFilter</filter-name>
-        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+		<filter-name>ObjectifyFilter</filter-name>
+		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
 	</filter>
 	<filter-mapping>
-        <filter-name>ObjectifyFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+		<filter-name>ObjectifyFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-<filter>
-    <filter-name>ShiroFilter</filter-name>
-    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
-</filter>
+	<filter>
+		<filter-name>ShiroFilter</filter-name>
+		<filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+	</filter>
 
-<filter-mapping>
-    <filter-name>ShiroFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-    <dispatcher>REQUEST</dispatcher> 
-    <dispatcher>FORWARD</dispatcher> 
-    <dispatcher>INCLUDE</dispatcher> 
-    <dispatcher>ERROR</dispatcher>
-</filter-mapping>
-	
+	<filter-mapping>
+		<filter-name>ShiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+
 </web-app>
