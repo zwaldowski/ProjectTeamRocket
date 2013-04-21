@@ -35,18 +35,22 @@ public class SearchableHelper {
 	public static <T extends Searchable> Query<T> search(Objectify objectify, Class<T> clazz, String searchString) {
 		if (searchString == null || searchString.length() == 0 || objectify == null || clazz == null) return null;
 		Set<String> queryTokens = getSearchTokens(searchString, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
-		return objectify.load().type(clazz).filter("searchTokens in", queryTokens);
+		Query<T> query = objectify.load().type(clazz);
+		if (queryTokens == null) return query;
+		return query.filter("searchTokens in", queryTokens);
 	}
 
 	public static <T extends Searchable> Query<T> search(LoadType<T> query, String searchString) {
 		if (searchString == null || searchString.length() == 0 || query == null) return null;
 		Set<String> queryTokens = getSearchTokens(searchString, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
+		if (queryTokens == null) return query;
 		return query.filter("searchTokens in", queryTokens);
 	}
 
 	public static void addSearchFilter(Map<String, Object> queryFilters, String searchString) {
 		if (searchString == null || searchString.length() == 0 || queryFilters == null) return;
 		Set<String> queryTokens = getSearchTokens(searchString, MAXIMUM_NUMBER_OF_WORDS_TO_SEARCH);
+		if (queryTokens == null) return;
 		queryFilters.put("searchTokens in", queryTokens);
 	}
 
@@ -75,24 +79,29 @@ public class SearchableHelper {
 	private static Set<String> getSearchTokens(String searchableContext, int maximumNumberOfTokens) {
 
 		String indexCleanedOfHTMLTags = searchableContext.replaceAll("<.*?>"," ");
-		Set<String> returnSet = new HashSet<>();
 
 		try (Analyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42)) {
-			TokenStream tokenStream = analyzer.tokenStream(null, new StringReader(indexCleanedOfHTMLTags));
-			CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
-			tokenStream.reset();
-			while (tokenStream.incrementToken()) {
-				String term = charTermAttribute.toString();
-				if (term != null) {
-					returnSet.add(term);
+			Set<String> returnSet = new HashSet<>();
+
+			TokenStream stream = analyzer.tokenStream(null, new StringReader(indexCleanedOfHTMLTags));
+			CharTermAttribute cattr = stream.addAttribute(CharTermAttribute.class);
+			stream.reset();
+			while (stream.incrementToken()) {
+				String string = cattr.toString();
+				if (string != null && string.length() != 0) {
+					returnSet.add(string);
 				}
 				if (returnSet.size() == maximumNumberOfTokens - 1) break;
 			}
+			stream.end();
+			stream.close();
+
+			if (returnSet.size() > 0) return returnSet;
 		} catch (IOException e) {
 			log.severe(e.getMessage());
 		}
 
-		return returnSet;
+		return null;
 	}
 
 
