@@ -16,10 +16,7 @@
 
 package edu.gatech.oad.rocket.findmythings.list;
 
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
+import android.os.*;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
@@ -52,9 +49,9 @@ public abstract class CustomFilter<T, U extends CustomFilter.Constraint<T>> {
 	/**
 	 * An object describing how to filter the given parametrized object.
 	 */
-	public static interface Constraint<T> {
+	public static abstract class Constraint<T> implements Parcelable {
 
-		public boolean isEmpty();
+		public abstract boolean isEmpty();
 
 	}
 

@@ -18,6 +18,8 @@
 
 package edu.gatech.oad.rocket.findmythings.model;
 
+import edu.gatech.oad.rocket.findmythings.list.TwoLineListProvider;
+
 /**
  * Model definition for AppMember.
  *
@@ -29,7 +31,7 @@ package edu.gatech.oad.rocket.findmythings.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class AppMember extends com.google.api.client.json.GenericJson {
+public final class AppMember extends com.google.api.client.json.GenericJson implements TwoLineListProvider {
 
   /**
    * The value may be {@code null}.
@@ -250,5 +252,15 @@ public final class AppMember extends com.google.api.client.json.GenericJson {
   public AppMember clone() {
     return (AppMember) super.clone();
   }
+
+	@Override
+	public String getTitle() {
+		return getName();
+	}
+
+	@Override
+	public String getDescription() {
+		return getEmail();
+	}
 
 }

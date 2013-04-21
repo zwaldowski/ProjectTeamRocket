@@ -13,7 +13,7 @@ import java.util.Date;
  * Date: 4/16/13
  * Time: 7:31 PM
  */
-public class ItemFilterConstraint implements CustomFilter.Constraint<DBItem>, Parcelable {
+public class ItemFilterConstraint extends CustomFilter.Constraint<DBItem> {
 
 	public ItemFilterConstraint() {}
 

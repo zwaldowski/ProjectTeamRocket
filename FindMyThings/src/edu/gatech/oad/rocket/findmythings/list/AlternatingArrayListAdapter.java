@@ -1,7 +1,6 @@
 package edu.gatech.oad.rocket.findmythings.list;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -13,9 +12,8 @@ import edu.gatech.oad.rocket.findmythings.R;
  * User: zw
  * Date: 4/14/13
  * Time: 2:12 AM
- * To change this template use File | Settings | File Templates.
  */
-public abstract class AlternatingLineListAdapter<T extends TwoLineListProvider, U extends CustomFilter.Constraint<T>> extends CustomArrayAdapter<T, U> {
+public class AlternatingArrayListAdapter<T extends TwoLineListProvider> extends ArrayListAdapter<T> {
 
 	private static final int primarySelectableResource = R.drawable.table_background_selector;
 	private static final int secondarySelectableResource = R.drawable.table_background_alternate_selector;
@@ -23,19 +21,13 @@ public abstract class AlternatingLineListAdapter<T extends TwoLineListProvider, 
 	private static final int secondaryResource = R.color.pager_background_alternate;
 	private static final int cellLayout = R.layout.list_two_item_cell;
 
-	public AlternatingLineListAdapter(Context context) {
+	public AlternatingArrayListAdapter(Context context) {
 		super(context, cellLayout);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		RelativeLayout row;
-		if (convertView == null) {
-			LayoutInflater inflater = LayoutInflater.from(getContext());
-			row = (RelativeLayout)inflater.inflate(cellLayout, null);
-		} else {
-			row = (RelativeLayout)convertView;
-		}
+		RelativeLayout row = inflateRowView(convertView, cellLayout);
 
 		TextView mText1 = (TextView) row.findViewById(R.id.item_cell_title);
 		TextView mText2 = (TextView) row.findViewById(R.id.item_cell_summary);

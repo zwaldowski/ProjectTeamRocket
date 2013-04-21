@@ -3,7 +3,6 @@ package edu.gatech.oad.rocket.findmythings;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +20,7 @@ import edu.gatech.oad.rocket.findmythings.service.Fmthings;
 import java.util.Date;
 import java.util.List;
 
-public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstraint> {
+public class ItemListFragment extends FilterableArrayListFragment<DBItem, ItemFilterConstraint> {
 
 	public static final String ARG_TYPE = "type";
 	public static final String ARG_QUERY = "searchQuery";
@@ -94,13 +93,13 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 	}
 
 	@Override
-	protected CustomArrayAdapter<DBItem, ItemFilterConstraint> onCreateAdapter() {
-		mLoadMoreFooter = (View)getActivity().getLayoutInflater().inflate(R.layout.list_footer_button, null);
+	protected FilterableArrayListAdapter<DBItem, ItemFilterConstraint> onCreateAdapter() {
+		mLoadMoreFooter = getActivity().getLayoutInflater().inflate(R.layout.list_footer_button, null);
 		TextView label = (TextView)mLoadMoreFooter.getRootView().findViewById(R.id.button_cell_title);
 		label.setText(R.string.item_load_more);
 		getListView().addFooterView(mLoadMoreFooter);
 
-		return new AlternatingLineListAdapter<DBItem, ItemFilterConstraint>(getActivity()) {
+		return new AlternatingFilterableArrayListAdapter<DBItem, ItemFilterConstraint>(getActivity()) {
 			@Override
 			public boolean applyFilter(DBItem object, ItemFilterConstraint constraint) {
 				Date consDate = constraint.getDateAfter();
@@ -135,8 +134,8 @@ public class ItemListFragment extends ArrayListFragment<DBItem, ItemFilterConstr
 		if (l.getAdapter().getItemViewType(position) != AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
 			DBItem item = ((DBItem) l.getItemAtPosition(position));
 
-			// this is a hashmap!
-			startActivity(new Intent(getActivity(), ItemDetailActivity.class).putExtra(ItemDetailActivity.ITEM_EXTRA, (Parcelable)item));
+			// this is a hash-map!
+			startActivity(new Intent(getActivity(), ItemDetailActivity.class).putExtra(ItemDetailActivity.ITEM_EXTRA, item));
 			getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 		} else {
 			if (v.equals(mLoadMoreFooter)) {

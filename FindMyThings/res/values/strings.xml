@@ -30,7 +30,9 @@
     <string name="admin_create">Create admin</string>
     <string name="action_refresh">Refresh</string>
     <string name="no_items_found">No items found!</string>
+    <string name="no_users_found">No users found!</string>
     <string name="error_loading_items">Couldn\'t load items! Please try again later.</string>
+    <string name="error_loading_users">Couldn\'t load users! Please try again later.</string>
 
     <string-array name="item_category">
         <item>Heir</item>

@@ -4,10 +4,7 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import edu.gatech.oad.rocket.findmythings.R;
 import edu.gatech.oad.rocket.findmythings.util.ToastHelper;
 
@@ -19,7 +16,7 @@ import java.util.List;
  * Date: 4/13/13
  * Time: 7:04 PM
  */
-public abstract class ArrayListFragment<T, U extends CustomFilter.Constraint<T>> extends ListFragment implements
+public abstract class ArrayListFragment<T> extends ListFragment implements
 		LoaderManager.LoaderCallbacks<List<T>> {
 
 	private static final String FORCE_REFRESH = "forceRefresh";
@@ -172,7 +169,7 @@ public abstract class ArrayListFragment<T, U extends CustomFilter.Constraint<T>>
 	 *
 	 * @return adapter
 	 */
-	protected abstract CustomArrayAdapter<T, U> onCreateAdapter();
+	protected abstract ArrayListAdapter<T> onCreateAdapter();
 
 	/**
 	 * Get list adapter
@@ -180,8 +177,8 @@ public abstract class ArrayListFragment<T, U extends CustomFilter.Constraint<T>>
 	 * @return list adapter
 	 */
 	@SuppressWarnings("unchecked")
-	public CustomArrayAdapter<T, U> getListAdapter() {
-		return (CustomArrayAdapter<T, U>) super.getListAdapter();
+	public ArrayListAdapter<T> getListAdapter() {
+		return (ArrayListAdapter<T>)super.getListAdapter();
 	}
 
 	/**
@@ -189,7 +186,7 @@ public abstract class ArrayListFragment<T, U extends CustomFilter.Constraint<T>>
 	 *
 	 * @param adapter Provide an adapter for the list view.
 	 */
-	public void setListAdapter(final CustomArrayAdapter<T, U> adapter) {
+	public void setListAdapter(final ArrayListAdapter<T> adapter) {
 		super.setListAdapter(adapter);
 	}
 

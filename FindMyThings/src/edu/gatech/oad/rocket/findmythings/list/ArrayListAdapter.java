@@ -22,28 +22,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.*;
 
 /**
- * A concrete BaseAdapter that is backed by a List of arbitrary
- * objects with custom, generic filtering logic.
+ * A concrete BaseAdapter that is backed by a List of arbitrary objects.
  */
-public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>> extends BaseAdapter {
+public abstract class ArrayListAdapter<T> extends BaseAdapter {
     /**
      * Contains the list of objects that represent the data of this ArrayAdapter.
      * The content of this list is referred to as "the array" in the documentation.
      */
-    private List<T> mObjects = new ArrayList<T>();
+    protected List<T> mObjects = new ArrayList<T>();
 
     /**
      * Lock used to modify the content of {@link #mObjects}. Any write operation
      * performed on the array should be synchronized on this lock. This lock is also
-     * used by the filter (see {@link #getFilter()} to make a synchronized copy of
+     * used by the filter to make a synchronized copy of
      * the original array of data.
      */
-    private final Object mLock = new Object();
+    protected final Object mLock = new Object();
 
     /**
      * The resource indicating what views to inflate to display the content of this
@@ -74,8 +74,7 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>
 
     // A copy of the original mObjects array, initialized from and then used instead as soon as
     // the mFilter ArrayFilter is used. mObjects will then only contain the filtered values.
-    private ArrayList<T> mOriginalValues;
-    private CustomArrayFilter mFilter;
+    protected ArrayList<T> mOriginalValues;
 
     private LayoutInflater mInflater;
 
@@ -86,7 +85,7 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>
      * @param textViewResourceId The resource ID for a layout file containing a TextView to use when
      *                 instantiating views.
      */
-    public CustomArrayAdapter(Context context, int textViewResourceId) {
+    public ArrayListAdapter(Context context, int textViewResourceId) {
         this(context, textViewResourceId, 0);
     }
 
@@ -98,7 +97,7 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>
      *                 instantiating views.
      * @param textViewResourceId The id of the TextView within the layout resource to be populated
      */
-    public CustomArrayAdapter(Context context, int resource, int textViewResourceId) {
+    public ArrayListAdapter(Context context, int resource, int textViewResourceId) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mResource = mDropDownResource = resource;
@@ -330,60 +329,15 @@ public abstract class CustomArrayAdapter<T, U extends CustomFilter.Constraint<T>
         return createViewFromResource(position, convertView, parent, mDropDownResource);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public CustomArrayFilter getFilter() {
-        if (mFilter == null) {
-            mFilter = new CustomArrayFilter();
-        }
-        return mFilter;
-    }
-
-	protected abstract boolean applyFilter(T object, U constraint);
-
-	private class CustomArrayFilter extends CustomFilter<T, U> {
-		@Override
-		protected List<T> performFiltering(U constraint) {
-			if (mOriginalValues == null) {
-				synchronized (mLock) {
-					mOriginalValues = new ArrayList<T>(mObjects);
-				}
-			}
-
-			if (constraint == null || constraint.isEmpty()) {
-				ArrayList<T> list;
-				synchronized (mLock) {
-					list = new ArrayList<T>(mOriginalValues);
-				}
-				return list;
-			} else {
-				ArrayList<T> values;
-				synchronized (mLock) {
-					values = new ArrayList<T>(mOriginalValues);
-				}
-
-				final ArrayList<T> newValues = new ArrayList<T>();
-
-				for (final T value : values) {
-					if (applyFilter(value, constraint)) {
-						newValues.add(value);
-					}
-				}
-
-				return newValues;
-			}
+	protected RelativeLayout inflateRowView(View convertView, int cellLayout) {
+		RelativeLayout row;
+		if (convertView == null) {
+			LayoutInflater inflater = LayoutInflater.from(getContext());
+			row = (RelativeLayout)inflater.inflate(cellLayout, null);
+		} else {
+			row = (RelativeLayout)convertView;
 		}
-
-		@Override
-		protected void publishResults(List<T> results, U constraint) {
-			mObjects = results;
-			if (results.size() > 0) {
-				notifyDataSetChanged();
-			} else {
-				notifyDataSetInvalidated();
-			}
-		}
+		return row;
 	}
 
 

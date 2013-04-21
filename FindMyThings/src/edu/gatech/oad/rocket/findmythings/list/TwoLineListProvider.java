@@ -1,7 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.list;
 
 /**
- * An item displayed in {@link AlternatingLineListAdapter}.
+ * An item displayed in {@link AlternatingArrayListAdapter}.
  * User: zw
  * Date: 4/14/13
  * Time: 2:46 AM
