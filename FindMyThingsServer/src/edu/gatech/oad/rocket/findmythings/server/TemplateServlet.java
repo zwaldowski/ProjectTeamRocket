@@ -1,23 +1,21 @@
 package edu.gatech.oad.rocket.findmythings.server;
 
+import com.google.common.base.Charsets;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.server.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.server.security.ProfileRealm;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP;
 import edu.gatech.oad.rocket.findmythings.server.util.HTTP.Status;
 import edu.gatech.oad.rocket.findmythings.server.util.MimeTypes;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import com.google.common.base.Charsets;
-
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,10 +29,11 @@ public abstract class TemplateServlet extends HttpServlet {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(TemplateServlet.class.getName());
 	
-	private final PageGenerator generator;
+	private PageGenerator generator;
 
-	public TemplateServlet() {
-		super();
+	@Override
+	public void init() throws ServletException {
+		super.init();
 		try {
 			generator = new PageGenerator(getServletContext().getResource("/WEB-INF/templates/"), Locale.getDefault(), Charsets.UTF_8);
 		} catch (IOException e) {
