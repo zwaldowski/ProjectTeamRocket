@@ -156,10 +156,21 @@ public class MainActivity extends Activity {
 		return getDisplayedTypeInPager(pager.getCurrentItem());
 	}
 
-	private ItemListFragment getDisplayedFragment() {
-		int position = pager.getCurrentItem();
+	protected void setDisplayedType(Type newType) {
+		int idx = 0;
+		if (newType != null) idx = newType.ordinal() + 1;
+		ActionBar actionBar = getActionBar();
+		actionBar.selectTab(actionBar.getTabAt(idx));
+		pager.setCurrentItem(idx, false);
+	}
+
+	private ItemListFragment getDisplayedFragment(int position) {
 		String tag = "android:switcher:" + pager.getId() + ":" + position;
 		return (ItemListFragment)getFragmentManager().findFragmentByTag(tag);
+	}
+
+	private ItemListFragment getDisplayedFragment() {
+		return getDisplayedFragment(pager.getCurrentItem());
 	}
 
 	@Override
@@ -172,9 +183,13 @@ public class MainActivity extends Activity {
 			}
 		} else if (requestCode == SubmitActivity.SUBMIT_REQUEST) {
 			if (resultCode == RESULT_OK) {
-				// TODO
-				// the Intent extras has MainActivity.EXTRA_LIST,
-				// switch to that tab and trigger a reload
+				Type switchTo = null; // ALL
+				if (data.hasExtra(MainActivity.EXTRA_LIST)) {
+					switchTo = Type.valueOf(data.getStringExtra(MainActivity.EXTRA_LIST));
+				}
+				setDisplayedType(switchTo);
+				ItemListFragment frag = getDisplayedFragment();
+				frag.refresh();
 			}
 		} else if (requestCode == FilterActivity.FILTER_REQUEST) {
 			ItemListFragment frag = getDisplayedFragment();
