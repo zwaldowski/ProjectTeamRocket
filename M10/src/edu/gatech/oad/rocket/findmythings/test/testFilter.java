@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import edu.gatech.oad.rocket.findmythings.FilterActivity;
 import edu.gatech.oad.rocket.findmythings.model.Category;
-import edu.gatech.oad.rocket.findmythings.model.Item;
+import edu.gatech.oad.rocket.findmythings.model.DBItem;
 import junit.framework.TestCase;
 
 public class testFilter extends ActivityInstrumentationTestCase2<FilterActivity> {
@@ -20,7 +20,7 @@ public class testFilter extends ActivityInstrumentationTestCase2<FilterActivity>
 	private ActionBar bar;
 	private ActionBar.Tab ok; 
 
-	private ArrayList<Item> results;
+	private ArrayList<DBItem> results;
 	
 	public static final int INITIAL_POS = 0;
 	public static final int TEST_POS_ONE = 1;
@@ -89,7 +89,7 @@ public class testFilter extends ActivityInstrumentationTestCase2<FilterActivity>
 	    
 	    int counter = 0;
 	    for (int i =0; i<results.size(); i++) {
-	    	if (results.get(i).getCat() == Category.KEEPSAKE) {
+	    	if (results.get(i).getCategory() == Category.KEEPSAKE) {
 	    		counter++;
 	    	}
 	    }
