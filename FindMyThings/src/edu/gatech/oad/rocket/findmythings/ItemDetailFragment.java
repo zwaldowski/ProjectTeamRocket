@@ -38,14 +38,16 @@ public class ItemDetailFragment extends Fragment {
 	 * creates new instance of ItemDetailActivity
 	 * @param savedInstanceState
 	 */
-	@Override @SuppressWarnings("unchecked")
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle extraInfo = getArguments();
 		if (extraInfo != null) {
-			Map<String, Object> derp = (Map<String, Object>) extraInfo.get(ItemDetailActivity.ITEM_EXTRA);
+			// yes this is weird, but it works, trust me
+			@SuppressWarnings("unchecked")
+			Map<String, Object> mapFromBundle = (Map<String, Object>)Map.class.cast(extraInfo.get(ItemDetailActivity.ITEM_EXTRA));
 			mItem = new DBItem();
-			mItem.putAll(derp);
+			mItem.putAll(mapFromBundle);
 			getActivity().setTitle(mItem.getTitle());
 		}
 	}
