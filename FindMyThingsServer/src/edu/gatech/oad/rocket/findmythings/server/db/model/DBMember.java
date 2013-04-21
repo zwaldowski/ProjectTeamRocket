@@ -10,13 +10,15 @@ import com.googlecode.objectify.annotation.Index;
 import edu.gatech.oad.rocket.findmythings.server.model.AppMutableMember;
 import edu.gatech.oad.rocket.findmythings.server.security.DatabaseRealm;
 import edu.gatech.oad.rocket.findmythings.server.util.HashHelper;
-
-import java.util.*;
-import java.util.logging.Logger;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.Realm;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -78,8 +80,6 @@ public class DBMember implements AppMutableMember {
 
 	public DBMember(String email, String password, Set<String> roles, Set<String> permissions, boolean isRegistered) {
 		Preconditions.checkNotNull(email, "DBMember email can't be null");
-		Preconditions.checkNotNull(roles, "DBMember roles can't be null");
-		Preconditions.checkNotNull(permissions, "DBMember permissions can't be null");
 		this.email = email;
 		
 		setPassword(password);
