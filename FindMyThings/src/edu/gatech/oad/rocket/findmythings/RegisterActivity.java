@@ -90,7 +90,7 @@ public class RegisterActivity extends Activity {
 		mConfirmView = (EditText) findViewById(R.id.confirmpass);
 		mPhoneView = (EditText) findViewById(R.id.phone);
 		mPhoneView.addTextChangedListener(new PhoneNumberTextWatcher());
-		mPhoneView.setFilters(new InputFilter[] {new InputFilter.LengthFilter(14)});
+		mPhoneView.setFilters(new InputFilter[] { new PhoneNumberFilter(), new InputFilter.LengthFilter(14) });
 
 		mStatusForm = findViewById(R.id.register_form);
 		mStatusView = findViewById(R.id.register_status);

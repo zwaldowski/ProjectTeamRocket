@@ -99,7 +99,7 @@
             android:layout_alignParentRight="true"
             android:ems="10"
             android:layout_below="@+id/confirmpass"
-            android:inputType="phone"
+            android:inputType="number|text"
             android:paddingBottom="@dimen/form_activity_input_pad_vertical"
             android:paddingTop="@dimen/form_activity_input_pad_vertical" />
 

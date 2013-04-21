@@ -25,16 +25,19 @@ public class PhoneNumberFilter extends NumberKeyListener {
 	@Override
 	public CharSequence filter(CharSequence source, int start, int end,
 							   Spanned dest, int dstart, int dend) {
-
+		String toReturn = null;
 		if (end > start) {
-			String destTxt = dest.toString();
-			String resultingTxt = destTxt.substring(0, dstart) + source.subSequence(start, end) + destTxt.substring(dend);
-
-			// Phone number must match x-xxx-xxx-xxxx
-			if (!resultingTxt.matches ("^[0-9]-([0-9]{3})-[0-9]{3}-[0-9]{4}")) {
+			if (!((String) source).matches ("[0-9]")) {
 				return "";
 			}
+			switch(dstart) {
+			case(0):	
+			case(4):
+			case(8):
+				toReturn = source+"-";
+			}
+	
 		}
-		return null;
+		return toReturn;
 	}
 }
