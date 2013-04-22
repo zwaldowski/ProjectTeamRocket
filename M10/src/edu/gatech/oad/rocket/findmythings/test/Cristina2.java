@@ -1,6 +1,7 @@
 package edu.gatech.oad.rocket.findmythings.test;
 
 import edu.gatech.oad.rocket.findmythings.LoginActivity;
+import edu.gatech.oad.rocket.findmythings.RegisterActivity;
 import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
@@ -43,9 +44,6 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 	protected void setUp() throws Exception {  
 		super.setUp();  
 		activity = getActivity();  
-		
-		//getting the EditTexts of the Login window
-	
 	}  
 
 	/**
@@ -54,32 +52,37 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 	 */
 	public void testLogin() throws Throwable {
 		final LoginManager logman = LoginManager.getLoginManager();
+		ActivityMonitor monitor = getInstrumentation().addMonitor(LoginActivity.class.getName(), null, false);
+		
+		//getting the EditTexts of the Login window
 		email = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.email);
 		password = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.password);
 		signIn = (Button)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.sign_in_button);
-		// e-mails and passwords that will be used for testing
-		final String email1 = "Tyrion@Lannister";
-		final String pass1 = "lion";
-		final String name1 = "Tyrion";
-		final String phone1 = "5555555555";
-		
-		/** Test Case 0 - checking for good user */
 		
 		
+		/** Test Case 1 - checking for good user */
 		runTestOnUiThread(new Runnable() {
 			public void run() {
 				Editable emailField = email.getText();
 				emailField.insert(email.getSelectionStart(), "a@a.com");
 				Editable passwordField = password.getText();
 				passwordField.insert(password.getSelectionStart(), "admin");
-				boolean x = signIn.performClick();
-				assertTrue(x);
-				logman.logout();
+				signIn.performClick();
 			}
 		});
 		
+		getInstrumentation().invokeMenuActionSync(activity, signIn.getBottom(), 0);
+		Activity loginIn1 = getInstrumentation().waitForMonitorWithTimeout(monitor, 1000);
+		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
+		assertTrue(logman.getCurrentUser() != null);
+		logman.logout();
+		loginIn1.finish();
 		
-		/** Test Case 1 - checking for wrong user */
+		/** Test Case 2 - checking for wrong user */
+		// email that will be used for testing
+		final String email1 = "Tyrion@Lannister";
+		final String pass1 = "lion";
+		
 		runTestOnUiThread(new Runnable() {
 			public void run() {
 				Editable emailField = email.getText();
@@ -91,12 +94,15 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 				logman.logout();
 			}
 	    });
-	    
-	    
-		//ActivityMonitor monitor = getInstrumentation().addMonitor(LoginActivity.class.getName(), null, false);
+		
+		getInstrumentation().invokeMenuActionSync(activity, signIn.getBottom(), 0);
+		Activity loginIn2 = getInstrumentation().waitForMonitorWithTimeout(monitor, 1000);
+		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
+		assertTrue(logman.getCurrentUser() != null);
+		logman.logout();
+		loginIn2.finish();
 
-		//Activity LoginActivity = getInstrumentation().waitForMonitorWithTimeout(monitor, 1000);
-		//assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
+		
 		activity.finish();
 	}
 }
