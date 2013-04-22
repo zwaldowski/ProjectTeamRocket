@@ -2,7 +2,6 @@ package edu.gatech.oad.rocket.findmythings.test;
 
 import android.test.InstrumentationTestCase;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
-import edu.gatech.oad.rocket.findmythings.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.model.MessageBean;
 import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
 import edu.gatech.oad.rocket.findmythings.service.Fmthings;
@@ -60,55 +59,6 @@ public class Zachary extends InstrumentationTestCase {
 		if (registerFailureType != Messages.Register.ALREADY_USER) {
 			assertEquals("Did not receive ok from server with result code" + registerFailureType, Messages.Status.OK.getText(), status);
 		}
-
-		// Log in as admin
-
-		String testAdminEmail = "ad@min.com";
-		String testAdminPass = "aaaa";
-
-		MessageBean adminLoginOutput = null;
-		try {
-			adminLoginOutput = EndpointUtils.getEndpoint().account().login(testAdminEmail, testAdminPass).execute();
-		} catch (IOException e) {
-			fail("Raised exception while logging in as admin.");
-		}
-
-		assertNotNull("Did not receive admin log in message back from server", adminLoginOutput);
-
-		String adminToken = adminLoginOutput.getToken(), adminEmail = adminLoginOutput.getEmail(), adminLoginFailureMessage = adminLoginOutput.getFailureReason();
-		Messages.Login adminLoginFailureType = null;
-		if (adminLoginFailureMessage != null) {
-			adminLoginFailureType = EnumHelper.forTextString(Messages.Login.class, adminLoginFailureMessage);
-		}
-
-		assertNotNull(adminToken, "Did not receive login token from server with result code" + adminLoginFailureType);
-
-		LoginManager.getLoginManager().setCurrentEmailAndToken(adminEmail, adminToken);
-
-		// Unlock registered user
-
-		AppMember adminLockUserOutput = null;
-		try {
-			adminLockUserOutput = EndpointUtils.getEndpoint().members().patch(testEmail, new AppMember().setLocked(true)).execute();
-		} catch (IOException e) {
-			fail("Raised exception while locking user");
-		}
-
-		assertNotNull("Did not receive updated member from server", adminLockUserOutput);
-		assertTrue("User was not locked", adminLockUserOutput.getLocked());
-
-		// Logout as admin
-
-		MessageBean adminLogoutTestOutput = null;
-		try {
-			adminLogoutTestOutput = EndpointUtils.getEndpoint().account().logout().execute();
-		} catch (IOException e) {
-			LoginManager.getLoginManager().setCurrentEmailAndToken(null, null);
-			fail("Raised exception while logging out as user");
-		}
-		LoginManager.getLoginManager().setCurrentEmailAndToken(null, null);
-		assertNotNull("Did not receive logout message back from server", adminLogoutTestOutput);
-		assertEquals("Did not receive OK from user logout.", 200, (int) adminLogoutTestOutput.getStatus());
 
 		// Login as user
 
