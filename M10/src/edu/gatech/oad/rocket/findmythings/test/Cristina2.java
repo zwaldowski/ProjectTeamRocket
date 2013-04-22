@@ -16,7 +16,6 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
   public LoginActivity activity;
 	public EditText email, password;
 	public Button signIn;
-	private boolean x;
 	
 	/**
 	 * constructor
@@ -40,7 +39,8 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 	 */
 	public void testLogin() throws Throwable {
 		final LoginManager logman = LoginManager.getLoginManager();
-				
+		final ActivityMonitor monitor = getInstrumentation().addMonitor(LoginActivity.class.getName(), null, false);
+		
 		//getting the EditTexts of the Login window
 		email = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.email);
 		password = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.password);
@@ -53,16 +53,11 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 				Editable emailField = email.getText();
 				emailField.insert(email.getSelectionStart(), "a@a.com");
 				Editable passwordField = password.getText();
-
-				passwordField.insert(password.getSelectionStart(), "aaaa");
+				passwordField.insert(password.getSelectionStart(), "admin");
 				signIn.performClick();
-				x = logman.getCurrentUser()==null? false:true;
-				assertTrue(x);
-				logman.logout();
-
+				assertTrue(getInstrumentation().checkMonitorHit(monitor, 1));
 			}
 		});
-	
 		
 		/** Test Case 2 - checking for wrong user */
 		// email that will be used for testing
@@ -71,18 +66,14 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 		
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-				Editable emailField = email.getText();
-				emailField.insert(email.getSelectionStart(), email1);
+				Editable emailField2 = email.getText();
+				emailField2.insert(email.getSelectionStart(), email1);
 				Editable passwordField = password.getText();
 				passwordField.insert(password.getSelectionStart(), pass1);
 				signIn.performClick();
-				x = logman.getCurrentUser()==null? false:true;
-				assertFalse(x); // x should be false because there is no user email1
-				logman.logout();
+				assertFalse(getInstrumentation().checkMonitorHit(monitor, 1));
 			}
 	    });
-		
-		
 		
 		activity.finish();
 	}
