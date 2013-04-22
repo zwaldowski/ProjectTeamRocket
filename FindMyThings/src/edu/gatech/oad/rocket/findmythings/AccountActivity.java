@@ -53,7 +53,8 @@ public class AccountActivity extends Activity {
 		mPhone = (EditText) findViewById(R.id.phoneview);
 		mAddy = (EditText) findViewById(R.id.addressview);
 		
-		if(manage.isLoggedIn()) {
+		//Added || so I can make my unit test slightly less shitty
+		if(manage.isLoggedIn() || manage.getCurrentUser()!=null) {
 			// Display user info
 			mEmail.setText(manage.getCurrentUser().getEmail());
 			if(manage.getCurrentUser().getName()!=null)

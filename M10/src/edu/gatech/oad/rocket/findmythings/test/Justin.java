@@ -24,6 +24,11 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 	 */
 	private EditText actName;
 	
+	/**
+	 * AccountActivity
+	 */
+	private Activity toAccountActivity;
+	
 	@SuppressWarnings("deprecation")
 	public Justin() {
 		 super("andtest.threads.asynctask", AccountEditActivity.class);
@@ -71,14 +76,14 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
 		getInstrumentation().invokeMenuActionSync(mActivity, R.id.edit_ok, 0);
 		
-		Activity toAccountActivity = getInstrumentation().waitForMonitorWithTimeout(monitor, 1000);
+		toAccountActivity = getInstrumentation().waitForMonitorWithTimeout(monitor, 1000);
 		//Check if AccountActivity Activity was started
 		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
 		//Check if name was successfully changes
 		runTestOnUiThread(new Runnable() {
 		     public void run() {
 		    	//Get reference to TextField containing name
-		    	actName = (EditText)mActivity.findViewById(R.id.personnameedit);
+		    	actName = (EditText)toAccountActivity.findViewById(R.id.personname);
 		     }
 		});
 		
