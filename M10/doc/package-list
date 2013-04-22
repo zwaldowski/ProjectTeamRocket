@@ -1,0 +1,8 @@
+com.google.android.gms
+edu.gatech.oad.rocket.findmythings
+edu.gatech.oad.rocket.findmythings.control
+edu.gatech.oad.rocket.findmythings.list
+edu.gatech.oad.rocket.findmythings.model
+edu.gatech.oad.rocket.findmythings.service
+edu.gatech.oad.rocket.findmythings.util
+edu.gatech.oad.rocket.findmythings.util.validation
