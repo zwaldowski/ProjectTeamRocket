@@ -15,6 +15,25 @@ public class Zachary extends InstrumentationTestCase {
 
 	public void testServerUserWorkflow() {
 
+		// Log out if already logged in
+
+		if (LoginManager.getLoginManager().getCurrentToken() != null) {
+
+			MessageBean preLogoutTestOutput = null;
+			try {
+				preLogoutTestOutput = EndpointUtils.getEndpoint().account().logout().execute();
+			} catch (IOException e) {
+				LoginManager.getLoginManager().setCurrentEmailAndToken(null, null);
+				fail("Raised exception while logging out as user");
+			}
+			LoginManager.getLoginManager().setCurrentEmailAndToken(null, null);
+			assertNotNull("Did not receive logout message back from server", preLogoutTestOutput);
+			assertEquals("Did not receive OK from user logout.", 200, (int) preLogoutTestOutput.getStatus());
+
+		}
+
+		// Register test user
+
 		String testEmail = "zwaldowski@gmail.com";
 		String testPassword = "whythehellamiawake7";
 		String testPhone = "1-843-333-6836";
@@ -42,7 +61,7 @@ public class Zachary extends InstrumentationTestCase {
 			assertEquals("Did not receive ok from server with result code" + registerFailureType, Messages.Status.OK.getText(), status);
 		}
 
-		//
+		// Log in as admin
 
 		String testAdminEmail = "ad@min.com";
 		String testAdminPass = "admin";
@@ -66,7 +85,7 @@ public class Zachary extends InstrumentationTestCase {
 
 		LoginManager.getLoginManager().setCurrentEmailAndToken(adminEmail, adminToken);
 
-		//
+		// Unlock registered user
 
 		AppMember adminLockUserOutput = null;
 		try {
@@ -78,7 +97,7 @@ public class Zachary extends InstrumentationTestCase {
 		assertNotNull("Did not receive updated member from server", adminLockUserOutput);
 		assertTrue("User was not locked", adminLockUserOutput.getLocked());
 
-		//
+		// Logout as admin
 
 		MessageBean adminLogoutTestOutput = null;
 		try {
@@ -91,7 +110,7 @@ public class Zachary extends InstrumentationTestCase {
 		assertNotNull("Did not receive logout message back from server", adminLogoutTestOutput);
 		assertEquals("Did not receive OK from user logout.", 200, (int) adminLogoutTestOutput.getStatus());
 
-		//
+		// Login as user
 
 		MessageBean loginOutput = null;
 		try {
@@ -112,7 +131,7 @@ public class Zachary extends InstrumentationTestCase {
 
 		LoginManager.getLoginManager().setCurrentEmailAndToken(email, token);
 
-		//
+		// Authentication test
 
 		MessageBean authTestOutput = null;
 		try {
@@ -125,7 +144,7 @@ public class Zachary extends InstrumentationTestCase {
 
 		assertEquals("Did not receive OK from authentication test.", 200, (int)authTestOutput.getStatus());
 
-		//
+		// User logout
 
 		MessageBean userLogoutTestOutput = null;
 		try {
