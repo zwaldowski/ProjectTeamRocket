@@ -51,15 +51,14 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 	 */
 	public void testLogin() throws Throwable {
 		final LoginManager logman = LoginManager.getLoginManager();
-		ActivityMonitor monitor = getInstrumentation().addMonitor(LoginActivity.class.getName(), null, false);
-		
+				
 		//getting the EditTexts of the Login window
 		email = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.email);
 		password = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.password);
 		signIn = (Button)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.sign_in_button);
 		
 		
-		//** Test Case 1 - checking for good user */
+		/** Test Case 1 - checking for good user */
 		runTestOnUiThread(new Runnable() {
 			public void run() {
 				Editable emailField = email.getText();
@@ -72,18 +71,9 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 				assertTrue(x);
 				logman.logout();
 
-				passwordField.insert(password.getSelectionStart(), "admin");
-				signIn.performClick();
-
 			}
 		});
-		
-		getInstrumentation().invokeMenuActionSync(activity, signIn.getBottom(), 0);
-		Activity loginIn1 = getInstrumentation().waitForMonitorWithTimeout(monitor, 1000);
-		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
-		assertTrue(logman.getCurrentUser() != null);
-		logman.logout();
-		loginIn1.finish();
+	
 		
 		/** Test Case 2 - checking for wrong user */
 		// email that will be used for testing
@@ -103,13 +93,7 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 			}
 	    });
 		
-		getInstrumentation().invokeMenuActionSync(activity, signIn.getBottom(), 0);
-		Activity loginIn2 = getInstrumentation().waitForMonitorWithTimeout(monitor, 1000);
-		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
-		assertTrue(logman.getCurrentUser() != null);
-		logman.logout();
-		loginIn2.finish();
-
+		
 		
 		activity.finish();
 	}
