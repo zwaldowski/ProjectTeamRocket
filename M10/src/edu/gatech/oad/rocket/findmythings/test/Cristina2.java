@@ -13,6 +13,8 @@ import edu.gatech.oad.rocket.findmythings.control.LoginManager;
 import edu.gatech.oad.rocket.findmythings.model.AppMember;
 import edu.gatech.oad.rocket.findmythings.model.Member;
 import edu.gatech.oad.rocket.findmythings.model.User;
+import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
+import edu.gatech.oad.rocket.findmythings.service.Fmthings;
 
 /**
  * Test Case for LoginActivity
@@ -56,8 +58,8 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 		// e-mails and passwords that will be used for testing
 		final String email1 = "Tyrion@Lannister";
 		final String pass1 = "lion";
-		final String email2 = "Daenerys@Targeryen";
-		final String pass2 = "dragon";
+		final String name1 = "Tyrion";
+		final String phone1 = "5555555555";
 		
 		/** Test Case 0 - checking for good user */
 		
@@ -66,9 +68,9 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 				new Runnable() {
 					public void run() {
 						Editable emailField = email.getText();
-						emailField.insert(email.getSelectionStart(), email1);
+						emailField.insert(email.getSelectionStart(), "a@a.com");
 						Editable passwordField = password.getText();
-						passwordField.insert(password.getSelectionStart(), pass1);
+						passwordField.insert(password.getSelectionStart(), "admin");
 						boolean x = signIn.performClick();
 						assertTrue(x);
 					}
@@ -81,11 +83,11 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 	    		new Runnable() {
 	    			public void run() {
 						Editable emailField = email.getText();
-						emailField.insert(email.getSelectionStart(), email2);
+						emailField.insert(email.getSelectionStart(), email1);
 						Editable passwordField = password.getText();
-						passwordField.insert(password.getSelectionStart(), pass2);
+						passwordField.insert(password.getSelectionStart(), pass1);
 						boolean x = signIn.performClick();
-						assertFalse(x); // x should be false because there is no user email2
+						assertFalse(x); // x should be false because there is no user email1
 	    			}
 	    		}
 		);
