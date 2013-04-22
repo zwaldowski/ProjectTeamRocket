@@ -28,7 +28,6 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 	public EditText email, password;
 	public Button signIn;
 	private boolean x;
-	//private LoginManager login = LoginManager.getLoginManager();
 	
 	/**
 	 * constructor
@@ -60,14 +59,22 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 		signIn = (Button)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.sign_in_button);
 		
 		
-		/** Test Case 1 - checking for good user */
+		//** Test Case 1 - checking for good user */
 		runTestOnUiThread(new Runnable() {
 			public void run() {
 				Editable emailField = email.getText();
 				emailField.insert(email.getSelectionStart(), "a@a.com");
 				Editable passwordField = password.getText();
+
+				passwordField.insert(password.getSelectionStart(), "aaaa");
+				signIn.performClick();
+				x = logman.getCurrentUser()==null? false:true;
+				assertTrue(x);
+				logman.logout();
+
 				passwordField.insert(password.getSelectionStart(), "admin");
 				signIn.performClick();
+
 			}
 		});
 		
@@ -89,7 +96,8 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 				emailField.insert(email.getSelectionStart(), email1);
 				Editable passwordField = password.getText();
 				passwordField.insert(password.getSelectionStart(), pass1);
-				boolean x = signIn.performClick();
+				signIn.performClick();
+				x = logman.getCurrentUser()==null? false:true;
 				assertFalse(x); // x should be false because there is no user email1
 				logman.logout();
 			}
