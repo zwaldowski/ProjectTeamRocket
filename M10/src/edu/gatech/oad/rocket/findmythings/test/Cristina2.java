@@ -1,22 +1,11 @@
 package edu.gatech.oad.rocket.findmythings.test;
 
 import edu.gatech.oad.rocket.findmythings.LoginActivity;
-import edu.gatech.oad.rocket.findmythings.RegisterActivity;
-import android.app.Activity;
-import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.text.Editable;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import edu.gatech.oad.rocket.findmythings.R;
 import edu.gatech.oad.rocket.findmythings.control.LoginManager;
-import edu.gatech.oad.rocket.findmythings.model.AppMember;
-import edu.gatech.oad.rocket.findmythings.model.Member;
-import edu.gatech.oad.rocket.findmythings.model.User;
-import edu.gatech.oad.rocket.findmythings.service.EndpointUtils;
-import edu.gatech.oad.rocket.findmythings.service.Fmthings;
-
 /**
  * Test Case for LoginActivity
  * 
