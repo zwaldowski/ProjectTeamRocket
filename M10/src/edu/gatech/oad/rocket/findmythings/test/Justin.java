@@ -14,7 +14,15 @@ import android.widget.EditText;
 
 public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity> {
 	
+	/**
+	 * AccountEditActivity
+	 */
 	private AccountEditActivity mActivity;
+	
+	/**
+	 * AccountActivity text field displaying name
+	 */
+	private EditText actName;
 	
 	@SuppressWarnings("deprecation")
 	public Justin() {
@@ -52,7 +60,7 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		
 		runTestOnUiThread(new Runnable() {
 		     public void run() {
-		    	//Get reference to Textfield containing name
+		    	//Get reference to TextField containing name
 		    	 EditText name = (EditText)mActivity.findViewById(R.id.personnameedit);
 		 		//Set new name
 		 		name.setText("Funny");
@@ -67,7 +75,15 @@ public class Justin extends ActivityInstrumentationTestCase2<AccountEditActivity
 		//Check if AccountActivity Activity was started
 		assertEquals(true, getInstrumentation().checkMonitorHit(monitor, 1));
 		//Check if name was successfully changes
-		assertEquals("Funny", currUser.getCurrentUser().getName());
+		runTestOnUiThread(new Runnable() {
+		     public void run() {
+		    	//Get reference to TextField containing name
+		    	actName = (EditText)mActivity.findViewById(R.id.personnameedit);
+		     }
+		});
+		
+		assertEquals("User name has been changed","Funny", currUser.getCurrentUser().getName());
+		assertEquals("TextField displaying the user's name is correct","Funny",actName.getText().toString());
 		//Patty Mayonnaise
 		currUser.logout();
 		toAccountActivity.finish();

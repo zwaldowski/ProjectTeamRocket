@@ -27,9 +27,6 @@ public class PhoneNumberFilter extends NumberKeyListener {
 							   Spanned dest, int dstart, int dend) {
 		String toReturn = null;
 		if (end > start) {
-			if (!((String) source).matches ("[0-9]")) {
-				return "";
-			}
 			switch(dstart) {
 			case(0):	
 			case(4):
