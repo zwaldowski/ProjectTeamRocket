@@ -64,7 +64,7 @@ public class Zachary extends InstrumentationTestCase {
 		// Log in as admin
 
 		String testAdminEmail = "ad@min.com";
-		String testAdminPass = "admin";
+		String testAdminPass = "aaaa";
 
 		MessageBean adminLoginOutput = null;
 		try {
