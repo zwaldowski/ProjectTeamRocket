@@ -27,14 +27,14 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 	public EditText email, password;
 	public Button signIn;
 	private boolean x;
-	private LoginManager login = LoginManager.getLoginManager();
+	//private LoginManager login = LoginManager.getLoginManager();
 	
 	/**
 	 * constructor
 	 */
 	@SuppressWarnings("deprecation")
 	public Cristina2() {
-		super("andtest.threads.asynctask", LoginActivity.class);
+		super("edu.gatech.oad.rocket.findmythings", LoginActivity.class);
 	}
 	
 	/**
@@ -45,16 +45,18 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 		activity = getActivity();  
 		
 		//getting the EditTexts of the Login window
-		email = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.email);
-		password = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.password);
-		signIn = (Button)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.sign_in_button);
+	
 	}  
 
 	/**
 	 * actual testing of features of Login
+	 * @throws Throwable 
 	 */
-	public void testLogin() {
-		
+	public void testLogin() throws Throwable {
+		final LoginManager logman = LoginManager.getLoginManager();
+		email = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.email);
+		password = (EditText)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.password);
+		signIn = (Button)activity.findViewById(edu.gatech.oad.rocket.findmythings.R.id.sign_in_button);
 		// e-mails and passwords that will be used for testing
 		final String email1 = "Tyrion@Lannister";
 		final String pass1 = "lion";
@@ -64,33 +66,31 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 		/** Test Case 0 - checking for good user */
 		
 		
-		activity.runOnUiThread(
-				new Runnable() {
-					public void run() {
-						Editable emailField = email.getText();
-						emailField.insert(email.getSelectionStart(), "a@a.com");
-						Editable passwordField = password.getText();
-						passwordField.insert(password.getSelectionStart(), "admin");
-						boolean x = signIn.performClick();
-						assertTrue(x);
-					}
-				}
-		);
+		runTestOnUiThread(new Runnable() {
+			public void run() {
+				Editable emailField = email.getText();
+				emailField.insert(email.getSelectionStart(), "a@a.com");
+				Editable passwordField = password.getText();
+				passwordField.insert(password.getSelectionStart(), "admin");
+				boolean x = signIn.performClick();
+				assertTrue(x);
+				logman.logout();
+			}
+		});
 		
 		
 		/** Test Case 1 - checking for wrong user */
-		activity.runOnUiThread(
-	    		new Runnable() {
-	    			public void run() {
-						Editable emailField = email.getText();
-						emailField.insert(email.getSelectionStart(), email1);
-						Editable passwordField = password.getText();
-						passwordField.insert(password.getSelectionStart(), pass1);
-						boolean x = signIn.performClick();
-						assertFalse(x); // x should be false because there is no user email1
-	    			}
-	    		}
-		);
+		runTestOnUiThread(new Runnable() {
+			public void run() {
+				Editable emailField = email.getText();
+				emailField.insert(email.getSelectionStart(), email1);
+				Editable passwordField = password.getText();
+				passwordField.insert(password.getSelectionStart(), pass1);
+				boolean x = signIn.performClick();
+				assertFalse(x); // x should be false because there is no user email1
+				logman.logout();
+			}
+	    });
 	    
 	    
 		//ActivityMonitor monitor = getInstrumentation().addMonitor(LoginActivity.class.getName(), null, false);
@@ -100,13 +100,3 @@ public class Cristina2 extends ActivityInstrumentationTestCase2<LoginActivity> {
 		activity.finish();
 	}
 }
-
-
-
-
-
-
-
-
-
-
