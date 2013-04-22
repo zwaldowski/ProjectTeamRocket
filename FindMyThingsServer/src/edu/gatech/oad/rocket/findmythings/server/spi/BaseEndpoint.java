@@ -33,7 +33,7 @@ abstract class BaseEndpoint {
 		if (cursor != null) query = query.startAt(cursor);
 		if (limit != null) query = query.limit(limit);
 
-		QueryResultIterator<T> iterator = ((Iterable) query).iterator();
+		QueryResultIterator<T> iterator = query.iterator();
 		while (iterator.hasNext()) {
 			outList.add(iterator.next());
 		}

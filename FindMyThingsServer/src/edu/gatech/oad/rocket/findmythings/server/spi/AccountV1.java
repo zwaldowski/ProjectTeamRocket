@@ -84,15 +84,11 @@ public class AccountV1 extends BaseEndpoint {
 
 			if (newUser == null) {
 				newUser = new DBMember(email, password, null, null, true);
-				newUser.setPhone(phoneNum);
-				newUser.setName(name);
-				newUser.setAddress(address);
-			} else {
-				if (phoneNum != null) newUser.setPhone(phoneNum);
-				if (name != null) newUser.setName(name);
-				if (address != null) newUser.setAddress(address);
 			}
-			
+
+			if (phoneNum != null) newUser.setPhone(phoneNum);
+			if (name != null) newUser.setName(name);
+			if (address != null) newUser.setAddress(address);
 			newUser.setAdmin(isAdmin);
 			
 			DatabaseService.ofy().save().entity(newUser);
