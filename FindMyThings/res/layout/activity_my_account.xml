@@ -54,13 +54,12 @@
             style="@style/HeaderLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:focusable="false"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignRight="@+id/personname"
             android:layout_below="@+id/phoneview"
+            android:layout_toLeftOf="@+id/loc_human"
             android:ems="10"
             android:enabled="false"
+            android:focusable="false"
             android:hint="@string/address"
             android:inputType="none"
             android:lines="2"
@@ -69,6 +68,19 @@
             android:paddingTop="@dimen/form_activity_input_pad_vertical"
             android:scrollHorizontally="false"
             android:singleLine="false" />
+
+        <Button
+            android:id="@+id/loc_human"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/addressview"
+            android:background="@drawable/action_map"
+            android:maxHeight="48dp"
+            android:maxWidth="48dp"
+            android:onClick="toMap"
+            android:scaleType="centerInside" />
 
         <QuickContactBadge
             android:id="@+id/personfaceview"

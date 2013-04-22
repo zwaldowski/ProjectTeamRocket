@@ -1,14 +1,23 @@
 package edu.gatech.oad.rocket.findmythings;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import edu.gatech.oad.rocket.findmythings.control.*;
+import edu.gatech.oad.rocket.findmythings.util.ErrorDialog;
 
 /**
  * CS 2340 - FindMyStuff Android App
@@ -24,6 +33,11 @@ public class AccountActivity extends Activity {
 	 * References to the layout 
 	 */
 	private EditText mName, mEmail, mPhone, mAddy;
+	
+	/**
+	 * Current login manager
+	 */
+	private LoginManager manage = LoginManager.getLoginManager();
 
 	/**
 	 * creates new window with correct layout
@@ -38,9 +52,6 @@ public class AccountActivity extends Activity {
 		mEmail = (EditText) findViewById(R.id.emailview);
 		mPhone = (EditText) findViewById(R.id.phoneview);
 		mAddy = (EditText) findViewById(R.id.addressview);
-
-		//Current Login manager
-		LoginManager manage = LoginManager.getLoginManager();
 		
 		if(manage.isLoggedIn()) {
 			// Display user info
@@ -110,6 +121,56 @@ public class AccountActivity extends Activity {
 		startActivity(goToNextActivity);
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 		return true;
+	}
+	
+	/**
+	 * Method called when the location button is clicked
+	 * Goes to MapsActivity
+	 * @param locationButton
+	 */
+	public void toMap (View locationButton) {
+		if (hasInternet()) {
+			String loc = manage.getCurrentUser().getAddress();
+			if (loc != null && loc.length() > 0) {
+				int googlePlayAccess = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+				if(googlePlayAccess != ConnectionResult.SUCCESS)
+				{
+					Dialog dialog = GooglePlayServicesUtil.getErrorDialog(googlePlayAccess, this, 2340);
+					if(dialog != null)
+					{
+						dialog.show();
+					}
+					else
+					{
+						new ErrorDialog(R.string.item_detail_playstore_err).getDialog(this).show();
+					}
+				} else {
+					startActivity(new Intent(this, MapsActivity.class).putExtra(MapsActivity.LOCATION_EXTRA, loc));
+				}
+			}
+		} else {
+			new ErrorDialog(R.string.item_detail_inet_err).getDialog(this).show();
+		}
+	}
+	
+	/**
+	 * Checks to see if the user has an active network connection 
+	 * @return boolean
+	 */
+	public boolean hasInternet() {
+		boolean hasWifi = false;
+		boolean hasMobile = false;
+		ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+		if ( ni != null ) {
+		    if (ni.getType() == ConnectivityManager.TYPE_WIFI)
+		        if (ni.isConnectedOrConnecting())
+		        	hasWifi = true;
+		    if (ni.getType() == ConnectivityManager.TYPE_MOBILE)
+		        if (ni.isConnectedOrConnecting())
+		        	hasMobile = true;
+		}
+		return hasWifi || hasMobile;
 	}
 	
 	/**
