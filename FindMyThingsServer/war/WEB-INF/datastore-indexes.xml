@@ -4,5 +4,10 @@
         <property name="type" direction="asc"/>
         <property name="date" direction="desc"/>
     </datastore-index>
+	
+    <datastore-index kind="DBItem" ancestor="false" source="manual">
+        <property name="searchTokens" direction="asc"/>
+        <property name="date" direction="desc"/>
+    </datastore-index>
 
 </datastore-indexes>
