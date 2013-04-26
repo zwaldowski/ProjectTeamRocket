@@ -98,4 +98,7 @@
     <string name="error_invalid_phone">Phone number not correct.</string>
     <string name="error_short_password">Password too short.</string>
     <string name="error_already_user">Already registered.</string>
+
+
+    <string name="item_detail_map">Show on Map</string>
 </resources>
